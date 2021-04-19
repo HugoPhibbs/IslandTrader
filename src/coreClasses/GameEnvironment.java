@@ -191,7 +191,56 @@ public class GameEnvironment {
 	 * what they would like to do, then calls the appropriate method of the current island's store.
 	 */
 	public void visitTheStore() {
+		// have based this code based on same structures for methods in this class
 		
+		/* TODO due to the amount of code this will require i 
+		 * think that it would make sense to put most of this code into the store class.
+		 * everything but exiting the store and viewing money that you have can be done
+		 * by store class
+		 */ 
+		String options = "Enter the action number:\n "
+				+ "1. View and buy items that the store sells. \n " 
+				+ "2. View and sell Items that the store buys. \n "
+				+ "3. See previously bought items from the store. \n"
+				+ "4. See previously sold items to the store. \n"
+				+ "5. View the amount of money that you have. \n"
+				+ "6. Exit store.";
+				
+		Store currentStore = player.getCurrentIsland().getIslandStore();
+				
+		Scanner scanner = new Scanner(System.in);
+		System.out.println(options);
+				
+		int input = takeTurnHelper(scanner);
+				
+		// If you add more options, make sure that you have accounted for this in while loop!
+		while (input < 1 || input > 6) {
+			System.out.println("Invalid input, please enter a number between 1 and 6");
+			input = takeTurnHelper(scanner);
+		}
+				
+		switch (input) {
+		    case 1:
+		    	ArrayList<Item> itemsToSell = currentStore.getItemsToSell();
+				break;
+		    case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+		    case 5:
+				// view the amount of cash that a player has
+				System.out.println("Player has a balance of: "+player.getMoneyBalance());
+				break;
+		    case 6:
+				// exit store
+		        return;
+		}
+				
+	    /* ask user if they would like to do any other action or just leave the store,
+		* only if they didnt ask for exit store, in the first place
+		*/
 	}
 	
 	

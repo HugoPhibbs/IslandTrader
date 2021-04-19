@@ -33,6 +33,41 @@ public class Store {
     }
   
     // #################### GENERAL STORE METHODS #####################
+    public void displayOnSaleItems() {
+    	/* Shows items that a player can buy
+    	 * player can then pick an item which is 
+    	 * passed on to sellItem
+    	 */
+   
+    }
+    
+    public void displayToBuyItems() {
+    	/* Shows items that a player can sell to store
+    	 * player can then pick an item to sell
+    	 * and then buyItem is called
+    	 */
+    }
+    
+    public Item displayHelper(ArrayList<Item> itemArrayList){
+    	/* helper method to display methods
+    	 * takes input in form of int and allows user to pick item
+    	 * from itemArrayList that they want
+    	 */
+    	for (int i=1; i < itemArrayList.size()+1, i++) {
+    		Item currItem = itemArrayList.get(i);
+    		/* format:
+    		 * Would you like to buy/sell items:
+    		 * i. item.getName for item.getPrice()
+    		 */
+    		System.out.println(String.format("%d. %s for %d", i, currItem.getName(), currItem.getPrice()));
+    	}
+    	
+    	int input = TakeInput.inputIntHelper();
+    	
+    	while (input < 1 || input >= itemArrayList.size()+1) {
+    		continue;
+    	}
+    	
     public boolean sellItem(Item item, Player player) {
     	// sells and item to a player
     	
