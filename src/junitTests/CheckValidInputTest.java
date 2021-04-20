@@ -13,7 +13,7 @@ import gameSetupClasses.*;
  * @since 15/4/2021
  */
 
-class CheckValidInputClassTest {
+class CheckValidInputTest {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {

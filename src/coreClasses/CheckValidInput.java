@@ -1,5 +1,8 @@
 package coreClasses;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 /** Class to check for valid input across project
  * 
  * @author Hugo Phibbs
@@ -7,7 +10,7 @@ package coreClasses;
  * @since 15/4/2021
  */
 
-public class CheckValidInputClass {
+public class CheckValidInput {
 	
 	/**
 	 * Checks that chosen duration of the game is between 20 and 50 days. 
@@ -46,5 +49,11 @@ public class CheckValidInputClass {
 			return false;
 		}
 		return true;
+	}
+	
+	public static boolean actionIntIsValid(int i, int lowerBound, int upperBound) {
+		// Helper method that can be used throughout gameEnvironment
+		// TODO transfer implementations of this to gameEnvironment etc
+		return (i < lowerBound || i > upperBound);
 	}
 }
