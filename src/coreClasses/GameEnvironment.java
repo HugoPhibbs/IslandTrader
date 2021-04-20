@@ -1,14 +1,13 @@
 package coreClasses;
 
 
-import java.io.ByteArrayInputStream;
+import java.io.ByteArrayInputStream; 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import Exceptions.GoBackException;
-import Exceptions.InvalidInputException;
+import exceptions.*;
 
 
 public class GameEnvironment {
@@ -43,11 +42,11 @@ public class GameEnvironment {
 		Scanner scan = new Scanner(System.in);
 		System.out.println(options);
 		
-		int input = takeTurnHelper(scan);
+		int input = actionIntHelper(scan);
 		
 		while (input < 1 || input > 6) {
 			System.out.println("Number entered didn't correspond with an action. Please enter a number between 1 and 6 (inlcusive).");
-			input = takeTurnHelper(scan);
+			input = actionIntHelper(scan);
 		}
 		
 		scan.close();
@@ -84,7 +83,8 @@ public class GameEnvironment {
 		}
 	}
 	
-	public int takeTurnHelper(Scanner scan) {
+	public int actionIntHelper(Scanner scan) {
+		// TODO rename this method, so it can be used elsewhere when ever we need to 
 		boolean successful = false;
 		while (!successful)
 			try {
@@ -94,7 +94,7 @@ public class GameEnvironment {
 				System.out.println("Invalid input. Please enter an integer.");
 				scan = new Scanner(System.in);
 			}
-		return takeTurnHelper(scan);
+		return actionIntHelper(scan);
 	}
 	
 	/**
@@ -211,19 +211,56 @@ public class GameEnvironment {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println(options);
 				
-		int input = takeTurnHelper(scanner);
+		int entryInput = actionIntHelper(scanner);
 				
 		// If you add more options, make sure that you have accounted for this in while loop!
-		while (input < 1 || input > 6) {
+		while (!CheckValidInput.actionIntIsValid(entryInput, 1, 6)) {
 			System.out.println("Invalid input, please enter a number between 1 and 6");
-			input = takeTurnHelper(scanner);
+			entryInput = actionIntHelper(scanner);
 		}
+		
+		// As a convention across the project, all printing is done by GameEnvironment
 				
-		switch (input) {
+		switch (entryInput) {
 		    case 1:
+		    	// Get itemsToSell and its size
 		    	ArrayList<Item> itemsToSell = currentStore.getItemsToSell();
+		    	int itemsToSellCount = itemsToSell.size();
+		    	
+		    	// Display on sale items
+		    	System.out.println("Enter the number corresponding to the Item that you want to buy!");
+		    	System.out.println(Store.getDisplayString(itemsToSell));
+		    	
+		    	// number for chosen item
+		    	int itemToSellNum= actionIntHelper(scanner);
+		    	
+		    	// Check that input of itemToSellNum is valid
+		    	while (!CheckValidInput.actionIntIsValid(itemToSellNum, 1, itemsToSellCount)) {
+		    		System.out.println(String.format("Invalid input, please enter a number between 1 and %d.",itemsToSellCount));
+		    		itemToSellNum = actionIntHelper(scanner);
+		    	}
+		    	// Sell item from store to player
+		    	currentStore.sellItem(itemsToSell.get(itemToSellNum-1), player);
 				break;
 		    case 2:
+		    	// Get itemsToBuy and its size
+		    	ArrayList<Item> itemsToBuy = currentStore.getItemsToSell();
+		    	int itemsToBuyCount = itemsToBuy.size();
+		    	
+		    	// Display items that can be bought by store
+		    	System.out.println("Enter the number corresponding to the Item that you want to sell!.");
+		    	System.out.println(Store.getDisplayString(itemsToBuy));
+		    	
+		    	// number for chosen item
+		    	int itemToBuyNum = actionIntHelper(scanner);
+		    	
+		    	// Check that input of itemToBuyNum is valid
+		    	while (!CheckValidInput.actionIntIsValid(itemToBuyNum, 1, itemsToBuyCount)) {
+		    		System.out.println(String.format("Invalid input, please enter a number between 1 and %d.",itemsToBuyCount));
+		    		itemToBuyNum = actionIntHelper(scanner);
+		    	}
+		    	// Sell item from player to store
+		    	currentStore.buyItem(itemsToBuy.get(itemToBuyNum-1), player);
 				break;
 			case 3:
 				break;
@@ -231,12 +268,43 @@ public class GameEnvironment {
 				break;
 		    case 5:
 				// view the amount of cash that a player has
-				System.out.println("Player has a balance of: "+player.getMoneyBalance());
+				System.out.println(String.format("Player has a balance of: %d Pirate Bucks", player.getMoneyBalance()));
 				break;
 		    case 6:
 				// exit store
 		        return;
 		}
+		
+		visitTheStoreHelper();
+	}
+	
+	public void visitTheStoreHelper() {
+		
+		System.out.println("Is that all you wanted to do at the store today? \n Enter action number:");
+		
+		String exitOptions = "1. Do more actions with the store. \n"
+				+ "2. Exit Store.";
+		
+		System.out.println(exitOptions);
+		
+		Scanner scanner = new Scanner(System.in);
+		
+		int exitInput = actionIntHelper(scanner);
+		
+		while (!CheckValidInput.actionIntIsValid(exitInput, 1, 2)) {
+			System.out.println("Please enter a number between 1 and 2.");
+			exitInput = actionIntHelper(scanner);
+		}
+		
+		switch (exitInput) {
+		    case 1:
+		    	// View options again
+		    	visitTheStore();
+		    case 2:
+		    	// Exit store
+		    	return;
+		}
+		
 				
 	    /* ask user if they would like to do any other action or just leave the store,
 		* only if they didnt ask for exit store, in the first place
