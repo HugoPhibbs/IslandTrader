@@ -5,7 +5,7 @@ import java.util.*;
 /** Represents a store
  * 
  * @author Hugo Phibbs
- * @version 16/4/2021
+ * @version 20/4/2021
  * @since 2/4/2021
  */
 
@@ -20,6 +20,7 @@ public class Store {
     
     /* TODO
      * How to sell Upgrades and take advantage of inheritance?
+     * just to be creative any mention of currency should be given as "pirate bucks"
      */
    
     
@@ -33,40 +34,6 @@ public class Store {
     }
   
     // #################### GENERAL STORE METHODS #####################
-    public void displayOnSaleItems() {
-    	/* Shows items that a player can buy
-    	 * player can then pick an item which is 
-    	 * passed on to sellItem
-    	 */
-   
-    }
-    
-    public void displayToBuyItems() {
-    	/* Shows items that a player can sell to store
-    	 * player can then pick an item to sell
-    	 * and then buyItem is called
-    	 */
-    }
-    
-    public Item displayHelper(ArrayList<Item> itemArrayList){
-    	/* helper method to display methods
-    	 * takes input in form of int and allows user to pick item
-    	 * from itemArrayList that they want
-    	 */
-    	for (int i=1; i < itemArrayList.size()+1, i++) {
-    		Item currItem = itemArrayList.get(i);
-    		/* format:
-    		 * Would you like to buy/sell items:
-    		 * i. item.getName for item.getPrice()
-    		 */
-    		System.out.println(String.format("%d. %s for %d", i, currItem.getName(), currItem.getPrice()));
-    	}
-    	
-    	int input = TakeInput.inputIntHelper();
-    	
-    	while (input < 1 || input >= itemArrayList.size()+1) {
-    		continue;
-    	}
     	
     public boolean sellItem(Item item, Player player) {
     	// sells and item to a player
@@ -124,6 +91,21 @@ public class Store {
     }
     
     // ##################### GETTER METHODS ########################
+    public static String getDisplayString(ArrayList<Item> itemArrayList) {
+    	/* Returns a string representation of everything in itemArrayList to be sold 
+    	 * or bought by a store
+    	 */
+    	String result = "";
+    	
+    	for (int i = 0; i < itemArrayList.size(); i++) {
+    		Item currItem = itemArrayList.get(i);
+    		result += String.format("%d. %s for %d Pirate Bucks \n", i+1, currItem.getName(), currItem.getPrice());
+    	}
+    	
+    	// return result string without the trailing white space
+    	return result.trim();
+    }
+    
     public ArrayList<Item> getItemsToBuy() {
     	return this.itemsToBuy;
     }
