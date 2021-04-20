@@ -42,11 +42,11 @@ public class GameEnvironment {
 		Scanner scan = new Scanner(System.in);
 		System.out.println(options);
 		
-		int input = actionIntHelper(scan);
+		int input = getActionInt(scan);
 		
 		while (input < 1 || input > 6) {
 			System.out.println("Number entered didn't correspond with an action. Please enter a number between 1 and 6 (inlcusive).");
-			input = actionIntHelper(scan);
+			input = getActionInt(scan);
 		}
 		
 		scan.close();
@@ -83,7 +83,7 @@ public class GameEnvironment {
 		}
 	}
 	
-	public int actionIntHelper(Scanner scan) {
+	public int getActionInt(Scanner scan) {
 		// TODO rename this method, so it can be used elsewhere when ever we need to 
 		boolean successful = false;
 		while (!successful)
@@ -94,7 +94,7 @@ public class GameEnvironment {
 				System.out.println("Invalid input. Please enter an integer.");
 				scan = new Scanner(System.in);
 			}
-		return actionIntHelper(scan);
+		return getActionInt(scan);
 	}
 	
 	/**
@@ -211,12 +211,12 @@ public class GameEnvironment {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println(options);
 				
-		int entryInput = actionIntHelper(scanner);
+		int entryInput = getActionInt(scanner);
 				
 		// If you add more options, make sure that you have accounted for this in while loop!
 		while (!CheckValidInput.actionIntIsValid(entryInput, 1, 6)) {
 			System.out.println("Invalid input, please enter a number between 1 and 6");
-			entryInput = actionIntHelper(scanner);
+			entryInput = getActionInt(scanner);
 		}
 		
 		// As a convention across the project, all printing is done by GameEnvironment
@@ -232,12 +232,12 @@ public class GameEnvironment {
 		    	System.out.println(Store.getDisplayString(itemsToSell));
 		    	
 		    	// number for chosen item
-		    	int itemToSellNum= actionIntHelper(scanner);
+		    	int itemToSellNum= getActionInt(scanner);
 		    	
 		    	// Check that input of itemToSellNum is valid
 		    	while (!CheckValidInput.actionIntIsValid(itemToSellNum, 1, itemsToSellCount)) {
 		    		System.out.println(String.format("Invalid input, please enter a number between 1 and %d.",itemsToSellCount));
-		    		itemToSellNum = actionIntHelper(scanner);
+		    		itemToSellNum = getActionInt(scanner);
 		    	}
 		    	// Sell item from store to player
 		    	currentStore.sellItem(itemsToSell.get(itemToSellNum-1), player);
@@ -252,12 +252,12 @@ public class GameEnvironment {
 		    	System.out.println(Store.getDisplayString(itemsToBuy));
 		    	
 		    	// number for chosen item
-		    	int itemToBuyNum = actionIntHelper(scanner);
+		    	int itemToBuyNum = getActionInt(scanner);
 		    	
 		    	// Check that input of itemToBuyNum is valid
 		    	while (!CheckValidInput.actionIntIsValid(itemToBuyNum, 1, itemsToBuyCount)) {
 		    		System.out.println(String.format("Invalid input, please enter a number between 1 and %d.",itemsToBuyCount));
-		    		itemToBuyNum = actionIntHelper(scanner);
+		    		itemToBuyNum = getActionInt(scanner);
 		    	}
 		    	// Sell item from player to store
 		    	currentStore.buyItem(itemsToBuy.get(itemToBuyNum-1), player);
@@ -289,11 +289,11 @@ public class GameEnvironment {
 		
 		Scanner scanner = new Scanner(System.in);
 		
-		int exitInput = actionIntHelper(scanner);
+		int exitInput = getActionInt(scanner);
 		
 		while (!CheckValidInput.actionIntIsValid(exitInput, 1, 2)) {
 			System.out.println("Please enter a number between 1 and 2.");
-			exitInput = actionIntHelper(scanner);
+			exitInput = getActionInt(scanner);
 		}
 		
 		switch (exitInput) {
