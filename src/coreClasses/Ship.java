@@ -26,6 +26,11 @@ import Exceptions.*;
  * of Item and ShipUpgrade objects. 
  */
 
+/* TODO
+ * process for adding upgrade should check have some sort of general method accociated with it
+ * can check if it is an upgrade, then adds it correspondingly. 
+ */
+
 /** Represents a ship
  * @author Hugo Phibbs
  * @version 16/4/2021
