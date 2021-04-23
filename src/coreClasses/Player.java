@@ -1,6 +1,6 @@
 package coreClasses;
 
-import exceptions.InsufficientMoneyException;
+import exceptions.*;
 
 /**
  * 
@@ -17,10 +17,10 @@ public class Player {
 	
 	// DELETE LATER - constructor for testing while ship doesn't work
 	public Player(String name, int startingCash, int days, Island startingIsland) {
-		if (CheckValidInputClass.nameIsValid(name)) {this.name = name;} 
+		if (CheckValidInput.nameIsValid(name)) {this.name = name;} 
 		else { throw new IllegalArgumentException("Invalid name. Please enter a name with 3-15 letters, not numbers or special characters.");}
 		
-		if (CheckValidInputClass.durationIsValid(days)) {this.daysRemaining = days;} 
+		if (CheckValidInput.durationIsValid(days)) {this.daysRemaining = days;} 
 		else { throw new IllegalArgumentException("Invalid game duration. Please enter a number of days between 20 and 50");}
 		
 		this.moneyBalance = startingCash;
@@ -29,10 +29,10 @@ public class Player {
 	
 	public Player(String name, Ship ship, int startingCash, int days, Island startingIsland) {
 		
-		if (CheckValidInputClass.nameIsValid(name)) {this.name = name;} 
+		if (CheckValidInput.nameIsValid(name)) {this.name = name;} 
 		else { throw new IllegalArgumentException("Invalid name. Please enter a name with 3-15 letters, not numbers or special characters.");}
 		
-		if (CheckValidInputClass.durationIsValid(days)) {this.daysRemaining = days;} 
+		if (CheckValidInput.durationIsValid(days)) {this.daysRemaining = days;} 
 		else { throw new IllegalArgumentException("Invalid game duration. Please enter a number of days between 20 and 50");}
 		
 		this.ship = ship;

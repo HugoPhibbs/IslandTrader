@@ -2,9 +2,10 @@ package coreClasses;
 
 import java.util.*;
 
+
 import java.math.*;
 
-import Exceptions.*;
+import exceptions.*;
 
 // --TODO--
 // A method to see the total space taken up by items in the itemArrayList
@@ -68,7 +69,7 @@ public class Ship {
     	// TODO need to check that all the names being added to crewArray are valid
     	
     	// Check name and crewArray are valid
-    	if (!CheckValidInputClass.nameIsValid(name)) {
+    	if (!CheckValidInput.nameIsValid(name)) {
     	    String msg1 = "Name must have no more than 1 consecutive white space and be between 3 and 15 characters in length!";
     		throw new IllegalArgumentException(msg1);
     	}
