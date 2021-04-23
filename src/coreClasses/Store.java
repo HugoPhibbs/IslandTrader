@@ -2,6 +2,8 @@ package coreClasses;
 
 import java.util.*;
 
+import exceptions.*;
+
 /** Represents a store
  * 
  * @author Hugo Phibbs
@@ -13,8 +15,6 @@ public class Store {
     private String name; // something creative
     private ArrayList<Item> itemsToSell= new ArrayList<Item>(); // items to sell to player
     private ArrayList<Item> itemsToBuy = new ArrayList<Item>();  // items that store will buy from player
-    private ArrayList<Item> itemsSold = new ArrayList<Item>(); // items sold to player
-    private ArrayList<Item> itemsBought = new ArrayList<Item>();
     private Island storeIsland;
     
     
@@ -41,10 +41,6 @@ public class Store {
     	// item is an item from the item ArrayList
     	
     	// TODO game environment needs to handle the errors thrown. 
-    	/* Explanation
-    	 * I couldve either checked that a player has the cash or check that the ship has the space
-    	 * wouldn't have mattered
-    	 */
     	
     	// TODO there is a conundrum here, you need to check that a player has cash first before you attempt to add it 
     	// to cargo hold (which may throw an error), or you could do the reverse. 
@@ -53,17 +49,12 @@ public class Store {
     	if (!itemsToSell.contains(item)) {
     		throw new IllegalStateException("BUG this store does not sell this item");
     	}
-    	if (player.getMoneyBalance() > item.getPrice()) {
-    		throw new IllegalStateException("You do not have enough money to buy this item");
+    	if (player.getMoneyBalance() > item.getPlayerBuyPrice()) {
+    		throw new InsufficientMoneyException("You do not have enough money to buy this item");
     	}
         // Player has cash, so attempt to add
     	player.getShip().addItem(item); // may throw an exception, game environment should handle
-    	player.spendMoney(item.getPrice());
-    	
-    	// add Item to itemSold
-    	itemsSold.add(item);
-    	// add items bought at
-    	item.setIslandBoughtAt(this.storeIsland);
+    	player.spendMoney(item.getPlayerBuyPrice());
     	return true;
     }
     
@@ -78,15 +69,18 @@ public class Store {
     	 * 4. add bought item to an array
     	 */
     	
+    	// Necessary to throw below exception?
     	if (!itemsToBuy.contains(item)) {
     		throw new IllegalStateException("BUG this store does not buy this item");
     	}
     	
     	Item boughtItem = player.getShip().takeItem(item.getName());
-    	player.earnMoney(item.getPrice());
-    	boughtItem.setPlayerSellPrice(item.getPrice());
+    	player.earnMoney(item.getPlayerBuyPrice());
+    	boughtItem.setPlayerSellPrice(item.getPlayerBuyPrice());
     	
-    	itemsBought.add(boughtItem);
+    	// Set island that a item was sold at
+    	boughtItem.setStoreIslandSoldAt(storeIsland);
+    	
     	return true;
     }
     
@@ -99,7 +93,7 @@ public class Store {
     	
     	for (int i = 0; i < itemArrayList.size(); i++) {
     		Item currItem = itemArrayList.get(i);
-    		result += String.format("%d. %s for %d Pirate Bucks \n", i+1, currItem.getName(), currItem.getPrice());
+    		result += String.format("%d. %s for %d Pirate Bucks \n", i+1, currItem.getName(), currItem.getPlayerBuyPrice());
     	}
     	
     	// return result string without the trailing white space
@@ -116,14 +110,6 @@ public class Store {
     
     public String getName() {
     	return this.name;
-    }
-    
-    public ArrayList<Item> getItemsSold(){
-    	return this.itemsSold;
-    }
-    
-    public ArrayList<Item> getItemsBought(){
-    	return this.itemsBought;
     }
   
     public String getDescription(){
