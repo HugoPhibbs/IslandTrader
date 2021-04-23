@@ -1,27 +1,33 @@
 package coreClasses;
 
 
-// TODO
-// get rid of base price, price of item is purely decided by store itself
+/* TODO
+ * fix up the mess that is the price system. 
+ */
 
 public class Item{
 
-    private Island islandBoughtAt;
+    private Island storeIslandSoldAt; // island where the item was sold from player to store
     private String name;
     private int spaceTaken;
-    private int price;
-    private int playerBuyPrice;
-    private int playerSellPrice;
+    // called playerBuyPrice and not buyPrice to avoid confusion with the perspective of the store 
+    private int playerBuyPrice; // Price of Item within a store
+    private int playerSellPrice; // Price of item that a player sells back to a store
+    
+    /* IDEA: however this may break the fundamentals of classes. LSP
+     * private int retailPrice
+     * private int consignmentPrice
+     */
     
     // could have a variable that tracks if it is in possession of a player
     // needs to include the amount paid for this item
     // and if it is sold, how much you sold it for and where it was sold.
     
-    public Item(String name, int spaceTaken, int basePrice){
+    public Item(String name, int spaceTaken, int playerBuyPrice){
     	// TODO need to check if the inputs are correct,
     	this.name = name; // needs to be capitalised
     	this.spaceTaken = spaceTaken; // int
-    	this.price = basePrice; 
+    	this.playerBuyPrice = playerBuyPrice; 
     	// calls setDescription()
     }
 
@@ -29,14 +35,8 @@ public class Item{
      *
      * @param islandSoldAt Island object that an Item was sold at
      */
-    public void setIslandBoughtAt(Island islandBoughtAt){
-        // Selling is in the perspective of the Item itself,
-        // i.e. selling it makes it now not in the possession of a player
-        this.islandBoughtAt = islandBoughtAt;
-    }
-
-    public void setPlayerBuyPrice(int playerBuyPrice){
-        this.playerBuyPrice = playerBuyPrice;
+    public void setStoreIslandSoldAt(Island storeIslandSoldAt){
+        this.storeIslandSoldAt = storeIslandSoldAt;
     }
     
     public void setPlayerSellPrice(int playerSellPrice){
@@ -85,15 +85,19 @@ public class Item{
      *
      * @return Integer for the base price of Item Object
      */
-    public int getPrice(){
-        return price;
+    public int getPlayerBuyPrice(){
+        return playerBuyPrice;
     }
 
     /** Getter method for the island that an Item object was sold at
      *
      * @return Island object that Item was sold at
      */
-    public Island getIslandBoughtAt(){
-        return islandBoughtAt;
+    public Island getStoreIslandSoldAt(){
+        return storeIslandSoldAt;
+    }
+    
+    public int getPlayerSellPrice() {
+    	return playerSellPrice;
     }
 }
