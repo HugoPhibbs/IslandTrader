@@ -3,12 +3,12 @@
  */
 package junitTests;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*; 
 
 import java.io.ByteArrayInputStream;
 import org.junit.jupiter.api.Test;
 
-import gameSetupClasses.*;
+import coreClasses.*;
 
 /**
  * @author Jordan Vegar

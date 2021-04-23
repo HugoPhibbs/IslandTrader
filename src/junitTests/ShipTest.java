@@ -1,11 +1,11 @@
 package junitTests;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*; 
 
 
 import org.junit.jupiter.api.*;
 
-import gameSetupClasses.*;
+import coreClasses.*;
 
 import java.util.*;
 
@@ -18,10 +18,9 @@ class ShipTest {
 
 	@BeforeEach
 	void setUpBeforeClass() {
-		String [] crewArray = {"Will Turner", "Elizabeth Swann", "Ragetti"};
 		
-		//Ship(String name, String[] crewArray, int maxUpgradeSpace, int maxCargoCapacity)
-		testShip = new Ship("Black Pearl", crewArray, 30, 20);
+		// Ship(String name, int speed, int crewSize, int maxUpgradeSpace, int maxCargoCapacity)
+		testShip = new Ship("Black Pearl", 10,  4, 30, 20);
 		
 		testStore = new Store();
 		testIsland = new Island("Shipwreck Cove", testStore, "Has alot of sand");
