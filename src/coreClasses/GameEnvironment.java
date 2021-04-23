@@ -16,6 +16,13 @@ import exceptions.*;
  * getMessage(), or create the messages themselves within GameEnvironment?
  */
 
+/**
+ * 
+ * @author Jordan Vegar and Hugo Phibbs
+ * @version 23/4/21
+ * @since 2/4/21
+ */
+
 
 public class GameEnvironment {
 	
@@ -204,10 +211,9 @@ public class GameEnvironment {
 		String options = "Enter the action number:\n "
 				+ "1. View and buy items that the store sells. \n " 
 				+ "2. View and sell Items that the store buys. \n "
-				+ "3. See previously bought items from the store. \n"
-				+ "4. See previously sold items to the store. \n"
-				+ "5. View the amount of money that you have. \n"
-				+ "6. Exit store.";
+				+ "3. View previously bought items. \n"
+				+ "4. View the amount of money that you have. \n"
+				+ "5. Exit store.";
 				
 		Store currentStore = player.getCurrentIsland().getIslandStore();
 				
@@ -217,8 +223,8 @@ public class GameEnvironment {
 		int entryInput = getActionInt(scanner);
 				
 		// If you add more options, make sure that you have accounted for this in while loop!
-		while (!CheckValidInput.actionIntIsValid(entryInput, 1, 6)) {
-			System.out.println("Invalid input, please enter a number between 1 and 6");
+		while (!CheckValidInput.actionIntIsValid(entryInput, 1, 5)) {
+			System.out.println("Invalid input, please enter a number between 1 and 5");
 			entryInput = getActionInt(scanner);
 		}
 		
@@ -247,7 +253,7 @@ public class GameEnvironment {
 		    	
 		    	// Get name of chosen item
 		    	String splitLine1 = (String) Array.get(sellDisplayString.split("\n"), itemToSellNum-1);
-		    	String itemOnSaleName = (String) Array.get(splitLine1.split(" "), 1);
+		    	String itemOnSaleName = (String) Array.get(splitLine1.split(" "), 1); // get name
 
 		    	// Try to sell item from store to player (may throw exception)
 		    	try {
@@ -265,7 +271,7 @@ public class GameEnvironment {
 		    	}
 				break;
 		    case 2:
-		    	// Get itemsToBuy and its size
+		    	// Get buyCatalogue and its size
 		    	HashMap<String, HashMap<String, Integer>> buyCatalogue = currentStore.getBuyCatalogue();
 		    	int itemsToBuyCount = buyCatalogue.size();
 		    	
@@ -297,14 +303,15 @@ public class GameEnvironment {
 		    	}
 				break;
 			case 3:
+				// Display items bought, and where they have been sold, if they have been sold
+				System.out.println(player.getShip().displayAllTimeItems());
 				break;
-			case 4:
-				break;
-		    case 5:
-				// view the amount of cash that a player has
+		    case 4:
+				// View the amount of cash that a player has
 				System.out.println(String.format("Player has a balance of: %d Pirate Bucks", player.getMoneyBalance()));
 				break;
-		    case 6:
+		    case 5:
+		    	System.out.println("You have exited the store!");
 				// exit store
 		        return;
 		}
