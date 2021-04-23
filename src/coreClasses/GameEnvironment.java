@@ -1,9 +1,11 @@
 package coreClasses;
 
 
-import java.io.ByteArrayInputStream; 
+import java.io.ByteArrayInputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -224,25 +226,32 @@ public class GameEnvironment {
 				
 		switch (entryInput) {
 		    case 1:
-		    	// Get itemsToSell and its size
-		    	ArrayList<Item> itemsToSell = currentStore.getItemsToSell();
-		    	int itemsToSellCount = itemsToSell.size();
+		    	// Get sellCatalogue and its size
+		    	HashMap<String, HashMap<String, Integer>> sellCatalogue = currentStore.getSellCatalogue();
+		    	int sellCatalogueSize = sellCatalogue.size();
 		    	
 		    	// Display on sale items
 		    	System.out.println("Enter the number corresponding to the Item that you want to buy!");
-		    	System.out.println(Store.getDisplayString(itemsToSell));
+		    	String sellDisplayString = Store.getDisplayString(sellCatalogue);
+		    	System.out.println(sellDisplayString);
+		    
 		    	
 		    	// number for chosen item
 		    	int itemToSellNum= getActionInt(scanner);
 		    	
 		    	// Check that input of itemToSellNum is valid
-		    	while (!CheckValidInput.actionIntIsValid(itemToSellNum, 1, itemsToSellCount)) {
-		    		System.out.println(String.format("Invalid input, please enter a number between 1 and %d.",itemsToSellCount));
+		    	while (!CheckValidInput.actionIntIsValid(itemToSellNum, 1, sellCatalogueSize)) {
+		    		System.out.println(String.format("Invalid input, please enter a number between 1 and %d.",sellCatalogueSize));
 		    		itemToSellNum = getActionInt(scanner);
 		    	}
+		    	
+		    	// Get name of chosen item
+		    	String splitLine1 = (String) Array.get(sellDisplayString.split("\n"), itemToSellNum-1);
+		    	String itemOnSaleName = (String) Array.get(splitLine1.split(" "), 1);
+
 		    	// Try to sell item from store to player (may throw exception)
 		    	try {
-		    		currentStore.sellItem(itemsToSell.get(itemToSellNum-1), player);
+		    		currentStore.sellItem(itemOnSaleName, player);
 		    	}
 		    	catch (InsufficientMoneyException ime) {
 		    		System.out.println(ime.getMessage());
@@ -257,12 +266,13 @@ public class GameEnvironment {
 				break;
 		    case 2:
 		    	// Get itemsToBuy and its size
-		    	ArrayList<Item> itemsToBuy = currentStore.getItemsToSell();
-		    	int itemsToBuyCount = itemsToBuy.size();
+		    	HashMap<String, HashMap<String, Integer>> buyCatalogue = currentStore.getBuyCatalogue();
+		    	int itemsToBuyCount = buyCatalogue.size();
 		    	
 		    	// Display items that can be bought by store
 		    	System.out.println("Enter the number corresponding to the Item that you want to sell!.");
-		    	System.out.println(Store.getDisplayString(itemsToBuy));
+		    	String buyDisplayString = Store.getDisplayString(buyCatalogue);
+		    	System.out.println(buyDisplayString);
 		    	
 		    	// number for chosen item
 		    	int itemToBuyNum = getActionInt(scanner);
@@ -272,9 +282,15 @@ public class GameEnvironment {
 		    		System.out.println(String.format("Invalid input, please enter a number between 1 and %d.",itemsToBuyCount));
 		    		itemToBuyNum = getActionInt(scanner);
 		    	}
+		    	
+		    	// Get name of chosen item
+		    	String splitLine2 = (String) Array.get(buyDisplayString.split("\n"), itemToBuyNum-1);
+		    	String itemToBuyName = (String) Array.get(splitLine2.split(" "), 1);
+		    	
+		    	
 		    	// Sell item from player to store
 		    	try {
-		    		currentStore.buyItem(itemsToBuy.get(itemToBuyNum-1), player);
+		    		currentStore.buyItem(itemToBuyName, player);
 		    	}
 		    	catch (IllegalStateException ise) {
 		    		System.out.println(ise.getMessage());

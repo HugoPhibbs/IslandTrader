@@ -1,10 +1,5 @@
 package coreClasses;
 
-
-/* TODO
- * fix up the mess that is the price system. 
- */
-
 public class Item{
 
     private Island storeIslandSoldAt; // island where the item was sold from player to store
@@ -14,10 +9,6 @@ public class Item{
     private int playerBuyPrice; // Price of Item within a store
     private int playerSellPrice; // Price of item that a player sells back to a store
     
-    /* IDEA: however this may break the fundamentals of classes. LSP
-     * private int retailPrice
-     * private int consignmentPrice
-     */
     
     // could have a variable that tracks if it is in possession of a player
     // needs to include the amount paid for this item

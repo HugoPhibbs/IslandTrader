@@ -13,9 +13,10 @@ import exceptions.*;
 
 public class Store {
     private String name; // something creative
-    private ArrayList<Item> itemsToSell= new ArrayList<Item>(); // items to sell to player
-    private ArrayList<Item> itemsToBuy = new ArrayList<Item>();  // items that store will buy from player
     private Island storeIsland;
+    
+    private HashMap<String, HashMap<String, Integer>> sellCatalogue;
+    private HashMap<String, HashMap<String, Integer>> buyCatalogue;
     
     
     /* TODO
@@ -27,15 +28,15 @@ public class Store {
     // leave this in here for informal testing, can delete once we get to more formal testing. 
     public Store() {}
     
-    public Store(String name, ArrayList<Item> itemsToSell, ArrayList<Item> itemsToBuy) {
+    public Store(String name, HashMap<String, HashMap<String, Integer>> sellCatalogue, HashMap<String, HashMap<String, Integer>> buyCatalogue) {
     	this.name = name;
-    	this.itemsToSell = itemsToSell;
-    	this.itemsToBuy = itemsToBuy;
+    	this.sellCatalogue = sellCatalogue;
+    	this.buyCatalogue = buyCatalogue;
     }
   
     // #################### GENERAL STORE METHODS #####################
     	
-    public boolean sellItem(Item item, Player player) {
+    public boolean sellItem(String itemName, Player player) {
     	// sells and item to a player
     	
     	// item is an item from the item ArrayList
@@ -46,19 +47,30 @@ public class Store {
     	// to cargo hold (which may throw an error), or you could do the reverse. 
     	
     	
-    	if (!itemsToSell.contains(item)) {
-    		throw new IllegalStateException("BUG this store does not sell this item");
+    	/*
+    	 * if (!itemsToSell.contains(item)) {
+    	 * throw new IllegalStateException("BUG this store does not sell this item");
     	}
-    	if (player.getMoneyBalance() > item.getPlayerBuyPrice()) {
-    		throw new InsufficientMoneyException("You do not have enough money to buy this item");
+
+    	 */
+    	// TODO need to check that the item being sold is actaully sold by store
+    	// Get price of item in sellCatalogue, and check that player has enough money
+    	int itemPrice = sellCatalogue.get(itemName).get("price");
+    	if (player.getMoneyBalance() > itemPrice) {
+    		throw new InsufficientMoneyException("You do not have enough money to buy this item!");
     	}
+    	
+    	// Create a NEW item object, based on the catalogue
+    	Item itemToSell = new Item(itemName, sellCatalogue.get(itemName).get("spaceTaken"), itemPrice );
+    		
         // Player has cash, so attempt to add
-    	player.getShip().addItem(item); // may throw an exception, game environment should handle
-    	player.spendMoney(item.getPlayerBuyPrice());
+    	player.getShip().addItem(itemToSell); // may throw an exception, game environment should handle
+    	player.spendMoney(itemToSell.getPlayerBuyPrice());
+    	
     	return true;
     }
     
-    public boolean buyItem(Item item, Player player) {
+    public boolean buyItem(String itemName, Player player) {
     	// buys an item from a player
     	
     	// item must be an object from itemsToBuy ArrayList
@@ -69,16 +81,20 @@ public class Store {
     	 * 4. add bought item to an array
     	 */
     	
-    	// Necessary to throw below exception?
+    	/*
+    	 * // Necessary to throw below exception?
     	if (!itemsToBuy.contains(item)) {
     		throw new IllegalStateException("BUG this store does not buy this item");
     	}
+    	 */
     	
-    	Item boughtItem = player.getShip().takeItem(item.getName());
-    	player.earnMoney(item.getPlayerBuyPrice());
-    	boughtItem.setPlayerSellPrice(item.getPlayerBuyPrice());
+    	int itemPrice = buyCatalogue.get(itemName).get("price");
     	
-    	// Set island that a item was sold at
+    	Item boughtItem = player.getShip().takeItem(itemName);
+    	player.earnMoney(itemPrice);
+    	
+    	// Set island and price that a item was sold at
+    	boughtItem.setPlayerSellPrice(itemPrice);
     	boughtItem.setStoreIslandSoldAt(storeIsland);
     	
     	return true;
@@ -100,14 +116,29 @@ public class Store {
     	return result.trim();
     }
     
-    public ArrayList<Item> getItemsToBuy() {
-    	return this.itemsToBuy;
+    public static String getDisplayString(HashMap<String, HashMap<String, Integer>> catalogue) {
+    	
+    	String result = "";
+    	int i = 1;
+    	
+    	// used bellow code from online https://www.geeksforgeeks.org/traverse-through-a-hashmap-in-java/
+    	for (Map.Entry<String, HashMap<String, Integer>> mapElement : catalogue.entrySet()) {
+    		String itemName = (String) mapElement.getKey();
+    		int itemPrice = catalogue.get(itemName).get("price");
+    		result += String.format("%d. %s for %d Pirate Bucks \n", i, itemName, itemPrice);
+    		i += 1;
+    	}
+    	return result.trim();
     }
     
-    public ArrayList<Item> getItemsToSell(){
-    	return this.itemsToSell;
+    public HashMap<String, HashMap<String, Integer>> getSellCatalogue(){
+    	return this.sellCatalogue;
     }
     
+    public HashMap<String, HashMap<String, Integer>> getBuyCatalogue(){
+    	return this.buyCatalogue;
+    }
+
     public String getName() {
     	return this.name;
     }
