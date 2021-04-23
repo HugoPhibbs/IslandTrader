@@ -7,7 +7,7 @@ import exceptions.*;
 /** Represents a store
  * 
  * @author Hugo Phibbs
- * @version 20/4/2021
+ * @version 23/4/2021
  * @since 2/4/2021
  */
 
@@ -28,33 +28,41 @@ public class Store {
     // leave this in here for informal testing, can delete once we get to more formal testing. 
     public Store() {}
     
+    /** Constructor for Store Class
+     * 
+     * @param name String name of Store object to be created
+     * @param sellCatalogue HashMap<String, HashMap> of Items that the store sells
+     * @param buyCatalogue HashMap<String, HashMap> of Items that a store buys
+     */
     public Store(String name, HashMap<String, HashMap<String, Integer>> sellCatalogue, HashMap<String, HashMap<String, Integer>> buyCatalogue) {
+    	
+    	if (!CheckValidInput.nameIsValid(name)) {
+    		throw new IllegalArgumentException("Name for store must have no more than 1 consecutive white space and be between 3 and 15 characters in length!");
+    	}
     	this.name = name;
     	this.sellCatalogue = sellCatalogue;
     	this.buyCatalogue = buyCatalogue;
     }
   
     // #################### GENERAL STORE METHODS #####################
-    	
+    
+    /** Creates and sells and item to a player 
+     * 
+     * @param itemName String for the name of Item to be created
+     * @param player PLayer object to receive Item
+     * @return Boolean, if transaction was successful
+     */
     public boolean sellItem(String itemName, Player player) {
-    	// sells and item to a player
-    	
-    	// item is an item from the item ArrayList
-    	
-    	// TODO game environment needs to handle the errors thrown. 
-    	
-    	// TODO there is a conundrum here, you need to check that a player has cash first before you attempt to add it 
-    	// to cargo hold (which may throw an error), or you could do the reverse. 
-    	
-    	
-    	/*
-    	 * if (!itemsToSell.contains(item)) {
-    	 * throw new IllegalStateException("BUG this store does not sell this item");
-    	}
-
+    	/* TODO 
+    	 * game environment needs to handle the errors thrown. 
     	 */
-    	// TODO need to check that the item being sold is actaully sold by store
+    	
     	// Get price of item in sellCatalogue, and check that player has enough money
+    	
+    	if (sellCatalogue.get(itemName) == null) {
+    		throw new IllegalStateException("BUG store does not sell this item!");
+    	}
+    	
     	int itemPrice = sellCatalogue.get(itemName).get("price");
     	if (player.getMoneyBalance() > itemPrice) {
     		throw new InsufficientMoneyException("You do not have enough money to buy this item!");
@@ -70,23 +78,16 @@ public class Store {
     	return true;
     }
     
+    /** Buys an item from a Player
+     * 
+     * @param itemName String for the name of Item to be bought 
+     * @param player Player object that is selling an Item
+     * @return Boolean if transaction was successful
+     */
     public boolean buyItem(String itemName, Player player) {
-    	// buys an item from a player
-    	
-    	// item must be an object from itemsToBuy ArrayList
-    	
-    	/* 1. take item from player
-    	 * 2. then add cash to their account, based on the price of the item in store ArrayList
-    	 * 3. set sellPlayerSellPrice to bought item
-    	 * 4. add bought item to an array
-    	 */
-    	
-    	/*
-    	 * // Necessary to throw below exception?
-    	if (!itemsToBuy.contains(item)) {
-    		throw new IllegalStateException("BUG this store does not buy this item");
+    	if (buyCatalogue.get(itemName) == null) {
+    		throw new IllegalStateException("BUG store does not buy this item!");
     	}
-    	 */
     	
     	int itemPrice = buyCatalogue.get(itemName).get("price");
     	
@@ -101,6 +102,12 @@ public class Store {
     }
     
     // ##################### GETTER METHODS ########################
+    
+    /** Displays items that a store sells or buys
+     * 
+     * @param itemArrayList ArrayList with Item objects to be displayed
+     * @return String representation of itemArrayList
+     */
     public static String getDisplayString(ArrayList<Item> itemArrayList) {
     	/* Returns a string representation of everything in itemArrayList to be sold 
     	 * or bought by a store
@@ -116,6 +123,11 @@ public class Store {
     	return result.trim();
     }
     
+    /** Displays items that a store sells or buys
+     * 
+     * @param catalogue HashMap<String, HashMap> representation of the things that a store buys or sells
+     * @return String representation of catalogue
+     */
     public static String getDisplayString(HashMap<String, HashMap<String, Integer>> catalogue) {
     	
     	String result = "";
@@ -131,18 +143,35 @@ public class Store {
     	return result.trim();
     }
     
+    /** Gets the sellCatalogue for a store
+     * 
+     * @return HashMap<String, Hashmap> representation of the things that a store sells
+     */
     public HashMap<String, HashMap<String, Integer>> getSellCatalogue(){
     	return this.sellCatalogue;
     }
     
+    /** Gets the buyCatalogue for a store
+     * 
+     * @return HashMap<String, Hashmap> representation of the things that a store buys
+     */
     public HashMap<String, HashMap<String, Integer>> getBuyCatalogue(){
     	return this.buyCatalogue;
     }
+    
+    /** Gets the name of the store
+     * 
+     * @return String for the name of the store
+     */
 
     public String getName() {
     	return this.name;
     }
-  
+    
+    /** Gets the description of the store
+     * 
+     * @return String for the descritpion of the store
+     */
     public String getDescription(){
         // returns the name of store, types of items it sells (eg ship upgrades, valuables, food etc)
         // called by visitStore method bellow
@@ -151,6 +180,10 @@ public class Store {
     
     // ##################### SETTER METHODS ########################
     
+    /** Sets the Island that a store belongs to
+     * 
+     * @param island Island that a store belongs to
+     */
     public void setStoreIsland(Island island) {
     	this.storeIsland = island;
     }
