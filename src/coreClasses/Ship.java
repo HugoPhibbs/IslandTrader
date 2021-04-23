@@ -53,6 +53,7 @@ public class Ship {
     private int healthStatus = 100;
     private ArrayList<Item> items = new ArrayList<Item>();
     private ArrayList<ShipUpgrade> upgrades = new ArrayList<ShipUpgrade>();
+    private ArrayList<Item> allTimeItems = new ArrayList<Item>(); // all items ever owner, for lack of a better name
 
     /** Constructor for Ship
      *
@@ -221,8 +222,9 @@ public class Ship {
        // otherwise an Exception is thrown
    	
        if (remainingCargoCapacity >= item.getSpaceTaken()) {
-           this.items.add(item);
-           this.remainingCargoCapacity -= item.getSpaceTaken();
+           items.add(item);
+           remainingCargoCapacity -= item.getSpaceTaken();
+           allTimeItems.add(item);
            return true;
        } 
        else {
@@ -324,6 +326,10 @@ public class Ship {
    
     
     public int getDefenseCapability() {return defenseCapability;}
+    
+    public ArrayList<Item> getAllTimeItems(){
+    	return allTimeItems;
+    }
     
     // // ########################### SETTER METHODS ###########################################
     /** Sets the Ship's owner
