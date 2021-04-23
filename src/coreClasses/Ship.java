@@ -1,9 +1,6 @@
 package coreClasses;
 
-import java.util.*;
-
-
-import java.math.*;
+import java.util.*; 
 
 import exceptions.*;
 
@@ -34,7 +31,7 @@ import exceptions.*;
 
 /** Represents a ship
  * @author Hugo Phibbs
- * @version 16/4/2021
+ * @version 23/4/2021
  * @since 2/4/2021
  */
 
@@ -71,7 +68,7 @@ public class Ship {
     	
     	// Check name and crewArray are valid
     	if (!CheckValidInput.nameIsValid(name)) {
-    	    String msg1 = "Name must have no more than 1 consecutive white space and be between 3 and 15 characters in length!";
+    	    String msg1 = "Name for ship must have no more than 1 consecutive white space and be between 3 and 15 characters in length!";
     		throw new IllegalArgumentException(msg1);
     	}
     	
@@ -252,6 +249,20 @@ public class Ship {
     		}
     	} // Did not find Item, raise an Exception
     	throw new IllegalArgumentException("Item is not in player's possession");
+    }
+    
+    public String displayAllTimeItems() {
+    	String result = "All items that have been bought and their details: \n";
+    	for (Item item : allTimeItems) {
+    		result += String.format("Item %s was bought for %d", item.getName(), item.getPlayerBuyPrice());
+    		if (item.getPlayerSellPrice() == -1) {
+    			result += String.format(" and was sold for %d at %s. \n", item.getPlayerSellPrice(), item.getStoreIslandSoldAt().getIslandName());
+    		}
+    		else {
+    			result += " and has not yet been sold to a store. \n";
+    		}
+    	}
+    	return result;
     }
 
     // ########################### GETTER METHODS ###########################################
