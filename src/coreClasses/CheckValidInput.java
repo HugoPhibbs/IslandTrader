@@ -1,8 +1,5 @@
 package coreClasses;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 /** Class to check for valid input across project
  * 
  * @author Hugo Phibbs
