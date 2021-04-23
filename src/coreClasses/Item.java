@@ -7,7 +7,7 @@ public class Item{
     private int spaceTaken;
     // called playerBuyPrice and not buyPrice to avoid confusion with the perspective of the store 
     private int playerBuyPrice; // Price of Item within a store
-    private int playerSellPrice; // Price of item that a player sells back to a store
+    private int playerSellPrice = -1; // Price of item that a player sells back to a store, default value -1 if it hasnt been sold to a store yet
     
     
     // could have a variable that tracks if it is in possession of a player
@@ -15,9 +15,13 @@ public class Item{
     // and if it is sold, how much you sold it for and where it was sold.
     
     public Item(String name, int spaceTaken, int playerBuyPrice){
-    	// TODO need to check if the inputs are correct,
-    	this.name = name; // needs to be capitalised
-    	this.spaceTaken = spaceTaken; // int
+    	
+    	if (!CheckValidInput.nameIsValid(name)) {
+    		throw new IllegalArgumentException("Name for Item must have no more than 1 consecutive white space and be between 3 and 15 characters in length!");
+    	}
+    	
+    	this.name = name;
+    	this.spaceTaken = spaceTaken;
     	this.playerBuyPrice = playerBuyPrice; 
     	// calls setDescription()
     }
