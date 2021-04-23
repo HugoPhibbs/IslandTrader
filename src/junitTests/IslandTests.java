@@ -3,7 +3,7 @@
  */
 package junitTests;
 
-import gameSetupClasses.*;
+import coreClasses.*; 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
