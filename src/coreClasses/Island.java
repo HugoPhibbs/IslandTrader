@@ -21,6 +21,10 @@ public class Island {
 	 * 		  of what it's store will buy and sell. 
 	 */
 	public Island(String name, Store store, String description) {
+		
+		if (!CheckValidInput.nameIsValid(name)) {
+			throw new IllegalArgumentException("Name for Island must have no more than 1 consecutive white space and be between 3 and 15 characters in length!");
+		}
 		this.islandName = name;
 		this.islandStore = store;
 		this.description = description;
