@@ -1,4 +1,4 @@
-\package coreClasses;
+package coreClasses;
 
 /** Class to check for valid input across project
  * 
@@ -22,7 +22,7 @@ public class CheckValidInput {
 	}
 	
 	public static boolean nameIsValid(String name) {
-		/* TODO
+		/** 
 		 * Do we need to check that the string doesn't have any leading white space, or should we remove this when inputting?
 		 */
 				

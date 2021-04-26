@@ -2,28 +2,38 @@ package uiClasses;
 
 import coreClasses.*;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class CmdLineUi implements GameUi{
 	
+	private GameEnvironment gameEnvironment;
+	private Scanner scanner;
+	// Indicates whether the cmd line should finish, leave here?
+	private boolean finish = false;
 	enum PlayOptions{
 		// TODO add these
 	}
-	private GameEnvironment gameEnvironment;
-	private Scanner scanner;
 	
-	// Indicates whether the cmd line should finish, leave here?
-	private boolean finish = false;
+	public CmdLineUi() {
+		this.scanner = new Scanner(System.in);
+	}
 	
 	public void setup(GameEnvironment gameEnvironment) {
 		this.gameEnvironment = gameEnvironment;
-		// TODO implement
+		// create the player and the ship
+		// player first
+		String playerName = getName("Enter a name for your player: ");
+		int gameDuration = getDuration();
+		
 	}
 	
-	public void play() {
+	public void playGame() {
+		
 		// TODO: implement
 		// this is just another use of the takeTurn method from gameEnvironment class
 		// So it will have a 
 	}
-	
 	
 	// needs to have methods from gameEnvironment that 'twin' the method
 	// so all the methods in ge need to be turned into returning things
@@ -35,5 +45,39 @@ public class CmdLineUi implements GameUi{
 		 * 
 		 */
 		
+	}
+	
+	public void finishGame() {
+		
+	}
+	/**
+	 * 
+	 * @param message message to be printed to tell the user what the name is for.
+	 * @return 
+	 */
+	private String getName(String message) {
+		System.out.println(message);
+		while (true) {
+			String name = scanner.nextLine();
+			if (CheckValidInput.nameIsValid(name)) {
+				return name;
+			}
+			System.out.println(NAME_REQUIREMENTS);
+		}
+	}
+	
+	private int getDuration() {
+		System.out.println("Enter the days to play for (must be between 20 and 50): ");
+		while (true) {
+			try {
+				int days = scanner.nextInt();
+				if (20 <= days && days <= 50) {
+					return days;
+				}
+				System.out.println(DURATION_REQUIREMENTS);
+			} catch (InputMismatchException e) {
+				System.out.println("Invalid input. Please enter an integer.");
+			}
+		}
 	}
 }
