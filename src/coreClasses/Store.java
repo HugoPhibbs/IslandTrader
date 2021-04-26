@@ -75,6 +75,7 @@ public class Store {
         // Player has cash, so attempt to add
     	player.getShip().addItem(itemToSell); // may throw an exception, game environment should handle
     	player.spendMoney(itemToSell.getPlayerBuyPrice());
+    	player.addPurchasedItem(itemToSell);
     	
     	return true;
     }

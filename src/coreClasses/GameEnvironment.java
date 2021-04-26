@@ -24,7 +24,7 @@ import exceptions.*;
  */
 
 
-/* TODO 
+/** TODO 
  * the main thing to remember is that we want to jeeo this all modular. 
  * so all the UI should be kept to game environment
  */
