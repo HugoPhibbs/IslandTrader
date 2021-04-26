@@ -1,7 +1,5 @@
 package main;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -10,6 +8,8 @@ import coreClasses.Island;
 import coreClasses.Item;
 import coreClasses.Player;
 import coreClasses.Store;
+import uiClasses.*;
+
 
 /**
  * The entry point to the program, creates instances of the classes required 
@@ -32,12 +32,15 @@ public class main {
 		Island currentIsland = new Island("current", currStore, "arb description");
 		// Create a player
 		Player player1 = new Player("ben", 100, 30, currentIsland);
-		// Create a game environment
+		// Create an island array, required for game environment constructor
 		Island[] islands = new Island[] {currentIsland, i1, i2, i3};
-		GameEnvironment game1 = new GameEnvironment(player1, islands);
 		
-		
+		// Initiate the UI and Game Environment
+		GameUi ui;
+		// TODO: needs to be changed later to allow both UIs to work.
+		// THis is however easier for testing the command line user interface
+		ui = new CmdLineUi();
+		GameEnvironment gameEnrviron = new GameEnvironment(player1, islands, ui);
+		ui.setup(gameEnrviron);
 	}
-	
-	
 }

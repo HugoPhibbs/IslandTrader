@@ -37,10 +37,13 @@ public class GameEnvironment {
 
 	private Player player;
 	private Island[] islandArray;
+	private uiClasses.GameUi ui;
+	private Ship ship;
 	
-	public GameEnvironment(Player player, Island[] islandArray) {
+	public GameEnvironment(Player player, Island[] islandArray, uiClasses.GameUi ui) {
 		this.player = player;
 		this.islandArray = islandArray;
+		this.ui = ui;
 	}
 	
 	public Player getPlayer() {return player;}
