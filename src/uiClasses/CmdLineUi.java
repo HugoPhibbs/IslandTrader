@@ -30,7 +30,7 @@ public class CmdLineUi implements GameUi{
 		// and ship
 		Ship ship = pickShip();
 		
-		gameEnvironment.onSetupFinished();
+		gameEnvironment.onSetupFinished(player, ship);
 	}
 	
 	public void playGame() {
