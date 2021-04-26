@@ -47,9 +47,4 @@ public final class TakeInput {
 		scan.close();
 		return input;
 	}
-	
-	public static void main(String[] args) {
-		String str = inputString("enter name");
-		System.out.println(str);
-	}
 }

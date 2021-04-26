@@ -24,6 +24,12 @@ import exceptions.*;
  */
 
 
+/* TODO 
+ * the main thing to remember is that we want to jeeo this all modular. 
+ * so all the UI should be kept to game environment
+ */
+
+
 public class GameEnvironment {
 	
 	// TODO fyi where do we create a new ship? -hp
@@ -357,6 +363,8 @@ public class GameEnvironment {
 	 * Note that this is an informal test environment, when i write the proper Junit tests ill use actual varaible names and what not.
 	 * Still keep it organised tho so its readable. 5th island coming to a game near you soon.
 	 */
+	
+	// TODO migrate this entire method into the main class
 	public static void main(String[] args) {
 		Store s1 = new Store(); Store s2 = new Store(); Store s3 = new Store(); 
 		Island i1 = new Island("other 1", s1, "arb1"); 
@@ -390,5 +398,10 @@ public class GameEnvironment {
 		
 		// note from me: fyi there needs to be 5 islands
 		// game1.takeTurn();
+	}
+	
+	public void chooseShip() {
+		// TODO implement
+		
 	}
 }

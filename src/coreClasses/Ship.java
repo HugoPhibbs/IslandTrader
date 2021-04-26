@@ -134,6 +134,11 @@ public class Ship {
     }
    
     // ########################### MANAGING SHIP UPGRADES #######################################
+    
+    /* TODO move upgrade to item system. 
+     * check equals and sameness.
+     */
+   
 
     /** Adds a new upgrade to this Ship
      *
@@ -182,7 +187,7 @@ public class Ship {
     	// returns upgrade if it exists in array, otherwise throws an exception.
     	// called by Store class when ever a player wants to sell an upgrade
     	for (ShipUpgrade currUpgrade : upgrades) {
-    		if (currUpgrade.getName() == upgradeName) {
+    		if (currUpgrade.getName().equals(upgradeName)) {
     			removeUpgrade(currUpgrade);
     			return currUpgrade;
     		}

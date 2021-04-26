@@ -1,3 +1,5 @@
 /coreClasses/
-/exceptions/
-/junitTests/
+/guiClasses/
+/uiClasses/
+/cmuiClasses/
+/main/

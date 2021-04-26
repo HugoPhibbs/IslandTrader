@@ -1,4 +1,4 @@
-package coreClasses;
+\package coreClasses;
 
 /** Class to check for valid input across project
  * 

@@ -39,6 +39,7 @@ public class Store {
     	if (!CheckValidInput.nameIsValid(name)) {
     		throw new IllegalArgumentException("Name for store must have no more than 1 consecutive white space and be between 3 and 15 characters in length!");
     	}
+    	
     	this.name = name;
     	this.sellCatalogue = sellCatalogue;
     	this.buyCatalogue = buyCatalogue;
@@ -133,7 +134,9 @@ public class Store {
     	String result = "";
     	int i = 1;
     	
-    	// used bellow code from online https://www.geeksforgeeks.org/traverse-through-a-hashmap-in-java/
+    	/*
+    	 *  used bellow code from online https://www.geeksforgeeks.org/traverse-through-a-hashmap-in-java/
+    	 */
     	for (Map.Entry<String, HashMap<String, Integer>> mapElement : catalogue.entrySet()) {
     		String itemName = (String) mapElement.getKey();
     		int itemPrice = catalogue.get(itemName).get("price");
@@ -153,7 +156,7 @@ public class Store {
     
     /** Gets the buyCatalogue for a store
      * 
-     * @return HashMap<String, Hashmap> representation of the things that a store buys
+     * @return HashMap<String, HashMap<String, Integer>> representation of the things that a store buys
      */
     public HashMap<String, HashMap<String, Integer>> getBuyCatalogue(){
     	return this.buyCatalogue;
@@ -170,7 +173,7 @@ public class Store {
     
     /** Gets the description of the store
      * 
-     * @return String for the descritpion of the store
+     * @return String for the description of the store
      */
     public String getDescription(){
         // returns the name of store, types of items it sells (eg ship upgrades, valuables, food etc)
