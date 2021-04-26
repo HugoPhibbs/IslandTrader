@@ -10,6 +10,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import exceptions.*;
+import uiClasses.GameUi;
 
 /* TODO
  * how do we do message handling of errors, since they are all caught GameEnvironment, should we use
@@ -37,11 +38,10 @@ public class GameEnvironment {
 
 	private Player player;
 	private Island[] islandArray;
-	private uiClasses.GameUi ui;
+	private GameUi ui;
 	private Ship ship;
 	
-	public GameEnvironment(Player player, Island[] islandArray, uiClasses.GameUi ui) {
-		this.player = player;
+	public GameEnvironment(Island[] islandArray, uiClasses.GameUi ui) {
 		this.islandArray = islandArray;
 		this.ui = ui;
 	}
@@ -49,6 +49,15 @@ public class GameEnvironment {
 	public Player getPlayer() {return player;}
 	
 	public Island[] getIslandArray() {return islandArray;}
+	
+	public GameUi getUi() {return ui;}
+	
+	public void onSetupFinished(Player player, Ship ship) {
+		this.player = player;
+		this.ship = ship;
+		ui.playGame();
+	}
+	
 	
 	// TODO: if you enter a invalid input and an int outside the vlaid range, in sequence, prints both error messages. fix this. 
 	/**

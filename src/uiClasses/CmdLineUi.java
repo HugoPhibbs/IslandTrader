@@ -25,7 +25,12 @@ public class CmdLineUi implements GameUi{
 		// player first
 		String playerName = getName("Enter a name for your player: ");
 		int gameDuration = getDuration();
+		Island startIsland = gameEnvironment.getIslandArray()[0];
+		Player player = new Player(playerName, 100, gameDuration, startIsland);
+		// and ship
+		Ship ship = pickShip();
 		
+		gameEnvironment.onSetupFinished();
 	}
 	
 	public void playGame() {
@@ -79,5 +84,13 @@ public class CmdLineUi implements GameUi{
 				System.out.println("Invalid input. Please enter an integer.");
 			}
 		}
+	}
+	
+	/**
+	 * Displays a list of ships and their qualities, and takes input to choose which will be used.
+	 * @return myShip the ship you have chosen to use in this play through.
+	 */
+	private Ship pickShip() {
+		// TODO implement this
 	}
 }

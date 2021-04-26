@@ -18,7 +18,7 @@ import uiClasses.*;
  * @author Jordan Vegar and Hugo Phibbs
  *
  */
-public class main {
+public class Main {
 	
 	public static void main(String[] args) {
 		// Create objects required to initiate GameEnvironement
@@ -30,8 +30,6 @@ public class main {
 		// Creating current instance of Island
 		Store currStore = new Store(); 
 		Island currentIsland = new Island("current", currStore, "arb description");
-		// Create a player
-		Player player1 = new Player("ben", 100, 30, currentIsland);
 		// Create an island array, required for game environment constructor
 		Island[] islands = new Island[] {currentIsland, i1, i2, i3};
 		
@@ -40,7 +38,7 @@ public class main {
 		// TODO: needs to be changed later to allow both UIs to work.
 		// THis is however easier for testing the command line user interface
 		ui = new CmdLineUi();
-		GameEnvironment gameEnrviron = new GameEnvironment(player1, islands, ui);
+		GameEnvironment gameEnrviron = new GameEnvironment(islands, ui);
 		ui.setup(gameEnrviron);
 	}
 }
