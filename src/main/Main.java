@@ -21,6 +21,8 @@ import uiClasses.*;
 public class Main {
 	
 	public static void main(String[] args) {
+		// So we have basically moved the main method from gameEnvironment to main class
+		
 		// Create objects required to initiate GameEnvironement
 		// Create stores and island
 		Store s1 = new Store(); Store s2 = new Store(); Store s3 = new Store(); 

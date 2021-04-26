@@ -5,6 +5,12 @@ import coreClasses.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Hugo Phibbs and Jordan Vegar
+ * @version 26/4/21
+ * @since 26/4/21
+ */
 public class CmdLineUi implements GameUi{
 	
 	private GameEnvironment gameEnvironment;
@@ -47,7 +53,8 @@ public class CmdLineUi implements GameUi{
 	
 	public void visitStore() {
 		/* twin method for the visitStore method from game environment
-		 * 
+		 * is a bit special compared to the gui version, bc this actually prints out things
+		 * we will see later on down the road with how to implement the GUI!
 		 */
 		
 	}
