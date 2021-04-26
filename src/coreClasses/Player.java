@@ -17,28 +17,10 @@ public class Player {
 	private Island currentIsland;
 	private ArrayList<Item> purchasedItems;
 	
-	// DELETE LATER - constructor for testing while ship doesn't work
 	public Player(String name, int startingCash, int days, Island startingIsland) {
-		if (CheckValidInput.nameIsValid(name)) {this.name = name;} 
-		else { throw new IllegalArgumentException("Invalid name. Please enter a name with 3-15 letters, not numbers or special characters.");}
-		
-		if (CheckValidInput.durationIsValid(days)) {this.daysRemaining = days;} 
-		else { throw new IllegalArgumentException("Invalid game duration. Please enter a number of days between 20 and 50");}
-		
+		this.name = name;
 		this.moneyBalance = startingCash;
-		this.currentIsland = startingIsland;
-	}
-	
-	public Player(String name, Ship ship, int startingCash, int days, Island startingIsland) {
-		
-		if (CheckValidInput.nameIsValid(name)) {this.name = name;} 
-		else { throw new IllegalArgumentException("Invalid name. Please enter a name with 3-15 letters, not numbers or special characters.");}
-		
-		if (CheckValidInput.durationIsValid(days)) {this.daysRemaining = days;} 
-		else { throw new IllegalArgumentException("Invalid game duration. Please enter a number of days between 20 and 50");}
-		
-		this.ship = ship;
-		this.moneyBalance = startingCash;
+		this.daysRemaining = days;
 		this.currentIsland = startingIsland;
 	}
 	

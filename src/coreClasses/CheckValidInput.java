@@ -23,7 +23,7 @@ public class CheckValidInput {
 	
 	public static boolean nameIsValid(String name) {
 		/** 
-		 * Do we need to check that the string doesn't have any leading white space, or should we remove this when inputting?
+		 * TODO: Do we need to check that the string doesn't have any leading white space, or should we remove this when inputting?
 		 */
 				
 		boolean prevWhiteSpace = false;
