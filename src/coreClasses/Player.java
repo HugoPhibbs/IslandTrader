@@ -1,6 +1,7 @@
 package coreClasses;
 
 import exceptions.*;
+import java.util.ArrayList;
 
 /**
  * 
@@ -14,6 +15,7 @@ public class Player {
 	private int moneyBalance;
 	private int daysRemaining;
 	private Island currentIsland;
+	private ArrayList<Item> purchasedItems;
 	
 	// DELETE LATER - constructor for testing while ship doesn't work
 	public Player(String name, int startingCash, int days, Island startingIsland) {
@@ -50,6 +52,11 @@ public class Player {
 	
 	public Island getCurrentIsland() {return currentIsland;}
 	
+	public ArrayList<Item> getPurchasedItems() {return purchasedItems;}
+	
+	public void addPurchasedItem(Item item) {
+		purchasedItems.add(item);
+	}
 	
 	public void reduceDaysRemaining(int daysPassed) {
 		daysRemaining -= daysPassed;
