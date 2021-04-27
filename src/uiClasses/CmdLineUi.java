@@ -2,6 +2,7 @@ package uiClasses;
 
 import coreClasses.*;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -31,11 +32,11 @@ public class CmdLineUi implements GameUi{
 		String playerName = getName("Enter a name for your player: ");
 		int gameDuration = getDuration();
 		Island startIsland = gameEnvironment.getIslandArray()[0];
-		Player player = new Player(playerName, 100, gameDuration, startIsland);
+		Player player = new Player(playerName, 100);
 		// and ship
 		Ship ship = pickShip();
 		
-		gameEnvironment.onSetupFinished(player, ship);
+		gameEnvironment.onSetupFinished(player, ship, gameDuration, startIsland);
 	}
 	
 	public void playGame() {
@@ -177,7 +178,22 @@ public class CmdLineUi implements GameUi{
 	}
 	
 	private void viewOtherIslands() {
+		ArrayList<Island> otherIslands = getOtherIslandsList();
 		
+		for (Island otherIsland: otherIslands) {
+				System.out.println(otherIsland);
+		}
+		
+		String input = TakeInput.inputString("To view more information about an island, enter the name of the island.");
+		
+		for (Island island: otherIslands) {
+			if (island.getIslandName().toLowerCase() == input) {
+				String islandInfo = "The island " + island.getIslandName() + " can be reached from your current island by the following routes:\n";
+				islandInfo += gameEnvironment.getPlayer().getCurrentIsland().viewRoutes(island);  // TODO: separate view routes from choose route.
+				// TODO: add info string about what the island's store buys and sells. 
+				// TODO : restructure player
+			}
+		}
 	}
 	
 	private void travelToIsland() {
