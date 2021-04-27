@@ -40,6 +40,7 @@ public class CmdLineUi implements GameUi{
 		gameEnvironment.onSetupFinished(player, ship, gameDuration, startIsland);
 	}
 	
+	
 	public void playGame() {
 		
 		while (!finish) {

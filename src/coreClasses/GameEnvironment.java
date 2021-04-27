@@ -26,7 +26,7 @@ import uiClasses.GameUi;
 
 
 /** TODO 
- * the main thing to remember is that we want to jeeo this all modular. 
+ * the main thing to remember is that we want to keep this all modular. 
  * so all the UI should be kept to game environment
  */
 
@@ -72,73 +72,13 @@ public class GameEnvironment {
 	}
 	
 	
-	// TODO: if you enter a invalid input and an int outside the vlaid range, in sequence, prints both error messages. fix this. 
-	/**
-	 * Method that handles all calls required to take a turn in the game. Displays
-	 * the player's options, takes input as to what the player wants to do, then calls the
-	 * appropriate method.
-	 */	
-	public void takeTurn() {
-		
-		String options = "Enter an action's number:\n1: View your money and days remaining.\n2: View the propeties of your ship.\n"
-				+ "3: View the goods you have purchased.\n4: View the properties of each Island.\n"
-				+ "5: Visit the store on " + player.getCurrentIsland() + " (current island).\n6: Set sail to another Island.";
-		
-		Scanner scan = new Scanner(System.in);
-		System.out.println(options);
-		
-		int input = getActionInt(scan);
-		
-		while  {
-			System.out.println("Number entered didn't correspond with an action. Please enter a number between 1 and 6 (inlcusive).");
-			input = getActionInt(scan);
-		}
-		
-		scan.close();
-		
-		switch (input) {
-			case 1: 
-				// option to view the amount of money and days remaining
-				System.out.println(String.format("%s has $%d and %d days remaining.",
-						player.getName(), player.getMoneyBalance(), player.getDaysRemaining()));
-				takeTurn();
-				break;
-			case 2:
-				// option to view the properties of the ship
-				// calls the toString method of the player's ship.
-				System.out.println(player.getShip());
-				takeTurn();
-				break;
-			case 3:
-				// view the goods you have purchased
-				System.out.println(3);
-				break;
-			case 4:
-				// option to view properties of each island
-				viewOtherIslands();
-				break;
-			case 5:
-				// option to visit the store on the current island
-				System.out.println(5);
-				break;
-			case 6:
-				// setting sail to another island
-				System.out.println(6);
-				break;
-		}
-	}
 	
-	
-	/**
-	 * Method to handle calls to chooseOtherIsland. If an Island is returned, get Route is called.
-	 */
 	public void getIsland() {
 		// Gets a new island or goes back to take turn
 		try {
 			Island newIsland = chooseOtherIsland();
 			getRoute(newIsland);
 		} catch (GoBackException e) {
-			takeTurn();
 			return;
 		}	
 	}
@@ -151,9 +91,8 @@ public class GameEnvironment {
 	public void getRoute(Island newIsland) {
 		// Gets route to new island or goes back to reselect island
 		try {
-			Route selectedRoute = player.getCurrentIsland().chooseRoute(newIsland);
+			Route selectedRoute = currentIsland.chooseRoute(newIsland);
 		} catch (GoBackException e) {
-			takeTurn();
 			return;
 		}
 		// call Ship.setSail() once implemented
@@ -176,7 +115,7 @@ public class GameEnvironment {
 		for (Island island: otherIslands) {
 			if (island.getIslandName().toLowerCase() == input) {
 				String islandInfo = "The island " + island.getIslandName() + " can be reached from your current island by the following routes:\n";
-				islandInfo += player.getCurrentIsland().viewRoutes(island);  // TODO: separate view routes from choose route.
+				islandInfo += currentIsland.viewRoutes(island);  // TODO: separate view routes from choose route.
 				// TODO: add info string about what the island's store buys and sells. 
 			}
 		}
