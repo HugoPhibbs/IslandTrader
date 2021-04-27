@@ -67,7 +67,7 @@ public class GameEnvironment {
 	 */	
 	public void takeTurn() {
 		
-		String options = "Enter an actions number:\n1: View your money and days remaining.\n2: View the propeties of your ship.\n"
+		String options = "Enter an action's number:\n1: View your money and days remaining.\n2: View the propeties of your ship.\n"
 				+ "3: View the goods you have purchased.\n4: View the properties of each Island.\n"
 				+ "5: Visit the store on " + player.getCurrentIsland() + " (current island).\n6: Set sail to another Island.";
 		
@@ -76,7 +76,7 @@ public class GameEnvironment {
 		
 		int input = getActionInt(scan);
 		
-		while (input < 1 || input > 6) {
+		while  {
 			System.out.println("Number entered didn't correspond with an action. Please enter a number between 1 and 6 (inlcusive).");
 			input = getActionInt(scan);
 		}
@@ -118,7 +118,7 @@ public class GameEnvironment {
 	public int getActionInt(Scanner scan) {
 		// TODO rename this method, so it can be used elsewhere when ever we need to 
 		boolean successful = false;
-		while (!successful)
+		while (true) {
 			try {
 				int input = scan.nextInt();	
 				return input;
@@ -126,7 +126,7 @@ public class GameEnvironment {
 				System.out.println("Invalid input. Please enter an integer.");
 				scan = new Scanner(System.in);
 			}
-		return getActionInt(scan);
+		}
 	}
 	
 	/**

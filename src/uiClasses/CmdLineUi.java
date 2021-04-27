@@ -41,9 +41,47 @@ public class CmdLineUi implements GameUi{
 	
 	public void playGame() {
 		
-		// TODO: implement
-		// this is just another use of the takeTurn method from gameEnvironment class
-		// So it will have a 
+		while (!finish) {
+			printOptions();
+			int input = getInt(1, 6);
+			
+			
+			
+			
+			
+		}
+		
+	}
+	
+	/**
+	 * Reads user input and ensures it is an integer within a specified range. 
+	 * 
+	 * @param lowerBound - minimum acceptable number for input
+	 * @param upperBound - maximum acceptable number for input
+	 * @return input - an integer between the lower and upper bounds. 
+	 */
+	public int getInt(int lowerBound, int upperBound) {
+		boolean successful = false;
+		while (true) {
+			try {
+				int input = scanner.nextInt();
+				if (lowerBound <= input && input <= upperBound) { 
+					return input;
+				}
+				System.out.format("Please enter a number between %d and %d (inlcusive).", lowerBound, upperBound);
+				
+			} catch (InputMismatchException e) {
+				System.out.println("Invalid input. Please enter an integer.");
+			}
+		}
+	}
+	
+	
+	private void printOptions() {
+		String options = "Enter an action's number:\n(1) View your money and days remaining.\n(2) View the propeties of your ship.\n"
+				+ "(3) View the goods you have purchased.\n(4) View the properties of each Island.\n"
+				+ "(5) Visit the store on " + gameEnvironment.getPlayer().getCurrentIsland() + " (current island).\n(6) Set sail to another Island.";
+		
 	}
 	
 	// needs to have methods from gameEnvironment that 'twin' the method
