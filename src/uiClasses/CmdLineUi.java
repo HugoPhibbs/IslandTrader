@@ -87,12 +87,11 @@ public class CmdLineUi implements GameUi{
 			break;
 		case 2:
 			// option to view the properties of the ship
-			// calls the toString method of the player's ship.
-			System.out.println(player.getShip());
+			viewShipProperties();
 			break;
 		case 3:
 			// view the goods you have purchased
-			System.out.println(3);
+			viewGoodsPurchased();
 			break;
 		case 4:
 			// option to view properties of each island
@@ -100,11 +99,11 @@ public class CmdLineUi implements GameUi{
 			break;
 		case 5:
 			// option to visit the store on the current island
-			System.out.println(5);
+			visitStore();
 			break;
 		case 6:
 			// setting sail to another island
-			System.out.println(6);
+			travelToIsland();
 			break;
 	}
 	}
@@ -157,11 +156,6 @@ public class CmdLineUi implements GameUi{
 		}
 	}
 	
-	private void viewPlayerInfo(Player player) {
-		System.out.println(String.format("%s has $%d and %d days remaining.",
-				player.getName(), player.getMoneyBalance(), player.getDaysRemaining()));
-	}
-	
 	/**
 	 * Displays a list of ships and their qualities, and takes input to choose which will be used.
 	 * @return myShip the ship you have chosen to use in this play through.
@@ -169,4 +163,25 @@ public class CmdLineUi implements GameUi{
 	private Ship pickShip() {
 		// TODO implement this
 	}
+	
+	private void viewPlayerInfo(Player player) {
+		System.out.format("%s has $%d and %d days remaining.", player.getName(), player.getMoneyBalance(), player.getDaysRemaining());
+	}
+	
+	private void viewShipProperties() {
+		
+	}
+	
+	private void viewGoodsPurchased() {
+		
+	}
+	
+	private void viewOtherIslands() {
+		
+	}
+	
+	private void travelToIsland() {
+		
+	}
+	
 }
