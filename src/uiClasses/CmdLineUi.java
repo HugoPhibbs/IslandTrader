@@ -156,6 +156,7 @@ public class CmdLineUi implements GameUi{
 			} catch (InputMismatchException e) {
 				System.out.println("Invalid input. Please enter an integer.");
 			}
+			scanner.nextLine();
 		}
 	}
 	
