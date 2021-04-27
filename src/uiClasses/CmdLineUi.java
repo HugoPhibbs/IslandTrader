@@ -36,6 +36,7 @@ public class CmdLineUi implements GameUi{
 		// and ship
 		Ship ship = pickShip();
 		
+		System.out.println("Setup complete! Ready to play!");
 		gameEnvironment.onSetupFinished(player, ship, gameDuration, startIsland);
 	}
 	
@@ -53,7 +54,8 @@ public class CmdLineUi implements GameUi{
 	private void printOptions() {
 		String options = "Enter an action's number:\n(1) View your money and days remaining.\n(2) View the propeties of your ship.\n"
 				+ "(3) View the goods you have purchased.\n(4) View the properties of each Island.\n"
-				+ "(5) Visit the store on " + gameEnvironment.getPlayer().getCurrentIsland() + " (current island).\n(6) Set sail to another Island.";
+				+ "(5) Visit the store on " + gameEnvironment.getCurrentIsland() + " (current island).\n(6) Set sail to another Island.";
+		System.out.println(options);
 		
 	}
 	
@@ -163,10 +165,12 @@ public class CmdLineUi implements GameUi{
 	 */
 	private Ship pickShip() {
 		// TODO implement this
+		// Temporary implementation for testing delete once actual implementation added. 
+		return new Ship("Row Boat", 10, 10, 5, 10);
 	}
 	
 	private void viewPlayerInfo(Player player) {
-		System.out.format("%s has $%d and %d days remaining.", player.getName(), player.getMoneyBalance(), player.getDaysRemaining());
+		System.out.format("%s has $%d and %d days remaining.\n", player.getName(), player.getMoneyBalance(), gameEnvironment.getDaysRemaining());
 	}
 	
 	private void viewShipProperties() {
@@ -189,7 +193,7 @@ public class CmdLineUi implements GameUi{
 		for (Island island: otherIslands) {
 			if (island.getIslandName().toLowerCase() == input) {
 				String islandInfo = "The island " + island.getIslandName() + " can be reached from your current island by the following routes:\n";
-				islandInfo += gameEnvironment.getPlayer().getCurrentIsland().viewRoutes(island);  // TODO: separate view routes from choose route.
+				islandInfo += gameEnvironment.getCurrentIsland().viewRoutes(island);  // TODO: separate view routes from choose route.
 				// TODO: add info string about what the island's store buys and sells. 
 				// TODO : restructure player
 			}
