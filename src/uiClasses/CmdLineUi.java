@@ -15,7 +15,6 @@ public class CmdLineUi implements GameUi{
 	
 	private GameEnvironment gameEnvironment;
 	private Scanner scanner;
-	// Indicates whether the cmd line should finish, leave here?
 	private boolean finish = false;
 	enum PlayOptions{
 		// TODO add these
@@ -45,11 +44,15 @@ public class CmdLineUi implements GameUi{
 			printOptions();
 			int input = getInt(1, 6);
 			
-			
-			
-			
-			
+			handleChoice(input);
 		}
+		
+	}
+	
+	private void printOptions() {
+		String options = "Enter an action's number:\n(1) View your money and days remaining.\n(2) View the propeties of your ship.\n"
+				+ "(3) View the goods you have purchased.\n(4) View the properties of each Island.\n"
+				+ "(5) Visit the store on " + gameEnvironment.getPlayer().getCurrentIsland() + " (current island).\n(6) Set sail to another Island.";
 		
 	}
 	
@@ -76,13 +79,36 @@ public class CmdLineUi implements GameUi{
 		}
 	}
 	
-	
-	private void printOptions() {
-		String options = "Enter an action's number:\n(1) View your money and days remaining.\n(2) View the propeties of your ship.\n"
-				+ "(3) View the goods you have purchased.\n(4) View the properties of each Island.\n"
-				+ "(5) Visit the store on " + gameEnvironment.getPlayer().getCurrentIsland() + " (current island).\n(6) Set sail to another Island.";
-		
+	private void handleChoice(int input) {
+		switch (input) {
+		case 1: 
+			// option to view the amount of money and days remaining
+			viewPlayerInfo(gameEnvironment.getPlayer());
+			break;
+		case 2:
+			// option to view the properties of the ship
+			// calls the toString method of the player's ship.
+			System.out.println(player.getShip());
+			break;
+		case 3:
+			// view the goods you have purchased
+			System.out.println(3);
+			break;
+		case 4:
+			// option to view properties of each island
+			viewOtherIslands();
+			break;
+		case 5:
+			// option to visit the store on the current island
+			System.out.println(5);
+			break;
+		case 6:
+			// setting sail to another island
+			System.out.println(6);
+			break;
 	}
+	}
+
 	
 	// needs to have methods from gameEnvironment that 'twin' the method
 	// so all the methods in ge need to be turned into returning things
@@ -129,6 +155,11 @@ public class CmdLineUi implements GameUi{
 				System.out.println("Invalid input. Please enter an integer.");
 			}
 		}
+	}
+	
+	private void viewPlayerInfo(Player player) {
+		System.out.println(String.format("%s has $%d and %d days remaining.",
+				player.getName(), player.getMoneyBalance(), player.getDaysRemaining()));
 	}
 	
 	/**

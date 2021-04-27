@@ -115,19 +115,6 @@ public class GameEnvironment {
 		}
 	}
 	
-	public int getActionInt(Scanner scan) {
-		// TODO rename this method, so it can be used elsewhere when ever we need to 
-		boolean successful = false;
-		while (true) {
-			try {
-				int input = scan.nextInt();	
-				return input;
-			} catch (InputMismatchException e) {
-				System.out.println("Invalid input. Please enter an integer.");
-				scan = new Scanner(System.in);
-			}
-		}
-	}
 	
 	/**
 	 * Method to handle calls to chooseOtherIsland. If an Island is returned, get Route is called.
