@@ -3,17 +3,23 @@ package coreClasses;
 import java.util.HashMap;
 
 /**
+ * Class that models and provides information about a route between two islands.
  * 
  * @author Jordan Vegar
- * @version 1.0
  * 
- *
  */
 public class Route {
-
+	
+	// The name of this route. 
 	private String routeName;
+	
+	// The distance of this route, expressed in nautical miles. 
 	private int distance;
+	
+	// The island the route starts at.
 	private Island origin;
+	
+	// The island that the route finishes at. 
 	private Island destination;
 	
 	/**
@@ -22,8 +28,22 @@ public class Route {
 	 * indication as to the potential profitability of the route. 
 	 */
 	private String description;
+	
+	/**
+	 * A map that assigns the name of each possible RandomEvent to the probability of said
+	 * random event happening on this particular route. 
+	 */
 	private HashMap<String, Integer> eventProbabilityMap;
 	
+	/**
+	 * Creates a new route object. 
+	 * 
+	 * @param name The name of the route.
+	 * @param distance The distance of the route
+	 * @param origin The island the route starts at
+	 * @param destination The island the route ends at
+	 * @param description A description of the route. 
+	 */
 	public Route(String name, int distance, Island origin, Island destination, String description) {
 		this.routeName = name;
 		this.distance = distance;
@@ -32,12 +52,20 @@ public class Route {
 		this.description = description;
 	}
 	
+	/**
+	 * Takes probabilities (out of 100), and constructs the map that shows the probability of each RandomEvent. 
+	 * 
+	 * @param pirateProb The probability of pirates attacking on this route. 
+	 * @param weatherProb The probability of encountering bad weather on this route.
+	 * @param rescueProb The probability of coming across sailors that need rescuing on this route. 
+	 */
 	public void constructProbabilityMap(int pirateProb, int weatherProb, int rescueProb) {
 		eventProbabilityMap = new HashMap<String, Integer>();
 		eventProbabilityMap.put("Pirates", pirateProb);
 		eventProbabilityMap.put("Weather", weatherProb);
 		eventProbabilityMap.put("Rescue", rescueProb);
 	} 
+	
 	
 	public String getRouteName() {return routeName;}
 	
@@ -55,11 +83,10 @@ public class Route {
 	
 	public int getRescueProb() {return eventProbabilityMap.get("Rescue");}
 	
+	// Returns a string which gives a complete description of the route.
 	@Override
 	public String toString() {
 		return String.format("%s: Takes %d days. %s", routeName, distance, description);
 	}
-	
-	
-	
+
 }
