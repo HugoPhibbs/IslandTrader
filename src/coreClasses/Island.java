@@ -6,9 +6,16 @@ import exceptions.GoBackException;
 
 public class Island {
 	
-	private String islandName;
+	// The name of the island.
+    private String islandName;
+	// The object of Store that models the store on this island. 
 	private Store islandStore;
+	// An array of all the routes from this island to another island.
 	private Route[] routeArray;
+	/**
+	 * A brief description of the characteristics of this island, including an
+	 * indication of what the store sells and buys. 
+	 */
 	private String description;
 	
 	/**
@@ -30,6 +37,13 @@ public class Island {
 		this.description = description;
 	}
 	
+	/**
+	 * Route objects require Island objects to be created, so an islands routes are created
+	 * after the island is created. For this reason the routeArray cannot be included in the
+	 * constructor. This method initializes the variable routeArray.
+	 * 
+	 * @param routes The list of routes that routeArray is to be assigned to. 
+	 */
 	public void setRouteArray(Route[] routes) {this.routeArray = routes;}
 	
 	public Store getIslandStore() {return islandStore;}
@@ -37,8 +51,11 @@ public class Island {
 	public String getIslandName() {return islandName;}
 
 	/**
-	 * @param destination - island you want to see routes to (from the player's current island)
-	 * @return routesToDestination - ArrayList of routes from current island to destination island. 
+	 * Searches through the current island's routes to find those that go to the island the player
+	 * wishes to travel to.
+	 * 
+	 * @param destination The Island you want to see routes to (from the player's current island)
+	 * @return an ArrayList of routes from the current island to the destination island. 
 	 */
 	public ArrayList<Route> getPossibleRoutes(Island destination) {
 		
@@ -54,7 +71,8 @@ public class Island {
 
 	/**
 	 * Prints out a description of each route from the current island to the destination island.
-	 * @param destination - island you want to see routes to (from the player's current island)
+	 * 
+	 * @param destination The Island you want to see routes to (from the player's current island)
 	 */
 	public String viewRoutes(Island destination) {
 		
@@ -67,6 +85,9 @@ public class Island {
 		return routeStr;
 	}
 	
+	/**
+	 * TODO move to CmdLine UI / GameEnvironment
+	 */
 	public Route chooseRoute(Island destination) {
 		ArrayList<Route> routesToDestination = getPossibleRoutes(destination);
 		
@@ -85,8 +106,6 @@ public class Island {
 		System.out.println("Invalid Input");
 		return chooseRoute(destination);
 	}
-	
-	
 	
 	@Override
 	public String toString() {
