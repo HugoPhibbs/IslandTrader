@@ -161,7 +161,7 @@ public class GameEnvironment {
 	 * Called by takeTurn, presents the list of things the player can do in the store, takes input from the player as to 
 	 * what they would like to do, then calls the appropriate method of the current island's store.
 	 */
-	public void visitTheStore() {
+	public void visitStore() {
 		/* TODO 
 		 * implement error handling for buying and selling items
 		 */
@@ -265,18 +265,18 @@ public class GameEnvironment {
 				break;
 		    case 4:
 				// View the amount of cash that a player has
-				System.out.println(String.format("Player has a balance of: %d Pirate Bucks", player.getMoneyBalance()));
-				break;
+		    	//return player.getMoneyBalance();
+		    	break;
 		    case 5:
 		    	System.out.println("You have exited the store!");
 				// exit store
 		        return;
 		}
 		
-		visitTheStoreHelper();
+		visitStoreHelper();
 	}
 	
-	public void visitTheStoreHelper() {
+	public void visitStoreHelper() {
 		
 		System.out.println("Is that all you wanted to do at the store today? \n Enter action number:");
 		
@@ -289,15 +289,10 @@ public class GameEnvironment {
 		
 		int exitInput = getActionInt(scanner);
 		
-		while (!CheckValidInput.actionIntIsValid(exitInput, 1, 2)) {
-			System.out.println("Please enter a number between 1 and 2.");
-			exitInput = getActionInt(scanner);
-		}
-		
 		switch (exitInput) {
 		    case 1:
 		    	// View options again
-		    	visitTheStore();
+		    	visitStore();
 		    case 2:
 		    	// Exit store
 		    	return;
