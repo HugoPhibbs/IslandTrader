@@ -44,15 +44,15 @@ public class CmdLineUi implements GameUi{
 	public void playGame() {
 		
 		while (!finish) {
-			printOptions();
+			printCoreOptions();
 			int input = getInt(1, 6);
 			
-			handleChoice(input);
+			handleCoreChoice(input);
 		}
 		
 	}
 	
-	private void printOptions() {
+	private void printCoreOptions() {
 		String options = "Enter an action's number:\n(1) View your money and days remaining.\n(2) View the propeties of your ship.\n"
 				+ "(3) View the goods you have purchased.\n(4) View the properties of each Island.\n"
 				+ "(5) Visit the store on " + gameEnvironment.getCurrentIsland() + " (current island).\n(6) Set sail to another Island.";
@@ -83,7 +83,7 @@ public class CmdLineUi implements GameUi{
 		}
 	}
 	
-	private void handleChoice(int input) {
+	private void handleCoreChoice(int input) {
 		switch (input) {
 		case 1: 
 			// option to view the amount of money and days remaining
@@ -112,6 +112,7 @@ public class CmdLineUi implements GameUi{
 	}
 	}
 
+	// #################### VISITING STORE METHODS ######################## 
 	
 	// needs to have methods from gameEnvironment that 'twin' the method
 	// so all the methods in ge need to be turned into returning things
@@ -123,8 +124,41 @@ public class CmdLineUi implements GameUi{
 		 * is a bit special compared to the gui version, bc this actually prints out things
 		 * we will see later on down the road with how to implement the GUI!
 		 */
-		
+		String storeName = gameEnvironment.getCurrentIsland().getIslandStore().getName();
+		System.out.println(String.format("Welcome to %s, please read options below for interacting with this store!", storeName));
+		printStoreOptions();
+		int input = getInt(1, 5);
+		handleStoreChoice(input);
 	}
+	
+	public void printStoreOptions() {
+		String options = "Enter the action number:\n "
+				+ "1. View and buy items that the store sells. \n " 
+				+ "2. View and sell Items that the store buys. \n "
+				+ "3. View previously bought items. \n"
+				+ "4. View the amount of money that you have. \n"
+				+ "5. Exit store.";
+		System.out.println(options);
+	}
+	
+	public void handleStoreChoice(int input) {
+		switch (input) {
+		case 1:
+			//view and buy items that store sells
+			break;
+		case 2:
+			// view and sell items that a store buys 
+			break;
+		case 3:
+			// view previously bought items
+			break;
+		case 4:
+			// view the amount of money that you have
+		case 5:
+			// exit store
+		}
+	}
+	//#######################################################
 	
 	public void finishGame() {
 		
