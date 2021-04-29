@@ -182,6 +182,11 @@ public class Store {
     	return "EMPTY";
     }
     
+    public void String getNameOfChosenItem(){
+    	
+    }
+    
+    
     // ##################### SETTER METHODS ########################
     
     /** Sets the Island that a store belongs to
