@@ -3,6 +3,7 @@ package uiClasses;
 import coreClasses.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -145,20 +146,52 @@ public class CmdLineUi implements GameUi{
 		switch (input) {
 		case 1:
 			//view and buy items that store sells
+			HashMap<String, HashMap<String, Integer>> sellCatalogue = gameEnvironment.getCurrentIsland().getIslandStore().getSellCatalogue();
+			System.out.println("Enter the number corresponding to the Item that you want to buy!");
+			String displayString = Store.getDisplayString(sellCatalogue);
+	    	System.out.println(displayString);
+	    	
+	    	int itemToSellNum = getInt(1, sellCatalogue.size());
+	    	
+	    	// HOW TO SELL ITEMS?
+			exitStore();
 			break;
 		case 2:
 			// view and sell items that a store buys 
+			exitStore();
 			break;
 		case 3:
 			// view previously bought items
+			exitStore();
 			break;
 		case 4:
 			// view the amount of money that you have
+			System.out.println(gameEnvironment.getPlayer().getMoneyBalance());
+			exitStore();
+			break;
 		case 5:
+			System.out.println("You have exited the store!");
 			// exit store
+			return;
 		}
 	}
-	//#######################################################
+	
+	public void exitStore() {
+		System.out.println("Is that all you wanted to do at this store today? \n Please enter action number:");
+		
+		String exitOptions = "1. Do more actions with the store. \n"
+				+ "2. Exit Store.";
+		System.out.println(exitOptions);
+		int input = getInt(1, 2);
+		
+		switch(input) {
+		case 1:
+			visitStore();
+		case 2:
+			return;
+		}
+	}
+	// #####################################################################
 	
 	public void finishGame() {
 		
