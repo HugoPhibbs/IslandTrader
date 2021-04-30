@@ -197,7 +197,6 @@ public class GameEnvironment {
 		    	System.out.println("Enter the number corresponding to the Item that you want to buy!");
 		    	String sellDisplayString = Store.getDisplayString(sellCatalogue);
 		    	System.out.println(sellDisplayString);
-		    
 		    	
 		    	// number for chosen item
 		    	int itemToSellNum= getActionInt(scanner);
@@ -213,6 +212,8 @@ public class GameEnvironment {
 		    	String itemOnSaleName = (String) Array.get(splitLine1.split(" "), 1); // get name
 
 		    	// Try to sell item from store to player (may throw exception)
+		    	
+		    	// TODO where to implement exception handling????
 		    	try {
 		    		currentStore.sellItem(itemOnSaleName, player);
 		    	}
