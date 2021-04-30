@@ -133,13 +133,12 @@ public class CmdLineUi implements GameUi{
 	}
 	
 	public void printStoreOptions() {
-		String options = "Enter the action number:\n "
-				+ "1. View and buy items that the store sells. \n " 
-				+ "2. View and sell Items that the store buys. \n "
-				+ "3. View previously bought items. \n"
-				+ "4. View the amount of money that you have. \n"
-				+ "5. Exit store.";
-		System.out.println(options);
+		String[] optionsArray = Store.getVisitOptions();
+		System.out.println("Please enter an action number corresponding to the action that you want to do!"); //header
+		for (int i = 0; i < optionsArray.length; i++) {
+			//TODO how to change an int into a string?
+			System.out.println((i+1).toString() + optionsArray[i]);
+		}
 	}
 	
 	public void handleStoreChoice(int input) {
@@ -148,10 +147,13 @@ public class CmdLineUi implements GameUi{
 			//view and buy items that store sells
 			HashMap<String, HashMap<String, Integer>> sellCatalogue = gameEnvironment.getCurrentIsland().getIslandStore().getSellCatalogue();
 			System.out.println("Enter the number corresponding to the Item that you want to buy!");
-			String displayString = Store.getDisplayString(sellCatalogue);
-	    	System.out.println(displayString);
+			ArrayList<String> displayArrayList = Store.getDisplayArrayList(sellCatalogue);
+	    	for (int i = 0; i < displayArrayList.size(); i++) {
+	    		System.out.println(i.toString() + displayArrayList.get(i));
+	    	}
 	    	
 	    	int itemToSellNum = getInt(1, sellCatalogue.size());
+	    	String itemToSellName = Store.getChosenItemName(displayArrayList, itemToSellNum);
 	    	
 	    	// HOW TO SELL ITEMS?
 			exitStore();
@@ -179,6 +181,8 @@ public class CmdLineUi implements GameUi{
 	public void exitStore() {
 		System.out.println("Is that all you wanted to do at this store today? \n Please enter action number:");
 		
+		// TODO should we use the same system with the visiting options as with exiting options, although it may be overkill
+		// just because it really doesnt save that much code reuse for only 2 options!
 		String exitOptions = "1. Do more actions with the store. \n"
 				+ "2. Exit Store.";
 		System.out.println(exitOptions);
