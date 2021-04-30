@@ -1,5 +1,6 @@
 package coreClasses;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import exceptions.*;
@@ -147,6 +148,17 @@ public class Store {
     	return result.trim();
     }
     
+    public static ArrayList<String> getDisplayArrayList(HashMap<String, HashMap<String, Integer>> catalogue){
+    	ArrayList<String> displayArrayList = new ArrayList<String>();
+    	
+    	for (Map.Entry<String, HashMap<String, Integer>> mapElement : catalogue.entrySet()) {
+    		String itemName = (String) mapElement.getKey();
+    		int itemPrice = catalogue.get(itemName).get("price");
+    		displayArrayList.add(String.format("%s for %d Pirate Bucks", itemName, itemPrice));
+        }
+    	return displayArrayList;
+    }
+    
     /** Gets the sellCatalogue for a store
      * 
      * @return HashMap<String, Hashmap> representation of the things that a store sells
@@ -182,8 +194,20 @@ public class Store {
     	return "EMPTY";
     }
     
-    public void String getNameOfChosenItem(){
-    	
+    public static String [] getVisitOptions() {
+    	String[] optionsArray = 
+    		    {" View and buy items that the store sells." 
+				," View and sell Items that the store buys."
+				," View previously bought items."
+				," View the amount of money that you have."
+				," Exit store."};
+    	return optionsArray;
+    }
+    
+    public static String getChosenItemName(ArrayList<String> displayArrayList, int chosenItemNum) {
+    	// gets the name of a chosen, as in implemented code from game environment, just nice to have here
+    	// display ArrayList must have form {"itemName for ..."}, key thing being itemName is in first position
+    	return (String) Array.get(displayArrayList.get(chosenItemNum-1).split(" "), 0);
     }
     
     
@@ -196,4 +220,5 @@ public class Store {
     public void setStoreIsland(Island island) {
     	this.storeIsland = island;
     }
+    
 }
