@@ -132,12 +132,19 @@ public class CmdLineUi implements GameUi{
 		handleStoreChoice(input);
 	}
 	
+	public void printArrayOptions(String[] optionsArray) {
+		System.out.println("Please enter an action number corresponding to the action that you want to do!"); //header
+		for (int i = 0; i < optionsArray.length; i++) {
+			System.out.format("(%d) %f\n", (i+1), optionsArray[i]);
+		}
+	}
+	
 	public void printStoreOptions() {
 		String[] optionsArray = Store.getVisitOptions();
 		System.out.println("Please enter an action number corresponding to the action that you want to do!"); //header
 		for (int i = 0; i < optionsArray.length; i++) {
 			//TODO how to change an int into a string?
-			System.out.println((i+1).toString() + optionsArray[i]);
+			System.out.println((String.valueOf(i+1)) + optionsArray[i]);
 		}
 	}
 	
@@ -255,7 +262,7 @@ public class CmdLineUi implements GameUi{
 	}
 	
 	private void viewOtherIslands() {
-		ArrayList<Island> otherIslands = getOtherIslandsList();
+		ArrayList<Island> otherIslands = gameEnvironment.getOtherIslandsList();
 		
 		for (Island otherIsland: otherIslands) {
 				System.out.println(otherIsland);
