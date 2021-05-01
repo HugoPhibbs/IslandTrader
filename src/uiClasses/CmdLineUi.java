@@ -134,9 +134,9 @@ public class CmdLineUi implements GameUi{
 	public void printArrayOptions(String[] optionsArray, String message) {
 		System.out.println(message); //header
 		for (int i = 0; i < optionsArray.length; i++) {
-			System.out.format("(%d) %f\n", (i+1), optionsArray[i]);
+			System.out.format("(%d) %s\n", (i+1), optionsArray[i]);
 		}
-		System.out.format("(%d) %f\n", (optionsArray.length+1), "Go back");
+		System.out.format("(%d) %s\n", (optionsArray.length+1), "Go back");
 	}
 	
 	public void printStoreOptions() {
@@ -262,16 +262,22 @@ public class CmdLineUi implements GameUi{
 	}
 	
 	private void viewOtherIslands() {
+		
 		Island[] otherIslands = gameEnvironment.getOtherIslands();
 		
-		System.out.println("To view more information about an island, enter the number of the island.");
-		printIslands(otherIslands);
-		int input = getInt(1, otherIslands.length+1);
-		System.out.println(input);
-		if (input == otherIslands.length) {
-			return;
+		while (true) {
+			System.out.println("To view more information about an island, enter the number of the island.");
+			printIslands(otherIslands);
+			int islandInput = getInt(1, otherIslands.length+1);
+			
+			// if islandInput was to go back
+			if (islandInput == otherIslands.length+1) {
+				return;
+			}
+			else {
+				viewIslandDetails(otherIslands, islandInput);
+			}
 		}
-		System.out.println(otherIslands[input-1].getFullInfo());
 	}
 	
 	/**
@@ -285,9 +291,25 @@ public class CmdLineUi implements GameUi{
 		System.out.format("(%d) %s\n", (islands.length+1), "Go back");
 	}
 	
+	public void viewIslandDetails(Island[] otherIslands, int islandInput) {
+		// print full info of selected island
+		System.out.println(otherIslands[islandInput-1].getFullInfo());
+		
+		String[] proceedOptions = new String[] {"Travel to this island"};
+		printArrayOptions(proceedOptions, "Enter the number of the action you wish to take.");
+		int proceedInput = getInt(1, otherIslands.length+1);
+		// if input was to go back
+		if (proceedInput == otherIslands.length) {
+			return;
+		}
+		else {
+			travelToIsland(); // will probably change this to call a helper of travelToisland()
+		}
+	}
+	
 	
 	private void travelToIsland() {
-		
+		System.out.println("Travelling to another isalnd");
 	}
 	
 }

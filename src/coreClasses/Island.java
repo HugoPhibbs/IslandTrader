@@ -112,7 +112,7 @@ public class Island {
 		// add method to view route info
 		// add string of items that the store sells
 		// add string of itmes that the store buys
-		fullInfo += "This is the full info string" 	// line only for testing, delete once mehtd fully implemented.
+		fullInfo += "This is the full info string"; 	// line only for testing, delete once mehtd fully implemented.
 		return fullInfo;
 	}
 	
