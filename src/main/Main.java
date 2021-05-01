@@ -26,9 +26,9 @@ public class Main {
 		// Create objects required to initiate GameEnvironement
 		// Create stores and island
 		Store s1 = new Store(); Store s2 = new Store(); Store s3 = new Store(); 
-		Island i1 = new Island("other one", s1, "arb1"); 
-		Island i2 = new Island("other two", s2, "arb2"); 
-		Island i3 = new Island("other three", s3, "arb3"); 
+		Island i1 = new Island("otherOne", s1, "arb1"); 
+		Island i2 = new Island("otherTwo", s2, "arb2"); 
+		Island i3 = new Island("otherThree", s3, "arb3"); 
 		// Creating current instance of Island
 		Store currStore = new Store(); 
 		Island currentIsland = new Island("current", currStore, "arb description");

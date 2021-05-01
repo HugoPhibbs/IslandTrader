@@ -50,7 +50,6 @@ public class CmdLineUi implements GameUi{
 			
 			handleCoreChoice(input);
 		}
-		
 	}
 	
 	private void printCoreOptions() {
@@ -132,11 +131,12 @@ public class CmdLineUi implements GameUi{
 		handleStoreChoice(input);
 	}
 	
-	public void printArrayOptions(String[] optionsArray) {
-		System.out.println("Please enter an action number corresponding to the action that you want to do!"); //header
+	public void printArrayOptions(String[] optionsArray, String message) {
+		System.out.println(message); //header
 		for (int i = 0; i < optionsArray.length; i++) {
 			System.out.format("(%d) %f\n", (i+1), optionsArray[i]);
 		}
+		System.out.format("(%d) %f\n", (optionsArray.length+1), "Go back");
 	}
 	
 	public void printStoreOptions() {
@@ -262,23 +262,29 @@ public class CmdLineUi implements GameUi{
 	}
 	
 	private void viewOtherIslands() {
-		ArrayList<Island> otherIslands = gameEnvironment.getOtherIslandsList();
+		Island[] otherIslands = gameEnvironment.getOtherIslands();
 		
-		for (Island otherIsland: otherIslands) {
-				System.out.println(otherIsland);
+		System.out.println("To view more information about an island, enter the number of the island.");
+		printIslands(otherIslands);
+		int input = getInt(1, otherIslands.length+1);
+		System.out.println(input);
+		if (input == otherIslands.length) {
+			return;
 		}
-		
-		String input = TakeInput.inputString("To view more information about an island, enter the name of the island.");
-		
-		for (Island island: otherIslands) {
-			if (island.getIslandName().toLowerCase() == input) {
-				String islandInfo = "The island " + island.getIslandName() + " can be reached from your current island by the following routes:\n";
-				islandInfo += gameEnvironment.getCurrentIsland().viewRoutes(island);  // TODO: separate view routes from choose route.
-				// TODO: add info string about what the island's store buys and sells. 
-				// TODO : restructure player
-			}
-		}
+		System.out.println(otherIslands[input-1].getFullInfo());
 	}
+	
+	/**
+	 * Prints the name and a brief description of each island in the list given. 
+	 * @param islands list of islands that can be traveled to.
+	 */
+	public void printIslands(Island[] islands) {
+		for (int i = 0; i < islands.length; i++) {
+			System.out.format("(%d) %s\n", i+1, islands[i].toString());
+		}
+		System.out.format("(%d) %s\n", (islands.length+1), "Go back");
+	}
+	
 	
 	private void travelToIsland() {
 		

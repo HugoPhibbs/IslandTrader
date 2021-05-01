@@ -121,11 +121,13 @@ public class GameEnvironment {
 		}
 	}
 	
-	public ArrayList<Island> getOtherIslandsList() {
-		ArrayList<Island> otherIslands = new ArrayList<Island>();
+	public Island[] getOtherIslands() {
+		Island[] otherIslands =  new Island[islandArray.length-1];
+		int i =0;
 		for (Island island: islandArray) {
-			if (island != player.getCurrentIsland()) {
-				otherIslands.add(island);
+			if (island != currentIsland) {
+				otherIslands[i] = island;
+				i++;
 			}
 		}
 		return otherIslands;

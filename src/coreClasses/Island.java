@@ -107,6 +107,15 @@ public class Island {
 		return chooseRoute(destination);
 	}
 	
+	public String getFullInfo() {
+		String fullInfo = toString() + "\n";
+		// add method to view route info
+		// add string of items that the store sells
+		// add string of itmes that the store buys
+		fullInfo += "This is the full info string" 	// line only for testing, delete once mehtd fully implemented.
+		return fullInfo;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("%s: %s", islandName, description);
