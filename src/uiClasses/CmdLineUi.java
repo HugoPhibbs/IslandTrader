@@ -309,7 +309,10 @@ public class CmdLineUi implements GameUi{
 		}
 	}
 	
-	
+	/**
+	 * Makes the necessary calls and takes input to choose an island to travel to, before calling chooseRoute
+	 * so that the player can choose a route to the island they selected. 
+	 */
 	private void travelToIsland() {
 		while(true) {
 			Island[] otherIslands = gameEnvironment.getOtherIslands();
@@ -323,23 +326,29 @@ public class CmdLineUi implements GameUi{
 				return;
 			}
 			Island destinationIsland = otherIslands[islandInput-1];
-			chooseRoute(destinationIsland, otherIslands);
+			chooseRoute(destinationIsland);
 		}
 	}
 	
-	private void chooseRoute(Island island, Island[] otherIslands) {
+	/**
+	 * Allows the user to see the routes to the island they have chosen (and info about each) and pick
+	 * one to travel along. It then checks the player has enough money to do the necessary action before
+	 * sailing along the chosen route, and calls set sail to travel along the route.
+	 * 
+	 * @param island The island the player wants to travel to. 
+	 */
+	private void chooseRoute(Island island) {
 		ArrayList<Route> routes = gameEnvironment.getCurrentIsland().getPossibleRoutes(island);
 		
 		System.out.println("Enter a number to choose a route to travel along.");
 		printRoutes(island, routes);
-		int routeInput = getInt(1, otherIslands.length+1);
+		int routeInput = getInt(1, routes.size()+1);
 		// if input was to go back
-		if (routeInput == otherIslands.length) {
+		if (routeInput == routes.size()+1) {
 			return;
 		}
 		else {
 			Route chosenRoute = routes.get(routeInput-1);
-			System.out.println(chosenRoute);
 			// Check you have enough money to repair ship and pay wages
 			if (gameEnvironment.getPlayer().getMoneyBalance() <= gameEnvironment.getCost(chosenRoute)) {
 				System.out.println("Not enough money to repair your ship and pay your crew wages for this Route.\n"

@@ -86,6 +86,13 @@ public class Island {
 		return routeStr;
 	}
 	
+	/**
+	 * Creates a detailed description of this island, including info about the routes to it 
+	 * (from current island) and a list of items the store buys and sells.
+	 *  
+	 * @param routes A list of routes from the player's current island to this island.
+	 * @return fullInfo A string giving a detailed description of this island.
+	 */
 	public String getFullInfo(ArrayList<Route> routes) {
 		String fullInfo = String.format("About %s: %s\n", getIslandName(), getDescription());
 		fullInfo += viewRoutes(routes);
