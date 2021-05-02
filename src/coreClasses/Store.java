@@ -106,50 +106,12 @@ public class Store {
     
     // ##################### GETTER METHODS ########################
     
-    /** Displays items that a store sells or buys
-     * 
-     * @param itemArrayList ArrayList with Item objects to be displayed
-     * @return String representation of itemArrayList
-     */
-    public static String getDisplayString(ArrayList<Item> itemArrayList) {
-    	/* Returns a string representation of everything in itemArrayList to be sold 
-    	 * or bought by a store
-    	 */
-    	String result = "";
-    	
-    	for (int i = 0; i < itemArrayList.size(); i++) {
-    		Item currItem = itemArrayList.get(i);
-    		result += String.format("%d. %s for %d Pirate Bucks \n", i+1, currItem.getName(), currItem.getPlayerBuyPrice());
-    	}
-    	
-    	// return result string without the trailing white space
-    	return result.trim();
-    }
-    
-    /** Displays items that a store sells or buys
-     * 
-     * @param catalogue HashMap<String, HashMap> representation of the things that a store buys or sells
-     * @return String representation of catalogue
-     */
-    public static String getDisplayString(HashMap<String, HashMap<String, Integer>> catalogue) {
-    	
-    	String result = "";
-    	int i = 1;
+    public static ArrayList<String> getDisplayArrayList(HashMap<String, HashMap<String, Integer>> catalogue){
+    	ArrayList<String> displayArrayList = new ArrayList<String>();
     	
     	/*
     	 *  used bellow code from online https://www.geeksforgeeks.org/traverse-through-a-hashmap-in-java/
     	 */
-    	for (Map.Entry<String, HashMap<String, Integer>> mapElement : catalogue.entrySet()) {
-    		String itemName = (String) mapElement.getKey();
-    		int itemPrice = catalogue.get(itemName).get("price");
-    		result += String.format("%d. %s for %d Pirate Bucks \n", i, itemName, itemPrice);
-    		i += 1;
-    	}
-    	return result.trim();
-    }
-    
-    public static ArrayList<String> getDisplayArrayList(HashMap<String, HashMap<String, Integer>> catalogue){
-    	ArrayList<String> displayArrayList = new ArrayList<String>();
     	
     	for (Map.Entry<String, HashMap<String, Integer>> mapElement : catalogue.entrySet()) {
     		String itemName = (String) mapElement.getKey();
