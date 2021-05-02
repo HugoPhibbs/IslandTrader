@@ -67,7 +67,7 @@ public class CmdLineUi implements GameUi{
 	 * @param upperBound - maximum acceptable number for input
 	 * @return input - an integer between the lower and upper bounds. 
 	 */
-	public int getInt(int lowerBound, int upperBound) {
+	private int getInt(int lowerBound, int upperBound) {
 		boolean successful = false;
 		while (true) {
 			try {
@@ -119,7 +119,7 @@ public class CmdLineUi implements GameUi{
 	
 	// so for a visitStore method in main it would basically be printing things that are outputted from the visitStore method in gameEnvirionemt
 	
-	public void visitStore() {
+	private void visitStore() {
 		/* twin method for the visitStore method from game environment
 		 * is a bit special compared to the gui version, bc this actually prints out things
 		 * we will see later on down the road with how to implement the GUI!
@@ -131,7 +131,7 @@ public class CmdLineUi implements GameUi{
 		handleStoreChoice(input);
 	}
 	
-	public void printArrayOptions(String[] optionsArray, String message) {
+	private void printArrayOptions(String[] optionsArray, String message) {
 		System.out.println(message); //header
 		for (int i = 0; i < optionsArray.length; i++) {
 			System.out.format("(%d) %s\n", (i+1), optionsArray[i]);
@@ -139,7 +139,7 @@ public class CmdLineUi implements GameUi{
 		System.out.format("(%d) %s\n", (optionsArray.length+1), "Go back");
 	}
 	
-	public void printStoreOptions() {
+	private void printStoreOptions() {
 		String[] optionsArray = Store.getVisitOptions();
 		System.out.println("Please enter an action number corresponding to the action that you want to do!"); //header
 		for (int i = 0; i < optionsArray.length; i++) {
@@ -148,7 +148,7 @@ public class CmdLineUi implements GameUi{
 		}
 	}
 	
-	public void handleStoreChoice(int input) {
+	private void handleStoreChoice(int input) {
 		switch (input) {
 		case 1:
 			//view and buy items that store sells
@@ -185,7 +185,7 @@ public class CmdLineUi implements GameUi{
 		}
 	}
 	
-	public void exitStore() {
+	private void exitStore() {
 		System.out.println("Is that all you wanted to do at this store today? \n Please enter action number:");
 		
 		// TODO should we use the same system with the visiting options as with exiting options, although it may be overkill
@@ -284,14 +284,14 @@ public class CmdLineUi implements GameUi{
 	 * Prints the name and a brief description of each island in the list given. 
 	 * @param islands list of islands that can be traveled to.
 	 */
-	public void printIslands(Island[] islands) {
+	private void printIslands(Island[] islands) {
 		for (int i = 0; i < islands.length; i++) {
 			System.out.format("(%d) %s\n", i+1, islands[i].toString());
 		}
 		System.out.format("(%d) %s\n", (islands.length+1), "Go back");
 	}
 	
-	public void viewIslandDetails(Island[] otherIslands, int islandInput) {
+	private void viewIslandDetails(Island[] otherIslands, int islandInput) {
 		// print full info of selected island
 		System.out.println(otherIslands[islandInput-1].getFullInfo());
 		
@@ -348,7 +348,7 @@ public class CmdLineUi implements GameUi{
 		}
 	}
 	
-	public void printRoutes(Island island, ArrayList<Route> routes) {
+	private void printRoutes(Island island, ArrayList<Route> routes) {
 		for (int i = 0; i < routes.size(); i++) {
 			System.out.format("(%d) %s\n", i+1, routes.get(i).toString());
 		}
