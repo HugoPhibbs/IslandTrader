@@ -1,6 +1,7 @@
 package coreClasses;
 
 import java.lang.reflect.Array;
+
 import java.util.*;
 
 import exceptions.*;
@@ -106,7 +107,12 @@ public class Store {
     
     // ##################### GETTER METHODS ########################
     
-    public static ArrayList<String> getDisplayArrayList(HashMap<String, HashMap<String, Integer>> catalogue){
+    /** Convertx a sell or buy catalogue into an an Array List that can be easily displayed
+     * 
+     * @param catalogue Catalogue to be parsed into a displayArrayList
+     * @return ArrayList for what you can buy or sell from a store
+     */
+    public static ArrayList<String> catalogueToArrayList(HashMap<String, HashMap<String, Integer>> catalogue){
     	ArrayList<String> displayArrayList = new ArrayList<String>();
     	
     	/*
@@ -141,7 +147,6 @@ public class Store {
      * 
      * @return String for the name of the store
      */
-
     public String getName() {
     	return this.name;
     }
@@ -156,6 +161,10 @@ public class Store {
     	return "EMPTY";
     }
     
+    /** Gets the visit options for a store, used by ui
+     * 
+     * @return ArrayList for the options for visiting a store
+     */
     public static String [] getVisitOptions() {
     	String[] optionsArray = 
     		    {" View and buy items that the store sells." 
@@ -166,9 +175,17 @@ public class Store {
     	return optionsArray;
     }
     
+    /** Gets the name of a chosen item to be sold or bought
+     * 
+     * @param displayArrayList ArrayList that details items that can be sold or bought
+     * @param chosenItemNum ItemNum action int chosen by cmd line ui of chosen item
+     * @return
+     */
     public static String getChosenItemName(ArrayList<String> displayArrayList, int chosenItemNum) {
     	// gets the name of a chosen, as in implemented code from game environment, just nice to have here
     	// display ArrayList must have form {"itemName for ..."}, key thing being itemName is in first position
+    	
+    	// TODO, needs to work with gui
     	return (String) Array.get(displayArrayList.get(chosenItemNum-1).split(" "), 0);
     }
     
