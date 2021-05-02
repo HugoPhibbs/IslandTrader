@@ -15,7 +15,7 @@ public class Player {
 	// The current amount of Pirate Bucks the player has. 
 	private int moneyBalance;
 	// A list of all items the player has purchased during the game, including those onsold. 
-	private ArrayList<Item> purchasedItems;
+	private ArrayList<Item> purchasedItems = new ArrayList<Item>();
 	
 	/**
 	 * Constructor method
@@ -34,6 +34,19 @@ public class Player {
 	
 	public ArrayList<Item> getPurchasedItems() {return purchasedItems;}
 	
+    public String purchasedItemsToString() {
+    	String result = "All items that have been bought and their details: \n";
+    	for (Item item : purchasedItems) {
+    		result += String.format("Item %s was bought for %d", item.getName(), item.getPlayerBuyPrice());
+    		if (item.getPlayerSellPrice() == -1) {
+    			result += String.format(" and was sold for %d at %s. \n", item.getPlayerSellPrice(), item.getStoreIslandSoldAt().getIslandName());
+    		}
+    		else {
+    			result += " and has not yet been sold to a store. \n";
+    		}
+    	}
+    	return result;
+    }
 	/**
 	 * Adds an item the player has purchased to purchasedItems.
 	 * 
