@@ -14,7 +14,7 @@ import java.util.Scanner;
  * @version 26/4/21
  * @since 26/4/21
  */
-public class CmdLineUi implements GameUi{
+public class CmdLineUi implements GameUi {
 	
 	private GameEnvironment gameEnvironment;
 	private Scanner scanner;
