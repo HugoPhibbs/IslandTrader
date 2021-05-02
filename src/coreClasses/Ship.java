@@ -50,7 +50,6 @@ public class Ship {
     private int healthStatus = 100;
     private ArrayList<Item> items = new ArrayList<Item>();
     private ArrayList<ShipUpgrade> upgrades = new ArrayList<ShipUpgrade>();
-    private ArrayList<Item> allTimeItems = new ArrayList<Item>(); // all items ever owner, for lack of a better name
 
     /** Constructor for Ship
      *
@@ -226,7 +225,6 @@ public class Ship {
        if (remainingCargoCapacity >= item.getSpaceTaken()) {
            items.add(item);
            remainingCargoCapacity -= item.getSpaceTaken();
-           allTimeItems.add(item);
            return true;
        } 
        else {
@@ -256,20 +254,6 @@ public class Ship {
     	throw new IllegalArgumentException("Item is not in player's possession");
     }
     
-    public String displayAllTimeItems() {
-    	String result = "All items that have been bought and their details: \n";
-    	for (Item item : allTimeItems) {
-    		result += String.format("Item %s was bought for %d", item.getName(), item.getPlayerBuyPrice());
-    		if (item.getPlayerSellPrice() == -1) {
-    			result += String.format(" and was sold for %d at %s. \n", item.getPlayerSellPrice(), item.getStoreIslandSoldAt().getIslandName());
-    		}
-    		else {
-    			result += " and has not yet been sold to a store. \n";
-    		}
-    	}
-    	return result;
-    }
-
     // ########################### GETTER METHODS ###########################################
     
     // TODO Do we need to include getter methods for things that we dont need to get? 
@@ -343,9 +327,6 @@ public class Ship {
     
     public int getDefenseCapability() {return defenseCapability;}
     
-    public ArrayList<Item> getAllTimeItems(){
-    	return allTimeItems;
-    }
     
     // // ########################### SETTER METHODS ###########################################
     /** Sets the Ship's owner
