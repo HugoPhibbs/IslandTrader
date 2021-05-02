@@ -5,14 +5,13 @@ public class Pirates {
     private String description;
     private int goodDemand;
 
-    public static void getDescription(){
+    public static String getDescription(){
         // something like "Pirates, roll the die to play your chances!"
+    	return "You have encountered pirates, roll the die to play your chances!";
     }
 
     public static void attackShip(Ship ship) {
-        // attacks ship based on the roll of the die
-        // ship upgrades increase chances agaisnt pirates
-        // except we need a way to measure the defense capabilities of a ship
+    	
     }
 
     private void takeGoods(Ship ship){
