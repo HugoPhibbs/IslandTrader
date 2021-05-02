@@ -337,7 +337,14 @@ public class CmdLineUi implements GameUi{
 		else {
 			Route chosenRoute = routes.get(routeInput-1);
 			System.out.println(chosenRoute);
-			chosenRoute.getCost();
+			// Check you have enough money to repair ship and pay wages
+			if (gameEnvironment.getPlayer().getMoneyBalance() <= gameEnvironment.getCost(chosenRoute)) {
+				System.out.println("Not enough money to repair your ship and pay your crew wages for this Route.\n"
+						+ "Please sell some items or choose a shorter route.");
+				return;
+			}
+			gameEnvironment.getShip().setSail(chosenRoute, gameEnvironment);
+			System.out.println("Sail complete.");
 		}
 	}
 	
@@ -347,7 +354,6 @@ public class CmdLineUi implements GameUi{
 		}
 		System.out.format("(%d) %s\n", (routes.size()+1), "Go back");
 	}
-	
 }
 
 
