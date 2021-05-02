@@ -26,6 +26,10 @@ public class CmdLineUi implements GameUi{
 		this.scanner = new Scanner(System.in);
 	}
 	
+	/**
+	 * Gets the input required to create the player and ship objects, then passes them to gameEnvironment
+	 * to complete its setup. 
+	 */
 	public void setup(GameEnvironment gameEnvironment) {
 		this.gameEnvironment = gameEnvironment;
 		// create the player and the ship
@@ -41,7 +45,10 @@ public class CmdLineUi implements GameUi{
 		gameEnvironment.onSetupFinished(player, ship, gameDuration, startIsland);
 	}
 	
-	
+	/**
+	 * While the game has not been finished, playGame calls methods to print the actions available
+	 * to the player, take input from the player and handles that input to perform actions.
+	 */
 	public void playGame() {
 		
 		while (!finish) {
@@ -52,6 +59,9 @@ public class CmdLineUi implements GameUi{
 		}
 	}
 	
+	/**
+	 * Prints a list of the actions available to the player. 
+	 */
 	private void printCoreOptions() {
 		String options = "Enter an action's number:\n(1) View your money and days remaining.\n(2) View the propeties of your ship.\n"
 				+ "(3) View the goods you have purchased.\n(4) View the properties of each Island.\n"
@@ -83,11 +93,15 @@ public class CmdLineUi implements GameUi{
 		}
 	}
 	
+	/**
+	 * Based on the players input, calls the appropriate method to execute the action they have selected.
+	 * @param input a valid integer that corresponds with an action available to the player.
+	 */
 	private void handleCoreChoice(int input) {
 		switch (input) {
 		case 1: 
 			// option to view the amount of money and days remaining
-			viewPlayerInfo(gameEnvironment.getPlayer());
+			viewPlayerInfo();
 			break;
 		case 2:
 			// option to view the properties of the ship
@@ -223,6 +237,11 @@ public class CmdLineUi implements GameUi{
 		}
 	}
 	
+	/**
+	 * Prompts the user to enter a game duration and reads the user input. Returns days if the input meets
+	 * the criteria. 
+	 * @return days the number of days the game will last if it is completed.
+	 */
 	private int getDuration() {
 		System.out.println("Enter the days to play for (must be between 20 and 50): ");
 		while (true) {
@@ -249,7 +268,11 @@ public class CmdLineUi implements GameUi{
 		return new Ship("Row Boat", 10, 10, 5, 10);
 	}
 	
-	private void viewPlayerInfo(Player player) {
+	/**
+	 * Prints information about the player and there position in the game. 
+	 */
+	private void viewPlayerInfo() {
+		Player player = gameEnvironment.getPlayer();
 		System.out.format("%s has $%d and %d days remaining.\n", player.getName(), player.getMoneyBalance(), gameEnvironment.getDaysRemaining());
 	}
 	
@@ -261,6 +284,10 @@ public class CmdLineUi implements GameUi{
 		
 	}
 	
+	/**
+	 * Displays a list of all the islands the player can travel to (all except the player's current island), 
+	 * then gives the player the option of seeing more detail on any of the islands. 
+	 */
 	private void viewOtherIslands() {
 		
 		Island[] otherIslands = gameEnvironment.getOtherIslands();
