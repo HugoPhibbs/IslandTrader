@@ -275,7 +275,8 @@ public class CmdLineUi implements GameUi{
 				return;
 			}
 			else {
-				viewIslandDetails(otherIslands, islandInput);
+				Island selectedIsland = otherIslands[islandInput-1];
+				viewIslandDetails(otherIslands, selectedIsland);
 			}
 		}
 	}
@@ -291,9 +292,14 @@ public class CmdLineUi implements GameUi{
 		System.out.format("(%d) %s\n", (islands.length+1), "Go back");
 	}
 	
-	private void viewIslandDetails(Island[] otherIslands, int islandInput) {
+	/**
+	 * Gives more detail about a selected island, then asks the player if the would like to go back or travel to the
+	 * island they are viewing info about.
+	 * @param otherIslands array f all islands in the game except the current island (islands that can be traveled to).
+	 * @param selectedIsland The island the player has chosen to see more info on.
+	 */
+	private void viewIslandDetails(Island[] otherIslands, Island selectedIsland) {
 		// print full info of selected island
-		Island selectedIsland = otherIslands[islandInput-1];
 		ArrayList<Route> routes = gameEnvironment.getCurrentIsland().getPossibleRoutes(selectedIsland);
 		System.out.println(selectedIsland.getFullInfo(routes));
 		
@@ -305,7 +311,7 @@ public class CmdLineUi implements GameUi{
 			return;
 		}
 		else {
-			chooseRoute(selectedIsland, otherIslands); // will probably change this to call a helper of travelToisland()
+			chooseRoute(selectedIsland); // will probably change this to call a helper of travelToisland()
 		}
 	}
 	
@@ -341,7 +347,7 @@ public class CmdLineUi implements GameUi{
 		ArrayList<Route> routes = gameEnvironment.getCurrentIsland().getPossibleRoutes(island);
 		
 		System.out.println("Enter a number to choose a route to travel along.");
-		printRoutes(island, routes);
+		printRoutes(routes);
 		int routeInput = getInt(1, routes.size()+1);
 		// if input was to go back
 		if (routeInput == routes.size()+1) {
@@ -361,7 +367,12 @@ public class CmdLineUi implements GameUi{
 		}
 	}
 	
-	private void printRoutes(Island island, ArrayList<Route> routes) {
+	/**
+	 * Prints the name and a short description of each route in the parameter routes.
+	 * 
+	 * @param routes list of routes to print out.
+	 */
+	private void printRoutes(ArrayList<Route> routes) {
 		for (int i = 0; i < routes.size(); i++) {
 			System.out.format("(%d) %s\n", i+1, routes.get(i).toString());
 		}
