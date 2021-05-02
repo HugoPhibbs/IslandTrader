@@ -1,6 +1,7 @@
 package uiClasses;
 
 import coreClasses.*;
+import exceptions.InsufficientMoneyException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -167,24 +168,44 @@ public class CmdLineUi implements GameUi{
 		case 1:
 			//view and buy items that store sells
 			HashMap<String, HashMap<String, Integer>> sellCatalogue = gameEnvironment.getCurrentIsland().getIslandStore().getSellCatalogue();
-			System.out.println("Enter the number corresponding to the Item that you want to buy!");
-			ArrayList<String> displayArrayList = Store.getDisplayArrayList(sellCatalogue);
-	    	for (int i = 0; i < displayArrayList.size(); i++) {
-	    		System.out.println(i.toString() + displayArrayList.get(i));
-	    	}
-	    	
-	    	int itemToSellNum = getInt(1, sellCatalogue.size());
-	    	String itemToSellName = Store.getChosenItemName(displayArrayList, itemToSellNum);
+			
+	    	String itemStoreToSellName = visitStoreBuySellHelper("buy", sellCatalogue);
 	    	
 	    	// HOW TO SELL ITEMS?
+	    	try {
+	    		gameEnvironment.buyFromStore(itemStoreToSellName);
+	    	}
+	    	catch (InsufficientMoneyException ime) {
+	    		System.out.println(ime.getMessage());
+	    		/* TODO
+	    		 * what should we do here, ie give player options to get cash?
+	    		 * create a method for this i think
+	    		 * should have method in game environment
+	    		 */
+	    	}
+	    	catch (IllegalStateException ise) {
+	    		System.out.print(ise.getMessage());
+	    	}
 			exitStore();
 			break;
 		case 2:
 			// view and sell items that a store buys 
+			HashMap<String, HashMap<String, Integer>> buyCatalogue = gameEnvironment.getCurrentIsland().getIslandStore().getBuyCatalogue();
+			
+			String itemStoreToBuyName = visitStoreBuySellHelper("sell", buyCatalogue);
+			
+	    	// Sell item from player to store
+	    	try {
+	    		gameEnvironment.sellToStore(itemStoreToBuyName);
+	    	}
+	    	catch (IllegalStateException ise) {
+	    		System.out.println(ise.getMessage());
+	    	}
 			exitStore();
 			break;
 		case 3:
 			// view previously bought items
+			System.out.print(gameEnvironment.getPlayer().purchasedItemsToString());
 			exitStore();
 			break;
 		case 4:
@@ -197,6 +218,15 @@ public class CmdLineUi implements GameUi{
 			// exit store
 			return;
 		}
+	}
+	
+	private String visitStoreBuySellHelper(String operation, HashMap<String, HashMap<String, Integer>> catalogue) {
+		System.out.println(String.format("Enter the number corresponding to the Item that you want to %s!", operation));
+		ArrayList<String> optionsArrayList = Store.catalogueToArrayList(catalogue);
+		printOptionsArrayList(optionsArrayList);
+    	
+    	int itemNum = getInt(1, catalogue.size());
+    	return Store.getChosenItemName(optionsArrayList, itemNum);
 	}
 	
 	private void exitStore() {
@@ -220,6 +250,14 @@ public class CmdLineUi implements GameUi{
 	
 	public void finishGame() {
 		
+	}
+	
+	private void printOptionsArrayList(ArrayList<String> optionsArrayList) {
+		String result = "";
+		for (int i = 0; i < optionsArrayList.size(); i++) {
+			result += Integer.toString(i) + optionsArrayList.get(i) + "\n";
+    	}
+		System.out.println(result.trim());
 	}
 	/**
 	 * 
