@@ -8,6 +8,7 @@ import coreClasses.Island;
 import coreClasses.Item;
 import coreClasses.Player;
 import coreClasses.Store;
+import coreClasses.Route;
 import uiClasses.*;
 
 
@@ -32,6 +33,11 @@ public class Main {
 		// Creating current instance of Island
 		Store currStore = new Store(); 
 		Island currentIsland = new Island("current", currStore, "arb description");
+		// Create Routes and pass to currentIsland
+		Route firstRoute = new Route("firstRoute", 10, currentIsland, i1, "test 1");
+		Route secondRoute = new Route("secondRoute", 20, currentIsland, i1, "test 2");
+		Route[] currIslandRoutes = new Route[] {firstRoute, secondRoute};
+		currentIsland.setRouteArray(currIslandRoutes);
 		// Create an island array, required for game environment constructor
 		Island[] islands = new Island[] {currentIsland, i1, i2, i3};
 		

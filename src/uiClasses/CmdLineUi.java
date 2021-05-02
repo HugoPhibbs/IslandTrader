@@ -309,7 +309,52 @@ public class CmdLineUi implements GameUi{
 	
 	
 	private void travelToIsland() {
-		System.out.println("Travelling to another isalnd");
+		while(true) {
+			Island[] otherIslands = gameEnvironment.getOtherIslands();
+			
+			System.out.println("Travelling to another isalnd");
+			System.out.println("Enter the number of the island you would like to travel to.");
+			
+			printIslands(otherIslands);
+			int islandInput = getInt(1, otherIslands.length+1);
+			// if input was to go back
+			if (islandInput == otherIslands.length) {
+				return;
+			}
+			Island destinationIsland = otherIslands[islandInput-1];
+			chooseRoute(destinationIsland, otherIslands);
+		}
+	}
+	
+	private void chooseRoute(Island island, Island[] otherIslands) {
+		ArrayList<Route> routes = gameEnvironment.getCurrentIsland().getPossibleRoutes(island);
+		printRoutes(island, routes);
+		int routeInput = getInt(1, otherIslands.length+1);
+		// if input was to go back
+		if (routeInput == otherIslands.length) {
+			return;
+		}
+		else {
+			Route chosenRoute = routes.get(routeInput-1);
+			System.out.println(chosenRoute);
+			chosenRoute.getCost();
+		}
+	}
+	
+	public void printRoutes(Island island, ArrayList<Route> routes) {
+		for (int i = 0; i < routes.size(); i++) {
+			System.out.format("(%d) %s\n", i+1, routes.get(i).toString());
+		}
+		System.out.format("(%d) %s\n", (routes.size()+1), "Go back");
 	}
 	
 }
+
+
+
+
+
+
+
+
+

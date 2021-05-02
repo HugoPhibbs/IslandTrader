@@ -71,6 +71,15 @@ public class GameEnvironment {
 		ui.playGame();
 	}
 	
+	/**
+	 * Works out the total cost to repair the ship and pay wages for a particular route. 
+	 * 
+	 * @return cost The total amount that needs to be paid before sailing that route. 
+	 */
+	public int getCost() {
+		return 10;
+	}
+	
 	
 	
 	public void getIsland() {
