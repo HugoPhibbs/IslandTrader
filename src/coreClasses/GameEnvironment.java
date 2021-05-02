@@ -58,6 +58,8 @@ public class GameEnvironment {
 	
 	public Island getCurrentIsland() {return currentIsland;}
 	
+	public Ship getShip() {return ship;}
+	
 	public void reduceDaysRemaining(int daysPassed) {
 		daysRemaining -= daysPassed;
 	}
@@ -76,7 +78,7 @@ public class GameEnvironment {
 	 * 
 	 * @return cost The total amount that needs to be paid before sailing that route. 
 	 */
-	public int getCost() {
+	public int getCost(Route route) {
 		return 10;
 	}
 	
