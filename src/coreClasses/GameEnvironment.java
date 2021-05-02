@@ -292,6 +292,14 @@ public class GameEnvironment {
 		visitStoreHelper();
 	}
 	
+	public void buyFromStore(String itemToBuyName) {
+		currentIsland.getIslandStore().buyItem(itemToBuyName, player);
+	}
+	
+	public void sellToStore(String itemToSellName) {
+		currentIsland.getIslandStore().buyItem(itemToSellName, player);
+	}
+	
 	public void visitStoreHelper() {
 		
 		System.out.println("Is that all you wanted to do at the store today? \n Enter action number:");
@@ -366,4 +374,6 @@ public class GameEnvironment {
 		// TODO implement
 		
 	}
+	
+	// TODO need to have a method that handles a player not having any cash
 }
