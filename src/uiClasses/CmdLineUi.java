@@ -319,7 +319,7 @@ public class CmdLineUi implements GameUi{
 			printIslands(otherIslands);
 			int islandInput = getInt(1, otherIslands.length+1);
 			// if input was to go back
-			if (islandInput == otherIslands.length) {
+			if (islandInput == otherIslands.length+1) {
 				return;
 			}
 			Island destinationIsland = otherIslands[islandInput-1];

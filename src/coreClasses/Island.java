@@ -87,12 +87,11 @@ public class Island {
 	}
 	
 	public String getFullInfo(ArrayList<Route> routes) {
-		String fullInfo = String.format("About %s: %s", getIslandName(), getDescription());
+		String fullInfo = String.format("About %s: %s\n", getIslandName(), getDescription());
 		fullInfo += viewRoutes(routes);
 		// add string of items that the store sells
-		
+		// fullInfo += getIslandStore().getDisplayString(null);
 		// add string of itmes that the store buys
-		fullInfo += "This is the full info string\n"; 	// line only for testing, delete once mehtd fully implemented.
 		return fullInfo;
 	}
 	
