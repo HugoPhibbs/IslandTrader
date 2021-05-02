@@ -49,6 +49,8 @@ public class Island {
 	public Store getIslandStore() {return islandStore;}
 	
 	public String getIslandName() {return islandName;}
+	
+	public String getDescription() {return description;}
 
 	/**
 	 * Searches through the current island's routes to find those that go to the island the player
@@ -68,51 +70,29 @@ public class Island {
 		}
 		return routesToDestination;
 	}
-
+	
 	/**
 	 * Prints out a description of each route from the current island to the destination island.
 	 * 
 	 * @param destination The Island you want to see routes to (from the player's current island)
 	 */
-	public String viewRoutes(Island destination) {
+	public String viewRoutes(ArrayList<Route> routes) {
 		
-		ArrayList<Route> routesToDestination = getPossibleRoutes(destination);
-		String routeStr = "Routes to " + destination.getIslandName() + ':';
+		String routeStr = "Routes to " + getIslandName() + ":\n";
 
-		for (Route availableRoute: routesToDestination) {
-			routeStr += availableRoute.toString() + "\n";
+		for (Route availableRoute: routes) {
+			routeStr += " - " + availableRoute.toString() + "\n";
 		}
 		return routeStr;
 	}
 	
-	/**
-	 * TODO move to CmdLine UI / GameEnvironment
-	 */
-	public Route chooseRoute(Island destination) {
-		ArrayList<Route> routesToDestination = getPossibleRoutes(destination);
-		
-		String inputStr = TakeInput.inputString("Enter a route's name to take that route. To go back please type \"back\"");
-		
-		if (inputStr.equals("back")) {
-			throw new GoBackException();
-		}
-		else {
-			for (Route possibleRoute: routesToDestination) {
-				if (inputStr.equals(possibleRoute.getRouteName())) {
-					return possibleRoute;
-				}
-			}
-		}
-		System.out.println("Invalid Input");
-		return chooseRoute(destination);
-	}
-	
-	public String getFullInfo() {
-		String fullInfo = toString() + "\n";
-		// add method to view route info
+	public String getFullInfo(ArrayList<Route> routes) {
+		String fullInfo = String.format("About %s: %s", getIslandName(), getDescription());
+		fullInfo += viewRoutes(routes);
 		// add string of items that the store sells
+		
 		// add string of itmes that the store buys
-		fullInfo += "This is the full info string"; 	// line only for testing, delete once mehtd fully implemented.
+		fullInfo += "This is the full info string\n"; 	// line only for testing, delete once mehtd fully implemented.
 		return fullInfo;
 	}
 	

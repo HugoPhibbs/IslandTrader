@@ -294,7 +294,8 @@ public class CmdLineUi implements GameUi{
 	private void viewIslandDetails(Island[] otherIslands, int islandInput) {
 		// print full info of selected island
 		Island selectedIsland = otherIslands[islandInput-1];
-		System.out.println(selectedIsland.getFullInfo());
+		ArrayList<Route> routes = gameEnvironment.getCurrentIsland().getPossibleRoutes(selectedIsland);
+		System.out.println(selectedIsland.getFullInfo(routes));
 		
 		String[] proceedOptions = new String[] {"Travel to this island"};
 		printArrayOptions(proceedOptions, "Enter the number of the action you wish to take.");
