@@ -293,7 +293,8 @@ public class CmdLineUi implements GameUi{
 	
 	private void viewIslandDetails(Island[] otherIslands, int islandInput) {
 		// print full info of selected island
-		System.out.println(otherIslands[islandInput-1].getFullInfo());
+		Island selectedIsland = otherIslands[islandInput-1];
+		System.out.println(selectedIsland.getFullInfo());
 		
 		String[] proceedOptions = new String[] {"Travel to this island"};
 		printArrayOptions(proceedOptions, "Enter the number of the action you wish to take.");
@@ -303,7 +304,7 @@ public class CmdLineUi implements GameUi{
 			return;
 		}
 		else {
-			travelToIsland(); // will probably change this to call a helper of travelToisland()
+			chooseRoute(selectedIsland, otherIslands); // will probably change this to call a helper of travelToisland()
 		}
 	}
 	
@@ -312,7 +313,6 @@ public class CmdLineUi implements GameUi{
 		while(true) {
 			Island[] otherIslands = gameEnvironment.getOtherIslands();
 			
-			System.out.println("Travelling to another isalnd");
 			System.out.println("Enter the number of the island you would like to travel to.");
 			
 			printIslands(otherIslands);
@@ -328,6 +328,8 @@ public class CmdLineUi implements GameUi{
 	
 	private void chooseRoute(Island island, Island[] otherIslands) {
 		ArrayList<Route> routes = gameEnvironment.getCurrentIsland().getPossibleRoutes(island);
+		
+		System.out.println("Enter a number to choose a route to travel along.");
 		printRoutes(island, routes);
 		int routeInput = getInt(1, otherIslands.length+1);
 		// if input was to go back
@@ -343,6 +345,7 @@ public class CmdLineUi implements GameUi{
 						+ "Please sell some items or choose a shorter route.");
 				return;
 			}
+			System.out.println("Repairing ship and paying wages");
 			gameEnvironment.getShip().setSail(chosenRoute, gameEnvironment);
 			System.out.println("Sail complete.");
 		}
