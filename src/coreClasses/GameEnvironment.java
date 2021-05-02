@@ -64,6 +64,9 @@ public class GameEnvironment {
 		daysRemaining -= daysPassed;
 	}
 	
+	public void setCurrentIsland(Island newCurrentIsland) {currentIsland = newCurrentIsland;}
+	
+	
 	public void onSetupFinished(Player player, Ship ship, int duration, Island startisland) {
 		this.player = player;
 		this.ship = ship;
