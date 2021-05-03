@@ -53,44 +53,18 @@ public class CmdLineUi implements GameUi {
 	public void playGame() {
 		
 		while (!finish) {
-			printCoreOptions();
+			String[] coreOptions = new String[] {
+					"View your money and days remaining.", 
+					"View the propeties of your ship.", 
+					"View the goods you have purchased.", 
+					"View the properties of each Island.",
+					String.format("Visit the store on %s (current island)", gameEnvironment.getCurrentIsland().getIslandName()), 
+					"Set sail to another Island."
+			        };
+			printOptions(coreOptions, "Enter an action's number: ");
 			int input = getInt(1, 6);
 			
 			handleCoreChoice(input);
-		}
-	}
-	
-	/**
-	 * Prints a list of the actions available to the player. 
-	 */
-	private void printCoreOptions() {
-		String options = "Enter an action's number:\n(1) View your money and days remaining.\n(2) View the propeties of your ship.\n"
-				+ "(3) View the goods you have purchased.\n(4) View the properties of each Island.\n"
-				+ "(5) Visit the store on " + gameEnvironment.getCurrentIsland() + " (current island).\n(6) Set sail to another Island.";
-		System.out.println(options);
-		
-	}
-	
-	/**
-	 * Reads user input and ensures it is an integer within a specified range. 
-	 * 
-	 * @param lowerBound - minimum acceptable number for input
-	 * @param upperBound - maximum acceptable number for input
-	 * @return input - an integer between the lower and upper bounds. 
-	 */
-	private int getInt(int lowerBound, int upperBound) {
-		boolean successful = false;
-		while (true) {
-			try {
-				int input = scanner.nextInt();
-				if (lowerBound <= input && input <= upperBound) { 
-					return input;
-				}
-				System.out.format("Please enter a number between %d and %d (inlcusive).", lowerBound, upperBound);
-				
-			} catch (InputMismatchException e) {
-				System.out.println("Invalid input. Please enter an integer.");
-			}
 		}
 	}
 	
@@ -124,7 +98,7 @@ public class CmdLineUi implements GameUi {
 			// setting sail to another island
 			travelToIsland();
 			break;
-	}
+	    }
 	}
 
 	// #################### VISITING STORE METHODS ######################## 
@@ -136,7 +110,7 @@ public class CmdLineUi implements GameUi {
 		 */
 		String storeName = gameEnvironment.getCurrentIsland().getIslandStore().getName();
 		String visitStoreMessage = String.format("Welcome to %s, please read options below for interacting with this store!", storeName);
-		printOptionsArray(Store.getVisitOptions(), visitStoreMessage);
+		printOptions(Store.getVisitOptions(), visitStoreMessage);
 		int input = getInt(1, 5);
 		handleStoreChoice(input);
 	}
@@ -187,7 +161,7 @@ public class CmdLineUi implements GameUi {
 			break;
 		case 4:
 			// view the amount of money that you have
-			System.out.format("You have a balance of: %d pirate bucks", gameEnvironment.getPlayer().getMoneyBalance());
+			System.out.println(gameEnvironment.getPlayer().moneyBalanceToString());
 			visitStore();
 			break;
 		case 5:
@@ -198,22 +172,17 @@ public class CmdLineUi implements GameUi {
 	}
 	
 	private String visitStoreBuySellHelper(String operation, HashMap<String, HashMap<String, Integer>> catalogue) {
-		System.out.println(String.format("Enter the number corresponding to the Item that you want to %s!", operation));
+		String buySellMessage  = String.format("Enter the number corresponding to the Item that you want to %s!", operation);
 		ArrayList<String> optionsArrayList = Store.catalogueToArrayList(catalogue);
-		printOptionsArrayList(optionsArrayList);
+		printOptions(optionsArrayList, buySellMessage);
     	
     	int itemNum = getInt(1, catalogue.size());
     	return Store.getChosenItemName(optionsArrayList, itemNum);
 	}
 	
 	private void exitStore() {
-		System.out.println("Are you sure you want to leave the store? \n Please enter action number:");
-		
-		// TODO should we use the same system with the visiting options as with exiting options, although it may be overkill
-		// just because it really doesnt save that much code reuse for only 2 options!
-		String exitOptions = "(1) Do more actions with the store. \n"
-				+ "(2) Exit Store.";
-		System.out.println(exitOptions);
+		String exitStoreMessage = "Are you sure you want to leave the store? \n Please enter action number:";
+		printOptions(new String[] {"Do more actions with the store.", "Exit Store"}, exitStoreMessage);
 		int input = getInt(1, 2);
 		
 		switch(input) {
@@ -233,7 +202,7 @@ public class CmdLineUi implements GameUi {
 	 */
 	private Ship pickShip() { 
 		String pickShipMessage = "Please choose a ship, enter an action number corresponding to the ship that you want:");
-		printOptionsArrayList(gameEnvironment.getShipDescriptionArrayList(), pickShipMessage);
+		printOptions(gameEnvironment.getShipDescriptionArrayList(), pickShipMessage);
 		int chosenShipNum = getInt(1, 4);
 		return gameEnvironment.getShipArray()[chosenShipNum-1];
 	}
@@ -308,7 +277,8 @@ public class CmdLineUi implements GameUi {
 		System.out.println(selectedIsland.getFullInfo(routes));
 		
 		String[] proceedOptions = new String[] {"Travel to this island"};
-		printOptionsArray(proceedOptions, "Enter the number of the action you wish to take.");
+		printOptions(proceedOptions, "Enter the number of the action you wish to take.");
+		System.out.format("(%d) %s\n", (proceedOptions.length+1), "Go back");
 		int proceedInput = getInt(1, otherIslands.length+1);
 		// if input was to go back
 		if (proceedInput == otherIslands.length) {
@@ -378,6 +348,7 @@ public class CmdLineUi implements GameUi {
 	 * 
 	 * @param routes list of routes to print out.
 	 */
+	// TODO move this to methods bellow!
 	private void printRoutes(ArrayList<Route> routes) {
 		for (int i = 0; i < routes.size(); i++) {
 			System.out.format("(%d) %s\n", i+1, routes.get(i).toString());
@@ -387,19 +358,40 @@ public class CmdLineUi implements GameUi {
 	
 	//################### GENERAL HELPER METHODS ########################
 	
-	private void printOptionsArrayList(ArrayList<String> optionsArrayList, String message) {
+	private void printOptions(ArrayList<String> optionsArrayList, String message) {
 		System.out.print(message);
 		for (int i = 0; i < optionsArrayList.size(); i++) {
-			System.out.format("(%d) %s \n", i, optionsArrayList.get(i));
+			System.out.format("(%d) %s \n", (i+1), optionsArrayList.get(i));
     	}
 	}
 	
-	private void printOptionsArray(String[] optionsArray, String message) {
+	private void printOptions(String[] optionsArray, String message) {
 		System.out.println(message); //header
 		for (int i = 0; i < optionsArray.length; i++) {
-			System.out.format("(%d) %s\n", (i+1), optionsArray[i]);
+			System.out.format("(%d) %s \n", (i+1), optionsArray[i]);
 		}
-		System.out.format("(%d) %s\n", (optionsArray.length+1), "Go back");
+	}
+	
+	/**
+	 * Reads user input and ensures it is an integer within a specified range. 
+	 * 
+	 * @param lowerBound - minimum acceptable number for input
+	 * @param upperBound - maximum acceptable number for input
+	 * @return input - an integer between the lower and upper bounds. 
+	 */
+	private int getInt(int lowerBound, int upperBound) {
+		while (true) {
+			try {
+				int input = scanner.nextInt();
+				if (lowerBound <= input && input <= upperBound) { 
+					return input;
+				}
+				System.out.format("Please enter a number between %d and %d (inlcusive).", lowerBound, upperBound);
+				
+			} catch (InputMismatchException e) {
+				System.out.println("Invalid input. Please enter an integer.");
+			}
+		}
 	}
 	
 	// ################## GETTER METHODS #########################
