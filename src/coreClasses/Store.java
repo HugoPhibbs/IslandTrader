@@ -122,7 +122,8 @@ public class Store {
     	for (Map.Entry<String, HashMap<String, Integer>> mapElement : catalogue.entrySet()) {
     		String itemName = (String) mapElement.getKey();
     		int itemPrice = catalogue.get(itemName).get("price");
-    		displayArrayList.add(String.format("%s for %d Pirate Bucks", itemName, itemPrice));
+    		int itemSpaceTaken = catalogue.get(itemName).get("spaceTaken");
+    		displayArrayList.add(String.format("%s for %d Pirate Bucks, taking up %d space", itemName, itemPrice, itemSpaceTaken));
         }
     	return displayArrayList;
     }
