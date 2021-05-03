@@ -1,6 +1,6 @@
 package main;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.Arrays;
 
 import coreClasses.GameEnvironment;
@@ -9,6 +9,7 @@ import coreClasses.Item;
 import coreClasses.Player;
 import coreClasses.Store;
 import coreClasses.Route;
+import coreClasses.Ship;
 import uiClasses.*;
 
 
@@ -30,6 +31,14 @@ public class Main {
 		Island i1 = new Island("otherOne", s1, "arb1"); 
 		Island i2 = new Island("otherTwo", s2, "arb2"); 
 		Island i3 = new Island("otherThree", s3, "arb3"); 
+		
+		// Create Ships to choose from, and an array to store
+		Ship ship1 = new Ship("Black Pearl", 100, 100, 20, 50);
+		Ship ship2 = new Ship("Thunder Bird", 80, 80, 30, 40);
+		Ship ship3 = new Ship("Batmobile", 70, 120, 10, 70);
+		Ship ship4 = new Ship("Apollo", 100, 100, 30, 40);
+		Ship[] shipArray = new Ship[] {ship1, ship2, ship3, ship4};
+		
 		// Creating current instance of Island
 		Store currStore = new Store(); 
 		Island currentIsland = new Island("current", currStore, "arb description");
@@ -46,7 +55,7 @@ public class Main {
 		// TODO: needs to be changed later to allow both UIs to work.
 		// THis is however easier for testing the command line user interface
 		ui = new CmdLineUi();
-		GameEnvironment gameEnrviron = new GameEnvironment(islands, ui);
+		GameEnvironment gameEnrviron = new GameEnvironment(islands, shipArray, ui);
 		ui.setup(gameEnrviron);
 	}
 }
