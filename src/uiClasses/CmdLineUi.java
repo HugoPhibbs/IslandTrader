@@ -201,7 +201,7 @@ public class CmdLineUi implements GameUi {
 	 * @return myShip the ship you have chosen to use in this play through.
 	 */
 	private Ship pickShip() { 
-		String pickShipMessage = "Please choose a ship, enter an action number corresponding to the ship that you want:");
+		String pickShipMessage = "Please choose a ship, enter an action number corresponding to the ship that you want:\n";
 		printOptions(gameEnvironment.getShipDescriptionArrayList(), pickShipMessage);
 		int chosenShipNum = getInt(1, 4);
 		return gameEnvironment.getShipArray()[chosenShipNum-1];

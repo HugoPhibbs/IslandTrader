@@ -248,7 +248,7 @@ public class Ship {
     			+ "Max Cargo-Capacity: %d \n"
     			+ "Max Upgrade-Space: %d \n"
     			+ "Speed: %d \n"
-    			+ "Crew-size: %d n"
+    			+ "Crew-size: %d"
     			, name, maxCargoCapacity, maxUpgradeSpace, speed, crewSize);
     }
     
