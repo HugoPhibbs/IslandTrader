@@ -38,13 +38,15 @@ public class GameEnvironment {
 
 	private Player player;
 	private Island[] islandArray;
+	private Ship[] shipArray;
 	private GameUi ui;
 	private int daysRemaining;
 	private Island currentIsland;
 	private Ship ship;
 	
-	public GameEnvironment(Island[] islandArray, uiClasses.GameUi ui) {
+	public GameEnvironment(Island[] islandArray, Ship[] shipArray, uiClasses.GameUi ui) {
 		this.islandArray = islandArray;
+		this.shipArray = shipArray;
 		this.ui = ui;
 	}
 	
@@ -59,6 +61,8 @@ public class GameEnvironment {
 	public Island getCurrentIsland() {return currentIsland;}
 	
 	public Ship getShip() {return ship;}
+	
+	public Ship[] getShipArray() {return shipArray;}
 	
 	public void reduceDaysRemaining(int daysPassed) {
 		daysRemaining -= daysPassed;
@@ -172,126 +176,6 @@ public class GameEnvironment {
 		return chooseOtherIsland();
 	}
 	
-	/**
-	 * Called by takeTurn, presents the list of things the player can do in the store, takes input from the player as to 
-	 * what they would like to do, then calls the appropriate method of the current island's store.
-	 */
-	public void visitStore() {
-		/* TODO 
-		 * implement error handling for buying and selling items
-		 */
-		String options = "Enter the action number:\n "
-				+ "1. View and buy items that the store sells. \n " 
-				+ "2. View and sell Items that the store buys. \n "
-				+ "3. View previously bought items. \n"
-				+ "4. View the amount of money that you have. \n"
-				+ "5. Exit store.";
-				
-		Store currentStore = player.getCurrentIsland().getIslandStore();
-				
-		Scanner scanner = new Scanner(System.in);
-		System.out.println(options);
-				
-		int entryInput = getActionInt(scanner);
-				
-		// If you add more options, make sure that you have accounted for this in while loop!
-		while (!CheckValidInput.actionIntIsValid(entryInput, 1, 5)) {
-			System.out.println("Invalid input, please enter a number between 1 and 5");
-			entryInput = getActionInt(scanner);
-		}
-		
-		// As a convention across the project, all printing is done by GameEnvironment
-				
-		switch (entryInput) {
-		    case 1:
-		    	// Get sellCatalogue and its size
-		    	HashMap<String, HashMap<String, Integer>> sellCatalogue = currentStore.getSellCatalogue();
-		    	int sellCatalogueSize = sellCatalogue.size();
-		    	
-		    	// Display on sale items
-		    	System.out.println("Enter the number corresponding to the Item that you want to buy!");
-		    	String sellDisplayString = Store.getDisplayString(sellCatalogue);
-		    	System.out.println(sellDisplayString);
-		    	
-		    	// number for chosen item
-		    	int itemToSellNum= getActionInt(scanner);
-		    	
-		    	// Check that input of itemToSellNum is valid
-		    	while (!CheckValidInput.actionIntIsValid(itemToSellNum, 1, sellCatalogueSize)) {
-		    		System.out.println(String.format("Invalid input, please enter a number between 1 and %d.",sellCatalogueSize));
-		    		itemToSellNum = getActionInt(scanner);
-		    	}
-		    	
-		    	// Get name of chosen item
-		    	String splitLine1 = (String) Array.get(sellDisplayString.split("\n"), itemToSellNum-1);
-		    	String itemOnSaleName = (String) Array.get(splitLine1.split(" "), 1); // get name
-
-		    	// Try to sell item from store to player (may throw exception)
-		    	
-		    	// TODO where to implement exception handling????
-		    	try {
-		    		currentStore.sellItem(itemOnSaleName, player);
-		    	}
-		    	catch (InsufficientMoneyException ime) {
-		    		System.out.println(ime.getMessage());
-		    		/* TODO
-		    		 * what should we do here, ie give player options to get cash?
-		    		 * create a method for this i think
-		    		 */
-		    	}
-		    	catch (IllegalStateException ise) {
-		    		System.out.print(ise.getMessage());
-		    	}
-				break;
-		    case 2:
-		    	// Get buyCatalogue and its size
-		    	HashMap<String, HashMap<String, Integer>> buyCatalogue = currentStore.getBuyCatalogue();
-		    	int itemsToBuyCount = buyCatalogue.size();
-		    	
-		    	// Display items that can be bought by store
-		    	System.out.println("Enter the number corresponding to the Item that you want to sell!.");
-		    	String buyDisplayString = Store.getDisplayString(buyCatalogue);
-		    	System.out.println(buyDisplayString);
-		    	
-		    	// number for chosen item
-		    	int itemToBuyNum = getActionInt(scanner);
-		    	
-		    	// Check that input of itemToBuyNum is valid
-		    	while (!CheckValidInput.actionIntIsValid(itemToBuyNum, 1, itemsToBuyCount)) {
-		    		System.out.println(String.format("Invalid input, please enter a number between 1 and %d.",itemsToBuyCount));
-		    		itemToBuyNum = getActionInt(scanner);
-		    	}
-		    	
-		    	// Get name of chosen item
-		    	String splitLine2 = (String) Array.get(buyDisplayString.split("\n"), itemToBuyNum-1);
-		    	String itemToBuyName = (String) Array.get(splitLine2.split(" "), 1);
-		    	
-		    	
-		    	// Sell item from player to store
-		    	try {
-		    		currentStore.buyItem(itemToBuyName, player);
-		    	}
-		    	catch (IllegalStateException ise) {
-		    		System.out.println(ise.getMessage());
-		    	}
-				break;
-			case 3:
-				// Display items bought, and where they have been sold, if they have been sold
-				System.out.println(player.getShip().displayAllTimeItems());
-				break;
-		    case 4:
-				// View the amount of cash that a player has
-		    	//return player.getMoneyBalance();
-		    	break;
-		    case 5:
-		    	System.out.println("You have exited the store!");
-				// exit store
-		        return;
-		}
-		
-		visitStoreHelper();
-	}
-	
 	public void buyFromStore(String itemToBuyName) {
 		currentIsland.getIslandStore().buyItem(itemToBuyName, player);
 	}
@@ -300,35 +184,17 @@ public class GameEnvironment {
 		currentIsland.getIslandStore().buyItem(itemToSellName, player);
 	}
 	
-	public void visitStoreHelper() {
-		
-		System.out.println("Is that all you wanted to do at the store today? \n Enter action number:");
-		
-		String exitOptions = "1. Do more actions with the store. \n"
-				+ "2. Exit Store.";
-		
-		System.out.println(exitOptions);
-		
-		Scanner scanner = new Scanner(System.in);
-		
-		int exitInput = getActionInt(scanner);
-		
-		switch (exitInput) {
-		    case 1:
-		    	// View options again
-		    	visitStore();
-		    case 2:
-		    	// Exit store
-		    	return;
+	public ArrayList<String> getShipDescriptionArrayList() {
+		// TODO implement
+		ArrayList<String> shipDescriptionArrayList = new ArrayList<String>();
+		for (Ship ship: shipArray) {
+			shipDescriptionArrayList.add(ship.getDescription());
 		}
 		
-				
-	    /* ask user if they would like to do any other action or just leave the store,
-		* only if they didnt ask for exit store, in the first place
-		*/
+		return shipDescriptionArrayList;
 	}
 	
-	
+		
 	/**
 	 * Note that this is an informal test environment, when i write the proper Junit tests ill use actual varaible names and what not.
 	 * Still keep it organised tho so its readable. 5th island coming to a game near you soon.
@@ -368,12 +234,6 @@ public class GameEnvironment {
 		
 		// note from me: fyi there needs to be 5 islands
 		// game1.takeTurn();
-	}
-	
-	public void chooseShip() {
-		// TODO implement
-		
-	}
-	
+	}	
 	// TODO need to have a method that handles a player not having any cash
 }
