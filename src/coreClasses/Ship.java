@@ -83,19 +83,6 @@ public class Ship {
     
     // ########################### GENERAL SHIP METHODS ###########################################
     
-    /** Method for String representation of Ship
-     * 
-     * @return String representation of Ship object
-     */
-    public String toString() {
-    	// TODO implement
-    	//String description = "Ship name: %s "+ "\n"+
-                             //"Number of crew: %d"+"\n"+
-    			             //"Daily wage cost: %d" + "\n"+
-                             //"Remaining cargo capacity: %d" + "\n"+...
-    	return "IMPLEMENT";		             
-    }
-    
     /** Enacts damage onto Ship Object
      *
      * @param damage Integer for damage to be inflicted onto ship
@@ -256,7 +243,14 @@ public class Ship {
     
     // ########################### GETTER METHODS ###########################################
     
-    // TODO Do we need to include getter methods for things that we dont need to get? 
+    public String getDescription() {
+    	return String.format("Ship %s, has stats: \n"
+    			+ "Max Cargo-Capacity: %d \n"
+    			+ "Max Upgrade-Space: %d \n"
+    			+ "Speed: %d \n"
+    			+ "Crew-size: %d n"
+    			, name, maxCargoCapacity, maxUpgradeSpace, speed, crewSize);
+    }
     
     /** Getter method for the daily wage of a ship's crew
      * 
