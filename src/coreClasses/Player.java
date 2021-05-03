@@ -34,6 +34,10 @@ public class Player {
 	
 	public ArrayList<Item> getPurchasedItems() {return purchasedItems;}
 	
+	public String moneyBalanceToString() {
+		return String.format("You have a balance of: %d pirate bucks", moneyBalance);
+	}
+	
     public String purchasedItemsToString() {
     	String result = "All items that have been bought and their details: \n";
     	for (Item item : purchasedItems) {
