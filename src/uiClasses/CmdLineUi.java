@@ -128,39 +128,17 @@ public class CmdLineUi implements GameUi {
 	}
 
 	// #################### VISITING STORE METHODS ######################## 
-	
-	// needs to have methods from gameEnvironment that 'twin' the method
-	// so all the methods in ge need to be turned into returning things
-	
-	// so for a visitStore method in main it would basically be printing things that are outputted from the visitStore method in gameEnvirionemt
-	
+
 	private void visitStore() {
 		/* twin method for the visitStore method from game environment
 		 * is a bit special compared to the gui version, bc this actually prints out things
 		 * we will see later on down the road with how to implement the GUI!
 		 */
 		String storeName = gameEnvironment.getCurrentIsland().getIslandStore().getName();
-		System.out.println(String.format("Welcome to %s, please read options below for interacting with this store!", storeName));
-		printStoreOptions();
+		String visitStoreMessage = String.format("Welcome to %s, please read options below for interacting with this store!", storeName);
+		printOptionsArray(Store.getVisitOptions(), visitStoreMessage);
 		int input = getInt(1, 5);
 		handleStoreChoice(input);
-	}
-	
-	private void printArrayOptions(String[] optionsArray, String message) {
-		System.out.println(message); //header
-		for (int i = 0; i < optionsArray.length; i++) {
-			System.out.format("(%d) %s\n", (i+1), optionsArray[i]);
-		}
-		System.out.format("(%d) %s\n", (optionsArray.length+1), "Go back");
-	}
-	
-	private void printStoreOptions() {
-		String[] optionsArray = Store.getVisitOptions();
-		System.out.println("Please enter an action number corresponding to the action that you want to do!"); //header
-		for (int i = 0; i < optionsArray.length; i++) {
-			//TODO how to change an int into a string?
-			System.out.println((String.valueOf(i+1)) + optionsArray[i]);
-		}
 	}
 	
 	private void handleStoreChoice(int input) {
@@ -171,7 +149,6 @@ public class CmdLineUi implements GameUi {
 			
 	    	String itemStoreToSellName = visitStoreBuySellHelper("buy", sellCatalogue);
 	    	
-	    	// HOW TO SELL ITEMS?
 	    	try {
 	    		gameEnvironment.buyFromStore(itemStoreToSellName);
 	    	}
@@ -186,7 +163,7 @@ public class CmdLineUi implements GameUi {
 	    	catch (IllegalStateException ise) {
 	    		System.out.print(ise.getMessage());
 	    	}
-			exitStore();
+	    	visitStore();
 			break;
 		case 2:
 			// view and sell items that a store buys 
@@ -201,21 +178,21 @@ public class CmdLineUi implements GameUi {
 	    	catch (IllegalStateException ise) {
 	    		System.out.println(ise.getMessage());
 	    	}
-			exitStore();
+	    	visitStore();
 			break;
 		case 3:
 			// view previously bought items
 			System.out.print(gameEnvironment.getPlayer().purchasedItemsToString());
-			exitStore();
+			visitStore();
 			break;
 		case 4:
 			// view the amount of money that you have
-			System.out.println(gameEnvironment.getPlayer().getMoneyBalance());
-			exitStore();
+			System.out.format("You have a balance of: %d pirate bucks", gameEnvironment.getPlayer().getMoneyBalance());
+			visitStore();
 			break;
 		case 5:
-			System.out.println("You have exited the store!");
 			// exit store
+			exitStore();
 			return;
 		}
 	}
@@ -230,12 +207,12 @@ public class CmdLineUi implements GameUi {
 	}
 	
 	private void exitStore() {
-		System.out.println("Is that all you wanted to do at this store today? \n Please enter action number:");
+		System.out.println("Are you sure you want to leave the store? \n Please enter action number:");
 		
 		// TODO should we use the same system with the visiting options as with exiting options, although it may be overkill
 		// just because it really doesnt save that much code reuse for only 2 options!
-		String exitOptions = "1. Do more actions with the store. \n"
-				+ "2. Exit Store.";
+		String exitOptions = "(1) Do more actions with the store. \n"
+				+ "(2) Exit Store.";
 		System.out.println(exitOptions);
 		int input = getInt(1, 2);
 		
@@ -243,68 +220,28 @@ public class CmdLineUi implements GameUi {
 		case 1:
 			visitStore();
 		case 2:
+			System.out.println("You have exited the store!");
 			return;
 		}
 	}
-	// #####################################################################
 	
-	public void finishGame() {
-		
-	}
-	
-	private void printOptionsArrayList(ArrayList<String> optionsArrayList) {
-		String result = "";
-		for (int i = 0; i < optionsArrayList.size(); i++) {
-			result += Integer.toString(i) + optionsArrayList.get(i) + "\n";
-    	}
-		System.out.println(result.trim());
-	}
-	/**
-	 * 
-	 * @param message message to be printed to tell the user what the name is for.
-	 * @return 
-	 */
-	private String getName(String message) {
-		System.out.println(message);
-		while (true) {
-			String name = scanner.nextLine();
-			if (CheckValidInput.nameIsValid(name)) {
-				return name;
-			}
-			System.out.println(NAME_REQUIREMENTS);
-		}
-	}
-	
-	/**
-	 * Prompts the user to enter a game duration and reads the user input. Returns days if the input meets
-	 * the criteria. 
-	 * @return days the number of days the game will last if it is completed.
-	 */
-	private int getDuration() {
-		System.out.println("Enter the days to play for (must be between 20 and 50): ");
-		while (true) {
-			try {
-				int days = scanner.nextInt();
-				if (20 <= days && days <= 50) {
-					return days;
-				}
-				System.out.println(DURATION_REQUIREMENTS);
-			} catch (InputMismatchException e) {
-				System.out.println("Invalid input. Please enter an integer.");
-			}
-			scanner.nextLine();
-		}
-	}
+	// ############### SHIP METHODS #################
 	
 	/**
 	 * Displays a list of ships and their qualities, and takes input to choose which will be used.
 	 * @return myShip the ship you have chosen to use in this play through.
 	 */
-	private Ship pickShip() {
-		// TODO implement this
-		// Temporary implementation for testing delete once actual implementation added. 
-		return new Ship("Row Boat", 10, 10, 5, 10);
+	private Ship pickShip() { 
+		String pickShipMessage = "Please choose a ship, enter an action number corresponding to the ship that you want:");
+		printOptionsArrayList(gameEnvironment.getShipDescriptionArrayList(), pickShipMessage);
+		int chosenShipNum = getInt(1, 4);
+		return gameEnvironment.getShipArray()[chosenShipNum-1];
 	}
+	
+	private void viewShipProperties() {
+		
+	}	
+
 	
 	/**
 	 * Prints information about the player and there position in the game. 
@@ -313,15 +250,17 @@ public class CmdLineUi implements GameUi {
 		Player player = gameEnvironment.getPlayer();
 		System.out.format("%s has $%d and %d days remaining.\n", player.getName(), player.getMoneyBalance(), gameEnvironment.getDaysRemaining());
 	}
-	
-	private void viewShipProperties() {
-		
-	}
+
 	
 	private void viewGoodsPurchased() {
 		
 	}
 	
+	public void finishGame() {
+		
+	}
+	
+	// ############### ISLAND METHODS ###############
 	/**
 	 * Displays a list of all the islands the player can travel to (all except the player's current island), 
 	 * then gives the player the option of seeing more detail on any of the islands. 
@@ -369,7 +308,7 @@ public class CmdLineUi implements GameUi {
 		System.out.println(selectedIsland.getFullInfo(routes));
 		
 		String[] proceedOptions = new String[] {"Travel to this island"};
-		printArrayOptions(proceedOptions, "Enter the number of the action you wish to take.");
+		printOptionsArray(proceedOptions, "Enter the number of the action you wish to take.");
 		int proceedInput = getInt(1, otherIslands.length+1);
 		// if input was to go back
 		if (proceedInput == otherIslands.length) {
@@ -400,6 +339,8 @@ public class CmdLineUi implements GameUi {
 			chooseRoute(destinationIsland);
 		}
 	}
+	
+	// ################## ROUTE METHODS ####################
 	
 	/**
 	 * Allows the user to see the routes to the island they have chosen (and info about each) and pick
@@ -442,6 +383,61 @@ public class CmdLineUi implements GameUi {
 			System.out.format("(%d) %s\n", i+1, routes.get(i).toString());
 		}
 		System.out.format("(%d) %s\n", (routes.size()+1), "Go back");
+	}
+	
+	//################### GENERAL HELPER METHODS ########################
+	
+	private void printOptionsArrayList(ArrayList<String> optionsArrayList, String message) {
+		System.out.print(message);
+		for (int i = 0; i < optionsArrayList.size(); i++) {
+			System.out.format("(%d) %s \n", i, optionsArrayList.get(i));
+    	}
+	}
+	
+	private void printOptionsArray(String[] optionsArray, String message) {
+		System.out.println(message); //header
+		for (int i = 0; i < optionsArray.length; i++) {
+			System.out.format("(%d) %s\n", (i+1), optionsArray[i]);
+		}
+		System.out.format("(%d) %s\n", (optionsArray.length+1), "Go back");
+	}
+	
+	// ################## GETTER METHODS #########################
+	/**
+	 * 
+	 * @param message message to be printed to tell the user what the name is for.
+	 * @return 
+	 */
+	private String getName(String message) {
+		System.out.println(message);
+		while (true) {
+			String name = scanner.nextLine();
+			if (CheckValidInput.nameIsValid(name)) {
+				return name;
+			}
+			System.out.println(NAME_REQUIREMENTS);
+		}
+	}
+	
+	/**
+	 * Prompts the user to enter a game duration and reads the user input. Returns days if the input meets
+	 * the criteria. 
+	 * @return days the number of days the game will last if it is completed.
+	 */
+	private int getDuration() {
+		System.out.println("Enter the days to play for (must be between 20 and 50): ");
+		while (true) {
+			try {
+				int days = scanner.nextInt();
+				if (20 <= days && days <= 50) {
+					return days;
+				}
+				System.out.println(DURATION_REQUIREMENTS);
+			} catch (InputMismatchException e) {
+				System.out.println("Invalid input. Please enter an integer.");
+			}
+			scanner.nextLine();
+		}
 	}
 }
 
