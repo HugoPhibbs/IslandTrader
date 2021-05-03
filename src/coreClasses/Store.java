@@ -128,6 +128,22 @@ public class Store {
     	return displayArrayList;
     }
     
+    /**
+     * Creates and returns a string representation of the given catalogue, useful for giving a quick overview
+     * of what a store buys or sells. Is called by island.fullInfo.
+     * 
+     * @param catalogue The catalogue (either buy or sell) to be made into a string. 
+     * @param buyOrSell Whether the catalogue is for items to be bought or sold. Should be "buy" or "sell".
+     * @return A string representation of the catalogue.
+     */
+    public String catalogueToString(HashMap<String, HashMap<String, Integer>> catalogue, String buyOrSell) {
+    	String catalogueString = "The store on this island " + buyOrSell + "s:\n";
+    	for (String itemString: catalogueToArrayList(catalogue)) {
+    		catalogueString += itemString;
+    	}
+    	return catalogueString;
+    }
+    
     /** Gets the sellCatalogue for a store
      * 
      * @return HashMap<String, Hashmap> representation of the things that a store sells
