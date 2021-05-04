@@ -30,7 +30,9 @@ public class Pirates {
     	return true;
     }
 
-    private static void takeGoods(Ship ship){
+    public static void takeGoods(Ship ship){
+    	// public for testing
+    	
     	Random random = new Random();
     	int randomGoodDemand = random.nextInt(120); //arbitrary upper bound, can be adjusted if need be
     	    			
@@ -60,8 +62,9 @@ public class Pirates {
     	Random random = new Random();
     	return random.nextInt(6) + 1;
     }
-    
-    private static Item getLargestShipItem(Ship ship) {
+
+    public static Item getLargestShipItem(Ship ship) {
+    	// public for testing
     	ArrayList<Item> itemsArrayList = ship.getItems();
     	int biggestSize = -1;
     	Item biggestItem = null;
