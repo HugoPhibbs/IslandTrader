@@ -197,6 +197,17 @@ public class GameEnvironment {
 		return shipDescriptionArrayList;
 	}
 	
+	/**
+	 * Calculates a score by dividing profit by days played.
+	 * @return The players score at time of call.
+	 */
+	public int getScore() {
+		int profit = getPlayer().getMoneyBalance() - 100;
+		int daysPlayed = getDaysSelected() - getDaysRemaining();
+		int score = profit / daysPlayed;
+		return score;
+	}
+	
 		
 	/**
 	 * Note that this is an informal test environment, when i write the proper Junit tests ill use actual varaible names and what not.
