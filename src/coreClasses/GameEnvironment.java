@@ -199,9 +199,11 @@ public class GameEnvironment {
 	
 	/**
 	 * Calculates a score by dividing profit by days played.
+	 * 
+	 * @param the amount of money the player started with, needed for profit calculation.  
 	 * @return The players score at time of call.
 	 */
-	public int getScore() {
+	public int getScore(int startMoney) {
 		int profit = getPlayer().getMoneyBalance() - 100;
 		int daysPlayed = getDaysSelected() - getDaysRemaining();
 		int score = profit / daysPlayed;

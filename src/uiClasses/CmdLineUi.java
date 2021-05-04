@@ -39,7 +39,7 @@ public class CmdLineUi implements GameUi {
 		String playerName = getName("Enter a name for your player: ");
 		int gameDuration = getDuration();
 		Island startIsland = gameEnvironment.getIslandArray()[0];
-		Player player = new Player(playerName, 100);
+		Player player = new Player(playerName, STARTING_MONEY);
 		// and ship
 		Ship ship = pickShip();
 		
@@ -77,8 +77,8 @@ public class CmdLineUi implements GameUi {
 		int selectedDays = gameEnvironment.getDaysSelected();
 		System.out.format("You played for %d days out of a selected %d days.\n", 
 				(selectedDays - gameEnvironment.getDaysRemaining()), selectedDays);
-		System.out.format("You made $%d profit, and your final score was %d!", );
-		
+		System.out.format("You made $%d profit, and your final score was %d!\n", 
+				(gameEnvironment.getPlayer().getMoneyBalance() -STARTING_MONEY), gameEnvironment.getScore(STARTING_MONEY));
 	}
 	
 	
