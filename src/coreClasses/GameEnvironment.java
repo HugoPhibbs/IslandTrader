@@ -39,6 +39,7 @@ public class GameEnvironment {
 	private Island[] islandArray;
 	private Ship[] shipArray;
 	private GameUi ui;
+	private int daysSelected;
 	private int daysRemaining;
 	private Island currentIsland;
 	private Ship ship;
@@ -63,6 +64,8 @@ public class GameEnvironment {
 	
 	public Ship[] getShipArray() {return shipArray;}
 	
+	public int getDaysSelected() {return daysSelected;}
+	
 	public void reduceDaysRemaining(int daysPassed) {
 		daysRemaining -= daysPassed;
 	}
@@ -72,6 +75,7 @@ public class GameEnvironment {
 	public void onSetupFinished(Player player, Ship ship, int duration, Island startisland) {
 		this.player = player;
 		this.ship = ship;
+		this.daysSelected = duration;
 		this.daysRemaining = duration;
 		this.currentIsland = startisland;
 		
