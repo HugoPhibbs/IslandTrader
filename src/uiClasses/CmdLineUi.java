@@ -31,6 +31,7 @@ public class CmdLineUi implements GameUi {
 	 * Gets the input required to create the player and ship objects, then passes them to gameEnvironment
 	 * to complete its setup. 
 	 */
+	@Override
 	public void setup(GameEnvironment gameEnvironment) {
 		this.gameEnvironment = gameEnvironment;
 		// create the player and the ship
@@ -50,6 +51,7 @@ public class CmdLineUi implements GameUi {
 	 * While the game has not been finished, playGame calls methods to print the actions available
 	 * to the player, take input from the player and handles that input to perform actions.
 	 */
+	@Override
 	public void playGame() {
 		
 		while (!finish) {
@@ -67,6 +69,18 @@ public class CmdLineUi implements GameUi {
 			handleCoreChoice(input);
 		}
 	}
+	
+	@Override
+	public void finishGame(String message) {
+		System.out.format("Game Over %s!\n", gameEnvironment.getPlayer().getName());
+		System.out.println(message);
+		int selectedDays = gameEnvironment.getDaysSelected();
+		System.out.format("You played for %d days out of a selected %d days.\n", 
+				(selectedDays - gameEnvironment.getDaysRemaining()), selectedDays);
+		System.out.format("You made $%d profit, and your final score was %d!", );
+		
+	}
+	
 	
 	/**
 	 * Based on the players input, calls the appropriate method to execute the action they have selected.
@@ -225,9 +239,6 @@ public class CmdLineUi implements GameUi {
 		
 	}
 	
-	public void finishGame() {
-		
-	}
 	
 	// ############### ISLAND METHODS ###############
 	/**
