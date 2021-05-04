@@ -33,8 +33,7 @@ import uiClasses.GameUi;
 
 public class GameEnvironment {
 	
-	// TODO fyi where do we create a new ship? -hp
-	// also i think sailShip should be implemented by game environment-see comment in ship class
+	// TODO need to have a method that handles random events
 
 	private Player player;
 	private Island[] islandArray;
