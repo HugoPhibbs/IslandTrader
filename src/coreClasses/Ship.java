@@ -70,7 +70,10 @@ public class Ship {
     	    String msg1 = "Name for ship must have no more than 1 consecutive white space and be between 3 and 15 characters in length!";
     		throw new IllegalArgumentException(msg1);
     	}
-    	
+    	if (maxCargoCapacity > 100) {
+    		String msg2 = "maxCargoCapacity cannot be more than 100!";
+    		throw new IllegalArgumentException(msg2);
+    	}
     	this.name = name;
     	this.speed = speed;
     	this.crewSize = crewSize;
