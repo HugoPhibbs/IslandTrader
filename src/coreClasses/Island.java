@@ -1,7 +1,6 @@
 package coreClasses;
 
 import java.util.ArrayList; 
-
 import exceptions.GoBackException;
 
 public class Island {
@@ -95,12 +94,16 @@ public class Island {
 	 */
 	public String getFullInfo(ArrayList<Route> routes) {
 		String fullInfo = String.format("About %s: %s\n", getIslandName(), getDescription());
+		
 		fullInfo += viewRoutes(routes);
-		// add string of items that the store sells
-		// fullInfo += getIslandStore().getDisplayString(null);
-		// add string of itmes that the store buys
+		
+		fullInfo += islandStore.catalogueToString(islandStore.getSellCatalogue(), "sell");
+		fullInfo += islandStore.catalogueToString(islandStore.getBuyCatalogue(), "buy");
+	
 		return fullInfo;
 	}
+	
+	
 	
 	@Override
 	public String toString() {
