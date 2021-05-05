@@ -118,7 +118,6 @@ public class Store {
     	/*
     	 *  used bellow code from online https://www.geeksforgeeks.org/traverse-through-a-hashmap-in-java/
     	 */
-    	
     	for (Map.Entry<String, HashMap<String, Integer>> mapElement : catalogue.entrySet()) {
     		String itemName = (String) mapElement.getKey();
     		int itemPrice = catalogue.get(itemName).get("price");
@@ -127,6 +126,8 @@ public class Store {
         }
     	return displayArrayList;
     }
+    
+    catalogueToArrayListWrapper()
     
     /**
      * Creates and returns a string representation of the given catalogue, useful for giving a quick overview
@@ -138,10 +139,16 @@ public class Store {
      */
     public String catalogueToString(HashMap<String, HashMap<String, Integer>> catalogue, String buyOrSell) {
     	String catalogueString = "The store on this island " + buyOrSell + "s:\n";
-    	for (String itemString: catalogueToArrayList(catalogue)) {
-    		catalogueString += itemString;
+    	try {
+    		for (String itemString: catalogueToArrayList(catalogue)) {
+        		catalogueString += itemString;
+    	    }
+    		return catalogueString;
     	}
-    	return catalogueString;
+    	catch (EmptyCatalogueException ese) {
+    		return String.format("This Store doesnt have a %s catalogue yet, please add one!", buyOrSell);
+    	}
+    
     }
     
     /** Gets the sellCatalogue for a store
@@ -184,11 +191,11 @@ public class Store {
      */
     public static String [] getVisitOptions() {
     	String[] optionsArray = 
-    		    {" View and buy items that the store sells." 
-				," View and sell Items that the store buys."
-				," View previously bought items."
-				," View the amount of money that you have."
-				," Exit store."};
+    		    {"View and buy items that the store sells." 
+				,"View and sell Items that the store buys."
+				,"View previously bought items."
+				,"View the amount of money that you have."
+				,"Exit store."};
     	return optionsArray;
     }
     

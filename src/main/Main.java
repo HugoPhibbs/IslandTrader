@@ -2,6 +2,7 @@ package main;
 
 import java.util.ArrayList; 
 import java.util.Arrays;
+import java.util.HashMap;
 
 import coreClasses.GameEnvironment;
 import coreClasses.Island;
@@ -57,5 +58,44 @@ public class Main {
 		ui = new CmdLineUi();
 		GameEnvironment gameEnrviron = new GameEnvironment(islands, shipArray, ui);
 		ui.setup(gameEnrviron);
+	}
+	
+	public static ArrayList<HashMap<String, HashMap<String, Integer>>> createBuyCatalogues(){
+		// Find a way to directly initialize these!!!
+		HashMap<String, HashMap<String, Integer>> buyCatalogue = new HashMap<String, HashMap<String, Integer>>();
+		HashMap<String, Integer> goldProperties = new HashMap<String, Integer>();
+		goldProperties.put("spaceTaken", 2);
+		goldProperties.put("price", 3);
+		HashMap<String, Integer> silverProperties = new HashMap<String, Integer>();
+		silverProperties.put("spaceTaken", 3);
+		silverProperties.put("price", 4);
+		HashMap<String, Integer> bananaProperties = new HashMap<String, Integer>();
+		bananaProperties.put("spaceTaken", 1);
+		bananaProperties.put("price", 1);
+		buyCatalogue.put("Gold", goldProperties);
+		buyCatalogue.put("Silver", silverProperties);
+		buyCatalogue.put("Banana", bananaProperties);
+		ArrayList<HashMap<String, HashMap<String, Integer>>> catalogues = new ArrayList<HashMap<String, HashMap<String, Integer>>>();
+		catalogues.add(buyCatalogue);
+		return catalogues;
+	}
+	
+	public static ArrayList<HashMap<String, HashMap<String, Integer>>> createSellCatalogues(){
+		HashMap<String, HashMap<String, Integer>> sellCatalogue = new HashMap<String, HashMap<String, Integer>>();
+		HashMap<String, Integer> goldProperties = new HashMap<String, Integer>();
+		goldProperties.put("spaceTaken", 2);
+		goldProperties.put("price", 3);
+		HashMap<String, Integer> silverProperties = new HashMap<String, Integer>();
+		silverProperties.put("spaceTaken", 3);
+		silverProperties.put("price", 4);
+		HashMap<String, Integer> bananaProperties = new HashMap<String, Integer>();
+		bananaProperties.put("spaceTaken", 1);
+		bananaProperties.put("price", 1);
+		sellCatalogue.put("Gold", goldProperties);
+		sellCatalogue.put("Silver", silverProperties);
+		sellCatalogue.put("Banana", bananaProperties);
+		ArrayList<HashMap<String, HashMap<String, Integer>>> catalogues = new ArrayList<HashMap<String, HashMap<String, Integer>>>();
+		catalogues.add(sellCatalogue);
+		return catalogues;
 	}
 }

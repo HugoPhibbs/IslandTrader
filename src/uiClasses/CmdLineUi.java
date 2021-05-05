@@ -31,7 +31,6 @@ public class CmdLineUi implements GameUi {
 	 * Gets the input required to create the player and ship objects, then passes them to gameEnvironment
 	 * to complete its setup. 
 	 */
-	@Override
 	public void setup(GameEnvironment gameEnvironment) {
 		this.gameEnvironment = gameEnvironment;
 		// create the player and the ship
@@ -39,10 +38,9 @@ public class CmdLineUi implements GameUi {
 		String playerName = getName("Enter a name for your player: ");
 		int gameDuration = getDuration();
 		Island startIsland = gameEnvironment.getIslandArray()[0];
-		Player player = new Player(playerName, STARTING_MONEY);
+		Player player = new Player(playerName, 100);
 		// and ship
 		Ship ship = pickShip();
-		ship.setOwner(player);
 		
 		System.out.println("Setup complete! Ready to play!");
 		gameEnvironment.onSetupFinished(player, ship, gameDuration, startIsland);
@@ -52,7 +50,6 @@ public class CmdLineUi implements GameUi {
 	 * While the game has not been finished, playGame calls methods to print the actions available
 	 * to the player, take input from the player and handles that input to perform actions.
 	 */
-	@Override
 	public void playGame() {
 		
 		while (!finish) {
@@ -70,18 +67,6 @@ public class CmdLineUi implements GameUi {
 			handleCoreChoice(input);
 		}
 	}
-	
-	@Override
-	public void finishGame(String message) {
-		System.out.format("Game Over %s!\n", gameEnvironment.getPlayer().getName());
-		System.out.println(message);
-		int selectedDays = gameEnvironment.getDaysSelected();
-		System.out.format("You played for %d days out of a selected %d days.\n", 
-				(selectedDays - gameEnvironment.getDaysRemaining()), selectedDays);
-		System.out.format("You made $%d profit, and your final score was %d!\n", 
-				(gameEnvironment.getPlayer().getMoneyBalance() -STARTING_MONEY), gameEnvironment.getScore(STARTING_MONEY));
-	}
-	
 	
 	/**
 	 * Based on the players input, calls the appropriate method to execute the action they have selected.
@@ -107,7 +92,7 @@ public class CmdLineUi implements GameUi {
 			break;
 		case 5:
 			// option to visit the store on the current island
-			visitStore();
+			visitStorePreper();
 			break;
 		case 6:
 			// setting sail to another island
@@ -118,19 +103,24 @@ public class CmdLineUi implements GameUi {
 
 	// #################### VISITING STORE METHODS ######################## 
 
-	private void visitStore() {
+	private void visitStorePreper() {
 		/* twin method for the visitStore method from game environment
 		 * is a bit special compared to the gui version, bc this actually prints out things
 		 * we will see later on down the road with how to implement the GUI!
 		 */
 		String storeName = gameEnvironment.getCurrentIsland().getIslandStore().getName();
 		String visitStoreMessage = String.format("Welcome to %s, please read options below for interacting with this store!", storeName);
+		getStoreVisitChoice(visitStoreMessage);
+	}
+	
+	private void getStoreVisitChoice(String visitStoreMessage) {
 		printOptions(Store.getVisitOptions(), visitStoreMessage);
 		int input = getInt(1, 5);
 		handleStoreChoice(input);
 	}
 	
 	private void handleStoreChoice(int input) {
+		String welcomeBackMsg = "Welcome back to the Store, please enter a number to further interact with this store!";
 		switch (input) {
 		case 1:
 			//view and buy items that store sells
@@ -152,7 +142,7 @@ public class CmdLineUi implements GameUi {
 	    	catch (IllegalStateException ise) {
 	    		System.out.print(ise.getMessage());
 	    	}
-	    	visitStore();
+	    	getStoreVisitChoice(welcomeBackMsg);
 			break;
 		case 2:
 			// view and sell items that a store buys 
@@ -167,17 +157,17 @@ public class CmdLineUi implements GameUi {
 	    	catch (IllegalStateException ise) {
 	    		System.out.println(ise.getMessage());
 	    	}
-	    	visitStore();
+	    	getStoreVisitChoice(welcomeBackMsg);
 			break;
 		case 3:
 			// view previously bought items
-			System.out.print(gameEnvironment.getPlayer().purchasedItemsToString());
-			visitStore();
+			viewGoodsPurchased();
+			getStoreVisitChoice(welcomeBackMsg);
 			break;
 		case 4:
 			// view the amount of money that you have
 			System.out.println(gameEnvironment.getPlayer().moneyBalanceToString());
-			visitStore();
+			getStoreVisitChoice(welcomeBackMsg);
 			break;
 		case 5:
 			// exit store
@@ -187,22 +177,27 @@ public class CmdLineUi implements GameUi {
 	}
 	
 	private String visitStoreBuySellHelper(String operation, HashMap<String, HashMap<String, Integer>> catalogue) {
-		String buySellMessage  = String.format("Enter the number corresponding to the Item that you want to %s!", operation);
+		String buySellMessage  = String.format("Enter the number corresponding to the Item that you want to %s! \n", operation);
 		ArrayList<String> optionsArrayList = Store.catalogueToArrayList(catalogue);
 		printOptions(optionsArrayList, buySellMessage);
-    	
-    	int itemNum = getInt(1, catalogue.size());
+		
+		System.out.format("(%d) Go Back \n", catalogue.size()+1);
+    	int itemNum = getInt(1, catalogue.size()+1);
+    	if (itemNum == 4) {
+    		getStoreVisitChoice("Welcome back to the Store, please enter a number to further interact with this store!");
+    	}
     	return Store.getChosenItemName(optionsArrayList, itemNum);
 	}
 	
 	private void exitStore() {
-		String exitStoreMessage = "Are you sure you want to leave the store? \n Please enter action number:";
+		String exitStoreMessage = "Are you sure you want to leave the store? \n"
+				+ "Please enter action number:";
 		printOptions(new String[] {"Do more actions with the store.", "Exit Store"}, exitStoreMessage);
 		int input = getInt(1, 2);
 		
 		switch(input) {
 		case 1:
-			visitStore();
+			getStoreVisitChoice("Welcome back to the Store, please enter a number to further interact with this store!");
 		case 2:
 			System.out.println("You have exited the store!");
 			return;
@@ -223,7 +218,7 @@ public class CmdLineUi implements GameUi {
 	}
 	
 	private void viewShipProperties() {
-		
+		System.out.println(gameEnvironment.getShip().getDescription());
 	}	
 
 	
@@ -237,9 +232,12 @@ public class CmdLineUi implements GameUi {
 
 	
 	private void viewGoodsPurchased() {
-		
+		System.out.print(gameEnvironment.getPlayer().purchasedItemsToString());
 	}
 	
+	public void finishGame() {
+		
+	}
 	
 	// ############### ISLAND METHODS ###############
 	/**
@@ -352,7 +350,6 @@ public class CmdLineUi implements GameUi {
 			System.out.println("Repairing ship and paying wages");
 			gameEnvironment.getShip().setSail(chosenRoute, gameEnvironment);
 			System.out.println("Sail complete.");
-			playGame();
 		}
 	}
 	
@@ -399,7 +396,7 @@ public class CmdLineUi implements GameUi {
 				if (lowerBound <= input && input <= upperBound) { 
 					return input;
 				}
-				System.out.format("Please enter a number between %d and %d (inlcusive).", lowerBound, upperBound);
+				System.out.format("Please enter a number between %d and %d (inlcusive). \n", lowerBound, upperBound);
 				
 			} catch (InputMismatchException e) {
 				System.out.println("Invalid input. Please enter an integer.");

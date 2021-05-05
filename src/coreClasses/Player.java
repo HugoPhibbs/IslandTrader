@@ -39,6 +39,9 @@ public class Player {
 	}
 	
     public String purchasedItemsToString() {
+    	if (purchasedItems.size() == 0) {
+    		return "You haven't bought any items yet, you can buy items at any Store! \n";
+    	}
     	String result = "All items that have been bought and their details: \n";
     	for (Item item : purchasedItems) {
     		result += String.format("Item %s was bought for %d", item.getName(), item.getPlayerBuyPrice());

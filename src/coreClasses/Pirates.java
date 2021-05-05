@@ -22,7 +22,7 @@ public class Pirates {
     	 */
     	
     	Random random = new Random();
-    	int randomAttack = random.nextInt(351); //arbitrary upper bound, can be adjusted if need be
+    	int randomAttack = random.nextInt(366); //arbitrary upper bound, can be adjusted if need be
     	
     	if (randomAttack > ship.getDefenseCapability()*diceInt) {
     		takeGoods(ship);
