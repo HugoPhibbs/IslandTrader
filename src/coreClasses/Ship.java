@@ -116,8 +116,7 @@ public class Ship {
      */
     public boolean payWages(Route route, Player player) {
     	// Called every time a player wants to sell sail to another island
-        int daysSailing = route.getDistance() / speed; // days sailing dependent on ship speed. 
-        int totalWageCost = getDailyWageCost() * daysSailing;
+        int totalWageCost = getWageCost(route);
     	player.spendMoney(totalWageCost);
     	return true;
     }
@@ -259,9 +258,10 @@ public class Ship {
      * 
      * @return Integer for the total wage cost of the ship's crew
      */
-    public int getDailyWageCost() {
-    	int SINGLEDAILYWAGE = 100; // Arbitrary value for the daily wage of a single crew member
-    	return SINGLEDAILYWAGE * crewSize;
+    public int getWageCost(Route route) {
+    	int daysSailing = route.getDistance() / speed; // days sailing dependent on ship speed. 
+    	int SINGLEDAILYWAGE = 10; // Arbitrary value for the daily wage of a single crew member
+    	return SINGLEDAILYWAGE * crewSize * daysSailing;
     }
    
     /** Getter method for the cost to repair ship because of damage
