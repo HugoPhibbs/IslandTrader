@@ -74,9 +74,7 @@ public class Player {
 			moneyBalance -= amountSpent;
 			return true;
 		}
-		else {
-			return false;
-		}	
+		return false; // not enough money
 	}
 	
 	/**
