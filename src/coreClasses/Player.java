@@ -17,6 +17,7 @@ public class Player {
 	// A list of all items the player has purchased during the game, including those onsold. 
 	private ArrayList<Item> purchasedItems = new ArrayList<Item>();
 	
+	private Ship ship;
 	/**
 	 * Constructor method
 	 * 
@@ -26,6 +27,13 @@ public class Player {
 	public Player(String name, int startingCash) {
 		this.name = name;
 		this.moneyBalance = startingCash;
+	}
+	
+	public void setShip(Ship ship) {
+		this.ship = ship;
+	}
+	public Ship getShip() {
+		return ship;
 	}
 	
 	public String getName() {return name;}
@@ -76,6 +84,7 @@ public class Player {
 		}
 		return false; // not enough money
 	}
+
 	
 	/**
 	 * Increases the player's balance by the given amount
