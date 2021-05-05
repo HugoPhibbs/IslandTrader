@@ -56,9 +56,6 @@ public class Store {
      * @return Boolean, if transaction was successful
      */
     public boolean sellItem(String itemName, Player player) {
-    	/* TODO 
-    	 * game environment needs to handle the errors thrown. 
-    	 */
     	
     	// Get price of item in sellCatalogue, and check that player has enough money
     	
@@ -68,14 +65,16 @@ public class Store {
     	
     	int itemPrice = sellCatalogue.get(itemName).get("price");
     	if (player.getMoneyBalance() > itemPrice) {
-    		throw new InsufficientMoneyException("You do not have enough money to buy this item!");
+    		return false;
     	}
     	
     	// Create a NEW item object, based on the catalogue
     	Item itemToSell = new Item(itemName, sellCatalogue.get(itemName).get("spaceTaken"), itemPrice );
     		
         // Player has cash, so attempt to add
-    	player.getShip().addItem(itemToSell); // may throw an exception, game environment should handle
+    	if (!player.getShip().addItem(itemToSell)) {
+    		return false; // not enough space to add!
+    	} // may throw an exception, game environment should handle
     	player.spendMoney(itemToSell.getPlayerBuyPrice());
     	player.addPurchasedItem(itemToSell);
     	
@@ -107,14 +106,13 @@ public class Store {
     
     // ##################### GETTER METHODS ########################
     
-    /** Convertx a sell or buy catalogue into an an Array List that can be easily displayed
+    /** Converts a sell or buy catalogue into an an Array List that can be easily displayed
      * 
      * @param catalogue Catalogue to be parsed into a displayArrayList
      * @return ArrayList for what you can buy or sell from a store
      */
     public static ArrayList<String> catalogueToArrayList(HashMap<String, HashMap<String, Integer>> catalogue){
     	ArrayList<String> displayArrayList = new ArrayList<String>();
-    	
     	/*
     	 *  used bellow code from online https://www.geeksforgeeks.org/traverse-through-a-hashmap-in-java/
     	 */
