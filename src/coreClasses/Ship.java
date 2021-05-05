@@ -96,10 +96,6 @@ public class Ship {
    
     // ########################### MANAGING SHIP UPGRADES #######################################
     
-    /* TODO move upgrade to item system. 
-     * check equals and sameness.
-     */
-
     /** Adds a new upgrade to this Ship
      *
      * @param upgrade Upgrade object to be added to ship
@@ -142,7 +138,7 @@ public class Ship {
    	   // Adds an Item to the ship's cargo hold
    	   // If the ship has enough cargo space, Item is added
        // otherwise an Exception is thrown
-   	
+
        if (remainingCargoCapacity >= item.getSpaceTaken()) {
            items.add(item);
            remainingCargoCapacity -= item.getSpaceTaken();
@@ -164,7 +160,8 @@ public class Ship {
     	// called by Store class when ever a a player wants to sell an upgrade
     	
     	for (Item currItem : items) {
-    		if (currItem.getName() == itemName) {
+    		// Bellow line took a while to realise that == points to the SAME object.
+    		if (currItem.getName().equals(itemName)) {
     			items.remove(currItem);
     			return currItem;
     		}
