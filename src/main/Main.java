@@ -42,8 +42,9 @@ public class Main {
 		
 		// Creating current instance of Island
 		ArrayList<HashMap<String, HashMap<String, Integer>>> catalogues = createBuyCatalogues();
-		Store currStore = new Store("MY SHACK", catalogues.get(0), catalogues.get(0)); 
+		Store currStore = new Store("MY SHACK", "Pies", catalogues.get(0), catalogues.get(0)); 
 		Island currentIsland = new Island("current", currStore, "arb description");
+		currStore.setStoreIsland(currentIsland);
 		// Create Routes and pass to currentIsland
 		Route firstRoute = new Route("firstRoute", 10, currentIsland, i1, "test 1");
 		Route secondRoute = new Route("secondRoute", 20, currentIsland, i1, "test 2");
