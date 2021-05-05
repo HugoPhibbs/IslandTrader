@@ -325,12 +325,16 @@ public class Ship {
     public int getDefenseCapability() {return defenseCapability;}
     
     
+    public int getSpeed() {return speed;}
+    
     // // ########################### SETTER METHODS ###########################################
     /** Sets the Ship's owner
      * 
      * @param owner Player object for owner of the ship
      */
     public void setOwner(Player owner) {this.owner = owner;}  
+    
+    
     
     
    // TODO implement bellow?
