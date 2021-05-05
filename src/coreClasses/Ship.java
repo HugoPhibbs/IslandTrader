@@ -1,49 +1,24 @@
 package coreClasses;
 
-import java.util.*; 
+import java.util.*;  
 
 import exceptions.*;
 
-// --TODO--
-// A method to see the total space taken up by items in the itemArrayList
-// do we need to explictly say that a method throws an exception?
-
-// TODO -- how to implement adding upgrades
-// input check on upgrades when they are made in upgrade, DONT check for valid in ship class. 
-// then when adding an item with addUpgrade, call a PRIVATE method addDefenseBoost(int defenseBoost) of some sort
-// that does all necessary math and calc to add
-// this way we can always ensure that defense boost is a valid input. 
-// also need to make sure that upgrades cant be added if the defenseCapabilty is already 50
-
-/* TODO IDEA
- * Could be easier to represent the storage space on the ship based on the sum of spacetaken for the objects in the arraylist
- * have some sort of method that goes through the arraylist and adds the qualities of .spacetaken for each of the upgrade/item objects in the arraList
- * this would make more sense and be easier to debug. 
- * 
- * HOWEVER this could overcomplicate things, as this would require a for loop everytime we wanted to calculate the cummulative space taken
- * of Item and ShipUpgrade objects. 
- */
-
-/* TODO
- * process for adding upgrade should check have some sort of general method accociated with it
- * can check if it is an upgrade, then adds it correspondingly. 
- */
-
 /** Represents a ship
  * @author Hugo Phibbs
- * @version 23/4/2021
+ * @version 6/5/2021
  * @since 2/4/2021
  */
 
 public class Ship {
-	// Class variables that cannot be altered after initialization
+	// Final class variables
     private final String name;
     private final int maxUpgradeSpace;
     private final int maxCargoCapacity;
     private final int speed;             // unit distance per day
     private final int crewSize;
     private Player owner;
-    // Class variables that can be altered after initialization
+    // Non-final class variables
     private int remainingUpgradeSpace;
     private int remainingCargoCapacity;
     private int defenseCapability = 0;
@@ -58,14 +33,7 @@ public class Ship {
      * @param maxCargoCapacity Integer for the max amount of cargo capacity of the ship
      * @param speed Integer for the speed of the ship as it travels between islands (assume constant)
      */
-    public Ship(String name, int speed, int crewSize, int maxUpgradeSpace, int maxCargoCapacity){
-        // have to check each of the constructor parameters to see if they are a valid input
-        // name: has to be a non empty String
-        // maxCargoCapacity: cannot be negative!
-    	
-    	// TODO need to check that all the names being added to crewArray are valid
-    	
-    	// Check name and crewArray are valid
+    public Ship(String name, int speed, int crewSize, int maxUpgradeSpace, int maxCargoCapacity){    	
     	if (!CheckValidInput.nameIsValid(name)) {
     	    String msg1 = "Name for ship must have no more than 1 consecutive white space and be between 3 and 15 characters in length!";
     		throw new IllegalArgumentException(msg1);
@@ -94,7 +62,8 @@ public class Ship {
     public boolean takeDamage(int damage) {
     	// TODO, ceiling of below calculations
         healthStatus -= (int) damage * (1-defenseCapability/100); 
-        return (healthStatus <= 0);
+        // in practicality will always be above 0, because max damage of unfortunate weather is 99
+        return (healthStatus <= 0); 
     }
     
     /** Repairs a Ship object
@@ -104,9 +73,11 @@ public class Ship {
     public boolean repairShip() {
     	// Called if the ship has less than 100 health before setting off for another island
     	int repairCost = getRepairCost();
-    	owner.spendMoney(repairCost);
-        this.healthStatus = 100;
-        return true;
+    	if (owner.spendMoney(repairCost)) {
+    		this.healthStatus = 100;
+    		return true; // not enough money
+    	}
+        return false;
     }
 
     /** Pays the wages for the Ship's crew
@@ -116,8 +87,10 @@ public class Ship {
      */
     public boolean payWages(Route route, Player player) {
     	// Called every time a player wants to sell sail to another island
-        int totalWageCost = getWageCost(route);
-    	player.spendMoney(totalWageCost);
+        int totalWageCost = getRouteWageCost(route);
+    	if (!player.spendMoney(totalWageCost)) {
+    		return false; // not enough money
+    	}
     	return true;
     }
    
@@ -126,7 +99,6 @@ public class Ship {
     /* TODO move upgrade to item system. 
      * check equals and sameness.
      */
-   
 
     /** Adds a new upgrade to this Ship
      *
@@ -142,63 +114,23 @@ public class Ship {
             upgrades.add(upgrade);
             return true;
         } 
-        else if (defenseCapability >= 50){
-            throw new MaxDefenseCapabilityException("Ship has reached max defense capability!");
-        }
-        else if (remainingUpgradeSpace >= upgrade.getSpaceTaken()) {
-        	// catches (remainingUpgradeSpaceAvailable >= upgrade.spaceTaken) from if block above
-        	throw new InsufficientUpgradeSlotsAvailable("Not enough space to add this ship upgrade!");
-        }
-		return false; // to satisfy compiler, if method returns false, something has seriously gone wrong!
+		return false; // not enough remaingUpgrade space, or max defense Capability
     }
     
     /** Helper method for addUpgrade(ShipUpgrade upgrade)
      * 
      * @param upgrade Upgrade object to be added to ship
      */
-    private void addDefenseBoost(ShipUpgrade upgrade) {
+    private boolean addDefenseBoost(ShipUpgrade upgrade) {
+    	// TODO, need to check in cmd line if adding an upgrade maxed out defense.
     	defenseCapability += upgrade.getDefenseBoost();
     	if (defenseCapability > 50) {
     		defenseCapability = 50;
+    		return true;
     	}
+    	return false; // ship already has max defense capabiility;
     }
-    
-    /** Takes upgrade from ship and returns it
-     * 
-     * @param upgradeName String name for the name of upgrade to be removed
-     * @return Upgrade object with name matching upgradeName
-     */
-    
-    public ShipUpgrade takeUpgrade(String upgradeName) {
-    	// Takes an input of a String upgradeName and removes the first occurance
-    	// of an upgrade that has the same name from the upgradeArrayList
-    	// returns upgrade if it exists in array, otherwise throws an exception.
-    	// called by Store class when ever a player wants to sell an upgrade
-    	for (ShipUpgrade currUpgrade : upgrades) {
-    		if (currUpgrade.getName().equals(upgradeName)) {
-    			removeUpgrade(currUpgrade);
-    			return currUpgrade;
-    		}
-    	} // Did not find Upgrade, raise an exception 
-    	throw new IllegalArgumentException("Upgrade is not in ship's possession");
-    }
-    
-    /** Helper method for takeUpgrade(String upgradeName){
-     * 
-     * @param upgrade Upgrade object to be removed from Ship's possession
-     * @return Boolean value if Upgrade was removed successfully.
-     */
-    private boolean removeUpgrade(ShipUpgrade upgrade) {
-    	// Helper method for takeUpgrade(String upgradeName)
-    	if (defenseCapability < upgrade.getDefenseBoost()) {
-    		// To catch any possible bug in program
-    		throw new IllegalStateException("ERROR defenseCapability cannot be made less than 0");
-    	}
-    	defenseCapability -= upgrade.getDefenseBoost();
-    	upgrades.remove(upgrade);
-    	return true;
-    }
-    
+   
     // ########################### MANAGING SHIP ITEMS ###########################################
     
     /** Adds an Item Object to this Ship's cargo hold
@@ -216,9 +148,7 @@ public class Ship {
            remainingCargoCapacity -= item.getSpaceTaken();
            return true;
        } 
-       else {
-           throw new InsufficientCargoSpaceException("You do not have enough space to add this item");
-       }
+       return false; // not enough space to add an item
    }
     
     /** Takes Item from ship and returns it
@@ -233,14 +163,13 @@ public class Ship {
     	// otherwise throws an exception if the item is not present
     	// called by Store class when ever a a player wants to sell an upgrade
     	
-    	// TODO can't we roll takeItem and takeUpgrade into the same method?
     	for (Item currItem : items) {
     		if (currItem.getName() == itemName) {
     			items.remove(currItem);
     			return currItem;
     		}
-    	} // Did not find Item, raise an Exception
-    	throw new IllegalArgumentException("Item is not in player's possession");
+    	}
+    	return null; // did not find and/or remove inputted item
     }
     
     // ########################### GETTER METHODS ###########################################
@@ -258,7 +187,7 @@ public class Ship {
      * 
      * @return Integer for the total wage cost of the ship's crew
      */
-    public int getWageCost(Route route) {
+    public int getRouteWageCost(Route route) {
     	int daysSailing = route.getDistance() / speed; // days sailing dependent on ship speed. 
     	int SINGLEDAILYWAGE = 10; // Arbitrary value for the daily wage of a single crew member
     	return SINGLEDAILYWAGE * crewSize * daysSailing;
@@ -280,13 +209,24 @@ public class Ship {
      */
     public int getRemainingCargoCapacity() {return remainingCargoCapacity;}
     
-
+    /** Getter for the occupied cargo capacity of a Ship Object
+     * 
+     * @return Integer for the max Cargo capacity of Ship Object
+     */
     public int getOccupiedCargoCapacity() {
     	return maxCargoCapacity - remainingCargoCapacity;
     }
     
+    /** Getter for the remaining upgrade space of a Object
+     * 
+     * @return Integer for the remaining upgrade space of Ship Object
+     */
     public int getRemainingUpgradeSpace() {return remainingUpgradeSpace;}
     
+    /** Getter for the occupied upgrade space of a Object
+     * 
+     * @return Integer for the occupied upgrade space of Ship Object
+     */
     public int getOccupiedUpgradeSpace() {
     	return maxUpgradeSpace - remainingUpgradeSpace;
     }
@@ -321,10 +261,16 @@ public class Ship {
      */
     public int getHealthStatus() {return healthStatus;}
    
-    
+    /** Gets the defense capability for this Ship Object
+    *
+    * @return Integer value for the defense capability of the Ship
+    */
     public int getDefenseCapability() {return defenseCapability;}
     
-    
+    /** Getter method for the speed of this ship object
+     * 
+     * @return Integer value for the speed of a ship object
+     */
     public int getSpeed() {return speed;}
     
     // // ########################### SETTER METHODS ###########################################
@@ -333,12 +279,4 @@ public class Ship {
      * @param owner Player object for owner of the ship
      */
     public void setOwner(Player owner) {this.owner = owner;}  
-    
-    
-    
-    
-   // TODO implement bellow?
-    // public void setSpeed()
-    
-    // TODO ship size!!
 }
