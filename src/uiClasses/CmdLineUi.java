@@ -42,6 +42,7 @@ public class CmdLineUi implements GameUi {
 		Player player = new Player(playerName, STARTING_MONEY);
 		// and ship
 		Ship ship = pickShip();
+		ship.setOwner(player);
 		
 		System.out.println("Setup complete! Ready to play!");
 		gameEnvironment.onSetupFinished(player, ship, gameDuration, startIsland);
@@ -351,6 +352,7 @@ public class CmdLineUi implements GameUi {
 			System.out.println("Repairing ship and paying wages");
 			gameEnvironment.getShip().setSail(chosenRoute, gameEnvironment);
 			System.out.println("Sail complete.");
+			playGame();
 		}
 	}
 	

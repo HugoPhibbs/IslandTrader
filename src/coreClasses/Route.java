@@ -66,7 +66,6 @@ public class Route {
 		eventProbabilityMap.put("Rescue", rescueProb);
 	} 
 	
-	
 	public String getRouteName() {return routeName;}
 	
 	public int getDistance() {return distance;}
