@@ -53,7 +53,7 @@ public class Player {
     	String result = "All items that have been bought and their details: \n";
     	for (Item item : purchasedItems) {
     		result += String.format("Item %s was bought for %d", item.getName(), item.getPlayerBuyPrice());
-    		if (item.getPlayerSellPrice() == -1) {
+    		if (item.getPlayerSellPrice() != -1) {
     			result += String.format(" and was sold for %d at %s. \n", item.getPlayerSellPrice(), item.getStoreIslandSoldAt().getIslandName());
     		}
     		else {
