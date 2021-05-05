@@ -127,8 +127,6 @@ public class Store {
     	return displayArrayList;
     }
     
-    catalogueToArrayListWrapper()
-    
     /**
      * Creates and returns a string representation of the given catalogue, useful for giving a quick overview
      * of what a store buys or sells. Is called by island.fullInfo.

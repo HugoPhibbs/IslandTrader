@@ -1,5 +1,7 @@
 package coreClasses;
 
+import java.util.HashMap;
+
 /** Class to check for valid input across project
  * 
  * @author Hugo Phibbs

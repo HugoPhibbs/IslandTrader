@@ -41,7 +41,8 @@ public class Main {
 		Ship[] shipArray = new Ship[] {ship1, ship2, ship3, ship4};
 		
 		// Creating current instance of Island
-		Store currStore = new Store(); 
+		ArrayList<HashMap<String, HashMap<String, Integer>>> catalogues = createBuyCatalogues();
+		Store currStore = new Store("MY SHACK", catalogues.get(0), catalogues.get(0)); 
 		Island currentIsland = new Island("current", currStore, "arb description");
 		// Create Routes and pass to currentIsland
 		Route firstRoute = new Route("firstRoute", 10, currentIsland, i1, "test 1");

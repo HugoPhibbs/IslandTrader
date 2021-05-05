@@ -178,6 +178,7 @@ public class CmdLineUi implements GameUi {
 	
 	private String visitStoreBuySellHelper(String operation, HashMap<String, HashMap<String, Integer>> catalogue) {
 		String buySellMessage  = String.format("Enter the number corresponding to the Item that you want to %s! \n", operation);
+		System.out.format("%s catalogue for this store is empty!", operation);
 		ArrayList<String> optionsArrayList = Store.catalogueToArrayList(catalogue);
 		printOptions(optionsArrayList, buySellMessage);
 		
