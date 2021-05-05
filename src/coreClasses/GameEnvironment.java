@@ -83,62 +83,15 @@ public class GameEnvironment {
 	}
 	
 	/**
-	 * Works out the total cost to repair the ship and pay wages for a particular route. 
+	 * Works out the amount that has to be spent before this route can be sailed.
+	 * Based on the cost to repair the ship and pay crew wages. 
 	 * 
 	 * @return cost The total amount that needs to be paid before sailing that route. 
 	 */
 	public int getCost(Route route) {
-		return 10;
-	}
-	
-	
-	
-	public void getIsland() {
-		// Gets a new island or goes back to take turn
-		try {
-			Island newIsland = chooseOtherIsland();
-			getRoute(newIsland);
-		} catch (GoBackException e) {
-			return;
-		}	
-	}
-	
-	/**
-	 * Method to handle calls to Island.chooseRoute. If a route is chosen, the player sets sail along that route. 
-	 * Alternatively the player chooses to go back, and getIsland is called. 
-	 * @param newIsland Island that has been selected to travel to.
-	 */
-	public void getRoute(Island newIsland) {
-		// Gets route to new island or goes back to reselect island
-		try {
-			Route selectedRoute = currentIsland.chooseRoute(newIsland);
-		} catch (GoBackException e) {
-			return;
-		}
-		// call Ship.setSail() once implemented
-		System.out.println("worked");
-	}
-
-	
-	/**
-	 * Prints a string representation of each island that is not the current island.
-	 */
-	public void viewOtherIslands() {
-		ArrayList<Island> otherIslands = getOtherIslandsList();
-		
-		for (Island otherIsland: otherIslands) {
-				System.out.println(otherIsland);
-		}
-		
-		String input = TakeInput.inputString("To view more information about an island, enter the name of the island.");
-		
-		for (Island island: otherIslands) {
-			if (island.getIslandName().toLowerCase() == input) {
-				String islandInfo = "The island " + island.getIslandName() + " can be reached from your current island by the following routes:\n";
-				islandInfo += currentIsland.viewRoutes(island);  // TODO: separate view routes from choose route.
-				// TODO: add info string about what the island's store buys and sells. 
-			}
-		}
+		int cost = ship.getRepairCost();
+		// get cost of paying wages based on number of crew, distance or route (days sailing) and cost per crew per day.
+		return cost;
 	}
 	
 	public Island[] getOtherIslands() {
@@ -151,32 +104,6 @@ public class GameEnvironment {
 			}
 		}
 		return otherIslands;
-	}
-	
-	public Island chooseOtherIsland() {
-		
-		ArrayList<Island> otherIslands = getOtherIslandsList();
-		
-		// delete this once viewOtherIslands is working
-		for (Island otherIsland: otherIslands) {
-				System.out.println(otherIsland);
-		}
-		
-		String inputStr = TakeInput.inputString("To travel to an Island, enter the island's name. To go back please type \"back\"");
-		
-		if (inputStr.equals("back")) {
-			throw new GoBackException();
-		}
-		else {
-			for (Island otherIsland: otherIslands) {
-				if (inputStr.equals(otherIsland.getIslandName().toLowerCase())) {
-					return otherIsland;
-				}
-			}
-		}
-		
-		System.out.println("Invalid Input");
-		return chooseOtherIsland();
 	}
 	
 	public void buyFromStore(String itemToBuyName) {
