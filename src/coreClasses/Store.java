@@ -1,6 +1,6 @@
 package coreClasses;
 
-import java.lang.reflect.Array;
+import java.lang.reflect.Array; 
 
 import java.util.*;
 
@@ -9,26 +9,16 @@ import exceptions.*;
 /** Represents a store
  * 
  * @author Hugo Phibbs
- * @version 23/4/2021
+ * @version 6/5/2021
  * @since 2/4/2021
  */
 
 public class Store {
-    private String name; // something creative
+    private String name; 
+    private String specialty; // just to be more creative
     private Island storeIsland;
-    
     private HashMap<String, HashMap<String, Integer>> sellCatalogue;
     private HashMap<String, HashMap<String, Integer>> buyCatalogue;
-    
-    
-    /* TODO
-     * How to sell Upgrades and take advantage of inheritance?
-     * just to be creative any mention of currency should be given as "pirate bucks"
-     */
-   
-    
-    // leave this in here for informal testing, can delete once we get to more formal testing. 
-    public Store() {}
     
     /** Constructor for Store Class
      * 
@@ -36,13 +26,13 @@ public class Store {
      * @param sellCatalogue HashMap<String, HashMap> of Items that the store sells
      * @param buyCatalogue HashMap<String, HashMap> of Items that a store buys
      */
-    public Store(String name, HashMap<String, HashMap<String, Integer>> sellCatalogue, HashMap<String, HashMap<String, Integer>> buyCatalogue) {
+    public Store(String name, String specialty, HashMap<String, HashMap<String, Integer>> sellCatalogue, HashMap<String, HashMap<String, Integer>> buyCatalogue) {
     	
     	if (!CheckValidInput.nameIsValid(name)) {
     		throw new IllegalArgumentException("Name for store must have no more than 1 consecutive white space and be between 3 and 15 characters in length!");
     	}
-    	
     	this.name = name;
+    	this.specialty = specialty;
     	this.sellCatalogue = sellCatalogue;
     	this.buyCatalogue = buyCatalogue;
     }
@@ -104,8 +94,6 @@ public class Store {
     	return true;
     }
     
-    // ##################### GETTER METHODS ########################
-    
     /** Converts a sell or buy catalogue into an an Array List that can be easily displayed
      * 
      * @param catalogue Catalogue to be parsed into a displayArrayList
@@ -144,41 +132,47 @@ public class Store {
     	catch (IllegalStateException ise) {
     		return String.format("This Store doesnt have a %s catalogue yet, please add one!", buyOrSell);
     	}
-    
     }
     
-    /** Gets the sellCatalogue for a store
-     * 
-     * @return HashMap<String, Hashmap> representation of the things that a store sells
-     */
-    public HashMap<String, HashMap<String, Integer>> getSellCatalogue(){
-    	return this.sellCatalogue;
-    }
-    
-    /** Gets the buyCatalogue for a store
-     * 
-     * @return HashMap<String, HashMap<String, Integer>> representation of the things that a store buys
-     */
-    public HashMap<String, HashMap<String, Integer>> getBuyCatalogue(){
-    	return this.buyCatalogue;
-    }
+    // ##################### GETTER METHODS ########################
     
     /** Gets the name of the store
      * 
      * @return String for the name of the store
      */
-    public String getName() {
-    	return this.name;
-    }
+    public String getName() {return name;}
+    
+    /** Getter method for the specialty of a store
+     * 
+     * @return String for the specialty of a store
+     */
+    public String getSpecialty() {return specialty;}
+    
+    /** Getter method for the Island that a store belongs to
+     * 
+     * @return Island that store object belongs to
+     */
+    public Island getStoreIsland() {return storeIsland;}
+   
+    /** Gets the sellCatalogue for a store
+     * 
+     * @return HashMap<String, Hashmap> representation of the things that a store sells
+     */
+    public HashMap<String, HashMap<String, Integer>> getSellCatalogue() {return sellCatalogue;}
+    
+    /** Gets the buyCatalogue for a store
+     * 
+     * @return HashMap<String, HashMap<String, Integer>> representation of the things that a store buys
+     */
+    public HashMap<String, HashMap<String, Integer>> getBuyCatalogue() {return buyCatalogue;}
     
     /** Gets the description of the store
      * 
      * @return String for the description of the store
      */
     public String getDescription(){
-        // returns the name of store, types of items it sells (eg ship upgrades, valuables, food etc)
-        // called by visitStore method bellow
-    	return "EMPTY";
+    	// specific things that a store sells will be given on request!
+    	return String.format("Store %s, is located on %s and specialised in %s!", name, storeIsland.getIslandName(), specialty);
     }
     
     /** Gets the visit options for a store, used by ui
@@ -205,10 +199,8 @@ public class Store {
     	// gets the name of a chosen, as in implemented code from game environment, just nice to have here
     	// display ArrayList must have form {"itemName for ..."}, key thing being itemName is in first position
     	
-    	// TODO, needs to work with gui
     	return (String) Array.get(displayArrayList.get(chosenItemNum-1).split(" "), 0);
     }
-    
     
     // ##################### SETTER METHODS ########################
     
