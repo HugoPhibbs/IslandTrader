@@ -192,16 +192,29 @@ public class GameEnvironment {
 	 * @return The amount of money required to take the cheapest sail option. 
 	 */
 	public int minMoneyRequired() {
-		return 10;
+		int cost = ship.getRepairCost();
+		cost += ship.getWageCost(shortestRoute());
+		return cost;
 	}
 	
 	/**
-	 * Finds the shortest route off the current Island to any other island
+	 * Searches through every route off the current island to any other island to find the
+	 * one with lowest distance. 
 	 * 
-	 * @return
+	 * @return the Route with lowest distance from currentIsland.
 	 */
 	private Route shortestRoute() {
-		
+		Route shortest = null;
+		int minDist = 999999;		// effectively infinite in this situation, but an int.
+		for (Island island: getOtherIslands()) {
+			for (Route route: currentIsland.getPossibleRoutes(island)) {
+				if (route.getDistance() < minDist) {
+					minDist = route.getDistance();
+					shortest = route;
+				}
+			}
+		}
+		return shortest;
 	}
 	
 	
