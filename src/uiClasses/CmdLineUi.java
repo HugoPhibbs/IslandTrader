@@ -126,33 +126,37 @@ public class CmdLineUi implements GameUi {
 			//view and buy items that store sells
 			HashMap<String, HashMap<String, Integer>> sellCatalogue = gameEnvironment.getCurrentIsland().getIslandStore().getSellCatalogue();
 			
-	    	String itemStoreToSellName = visitStoreBuySellHelper("buy", sellCatalogue);
+	    	String itemStoreToSellName = visitStoreBuySellPreper("buy", sellCatalogue);
 	    	
 	    	try {
-	    		gameEnvironment.buyFromStore(itemStoreToSellName);
-	    	}
-	    	catch (InsufficientMoneyException ime) {
-	    		System.out.println(ime.getMessage());
-	    		/* TODO
-	    		 * what should we do here, ie give player options to get cash?
-	    		 * create a method for this i think
-	    		 * should have method in game environment
-	    		 */
+	    		// TODO move bellow if statement into ge
+	    		Item itemToSell = gameEnvironment.buyFromStore(itemStoreToSellName);
+	    		if (!itemToSell.getWithPlayer()) {
+	    			System.out.println(Store.sellItemChecker(gameEnvironment.getPlayer(), itemToSell));
+	    		}
+	    		System.out.format("You just bought %s for %s pirate bucks! \n", itemToSell.getName(), itemToSell.getPlayerBuyPrice());
 	    	}
 	    	catch (IllegalStateException ise) {
 	    		System.out.print(ise.getMessage());
 	    	}
+	    	
 	    	getStoreVisitChoice(welcomeBackMsg);
 			break;
 		case 2:
 			// view and sell items that a store buys 
 			HashMap<String, HashMap<String, Integer>> buyCatalogue = gameEnvironment.getCurrentIsland().getIslandStore().getBuyCatalogue();
 			
-			String itemStoreToBuyName = visitStoreBuySellHelper("sell", buyCatalogue);
+			String itemStoreToBuyName = visitStoreBuySellPreper("sell", buyCatalogue);
 			
 	    	// Sell item from player to store
 	    	try {
-	    		gameEnvironment.sellToStore(itemStoreToBuyName);
+	    		Item itemToBuy = gameEnvironment.sellToStore(itemStoreToBuyName);
+	    		if (itemToBuy == null) {
+	    			System.out.println(Store.buyItemChecker(gameEnvironment.getPlayer(), itemToBuy));
+	    		}
+	    		else {
+	    			System.out.format("You just sold %s for %s pirate bucks! \n", itemToBuy.getName(), itemToBuy.getPlayerSellPrice());
+	    		}	
 	    	}
 	    	catch (IllegalStateException ise) {
 	    		System.out.println(ise.getMessage());
@@ -176,9 +180,12 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
-	private String visitStoreBuySellHelper(String operation, HashMap<String, HashMap<String, Integer>> catalogue) {
+	private String visitStoreBuySellPreper(String operation, HashMap<String, HashMap<String, Integer>> catalogue) {
 		String buySellMessage  = String.format("Enter the number corresponding to the Item that you want to %s! \n", operation);
-		System.out.format("%s catalogue for this store is empty!", operation);
+		if (catalogue.isEmpty()) {
+			System.out.format("%s catalogue for this store is empty!", operation);
+			return null;
+		}
 		ArrayList<String> optionsArrayList = Store.catalogueToArrayList(catalogue);
 		printOptions(optionsArrayList, buySellMessage);
 		
