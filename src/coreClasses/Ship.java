@@ -332,18 +332,6 @@ public class Ship {
      */
     public void setOwner(Player owner) {this.owner = owner;}  
     
-    public void setSail(Route route, GameEnvironment ge) {
-    	// Repair ship and pay wages before setting sail.
-		repairShip();
-		payWages(route, owner);
-		// Set sail
-		// TODO run random events. 
-		// Arrive at new island
-		int routeDuration = route.getDistance() / speed;
-		ge.reduceDaysRemaining(routeDuration);
-		ge.setCurrentIsland(route.getDestination());		
-    }
-    
     
    // TODO implement bellow?
     // public void setSpeed()

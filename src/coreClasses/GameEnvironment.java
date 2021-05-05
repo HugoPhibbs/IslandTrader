@@ -82,6 +82,19 @@ public class GameEnvironment {
 		ui.playGame();
 	}
 	
+	public void setSail(Route route) {
+    	// Repair ship and pay wages before setting sail.
+		ship.repairShip();
+		ship.payWages(route, player);
+		// Set sail
+		// TODO run random events. 
+		// Arrive at new island
+		int routeDuration = route.getDistance() / ship.getSpeed();
+		reduceDaysRemaining(routeDuration);
+		setCurrentIsland(route.getDestination());		
+    }
+    
+	
 	/**
 	 * Works out the amount that has to be spent before this route can be sailed.
 	 * Based on the cost to repair the ship and pay crew wages. 
@@ -155,6 +168,8 @@ public class GameEnvironment {
 	private Route shortestRoute() {
 		
 	}
+	
+	
 	
 		
 	/**
