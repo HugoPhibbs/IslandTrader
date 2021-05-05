@@ -5,6 +5,7 @@ public class Item{
     private Island storeIslandSoldAt; // island where the item was sold from player to store
     private String name;
     private int spaceTaken;
+    private boolean withPlayer; // keeps track of whether an item is currently with a player or not!
     // called playerBuyPrice and not buyPrice to avoid confusion with the perspective of the store 
     private int playerBuyPrice; // Price of Item within a store
     private int playerSellPrice = -1; // Price of item that a player sells back to a store, default value -1 if it hasnt been sold to a store yet
@@ -23,7 +24,6 @@ public class Item{
     	this.name = name;
     	this.spaceTaken = spaceTaken;
     	this.playerBuyPrice = playerBuyPrice; 
-    	// calls setDescription()
     }
 
     /** Setter method for the Island that an Item as sold at
@@ -38,18 +38,14 @@ public class Item{
     	this.playerSellPrice = playerSellPrice;
     }
     
-
-    public void setDescription(){
-    	// takes a parameter from store, so when calling this, it shows the actual price in store
-    	
-    	// called by shop method when displaying items on sale. 
-    	// could it be more simple just to include straight prices and not confuse ourselves with multipliers??
-    	// if we have a thing with multipliers, we can easily add the same Item object to multiple stores
-    	// and then the stores can decide the price easily
-    	
-        // implement
+    public void setWithPlayer(boolean withPlayer) {
+    	this.withPlayer = withPlayer;
     }
     
+    public boolean getWithPlayer() {
+    	return withPlayer;
+    }
+
     /** Getter method for the description of Item object
      * 
      * @return String description of Item object details
