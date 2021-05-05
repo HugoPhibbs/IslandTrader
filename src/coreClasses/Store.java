@@ -143,7 +143,7 @@ public class Store {
     	    }
     		return catalogueString;
     	}
-    	catch (EmptyCatalogueException ese) {
+    	catch (IllegalStateException ise) {
     		return String.format("This Store doesnt have a %s catalogue yet, please add one!", buyOrSell);
     	}
     

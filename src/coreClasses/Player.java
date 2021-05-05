@@ -69,12 +69,13 @@ public class Player {
 	 * 
 	 * @param amountSpent The amount the purchase costs.
 	 */
-	public void spendMoney(int amountSpent) {
+	public boolean spendMoney(int amountSpent) {
 		if (amountSpent <= moneyBalance) {
 			moneyBalance -= amountSpent;
+			return true;
 		}
 		else {
-			throw new InsufficientMoneyException("Not enough money!");
+			return false;
 		}	
 	}
 	
