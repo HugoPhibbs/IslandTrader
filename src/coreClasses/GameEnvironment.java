@@ -8,9 +8,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Random;
 
 import exceptions.*;
 import uiClasses.GameUi;
+
 
 /* TODO
  * how do we do message handling of errors, since they are all caught GameEnvironment, should we use
@@ -87,13 +89,32 @@ public class GameEnvironment {
 		ship.repairShip();
 		ship.payWages(route, player);
 		// Set sail
-		// TODO run random events. 
+		randomEvents(route);
 		// Arrive at new island
 		int routeDuration = route.getDistance() / ship.getSpeed();
 		reduceDaysRemaining(routeDuration);
 		setCurrentIsland(route.getDestination());		
     }
     
+	/**
+	 * Based on the probabilities of each event for the specific route, uses a random number to decide
+	 * if any random events will occur. Makes the necessary calls if they are to occur. 
+	 * @param route The route the player is traveling along.
+	 */
+	private void randomEvents(Route route) {
+		Random random = new Random();
+		if (route.getPirateProb() < random.nextInt(100)) {
+			// roll dice
+			Pirates.attackShip(1, ship);
+		}
+		if (route.getWeatherProb() < random.nextInt(100)) {
+			UnfortunateWeather.damageShip(ship);
+		}
+		if (route.getRescueProb() < random.nextInt(100)) {
+			// roll dice
+			RescuedSailors.giveMoney(player);
+		}
+	}
 	
 	/**
 	 * Works out the amount that has to be spent before this route can be sailed.
