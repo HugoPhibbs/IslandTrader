@@ -74,6 +74,15 @@ public class GameEnvironment {
 	
 	public void setCurrentIsland(Island newCurrentIsland) {currentIsland = newCurrentIsland;}
 	
+	/**
+	 * Method that is called when the user has entered all necessary information for setup, 
+	 * and all objects that required this information have been created. This method passes
+	 * those objects to the current instance of GameEnvironment. 
+	 * @param player
+	 * @param ship
+	 * @param duration
+	 * @param startisland
+	 */
 	public void onSetupFinished(Player player, Ship ship, int duration, Island startisland) {
 		this.player = player;
 		this.ship = ship;
@@ -84,6 +93,11 @@ public class GameEnvironment {
 		ui.playGame();
 	}
 	
+	/**
+	 * Makes the necessary payments before sailing, then sails along a particular route to a 
+	 * new Island. May encounter random events based on the probabilities of the particular route. 
+	 * @param route The Route the player has chosen. 
+	 */
 	public void setSail(Route route) {
     	// Repair ship and pay wages before setting sail.
 		ship.repairShip();
