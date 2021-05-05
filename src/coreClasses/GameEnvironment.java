@@ -137,6 +137,25 @@ public class GameEnvironment {
 		return score;
 	}
 	
+	/**
+	 * Calculates the amount that needs to be paid before the cheapest route available can be sailed. 
+	 * cost is dependent on amount of damage to the ship that needs to be repaired, as well as cost of wages to be paid. 
+	 * 
+	 * @return The amount of money required to take the cheapest sail option. 
+	 */
+	public int minMoneyRequired() {
+		return 10;
+	}
+	
+	/**
+	 * Finds the shortest route off the current Island to any other island
+	 * 
+	 * @return
+	 */
+	private Route shortestRoute() {
+		
+	}
+	
 		
 	/**
 	 * Note that this is an informal test environment, when i write the proper Junit tests ill use actual varaible names and what not.

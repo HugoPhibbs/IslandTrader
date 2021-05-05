@@ -22,7 +22,8 @@ public class Pirates {
     	 */
     	
     	Random random = new Random();
-    	int randomAttack = random.nextInt(366); //arbitrary upper bound, can be adjusted if need be
+    	int randomAttack = random.nextInt(351); //arbitrary upper bound, can be adjusted if need be
+    	
     	if (randomAttack > ship.getDefenseCapability()*diceInt) {
     		takeGoods(ship);
     		return false;
@@ -43,7 +44,7 @@ public class Pirates {
         	String gameOverMessage = "You have less goods than what the pirates demand. \n"
         			+ "You and your crew have to walk the plank! \n"
         			+ "GAME OVER!";
-        	throw new GameOverException(gameOverMessage);
+        	throw new GameOverException(gameOverMessage); //TODO dont throw GameOverException
         }
         else{
         	while (randomGoodDemand > 0) {
