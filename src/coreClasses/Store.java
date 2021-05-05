@@ -20,6 +20,7 @@ public class Store {
     private HashMap<String, HashMap<String, Integer>> sellCatalogue;
     private HashMap<String, HashMap<String, Integer>> buyCatalogue;
     
+    public Store() {}
     /** Constructor for Store Class
      * 
      * @param name String name of Store object to be created
@@ -45,53 +46,86 @@ public class Store {
      * @param player PLayer object to receive Item
      * @return Boolean, if transaction was successful
      */
-    public boolean sellItem(String itemName, Player player) {
+    public Item sellItem(String itemName, Player player) {
     	
     	// Get price of item in sellCatalogue, and check that player has enough money
     	
+    	
+    	// returns the item that was sold either way, this is to make handling alternative flow
+    	// ALOT easier!
     	if (sellCatalogue.get(itemName) == null) {
     		throw new IllegalStateException("BUG store does not sell this item!");
     	}
     	
-    	int itemPrice = sellCatalogue.get(itemName).get("price");
-    	if (player.getMoneyBalance() > itemPrice) {
-    		return false;
+    	Item itemToSell = new Item(itemName, sellCatalogue.get(itemName).get("spaceTaken"), sellCatalogue.get(itemName).get("price") );
+    	// TODO need to discard object if it doesnt work? or will java do it automatically??
+    	if (sellItemChecker(player, itemToSell) != null){
+    		return itemToSell;
     	}
-    	
-    	// Create a NEW item object, based on the catalogue
-    	Item itemToSell = new Item(itemName, sellCatalogue.get(itemName).get("spaceTaken"), itemPrice );
-    		
-        // Player has cash, so attempt to add
-    	if (!player.getShip().addItem(itemToSell)) {
-    		return false; // not enough space to add!
-    	} // may throw an exception, game environment should handle
+    	itemToSell.setWithPlayer(true);
     	player.spendMoney(itemToSell.getPlayerBuyPrice());
+    	player.getShip().addItem(itemToSell);
     	player.addPurchasedItem(itemToSell);
     	
-    	return true;
+    	return itemToSell;
     }
     
-    /** Buys an item from a Player
+    /** Checks if selling an item from a STORE TO A PLAYER is permissible
+     *  if it is, returns null, otherwise returns String for reason why not
+     * 
+     * @param player
+     * @return
+     */
+    public static String sellItemChecker(Player player, Item itemToSell) {
+    	if (player.getMoneyBalance() < itemToSell.getPlayerBuyPrice()) {
+    		return "Player does not have enough money to buy this item!";
+    	}
+    	else if (player.getShip().getRemainingCargoCapacity() < itemToSell.getSpaceTaken()) {
+    		return "Player does not have enough space to store this item!";
+    	}
+    	return null;
+    }
+    
+    /** Buys an item from a Player to a store
      * 
      * @param itemName String for the name of Item to be bought 
      * @param player Player object that is selling an Item
      * @return Boolean if transaction was successful
      */
-    public boolean buyItem(String itemName, Player player) {
+    public Item buyItem(String itemName, Player player) {
     	if (buyCatalogue.get(itemName) == null) {
     		throw new IllegalStateException("BUG store does not buy this item!");
     	}
     	
+    	Item itemToBuy = player.getShip().takeItem(itemName);
+    	
+    	if (buyItemChecker(player, itemToBuy) != null) {
+    		// not successful, return item, and dont remove it from players possession
+    		return itemToBuy;
+    	}
+        // Set island that item was sold at and give player money
     	int itemPrice = buyCatalogue.get(itemName).get("price");
     	
-    	Item boughtItem = player.getShip().takeItem(itemName);
+    	// Set item to not be with player, opposite process to what is happening above.
+    	itemToBuy.setWithPlayer(false);
     	player.earnMoney(itemPrice);
-    	
-    	// Set island and price that a item was sold at
-    	boughtItem.setPlayerSellPrice(itemPrice);
-    	boughtItem.setStoreIslandSoldAt(storeIsland);
-    	
-    	return true;
+    	itemToBuy.setPlayerSellPrice(itemPrice);
+    	itemToBuy.setStoreIslandSoldAt(storeIsland);
+
+    	return itemToBuy;
+    }
+    
+    /** Checks if buying an item from a PLAYER TO A STORE is permissible
+     *  if it is, returns null, otherwise returns String for reason why not
+     * 
+     * @param player
+     * @return
+     */
+    public static String buyItemChecker(Player player, Item itemToBuy) {
+    	if (itemToBuy == null) {
+    		return "Player does not have this item in possession!";
+    	}
+    	return null;
     }
     
     /** Converts a sell or buy catalogue into an an Array List that can be easily displayed
@@ -133,7 +167,6 @@ public class Store {
     		return String.format("This Store doesnt have a %s catalogue yet, please add one!", buyOrSell);
     	}
     }
-    
     // ##################### GETTER METHODS ########################
     
     /** Gets the name of the store
@@ -208,8 +241,8 @@ public class Store {
      * 
      * @param island Island that a store belongs to
      */
-    public void setStoreIsland(Island island) {
-    	this.storeIsland = island;
+    public void setStoreIsland(Island storeIsland) {
+    	this.storeIsland = storeIsland;
     }
     
 }
