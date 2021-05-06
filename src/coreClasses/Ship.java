@@ -16,7 +16,8 @@ public class Ship {
     private final int maxUpgradeSpace;
     private final int maxCargoCapacity;
     private final int speed;             // unit distance per day
-    private final int crewSize;
+    private final int crewSize; 
+	private final int COST_PER_CREW_PER_DAY = 5;
     private Player owner;
     // Non-final class variables
     private int remainingUpgradeSpace;
@@ -186,8 +187,7 @@ public class Ship {
      */
     public int getRouteWageCost(Route route) {
     	int daysSailing = route.getDistance() / speed; // days sailing dependent on ship speed. 
-    	int SINGLEDAILYWAGE = 10; // Arbitrary value for the daily wage of a single crew member
-    	return SINGLEDAILYWAGE * crewSize * daysSailing;
+    	return COST_PER_CREW_PER_DAY * crewSize * daysSailing;
     }
    
     /** Getter method for the cost to repair ship because of damage
