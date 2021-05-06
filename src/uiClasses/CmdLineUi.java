@@ -368,7 +368,7 @@ public class CmdLineUi implements GameUi {
 			}
 			System.out.println("Repairing ship and paying wages");
 			gameEnvironment.setSail(chosenRoute);
-			System.out.format("You have arrived at %s\n", gameEnvironment.getCurrentIsland());
+			System.out.println("You have arrived at " + gameEnvironment.getCurrentIsland().getIslandName());
 			playGame();
 		}
 	}
