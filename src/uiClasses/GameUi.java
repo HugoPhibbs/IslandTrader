@@ -18,4 +18,6 @@ public interface GameUi {
 	public void playGame();
 	
 	public void finishGame(String message);
+	
+	public int rollDice();
 }
