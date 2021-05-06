@@ -45,6 +45,8 @@ public class GameEnvironment {
 	private int daysRemaining;
 	private Island currentIsland;
 	private Ship ship;
+	// The minimum amount of money to travel off your particular island. 
+	private int minMoneyToTravel;
 	
 	public GameEnvironment(Island[] islandArray, Ship[] shipArray, uiClasses.GameUi ui) {
 		this.islandArray = islandArray;
@@ -67,6 +69,8 @@ public class GameEnvironment {
 	public Ship[] getShipArray() {return shipArray;}
 	
 	public int getDaysSelected() {return daysSelected;}
+	
+	public int getMinMoneyToTravel() {return minMoneyToTravel;}
 	
 	public void reduceDaysRemaining(int daysPassed) {
 		daysRemaining -= daysPassed;
@@ -196,10 +200,9 @@ public class GameEnvironment {
 	 * 
 	 * @return The amount of money required to take the cheapest sail option. 
 	 */
-	public int minMoneyRequired() {
+	public void minMoneyRequired() {
 		int cost = ship.getRepairCost();
-		cost += ship.getRouteWageCost(shortestRoute());
-		return cost;
+		minMoneyToTravel += ship.getRouteWageCost(shortestRoute());
 	}
 	
 	/**
@@ -220,6 +223,14 @@ public class GameEnvironment {
 			}
 		}
 		return shortest;
+	}
+	
+	/**
+	 * Based on your items you can sell at the current island's store, works out your players liquid value.
+	 * @return The amount the player can sell all his sellable items for plus his bank balance. 
+	 */
+	public int liquidValue() {
+		return 10;
 	}
 	
 	
