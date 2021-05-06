@@ -69,6 +69,18 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
+	@Override
+	public void finishGame(String message) {
+		System.out.format("Game Over %s!\n", gameEnvironment.getPlayer().getName());
+		System.out.println(message);
+		int selectedDays = gameEnvironment.getDaysSelected();
+		System.out.format("You played for %d days out of a selected %d days.\n", 
+				(selectedDays - gameEnvironment.getDaysRemaining()), selectedDays);
+		System.out.format("You made $%d profit, and your final score was %d!\n", 
+				(gameEnvironment.getPlayer().getMoneyBalance() -STARTING_MONEY), gameEnvironment.getScore(STARTING_MONEY));
+	}
+
+	
 	/**
 	 * Based on the players input, calls the appropriate method to execute the action they have selected.
 	 * @param input a valid integer that corresponds with an action available to the player.
@@ -242,10 +254,6 @@ public class CmdLineUi implements GameUi {
 	
 	private void viewGoodsPurchased() {
 		System.out.print(gameEnvironment.getPlayer().purchasedItemsToString());
-	}
-	
-	public void finishGame() {
-		
 	}
 	
 	// ############### ISLAND METHODS ###############
