@@ -159,9 +159,9 @@ public class Store {
     	String catalogueString = "The store on this island " + buyOrSell + "s:\n";
     	try {
     		for (String itemString: catalogueToArrayList(catalogue)) {
-        		catalogueString += itemString;
+        		catalogueString += itemString + "; ";
     	    }
-    		return catalogueString;
+    		return catalogueString + "\n";
     	}
     	catch (IllegalStateException ise) {
     		return String.format("This Store doesnt have a %s catalogue yet, please add one!", buyOrSell);

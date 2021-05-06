@@ -35,7 +35,7 @@ public class Main {
 		currStore.setStoreIsland(currentIsland);
 		
 		// Create the second island and its store
-		Store s1 = new Store();
+		Store s1 = new Store("AAA", "WWW", catalogues.get(0), catalogues.get(0));
 		Island i1 = new Island("otherOne", s1, "arb1"); 
 		s1.setStoreIsland(i1);
 		

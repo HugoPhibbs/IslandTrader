@@ -31,6 +31,7 @@ public class CmdLineUi implements GameUi {
 	 * Gets the input required to create the player and ship objects, then passes them to gameEnvironment
 	 * to complete its setup. 
 	 */
+	@Override
 	public void setup(GameEnvironment gameEnvironment) {
 		this.gameEnvironment = gameEnvironment;
 		// create the player and the ship
@@ -51,6 +52,7 @@ public class CmdLineUi implements GameUi {
 	 * While the game has not been finished, playGame calls methods to print the actions available
 	 * to the player, take input from the player and handles that input to perform actions.
 	 */
+	@Override
 	public void playGame() {
 		
 		while (!finish) {
@@ -59,8 +61,8 @@ public class CmdLineUi implements GameUi {
 					"View the propeties of your ship.", 
 					"View the goods you have purchased.", 
 					"View the properties of each Island.",
-					String.format("Visit the store on %s (current island)", gameEnvironment.getCurrentIsland().getIslandName()), 
-					"Set sail to another Island."
+					String.format("Visit %s's store", gameEnvironment.getCurrentIsland().getIslandName()), 
+					"Set sail to another island."
 			        };
 			printOptions(coreOptions, "Enter an action's number: ");
 			int input = getInt(1, 6);
@@ -366,7 +368,8 @@ public class CmdLineUi implements GameUi {
 			}
 			System.out.println("Repairing ship and paying wages");
 			gameEnvironment.setSail(chosenRoute);
-			System.out.println("Sail complete.");
+			System.out.format("You have arrived at %s\n", gameEnvironment.getCurrentIsland());
+			playGame();
 		}
 	}
 	

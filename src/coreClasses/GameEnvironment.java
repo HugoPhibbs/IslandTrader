@@ -109,7 +109,7 @@ public class GameEnvironment {
 		// Arrive at new island
 		int routeDuration = route.getDistance() / ship.getSpeed();
 		reduceDaysRemaining(routeDuration);
-		setCurrentIsland(route.getDestination());		
+		setCurrentIsland(route.getDestination());	
     }
     
 	/**
