@@ -461,6 +461,16 @@ public class CmdLineUi implements GameUi {
 			scanner.nextLine();
 		}
 	}
+	
+	public int rollDice() {
+		System.out.println(Pirates.getDescription());
+		System.out.println("(Press enter to roll)");
+		scanner.nextLine();
+		int roll = Pirates.rollDice();
+		System.out.println(roll);
+		return roll;
+		
+	}
 }
 
 
