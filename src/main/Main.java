@@ -24,33 +24,50 @@ import uiClasses.*;
 public class Main {
 	
 	public static void main(String[] args) {
-		// So we have basically moved the main method from gameEnvironment to main class
-		
 		// Create objects required to initiate GameEnvironement
-		// Create stores and island
-		Store s1 = new Store(); Store s2 = new Store(); Store s3 = new Store(); 
-		Island i1 = new Island("otherOne", s1, "arb1"); 
-		Island i2 = new Island("otherTwo", s2, "arb2"); 
-		Island i3 = new Island("otherThree", s3, "arb3"); 
-		
 		// Create Ships to choose from, and an array to store
-		Ship ship1 = new Ship("Black Pearl", 100, 100, 20, 50);
-		Ship ship2 = new Ship("Thunder Bird", 80, 80, 30, 40);
-		Ship ship3 = new Ship("Batmobile", 70, 120, 10, 70);
-		Ship ship4 = new Ship("Apollo", 100, 100, 30, 40);
-		Ship[] shipArray = new Ship[] {ship1, ship2, ship3, ship4};
+		Ship[] shipArray = createShips();
 		
-		// Creating current instance of Island
+		// Create the first island and its store
 		ArrayList<HashMap<String, HashMap<String, Integer>>> catalogues = createBuyCatalogues();
 		Store currStore = new Store("MY SHACK", "Pies", catalogues.get(0), catalogues.get(0)); 
 		Island currentIsland = new Island("current", currStore, "arb description");
 		currStore.setStoreIsland(currentIsland);
-		// Create Routes and pass to currentIsland
-		Route firstRoute = new Route("firstRoute", 10, currentIsland, i1, "test 1");
-		firstRoute.constructProbabilityMap(50, 50, 50);
-		Route secondRoute = new Route("secondRoute", 20, currentIsland, i1, "test 2");
+		
+		// Create the second island and its store
+		Store s1 = new Store();
+		Island i1 = new Island("otherOne", s1, "arb1"); 
+		s1.setStoreIsland(i1);
+		
+		// Create the third island and its store
+		Store s2 = new Store(); 
+		Island i2 = new Island("otherTwo", s2, "arb2"); 
+		s2.setStoreIsland(i2);
+		
+		// Create the fourth island and its store
+		Store s3 = new Store(); 
+		Island i3 = new Island("otherThree", s3, "arb3"); 
+		s3.setStoreIsland(i3);
+		
+		// Create the fourth island and its store
+		Store s4 = new Store(); 
+		Island i4 = new Island("otherThree", s3, "arb3"); 
+		s4.setStoreIsland(i4);
+		
+		
+		// Create Routes for the first store
+		Route firstRoute = new Route("firstRoute", 10, currentIsland, i1, "test 1"); firstRoute.constructProbabilityMap(50, 50, 50);
+		Route secondRoute = new Route("secondRoute", 20, currentIsland, i1, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
 		Route[] currIslandRoutes = new Route[] {firstRoute, secondRoute};
 		currentIsland.setRouteArray(currIslandRoutes);
+		
+		// Create Routes for the first store
+		Route r1 = new Route("firstRoute", 10, currentIsland, i1, "test 1"); firstRoute.constructProbabilityMap(50, 50, 50);
+		Route r2 = new Route("secondRoute", 20, currentIsland, i1, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
+		Route[] s2routes = new Route[] {firstRoute, secondRoute};
+		currentIsland.setRouteArray(currIslandRoutes);
+		
+	
 		// Create an island array, required for game environment constructor
 		Island[] islands = new Island[] {currentIsland, i1, i2, i3};
 		
@@ -101,4 +118,23 @@ public class Main {
 		catalogues.add(sellCatalogue);
 		return catalogues;
 	}
+	
+	public static Ship[] createShips() {
+		Ship ship1 = new Ship("Black Pearl", 100, 100, 20, 50);
+		Ship ship2 = new Ship("Thunder Bird", 80, 80, 30, 40);
+		Ship ship3 = new Ship("Batmobile", 70, 120, 10, 70);
+		Ship ship4 = new Ship("Apollo", 100, 100, 30, 40);
+		return new Ship[] {ship1, ship2, ship3, ship4};
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
