@@ -19,5 +19,5 @@ public interface GameUi {
 	
 	public void finishGame(String message);
 	
-	public int rollDice();
+	public void pirateAttack();
 }

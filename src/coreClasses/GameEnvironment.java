@@ -119,14 +119,13 @@ public class GameEnvironment {
 	 */
 	private void randomEvents(Route route) {
 		Random random = new Random();
-		if (route.getPirateProb() < random.nextInt(100)) {
-			// roll dice
-			Pirates.attackShip(1, ship);
+		if (route.getPirateProb() >= random.nextInt(100)) {
+			ui.pirateAttack();
 		}
-		if (route.getWeatherProb() < random.nextInt(100)) {
+		if (route.getWeatherProb() >= random.nextInt(100)) {
 			UnfortunateWeather.damageShip(ship);
 		}
-		if (route.getRescueProb() < random.nextInt(100)) {
+		if (route.getRescueProb() >= random.nextInt(100)) {
 			// roll dice
 			RescuedSailors.giveMoney(player);
 		}
@@ -183,8 +182,12 @@ public class GameEnvironment {
 	public int getScore(int startMoney) {
 		int profit = getPlayer().getMoneyBalance() - 100;
 		int daysPlayed = getDaysSelected() - getDaysRemaining();
-		int score = profit / daysPlayed;
-		return score;
+		
+		if (daysPlayed == 0) {
+			return 0;
+		} else {
+			return profit / daysPlayed;
+		}
 	}
 	
 	/**

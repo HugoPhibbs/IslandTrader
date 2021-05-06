@@ -56,7 +56,7 @@ public class Main {
 		
 		
 		// Create Routes for the first store
-		Route firstRoute = new Route("firstRoute", 10, currentIsland, i1, "test 1"); firstRoute.constructProbabilityMap(50, 50, 50);
+		Route firstRoute = new Route("firstRoute", 10, currentIsland, i1, "test 1"); firstRoute.constructProbabilityMap(100, 50, 50);
 		Route secondRoute = new Route("secondRoute", 20, currentIsland, i1, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
 		Route[] currIslandRoutes = new Route[] {firstRoute, secondRoute};
 		currentIsland.setRouteArray(currIslandRoutes);

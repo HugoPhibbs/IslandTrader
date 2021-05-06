@@ -460,15 +460,28 @@ public class CmdLineUi implements GameUi {
 			}
 			scanner.nextLine();
 		}
-	}
+	}		
 	
-	public int rollDice() {
+	@Override
+	public void pirateAttack() {
+		// Roll die
 		System.out.println(Pirates.getDescription());
 		System.out.println("(Press enter to roll)");
 		scanner.nextLine();
+		scanner.nextLine();
 		int roll = Pirates.rollDice();
-		System.out.println(roll);
-		return roll;
+		System.out.format("You got a %d!\n", roll);
+		// Pirate Attack 
+		String pirateOutcome = Pirates.attackShip(roll, gameEnvironment.getShip());
+		if (pirateOutcome.equals("attack_failed")) {
+			System.out.println("You successful fended of the pirates!");
+		}
+		else if (pirateOutcome.equals("attack_successful")) {
+			System.out.println("The pirate's boarded yur ship and stole your goods!");
+		}
+		else {
+			finishGame(pirateOutcome);
+		}
 		
 	}
 }
