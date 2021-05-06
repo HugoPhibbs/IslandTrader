@@ -12,7 +12,7 @@ public class Pirates {
     	return "You have encountered pirates, roll the die to play your chances!";
     }
 
-    public static boolean attackShip(int diceInt, Ship ship) {
+    public static String attackShip(int diceInt, Ship ship) {
     	
     	/* based on a game of chance
     	 * defense capability is multiplied by the number that is rolled by dice. 
@@ -25,13 +25,12 @@ public class Pirates {
     	int randomAttack = random.nextInt(366); //arbitrary upper bound, can be adjusted if need be
     	
     	if (randomAttack > ship.getDefenseCapability()*diceInt) {
-    		takeGoods(ship);
-    		return false;
+    		return takeGoods(ship);
     	}
-    	return true;
+    	return "attack_failed";
     }
 
-    public static void takeGoods(Ship ship){
+    public static String takeGoods(Ship ship){
     	// public for testing
     	
     	Random random = new Random();
@@ -44,7 +43,7 @@ public class Pirates {
         	String gameOverMessage = "You have less goods than what the pirates demand. \n"
         			+ "You and your crew have to walk the plank! \n"
         			+ "GAME OVER!";
-        	throw new GameOverException(gameOverMessage); //TODO dont throw GameOverException
+        	return gameOverMessage;
         }
         else{
         	while (randomGoodDemand > 0) {
@@ -52,6 +51,7 @@ public class Pirates {
         		 ship.takeItem(biggestItem.getName());
         		 randomGoodDemand -= biggestItem.getSpaceTaken();
         	}
+        	return "attack_successful";
         }
     }
     
