@@ -47,6 +47,7 @@ public class Main {
 		currStore.setStoreIsland(currentIsland);
 		// Create Routes and pass to currentIsland
 		Route firstRoute = new Route("firstRoute", 10, currentIsland, i1, "test 1");
+		firstRoute.constructProbabilityMap(50, 50, 50);
 		Route secondRoute = new Route("secondRoute", 20, currentIsland, i1, "test 2");
 		Route[] currIslandRoutes = new Route[] {firstRoute, secondRoute};
 		currentIsland.setRouteArray(currIslandRoutes);
@@ -82,7 +83,7 @@ public class Main {
 		return catalogues;
 	}
 	
-	public static ArrayList<HashMap<String, HashMap<String, Integer>>> createSellCatalogues(){
+	public static ArrayList<HashMap<String, HashMap<String, Integer>>> createSellCatalogues() {
 		HashMap<String, HashMap<String, Integer>> sellCatalogue = new HashMap<String, HashMap<String, Integer>>();
 		HashMap<String, Integer> goldProperties = new HashMap<String, Integer>();
 		goldProperties.put("spaceTaken", 2);
