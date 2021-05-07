@@ -30,41 +30,47 @@ public class Main {
 		
 		// Create the first island and its store
 		ArrayList<HashMap<String, HashMap<String, Integer>>> catalogues = createBuyCatalogues();
-		Store currStore = new Store("MY SHACK", "Pies", catalogues.get(0), catalogues.get(0)); 
-		Island currentIsland = new Island("current", currStore, "arb description");
-		currStore.setStoreIsland(currentIsland);
+		Store cyprusStore = new Store("War Goods", "Pies", catalogues.get(0), catalogues.get(0)); 
+		Island cyprus = new Island("Cyprus", cyprusStore, "arb description");
+		cyprusStore.setStoreIsland(cyprus);
 		
 		// Create the second island and its store
-		Store s1 = new Store("AAA", "WWW", catalogues.get(0), catalogues.get(0));
-		Island i1 = new Island("otherOne", s1, "arb1"); 
-		s1.setStoreIsland(i1);
+		Store sicilyStore = new Store("Pasta and Co", "WWW", catalogues.get(0), catalogues.get(0));
+		Island sicily = new Island("Sicily", sicilyStore, "arb1"); 
+		sicilyStore.setStoreIsland(sicily);
 		
 		// Create the third island and its store
-		Store s2 = new Store(); 
-		Island i2 = new Island("otherTwo", s2, "arb2"); 
-		s2.setStoreIsland(i2);
+		Store corsicaStore = new Store("Napolean's", "MMMMM", null, null);
+		Island corsica = new Island("Corsica", corsicaStore, "arb2"); 
+		corsicaStore.setStoreIsland(corsica);
 		
 		// Create the fourth island and its store
-		Store s3 = new Store(); 
-		Island i3 = new Island("otherThree", s3, "arb3"); 
-		s3.setStoreIsland(i3);
+		Store maltaStore = new Store("Duty Free Store", "ppppppp", null, null);
+		Island malta = new Island("Malta", maltaStore, "arb3"); 
+		maltaStore.setStoreIsland(malta);
 		
-		// Create the fourth island and its store
-		Store s4 = new Store(); 
-		Island i4 = new Island("otherThree", s3, "arb3"); 
-		s4.setStoreIsland(i4);
+		// Create the fifth island and its store
+		Store ibizaStore = new Store("Party Store", "pills and potions", null, null); 
+		Island ibiza = new Island("Ibiza", ibizaStore, "arb3"); 
+		ibizaStore.setStoreIsland(ibiza);
 		
 		
-		// Create Routes for the first store
+		// Create Routes for the first island
 		Route firstRoute = new Route("firstRoute", 10, currentIsland, i1, "test 1"); firstRoute.constructProbabilityMap(100, 50, 50);
 		Route secondRoute = new Route("secondRoute", 20, currentIsland, i1, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
 		Route[] currIslandRoutes = new Route[] {firstRoute, secondRoute};
 		currentIsland.setRouteArray(currIslandRoutes);
 		
-		// Create Routes for the first store
+		// Create Routes for the first island
 		Route r1 = new Route("firstRoute", 10, currentIsland, i1, "test 1"); firstRoute.constructProbabilityMap(50, 50, 50);
 		Route r2 = new Route("secondRoute", 20, currentIsland, i1, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
 		Route[] s2routes = new Route[] {firstRoute, secondRoute};
+		currentIsland.setRouteArray(currIslandRoutes);
+		
+		// Create Routes for the first island
+		Route r3 = new Route("firstRoute", 10, currentIsland, i1, "test 1"); firstRoute.constructProbabilityMap(50, 50, 50);
+		Route r4 = new Route("secondRoute", 20, currentIsland, i1, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
+		Route[] s3routes = new Route[] {firstRoute, secondRoute};
 		currentIsland.setRouteArray(currIslandRoutes);
 		
 	

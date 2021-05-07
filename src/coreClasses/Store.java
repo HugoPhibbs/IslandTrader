@@ -20,7 +20,6 @@ public class Store {
     private HashMap<String, HashMap<String, Integer>> sellCatalogue;
     private HashMap<String, HashMap<String, Integer>> buyCatalogue;
     
-    public Store() {}
     /** Constructor for Store Class
      * 
      * @param name String name of Store object to be created
