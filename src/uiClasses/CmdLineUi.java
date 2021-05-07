@@ -69,7 +69,7 @@ public class CmdLineUi implements GameUi {
 					String.format("Visit %s's store", gameEnvironment.getCurrentIsland().getIslandName()), 
 					"Set sail to another island."
 			        };
-			printOptions(coreOptions, "Enter an action's number: ");
+			printOptions(coreOptions, "Enter an action's number: ", false);
 			int input = getInt(1, 6);
 			
 			handleCoreChoice(input);
@@ -134,7 +134,7 @@ public class CmdLineUi implements GameUi {
 	}
 	
 	private void getStoreVisitChoice(String visitStoreMessage) {
-		printOptions(Store.getVisitOptions(), visitStoreMessage);
+		printOptions(Store.getVisitOptions(), visitStoreMessage, true);
 		int input = getInt(1, 5);
 		handleStoreChoice(input);
 	}
@@ -143,76 +143,118 @@ public class CmdLineUi implements GameUi {
 		String welcomeBackMsg = "Welcome back to the Store, please enter a number to further interact with this store!";
 		switch (input) {
 		case 1:
-			//view and buy items that store sells
-			HashMap<String, HashMap<String, Integer>> sellCatalogue = gameEnvironment.getCurrentIsland().getIslandStore().getSellCatalogue();
-			
-	    	String itemStoreToSellName = visitStoreBuySellPreper("buy", sellCatalogue);
-	    	
-	    	try {
-	    		// TODO move bellow if statement into ge
-	    		Item itemToSell = gameEnvironment.buyFromStore(itemStoreToSellName);
-	    		if (!itemToSell.getWithPlayer()) {
-	    			System.out.println(Store.sellItemChecker(gameEnvironment.getPlayer(), itemToSell));
-	    		}
-	    		System.out.format("You just bought %s for %s pirate bucks! \n", itemToSell.getName(), itemToSell.getPlayerBuyPrice());
-	    	}
-	    	catch (IllegalStateException ise) {
-	    		System.out.print(ise.getMessage());
-	    	}
-	    	
+			// Call recursive method for selling to a player
+			visitStoreSellToPlayer();
+			// Go back to main visit store choices
 	    	getStoreVisitChoice(welcomeBackMsg);
 			break;
 		case 2:
-			// view and sell items that a store buys 
-			HashMap<String, HashMap<String, Integer>> buyCatalogue = gameEnvironment.getCurrentIsland().getIslandStore().getBuyCatalogue();
+			// Call recursive method for buying from a player
+			visitStoreBuyFromPlayer();
 			
-			String itemStoreToBuyName = visitStoreBuySellPreper("sell", buyCatalogue);
+	    	getStoreVisitChoice(welcomeBackMsg);
+			break;
+		case 3:
+			// view previously bought items
+			viewGoodsPurchased();
 			
-	    	// Sell item from player to store
+			getStoreVisitChoice(welcomeBackMsg);
+			break;
+		case 4:
+			// view the amount of money that you have
+			System.out.println(gameEnvironment.getPlayer().moneyBalanceToString());
+			
+			getStoreVisitChoice(welcomeBackMsg);
+			break;
+		case 5:
+			// exit store
+			exitStore();
+			System.out.println("You have exited the store!");
+			return;
+		}
+	}
+	
+	/** Recursive method for selling an Item to a player
+	 * 
+	 */
+	private void visitStoreSellToPlayer() {
+		// turn bellow into a method
+		//view and buy items that store sells
+		HashMap<String, HashMap<String, Integer>> sellCatalogue = gameEnvironment.getCurrentIsland().getIslandStore().getSellCatalogue();
+		
+    	String itemStoreToSellName = visitStoreBuySellHelper("buy", sellCatalogue);
+    	
+    	// if itemStoreToBuyName is null, then visitStoreBuySellHelper is handling case when user wants to go back menus
+    	if (itemStoreToSellName != null) {
+        	try {
+        		// TODO move bellow if statement into ge
+        		Item itemToSell = gameEnvironment.buyFromStore(itemStoreToSellName);
+        		if (!itemToSell.getWithPlayer()) {
+        			// Print string for reason item wasnt sold, since it isnt with player. 
+        			// NB Different checking compared to visitStoreBuyFromPlayer() bellow
+        			System.out.println(Store.sellItemChecker(gameEnvironment.getPlayer(), itemToSell));
+        		}
+        		else {
+        			// If item was found, print transaction statement
+        			System.out.format("You just bought %s for %s pirate bucks! \n", itemToSell.getName(), itemToSell.getPlayerBuyPrice());
+        		}
+        	}
+        	catch (IllegalStateException ise) {
+        		System.out.print(ise.getMessage());
+        	}
+        	visitStoreSellToPlayer();// Recursively call function until user selects "Go back" in helper method bellow
+    	}
+    	return; // stops recursion
+	}
+	
+	/** Recursive Method for selling an Item to a store
+	 * 
+	 */
+	private void visitStoreBuyFromPlayer() {
+		HashMap<String, HashMap<String, Integer>> buyCatalogue = gameEnvironment.getCurrentIsland().getIslandStore().getBuyCatalogue();
+		
+		String itemStoreToBuyName = visitStoreBuySellHelper("sell", buyCatalogue);
+		
+		// if itemStoreToBuyName is null, then visitStoreBuySellHelper is handling case when user wants to go back menus
+		if (itemStoreToBuyName != null) {
 	    	try {
+	    		// Get item that will be sold to store
 	    		Item itemToBuy = gameEnvironment.sellToStore(itemStoreToBuyName);
 	    		if (itemToBuy == null) {
+	    			// wasn't successful in getting item, print reason why from store
 	    			System.out.println(Store.buyItemChecker(gameEnvironment.getPlayer(), itemToBuy));
 	    		}
 	    		else {
+	    			// If item was found, print transaction statement
 	    			System.out.format("You just sold %s for %s pirate bucks! \n", itemToBuy.getName(), itemToBuy.getPlayerSellPrice());
 	    		}	
 	    	}
 	    	catch (IllegalStateException ise) {
 	    		System.out.println(ise.getMessage());
 	    	}
-	    	getStoreVisitChoice(welcomeBackMsg);
-			break;
-		case 3:
-			// view previously bought items
-			viewGoodsPurchased();
-			getStoreVisitChoice(welcomeBackMsg);
-			break;
-		case 4:
-			// view the amount of money that you have
-			System.out.println(gameEnvironment.getPlayer().moneyBalanceToString());
-			getStoreVisitChoice(welcomeBackMsg);
-			break;
-		case 5:
-			// exit store
-			exitStore();
-			return;
+	    	visitStoreBuyFromPlayer(); // Recursively call function until user selects "Go back" in helper method bellow
 		}
+		return; // stops recursion
 	}
 	
-	private String visitStoreBuySellPreper(String operation, HashMap<String, HashMap<String, Integer>> catalogue) {
-		String buySellMessage  = String.format("Enter the number corresponding to the Item that you want to %s! \n", operation);
+	/** Helper method for buying and selling from/to a store
+	 * 
+	 * @param operation String for what operation is happening "buy" or "sell"
+	 * @param catalogue HashMap containing the items that a store buys or sells
+	 * @return String name of the chosen item that is being sold or bought
+	 */
+	private String visitStoreBuySellHelper(String operation, HashMap<String, HashMap<String, Integer>> catalogue) {
 		if (catalogue.isEmpty()) {
 			System.out.format("%s catalogue for this store is empty!", operation);
 			return null;
 		}
+		String buySellMessage  = String.format("Enter the number corresponding to the Item that you want to %s! \n", operation);
 		ArrayList<String> optionsArrayList = Store.catalogueToArrayList(catalogue);
-		printOptions(optionsArrayList, buySellMessage);
+		printOptions(optionsArrayList, buySellMessage, true);
 		
-		System.out.format("(%d) Go Back \n", catalogue.size()+1);
     	int itemNum = getInt(1, catalogue.size()+1);
-    	if (itemNum == 4) {
-    		getStoreVisitChoice("Welcome back to the Store, please enter a number to further interact with this store!");
+    	if (itemNum == catalogue.size()) {
+    		return null; // user wants to go back menus
     	}
     	return Store.getChosenItemName(optionsArrayList, itemNum);
 	}
@@ -220,14 +262,13 @@ public class CmdLineUi implements GameUi {
 	private void exitStore() {
 		String exitStoreMessage = "Are you sure you want to leave the store? \n"
 				+ "Please enter action number:";
-		printOptions(new String[] {"Do more actions with the store.", "Exit Store"}, exitStoreMessage);
+		printOptions(new String[] {"Do more actions with the store."}, exitStoreMessage, true);
 		int input = getInt(1, 2);
 		
 		switch(input) {
 		case 1:
 			getStoreVisitChoice("Welcome back to the Store, please enter a number to further interact with this store!");
 		case 2:
-			System.out.println("You have exited the store!");
 			return;
 		}
 	}
@@ -240,7 +281,7 @@ public class CmdLineUi implements GameUi {
 	 */
 	private Ship pickShip() { 
 		String pickShipMessage = "Please choose a ship, enter an action number corresponding to the ship that you want:\n";
-		printOptions(gameEnvironment.getShipDescriptionArrayList(), pickShipMessage);
+		printOptions(gameEnvironment.getShipDescriptionArrayList(), pickShipMessage, false);
 		int chosenShipNum = getInt(1, 4);
 		return gameEnvironment.getShipArray()[chosenShipNum-1];
 	}
@@ -311,8 +352,7 @@ public class CmdLineUi implements GameUi {
 		System.out.println(selectedIsland.getFullInfo(routes));
 		
 		String[] proceedOptions = new String[] {"Travel to this island"};
-		printOptions(proceedOptions, "Enter the number of the action you wish to take.");
-		System.out.format("(%d) %s\n", (proceedOptions.length+1), "Go back");
+		printOptions(proceedOptions, "Enter the number of the action you wish to take.", true);
 		int proceedInput = getInt(1, otherIslands.length+1);
 		// if input was to go back
 		if (proceedInput == otherIslands.length) {
@@ -383,7 +423,6 @@ public class CmdLineUi implements GameUi {
 	 * 
 	 * @param routes list of routes to print out.
 	 */
-	// TODO move this to methods bellow!
 	private void printRoutes(ArrayList<Route> routes) {
 		for (int i = 0; i < routes.size(); i++) {
 			System.out.format("(%d) %s\n", i+1, routes.get(i).toString());
@@ -393,17 +432,23 @@ public class CmdLineUi implements GameUi {
 	
 	//################### GENERAL HELPER METHODS ########################
 	
-	private void printOptions(ArrayList<String> optionsArrayList, String message) {
+	private void printOptions(ArrayList<String> optionsArrayList, String message, boolean canGoBack) {
 		System.out.print(message);
 		for (int i = 0; i < optionsArrayList.size(); i++) {
 			System.out.format("(%d) %s \n", (i+1), optionsArrayList.get(i));
     	}
+		if (canGoBack) {
+			System.out.format("(%d) Go back \n", optionsArrayList.size());
+		}
 	}
 	
-	private void printOptions(String[] optionsArray, String message) {
+	private void printOptions(String[] optionsArray, String message, boolean canGoBack) {
 		System.out.println(message); //header
 		for (int i = 0; i < optionsArray.length; i++) {
 			System.out.format("(%d) %s \n", (i+1), optionsArray[i]);
+		}
+		if (canGoBack) {
+			System.out.format("(%d) Go back \n", optionsArray.length);
 		}
 	}
 	

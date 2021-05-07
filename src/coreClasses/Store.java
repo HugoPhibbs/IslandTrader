@@ -58,9 +58,10 @@ public class Store {
     	
     	Item itemToSell = new Item(itemName, sellCatalogue.get(itemName).get("spaceTaken"), sellCatalogue.get(itemName).get("price") );
     	// TODO need to discard object if it doesnt work? or will java do it automatically??
-    	if (sellItemChecker(player, itemToSell) != null){
-    		return itemToSell;
+    	if (!sellItemChecker(player, itemToSell).equals("can sell")){
+    		return itemToSell; // handled by ui
     	}
+    	
     	itemToSell.setWithPlayer(true);
     	player.spendMoney(itemToSell.getPlayerBuyPrice());
     	player.getShip().addItem(itemToSell);
@@ -68,6 +69,7 @@ public class Store {
     	
     	return itemToSell;
     }
+    
     
     /** Checks if selling an item from a STORE TO A PLAYER is permissible
      *  if it is, returns null, otherwise returns String for reason why not
@@ -82,7 +84,7 @@ public class Store {
     	else if (player.getShip().getRemainingCargoCapacity() < itemToSell.getSpaceTaken()) {
     		return "Player does not have enough space to store this item!";
     	}
-    	return null;
+    	return "can sell";
     }
     
     /** Buys an item from a Player to a store
@@ -124,7 +126,7 @@ public class Store {
     	if (itemToBuy == null) {
     		return "Player does not have this item in possession!";
     	}
-    	return null;
+    	return "can buy";
     }
     
     /** Converts a sell or buy catalogue into an an Array List that can be easily displayed
@@ -216,8 +218,7 @@ public class Store {
     		    {"View and buy items that the store sells." 
 				,"View and sell Items that the store buys."
 				,"View previously bought items."
-				,"View the amount of money that you have."
-				,"Exit store."};
+				,"View the amount of money that you have."};
     	return optionsArray;
     }
     
