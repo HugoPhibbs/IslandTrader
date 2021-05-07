@@ -40,7 +40,7 @@ public class Main {
 		sicilyStore.setStoreIsland(sicily);
 		
 		// Create the third island and its store
-		Store corsicaStore = new Store("Napolean's", "MMMMM", null, null);
+		Store corsicaStore = new Store("Napoleans", "MMMMM", null, null);
 		Island corsica = new Island("Corsica", corsicaStore, "arb2"); 
 		corsicaStore.setStoreIsland(corsica);
 		
@@ -56,26 +56,31 @@ public class Main {
 		
 		
 		// Create Routes for the first island
-		Route firstRoute = new Route("firstRoute", 10, currentIsland, i1, "test 1"); firstRoute.constructProbabilityMap(100, 50, 50);
-		Route secondRoute = new Route("secondRoute", 20, currentIsland, i1, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
+		// for testing
+		
+		// TODO change bellow did this for testing!
+		Island currentIsland = ibiza;
+		Store currStore = ibiza.getIslandStore();
+		Route firstRoute = new Route("firstRoute", 10, currentIsland, currentIsland, "test 1"); firstRoute.constructProbabilityMap(100, 50, 50);
+		Route secondRoute = new Route("secondRoute", 20, currentIsland, currentIsland, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
 		Route[] currIslandRoutes = new Route[] {firstRoute, secondRoute};
 		currentIsland.setRouteArray(currIslandRoutes);
 		
 		// Create Routes for the first island
-		Route r1 = new Route("firstRoute", 10, currentIsland, i1, "test 1"); firstRoute.constructProbabilityMap(50, 50, 50);
-		Route r2 = new Route("secondRoute", 20, currentIsland, i1, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
+		Route r1 = new Route("firstRoute", 10, currentIsland, currentIsland, "test 1"); firstRoute.constructProbabilityMap(50, 50, 50);
+		Route r2 = new Route("secondRoute", 20, currentIsland, currentIsland, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
 		Route[] s2routes = new Route[] {firstRoute, secondRoute};
 		currentIsland.setRouteArray(currIslandRoutes);
 		
 		// Create Routes for the first island
-		Route r3 = new Route("firstRoute", 10, currentIsland, i1, "test 1"); firstRoute.constructProbabilityMap(50, 50, 50);
-		Route r4 = new Route("secondRoute", 20, currentIsland, i1, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
+		Route r3 = new Route("firstRoute", 10, currentIsland, currentIsland, "test 1"); firstRoute.constructProbabilityMap(50, 50, 50);
+		Route r4 = new Route("secondRoute", 20, currentIsland, currentIsland, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
 		Route[] s3routes = new Route[] {firstRoute, secondRoute};
 		currentIsland.setRouteArray(currIslandRoutes);
 		
 	
 		// Create an island array, required for game environment constructor
-		Island[] islands = new Island[] {currentIsland, i1, i2, i3};
+		Island[] islands = new Island[] {currentIsland, currentIsland, currentIsland, currentIsland};
 		
 		// Initiate the UI and Game Environment
 		GameUi ui;
