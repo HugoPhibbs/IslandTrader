@@ -4,12 +4,10 @@ import java.lang.reflect.Array;
 
 import java.util.*;
 
-import exceptions.*;
-
-/** Represents a store
+/** Represents a Store object
  * 
  * @author Hugo Phibbs
- * @version 6/5/2021
+ * @version 8/5/2021
  * @since 2/4/2021
  */
 
@@ -135,7 +133,7 @@ public class Store {
     	
     	Item itemToBuy = player.getShip().takeItem(itemName);
     	
-    	if (!buyItemChecker(player, itemToBuy).equals("Can buy")) {
+    	if (!canBuyItem(player, itemToBuy).equals("Can buy")) {
     		// not successful, return item, and dont remove it from players possession
     		return itemToBuy;
     	}
@@ -157,7 +155,7 @@ public class Store {
      * @param player
      * @return
      */
-    public static String buyItemChecker(Player player, Item itemToBuy) {
+    public static String canBuyItem(Player player, Item itemToBuy) {
     	if (itemToBuy == null) {
     		return "Player does not have this item in possession!";
     	}
@@ -276,8 +274,5 @@ public class Store {
      * 
      * @param island Island that a store belongs to
      */
-    public void setStoreIsland(Island storeIsland) {
-    	this.storeIsland = storeIsland;
-    }
-    
+    public void setStoreIsland(Island storeIsland) {this.storeIsland = storeIsland;}
 }

@@ -3,6 +3,12 @@ package coreClasses;
 import java.util.ArrayList; 
 import exceptions.GoBackException;
 
+/** Represents an Island object
+ * 
+ * @author Jordan Vegar
+ * @version 8/5/2021
+ * @since 2/4/2021
+ */
 public class Island {
 	
 	// The name of the island.
@@ -17,17 +23,18 @@ public class Island {
 	 */
 	private String description;
 	
-	/**
-	 * Constructor class. Note that the route Array is not initiated
-	 * as to make the routes and routeArray, the island must already
-	 * exist as it is a parameter of the route constructor.
+	/** Constructor method for Island object
+	 * 
 	 * @param name the name of the Island
 	 * @param store the Store on the Island
 	 * @param description test description of the island, gives an indication
 	 * 		  of what it's store will buy and sell. 
 	 */
 	public Island(String name, Store store, String description) {
-		
+		/*Note that the route Array is not initiated
+	     * as to make the routes and routeArray, the island must already
+	     * exist as it is a parameter of the route constructor.
+	     */
 		if (!CheckValidInput.nameIsValid(name)) {
 			throw new IllegalArgumentException("Name for Island must have no more than 1 consecutive white space and be between 3 and 15 characters in length!");
 		}
@@ -36,19 +43,27 @@ public class Island {
 		this.description = description;
 	}
 	
-	/**
-	 * Route objects require Island objects to be created, so an islands routes are created
-	 * after the island is created. For this reason the routeArray cannot be included in the
-	 * constructor. This method initializes the variable routeArray.
-	 * 
-	 * @param routes The list of routes that routeArray is to be assigned to. 
-	 */
-	public void setRouteArray(Route[] routes) {this.routeArray = routes;}
+	@Override
+	public String toString() {
+		return String.format("%s: %s", islandName, description);
+	}
 	
+	/** Getter method for the store belonging to island object
+	 * 
+	 * @return Store belonging to Island Object
+	 */
 	public Store getIslandStore() {return islandStore;}
 	
+	/** Getter method for the name of an island object
+	 * 
+	 * @return String representation of an Island object
+	 */
 	public String getIslandName() {return islandName;}
 	
+	/** Getter method for the description of an island object
+	 * 
+	 * @return String representation for the description of an Island object
+	 */
 	public String getDescription() {return description;}
 
 	/**
@@ -60,6 +75,7 @@ public class Island {
 	 */
 	public ArrayList<Route> getPossibleRoutes(Island destination) {
 		
+		
 		ArrayList<Route> routesToDestination = new ArrayList<Route>();
 		
 		for (Route possibleRoute: routeArray) {
@@ -70,10 +86,10 @@ public class Island {
 		return routesToDestination;
 	}
 	
-	/**
-	 * Prints out a description of each route from the current island to the destination island.
+	/** Method for the getting a string representation of routes from an island
 	 * 
 	 * @param destination The Island you want to see routes to (from the player's current island)
+	 * @return String representation of all the routes from a given island
 	 */
 	public String viewRoutes(ArrayList<Route> routes) {
 		
@@ -103,10 +119,12 @@ public class Island {
 		return fullInfo;
 	}
 	
-	
-	
-	@Override
-	public String toString() {
-		return String.format("%s: %s", islandName, description);
-	}
+	/**
+	 * Route objects require Island objects to be created, so an islands routes are created
+	 * after the island is created. For this reason the routeArray cannot be included in the
+	 * constructor. This method initializes the variable routeArray.
+	 * 
+	 * @param routes The list of routes that routeArray is to be assigned to. 
+	 */
+	public void setRouteArray(Route[] routes) {this.routeArray = routes;}
 }

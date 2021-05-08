@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-/**
+/** Represents command line object for playing 'Island Trader' game
  * 
  * @author Hugo Phibbs and Jordan Vegar
- * @version 26/4/21
+ * @version 8/5/21
  * @since 26/4/21
  */
 public class CmdLineUi implements GameUi {

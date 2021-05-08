@@ -1,17 +1,15 @@
 package coreClasses;
 
 /** Represents a ship upgrade
+ * 
  * @author Hugo Phibbs
- * @version 14/2/2021
+ * @version 8/5/2021
  * @since 2/4/2021
  */
-
 public class ShipUpgrade extends Item{
-	// TODO remove constructor if we arent using it!
-	
-	// Class Variables
     private int defenseBoost; 
     
+    // TODO remove constructor if we arent using it!
     /** Constructor method for ShipUpgrade object
      * 
      * @param name String for the name of ShipUpgrade
@@ -22,9 +20,26 @@ public class ShipUpgrade extends Item{
     public ShipUpgrade(String name, int spaceTaken, int price, int defenseBoost){
     	// Call Item constructor
     	super(name, spaceTaken, price);
-    	
-    	// Check and add defenseBoost
+    	setDefenseBoost(defenseBoost);
+    }
     
+    /** Getter method for the defense boost of ShipUpgrade object
+     * 
+     * @return Integer defenseBoost how much ShipUpgrade object benefits the defense of a ship
+     */
+    public int getDefenseBoost() { return defenseBoost; }    
+    
+    /** Setter method for the defense boost of a Ship Upgrade object
+     * 
+     * @param defenseBoost Integer for the defense boost to be set
+     */
+    public void setDefenseBoost(int defenseBoost) {
+    	if (defenseBoostIsValid(defenseBoost)) {
+    		this.defenseBoost = defenseBoost;
+    		}
+    	else {
+    		throw new IllegalArgumentException("Defense boost must be above 0 and less than 50!");
+    		}  
     }
     
     /** Checks if a defenseBoost is valid, helper for constructor
@@ -35,20 +50,4 @@ public class ShipUpgrade extends Item{
     private boolean defenseBoostIsValid(int defenseBoost) {
     	return (defenseBoost < 50 && defenseBoost > 0);
     }
-    
-    /** Getter method for the defense boost of ShipUpgrade object
-     * 
-     * @return Integer defenseBoost how much ShipUpgrade object benefits the defense of a ship
-     */
-    public int getDefenseBoost() { return defenseBoost; }    
-    
-    
-    public void setDefenseBoost(int defenseBoost) {
-    	if (defenseBoostIsValid(defenseBoost)) {
-    		this.defenseBoost = defenseBoost;
-    		}
-    	else {
-    		throw new IllegalArgumentException("Defense boost must be above 0 and less than 50!");
-    		}  
-    	}
 }

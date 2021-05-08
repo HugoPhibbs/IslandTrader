@@ -2,13 +2,12 @@ package coreClasses;
 
 import java.util.HashMap;
 
-/** Class to check for valid input across project
+/** General class to check for valid input across project
  * 
- * @author Hugo Phibbs
+ * @author Hugo Phibbs and Jordan Vegar
  * @version 16/4/2021
  * @since 15/4/2021
  */
-
 public class CheckValidInput {
 	
 	/**
@@ -16,7 +15,6 @@ public class CheckValidInput {
 	 * @param days
 	 */
 	public static boolean durationIsValid(int days) {
-		
 		if (20 <= days && days <= 50) {
 			return true;
 		}
@@ -48,11 +46,5 @@ public class CheckValidInput {
 			return false;
 		}
 		return true;
-	}
-	
-	public static boolean actionIntIsValid(int i, int lowerBound, int upperBound) {
-		// Helper method that can be used throughout gameEnvironment
-		// TODO transfer implementations of this to gameEnvironment etc
-		return (i < lowerBound || i > upperBound);
 	}
 }

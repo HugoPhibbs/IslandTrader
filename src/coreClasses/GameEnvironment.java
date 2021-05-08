@@ -21,13 +21,12 @@ import uiClasses.GameUi;
 
 // TODO need to have a method that handles a player not having any cash
 
-/**
+/** Represents the game environment of an 'Island Trader' game
  * 
  * @author Jordan Vegar and Hugo Phibbs
- * @version 23/4/21
+ * @version 8/5/21
  * @since 2/4/21
  */
-
 public class GameEnvironment {
 	
 	// TODO need to have a method that handles random events
@@ -43,30 +42,76 @@ public class GameEnvironment {
 	// The minimum amount of money to travel off your particular island. 
 	private int minMoneyToTravel;
 	
+	/** Constructor for GameEnvironment class
+	 * 
+	 * @param islandArray Island[] array containing islands to be used in game
+	 * @param shipArray Ship[] array containing ships that can be chosen by player
+	 * @param ui GameUi implementation to be used by game
+	 */
 	public GameEnvironment(Island[] islandArray, Ship[] shipArray, uiClasses.GameUi ui) {
 		this.islandArray = islandArray;
 		this.shipArray = shipArray;
 		this.ui = ui;
 	}
 	
+	/** Getter method for in game Player object
+	 * 
+	 * @return Player object belonging to GameEnvironment
+	 */
 	public Player getPlayer() {return player;}
 	
+	/** Getter method for Island Array 
+	 * 
+	 * @return Island[] array belonging to GameEnvironment
+	 */
 	public Island[] getIslandArray() {return islandArray;}
 	
+	/** Getter method for ui object
+	 * 
+	 * @return GameUi implementation being used
+	 */
 	public GameUi getUi() {return ui;}
 	
+	/** Getter method for game days remaining
+	 * 
+	 * @return Integer for the number of game days remaining
+	 */
 	public int getDaysRemaining() {return daysRemaining;}	
 	
+	/** Getter method for current game island
+	 * 
+	 * @return Island object for current game island
+	 */
 	public Island getCurrentIsland() {return currentIsland;}
 	
+	/** Getter method for in game Ship object
+	 * 
+	 * @return Ship object belonging to GameEnvironment
+	 */
 	public Ship getShip() {return ship;}
 	
+	/** Getter method for Ship Array
+	 * 
+	 * @return Ship[] Array containing all ships in game
+	 */
 	public Ship[] getShipArray() {return shipArray;}
 	
+	/** Getter method for days selected for a game
+	 * 
+	 * @return Integer for the number of days selected for a game
+	 */
 	public int getDaysSelected() {return daysSelected;}
 	
+	/** Getter method for the minimum amount of money to travel to another island
+	 * 
+	 * @return Integer for the minimum amount of money to travel to another island
+	 */
 	public int getMinMoneyToTravel() {return minMoneyToTravel;}
 	
+	/** Method to reduce in-game days
+	 * 
+	 * @param daysPassed Integer for the number of in-game days passed
+	 */
 	public void reduceDaysRemaining(int daysPassed) {
 		daysRemaining -= daysPassed;
 	}
@@ -142,6 +187,10 @@ public class GameEnvironment {
 		return cost;
 	}
 	
+	/** Getter method for every game island besides the current island
+	 * 
+	 * @return Island[] array containing every game island besides the current island
+	 */
 	public Island[] getOtherIslands() {
 		Island[] otherIslands =  new Island[islandArray.length-1];
 		int i =0;
@@ -154,6 +203,10 @@ public class GameEnvironment {
 		return otherIslands;
 	}
 	
+	/** Getter method for the descriptions of every ship that a player can choose
+	 * 
+	 * @return Ship[] array containing descriptions of every ship that a player can choose
+	 */
 	public ArrayList<String> getShipDescriptionArrayList() {
 		// TODO implement
 		ArrayList<String> shipDescriptionArrayList = new ArrayList<String>();
@@ -222,6 +275,11 @@ public class GameEnvironment {
 	
 	// ################## METHODS FOR VISTING A STORE ###################
 	
+	/** Helper method for buying from a store in UI
+	 * 
+	 * @param itemStoreToSellName String for the name of Item object attempting to be sold to a player
+	 * @return String representation for the result of the transaction
+	 */
 	public String sellToPlayerHelper(String itemStoreToSellName) {
 		// helper method for ui classes 
 		Item itemToSell = currentIsland.getIslandStore().sellItemToPlayer(itemStoreToSellName, player);
@@ -241,12 +299,17 @@ public class GameEnvironment {
 	    }
 	}
 	
+	/** Helper for method for selling to a store in UI
+	 * 
+	 * @param itemStoreToBuyName String for the name of Item object attempting to be sold to a store
+	 * @return String representation for the result of the transaction
+	 */
 	public String sellToStoreHelper(String itemStoreToBuyName) {
 		// helper method for ui
 		Item itemToBuy = currentIsland.getIslandStore().buyItemFromPlayer(itemStoreToBuyName, player);
 		if (itemToBuy == null) {
 			// wasn't successful in getting item, print reason why from store
-			return Store.buyItemChecker(player, itemToBuy);
+			return Store.canBuyItem(player, itemToBuy);
 		}
 		else {
 			// If item was found, print transaction statement

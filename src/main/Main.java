@@ -14,12 +14,12 @@ import coreClasses.Ship;
 import uiClasses.*;
 
 
-/**
- * The entry point to the program, creates instances of the classes required 
- * to start the game, then handles control to the class for the desired ui.
+/** The entry point to the program, creates instances of the classes required 
+ *  to start the game, then handles control to the class for the desired ui.
  * 
  * @author Jordan Vegar and Hugo Phibbs
- *
+ * @version 8/5/2021
+ * @since 29/4/2021
  */
 public class Main {
 	
