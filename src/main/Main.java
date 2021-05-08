@@ -78,7 +78,6 @@ public class Main {
 		Route[] s3routes = new Route[] {firstRoute, secondRoute};
 		currentIsland.setRouteArray(currIslandRoutes);
 		
-	
 		// Create an island array, required for game environment constructor
 		Island[] islands = new Island[] {currentIsland, currentIsland, currentIsland, currentIsland};
 		
@@ -131,10 +130,10 @@ public class Main {
 	}
 	
 	public static Ship[] createShips() {
-		Ship ship1 = new Ship("Black Pearl", 100, 100, 20, 50);
-		Ship ship2 = new Ship("Thunder Bird", 80, 80, 30, 40);
-		Ship ship3 = new Ship("Batmobile", 70, 120, 10, 70);
-		Ship ship4 = new Ship("Apollo", 100, 100, 30, 40);
+		Ship ship1 = new Ship("Black Pearl", 100, 20, 50);
+		Ship ship2 = new Ship("Thunder Bird", 80, 30, 40);
+		Ship ship3 = new Ship("Batmobile", 70, 10, 70);
+		Ship ship4 = new Ship("Apollo", 100, 30, 40);
 		return new Ship[] {ship1, ship2, ship3, ship4};
 	}
 }
