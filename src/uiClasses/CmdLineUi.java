@@ -54,11 +54,7 @@ public class CmdLineUi implements GameUi {
 	 */
 	@Override
 	public void playGame() {
-		gameEnvironment.minMoneyRequired();
-		// If player has less money than min money required to travel, prints a message warning them.
-		if (gameEnvironment.getPlayer().getMoneyBalance() < gameEnvironment.getMinMoneyToTravel())
-			System.out.format("You currently don't have enough money to repair your ship and pay your crew. This requires $%d\n",
-					gameEnvironment.getMinMoneyToTravel());
+		checkSufficientMoney();
 		
 		while (!finish) {
 			String[] coreOptions = new String[] {
@@ -520,6 +516,19 @@ public class CmdLineUi implements GameUi {
 			finishGame(pirateOutcome);
 		}
 		
+	}
+	
+	public void checkSufficientMoney() {
+		gameEnvironment.minMoneyRequired();
+		int balance = gameEnvironment.getPlayer().getMoneyBalance();
+		if (balance < gameEnvironment.liquidValue()) {
+			finishGame("You don't have enough money and can't sell enough goods to repair your ship and pay your crew wages. You are stranded!");
+		}
+		// If player has less money than min money required to travel, prints a message warning them.
+		else if (balance < gameEnvironment.getMinMoneyToTravel()) {
+			System.out.format("You currently don't have enough money to repair your ship and pay your crew. This requires $%d\n",
+					gameEnvironment.getMinMoneyToTravel());
+		}
 	}
 }
 
