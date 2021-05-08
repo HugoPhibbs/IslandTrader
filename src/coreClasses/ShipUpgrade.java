@@ -7,9 +7,7 @@ package coreClasses;
  */
 
 public class ShipUpgrade extends Item{
-    // just a note that we have made all quantities into integers to make everything simple--for report
-	// NOTE: items of the same name MUST Have the same qualities as every other upgrade of the same name, apart from price
-	// TODO how to implement the above line?
+	// TODO remove constructor if we arent using it!
 	
 	// Class Variables
     private int defenseBoost; 
@@ -26,8 +24,7 @@ public class ShipUpgrade extends Item{
     	super(name, spaceTaken, price);
     	
     	// Check and add defenseBoost
-    	if (defenseBoostIsValid(defenseBoost)) {this.defenseBoost = defenseBoost;}
-    	else {throw new IllegalArgumentException("Defense boost must be above 0 and less than 50!");}  
+    
     }
     
     /** Checks if a defenseBoost is valid, helper for constructor
@@ -44,4 +41,14 @@ public class ShipUpgrade extends Item{
      * @return Integer defenseBoost how much ShipUpgrade object benefits the defense of a ship
      */
     public int getDefenseBoost() { return defenseBoost; }    
+    
+    
+    public void setDefenseBoost(int defenseBoost) {
+    	if (defenseBoostIsValid(defenseBoost)) {
+    		this.defenseBoost = defenseBoost;
+    		}
+    	else {
+    		throw new IllegalArgumentException("Defense boost must be above 0 and less than 50!");
+    		}  
+    	}
 }
