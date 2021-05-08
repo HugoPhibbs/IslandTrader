@@ -14,10 +14,12 @@ import exceptions.*;
 import uiClasses.GameUi;
 
 
-/* TODO
+/* TODO 
  * how do we do message handling of errors, since they are all caught GameEnvironment, should we use
  * getMessage(), or create the messages themselves within GameEnvironment?
  */
+
+// TODO need to have a method that handles a player not having any cash
 
 /**
  * 
@@ -25,13 +27,6 @@ import uiClasses.GameUi;
  * @version 23/4/21
  * @since 2/4/21
  */
-
-
-/** TODO 
- * the main thing to remember is that we want to keep this all modular. 
- * so all the UI should be kept to game environment
- */
-
 
 public class GameEnvironment {
 	
@@ -159,14 +154,6 @@ public class GameEnvironment {
 		return otherIslands;
 	}
 	
-	public Item buyFromStore(String itemToBuyName) {
-		return currentIsland.getIslandStore().sellItem(itemToBuyName, player);
-	}
-	
-	public Item sellToStore(String itemToSellName) {
-		return currentIsland.getIslandStore().buyItem(itemToSellName, player);
-	}
-	
 	public ArrayList<String> getShipDescriptionArrayList() {
 		// TODO implement
 		ArrayList<String> shipDescriptionArrayList = new ArrayList<String>();
@@ -233,14 +220,38 @@ public class GameEnvironment {
 		return 10;
 	}
 	
+	// ################## METHODS FOR VISTING A STORE ###################
 	
+	public String sellToPlayerHelper(String itemStoreToSellName) {
+		// helper method for ui classes 
+		Item itemToSell = currentIsland.getIslandStore().sellItemToPlayer(itemStoreToSellName, player);
+		if (!itemToSell.getWithPlayer()) {
+			// Since item didnt come in possession with player, find reason why not
+			
+			// check if item wasnt sold because of an error to do with it being an upgrade
+			if (itemToSell.getName().endsWith("(upgrade)") && !Store.canSellUpgrade(player).equals("Can sell")){
+				return Store.canSellUpgrade(player); // return reason why cant sell upgrade.
+			}
+			// otherwise find reason inherent in being an item
+			return Store.canSellItem(player, itemToSell);
+		}
+		else {
+			// If item was found, print transaction statement
+			return String.format("You just bought %s for %s pirate bucks! \n", itemToSell.getName(), itemToSell.getPlayerBuyPrice());
+	    }
+	}
 	
-		
-	/**
-	 * Note that this is an informal test environment, when i write the proper Junit tests ill use actual varaible names and what not.
-	 * Still keep it organised tho so its readable. 5th island coming to a game near you soon.
-	 */
-	
+	public String sellToStoreHelper(String itemStoreToBuyName) {
+		// helper method for ui
+		Item itemToBuy = currentIsland.getIslandStore().buyItemFromPlayer(itemStoreToBuyName, player);
+		if (itemToBuy == null) {
+			// wasn't successful in getting item, print reason why from store
+			return Store.buyItemChecker(player, itemToBuy);
+		}
+		else {
+			// If item was found, print transaction statement
+			return String.format("You just sold %s for %s pirate bucks! \n", itemToBuy.getName(), itemToBuy.getPlayerSellPrice());
+		}	
+	}	
 }	
-	// TODO need to have a method that handles a player not having any cash
 
