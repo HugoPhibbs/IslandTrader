@@ -66,9 +66,24 @@ public class Main {
 		Route maltaAndCorsica = new Route("firstRoute", 10, new Island[] {malta, corsica}, "test 1"); maltaAndCorsica.constructProbabilityMap(50, 50, 50);
 		Route maltaAndIbiza = new Route("firstRoute", 10, new Island[] {malta, ibiza}, "test 1"); maltaAndIbiza.constructProbabilityMap(50, 50, 50);
 		Route ibizaAndCorsica = new Route("firstRoute", 10, new Island[] {ibiza, corsica}, "test 1"); ibizaAndCorsica.constructProbabilityMap(50, 50, 50);
-
+		
 		// Create an island array, required for game environment constructor
 		Island[] islands = new Island[] {cyprus, sicily, corsica, malta, ibiza};
+		
+		// Assign islands to routes
+		Route[] allRoutes = new Route[] {cyprusAndSicily, cyprusAndCorsica, cyprusAndMalta, cyprusAndIbiza, sicilyAndIbiza, sicilyAndCorsica, 
+				sicilyAndMalta, maltaAndCorsica, maltaAndIbiza, ibizaAndCorsica};
+		for (Island island: islands) {
+			Route[] routesToIsland = new Route[4];
+			int index = 0;
+			for(Route route: allRoutes) {
+				if (island == route.getIslands()[0] || island == route.getIslands()[0]) {
+					routesToIsland[index] = route;
+					index++;
+				}
+			}
+			island.setRouteArray(routesToIsland);
+		}
 		
 		// Initiate the UI and Game Environment
 		GameUi ui;
