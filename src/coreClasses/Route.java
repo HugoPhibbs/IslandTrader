@@ -1,6 +1,7 @@
 package coreClasses;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Class that models and provides information about a route between two islands.

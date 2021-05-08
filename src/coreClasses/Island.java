@@ -79,7 +79,8 @@ public class Island {
 		ArrayList<Route> routesToDestination = new ArrayList<Route>();
 		
 		for (Route possibleRoute: routeArray) {
-			if (possibleRoute.getDestination() == destination) {
+			// Check if island is in the array of two islands -array has no contains method :(
+			if (possibleRoute.getIslands()[0] == destination || possibleRoute.getIslands()[1] == destination) {
 				routesToDestination.add(possibleRoute);
 			}
 		}
