@@ -13,15 +13,13 @@ import exceptions.*;
 public class Ship {
 	// Final class variables
     private final String name;
-    private final int maxUpgradeSpace;
-    private final int maxCargoCapacity;
+    private final int maxItemSpace;
     private final int speed;             // unit distance per day
     private final int crewSize; 
 	private final int COST_PER_CREW_PER_DAY = 5;
     private Player owner;
     // Non-final class variables
-    private int remainingUpgradeSpace;
-    private int remainingCargoCapacity;
+    private int remainingItemSpace;
     private int defenseCapability = 0;
     private int healthStatus = 100;
     private ArrayList<Item> items = new ArrayList<Item>();
@@ -34,23 +32,21 @@ public class Ship {
      * @param maxCargoCapacity Integer for the max amount of cargo capacity of the ship
      * @param speed Integer for the speed of the ship as it travels between islands (assume constant)
      */
-    public Ship(String name, int speed, int crewSize, int maxUpgradeSpace, int maxCargoCapacity){    	
+    public Ship(String name, int speed, int crewSize, int maxItemSpace){    	
     	if (!CheckValidInput.nameIsValid(name)) {
     	    String msg1 = "Name for ship must have no more than 1 consecutive white space and be between 3 and 15 characters in length!";
     		throw new IllegalArgumentException(msg1);
     	}
-    	if (maxCargoCapacity > 100) {
-    		String msg2 = "maxCargoCapacity cannot be more than 100!";
+    	if (maxItemSpace > 100) {
+    		String msg2 = "Max item space cannot be more than 100!";
     		throw new IllegalArgumentException(msg2);
     	}
     	this.name = name;
     	this.speed = speed;
     	this.crewSize = crewSize;
-    	this.maxUpgradeSpace = maxUpgradeSpace;
-    	this.maxCargoCapacity = maxCargoCapacity;
+    	this.maxItemSpace = maxItemSpace;
     	
-    	remainingCargoCapacity =  maxCargoCapacity;
-    	remainingUpgradeSpace = maxUpgradeSpace;
+    	remainingItemSpace = maxItemSpace;
     }
     
     // ########################### GENERAL SHIP METHODS ###########################################
@@ -104,28 +100,20 @@ public class Ship {
      * @throws InsufficientUpgradeSlotsRemaining
      * Exception thrown if the remaining upgrade slots is not enough to store upgrade
      */
-    public boolean addUpgrade(ShipUpgrade upgrade) {
-        if (remainingUpgradeSpace >= upgrade.getSpaceTaken() && defenseCapability < 50) {
-            remainingUpgradeSpace -= upgrade.getSpaceTaken();
-            addDefenseBoost(upgrade);
-            upgrades.add(upgrade);
-            return true;
-        } 
-		return false; // not enough remaingUpgrade space, or max defense Capability
+    public void addUpgrade(ShipUpgrade upgrade) {
+        remainingItemSpace -= upgrade.getSpaceTaken();
+        addDefenseBoost(upgrade);
+        items.add(upgrade);
     }
     
     /** Helper method for addUpgrade(ShipUpgrade upgrade)
      * 
      * @param upgrade Upgrade object to be added to ship
      */
-    private boolean addDefenseBoost(ShipUpgrade upgrade) {
-    	// TODO, need to check in cmd line if adding an upgrade maxed out defense.
+    private void addDefenseBoost(ShipUpgrade upgrade) {
+    	// checking if upgrade can be added is done by store class. 
     	defenseCapability += upgrade.getDefenseBoost();
-    	if (defenseCapability > 50) {
-    		defenseCapability = 50;
-    		return true;
-    	}
-    	return false; // ship already has max defense capabiility;
+        defenseCapability = 50;
     }
    
     // ########################### MANAGING SHIP ITEMS ###########################################
@@ -135,17 +123,14 @@ public class Ship {
     * @param item Item object to be added to cargo hold
     * @throws InsufficientCargoException Exception thrown if the remaining cargo space is not enough to store item
     */
-   public boolean addItem(Item item) throws InsufficientCargoSpaceException{
+   public void addItem(Item item) throws InsufficientCargoSpaceException{
    	   // Adds an Item to the ship's cargo hold
    	   // If the ship has enough cargo space, Item is added
        // otherwise an Exception is thrown
-
-       if (remainingCargoCapacity >= item.getSpaceTaken()) {
-           items.add(item);
-           remainingCargoCapacity -= item.getSpaceTaken();
-           return true;
-       } 
-       return false; // not enough space to add an item
+	   
+	   // checking that you can add an item is done by store
+       remainingItemSpace -= item.getSpaceTaken();
+       items.add(item);
    }
     
     /** Takes Item from ship and returns it
@@ -174,11 +159,10 @@ public class Ship {
     
     public String getDescription() {
     	return String.format("Ship %s, has stats: \n"
-    			+ "Max Cargo-Capacity: %d \n"
-    			+ "Max Upgrade-Space: %d \n"
+    			+ "Max Item-Space: %d \n"
     			+ "Speed: %d \n"
     			+ "Crew-size: %d"
-    			, name, maxCargoCapacity, maxUpgradeSpace, speed, crewSize);
+    			, name, maxItemSpace, speed, crewSize);
     }
     
     /** Getter method for the daily wage of a ship's crew
@@ -204,30 +188,8 @@ public class Ship {
      * 
      * @return Integer for the max Cargo capacity of Ship Object
      */
-    public int getRemainingCargoCapacity() {return remainingCargoCapacity;}
-    
-    /** Getter for the occupied cargo capacity of a Ship Object
-     * 
-     * @return Integer for the max Cargo capacity of Ship Object
-     */
-    public int getOccupiedCargoCapacity() {
-    	return maxCargoCapacity - remainingCargoCapacity;
-    }
-    
-    /** Getter for the remaining upgrade space of a Object
-     * 
-     * @return Integer for the remaining upgrade space of Ship Object
-     */
-    public int getRemainingUpgradeSpace() {return remainingUpgradeSpace;}
-    
-    /** Getter for the occupied upgrade space of a Object
-     * 
-     * @return Integer for the occupied upgrade space of Ship Object
-     */
-    public int getOccupiedUpgradeSpace() {
-    	return maxUpgradeSpace - remainingUpgradeSpace;
-    }
-    
+    public int getRemainingItemSpace() {return remainingItemSpace;}
+
     /** Getter method for the size of crew on board ship
      * 
      * @return Integer for the number of crew on board 
