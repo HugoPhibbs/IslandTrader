@@ -54,28 +54,21 @@ public class Main {
 		Island ibiza = new Island("Ibiza", ibizaStore, "arb3"); 
 		ibizaStore.setStoreIsland(ibiza);
 		
-		
-		// Create Routes for the first island
-		// for testing
-		Route firstRoute = new Route("firstRoute", 10, cyprus, currentIsland, "test 1"); firstRoute.constructProbabilityMap(100, 50, 50);
-		Route secondRoute = new Route("secondRoute", 20, cyprus, currentIsland, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
-		Route[] currIslandRoutes = new Route[] {firstRoute, secondRoute};
-		currentIsland.setRouteArray(currIslandRoutes);
-		
-		// Create Routes for the first island
-		Route r1 = new Route("firstRoute", 10, currentIsland, currentIsland, "test 1"); firstRoute.constructProbabilityMap(50, 50, 50);
-		Route r2 = new Route("secondRoute", 20, currentIsland, currentIsland, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
-		Route[] s2routes = new Route[] {firstRoute, secondRoute};
-		currentIsland.setRouteArray(currIslandRoutes);
-		
-		// Create Routes for the first island
-		Route r3 = new Route("firstRoute", 10, currentIsland, currentIsland, "test 1"); firstRoute.constructProbabilityMap(50, 50, 50);
-		Route r4 = new Route("secondRoute", 20, currentIsland, currentIsland, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
-		Route[] s3routes = new Route[] {firstRoute, secondRoute};
-		currentIsland.setRouteArray(currIslandRoutes);
-		
+	
+		// Create Routes
+		Route cyprusAndSicily = new Route("firstRoute", 10, new Island[] {cyprus, sicily}, "test 1"); cyprusAndSicily.constructProbabilityMap(50, 50, 50);
+		Route cyprusAndCorsica = new Route("secondRoute", 20, new Island[] {cyprus, corsica}, "test 2"); cyprusAndCorsica.constructProbabilityMap(50, 50, 50);
+		Route cyprusAndMalta = new Route("firstRoute", 10, new Island[] {cyprus, malta}, "test 1"); cyprusAndMalta.constructProbabilityMap(50, 50, 50);
+		Route cyprusAndIbiza = new Route("secondRoute", 20, new Island[] {cyprus, ibiza}, "test 2"); cyprusAndIbiza.constructProbabilityMap(50, 50, 50);
+		Route sicilyAndIbiza = new Route("firstRoute", 10, new Island[] {sicily, ibiza}, "test 1"); sicilyAndIbiza.constructProbabilityMap(50, 50, 50);
+		Route sicilyAndCorsica = new Route("secondRoute", 20, new Island[] {sicily, corsica}, "test 2"); sicilyAndCorsica.constructProbabilityMap(50, 50, 50);
+		Route sicilyAndMalta = new Route("firstRoute", 10, new Island[] {sicily, malta}, "test 1"); sicilyAndMalta.constructProbabilityMap(50, 50, 50);
+		Route maltaAndCorsica = new Route("firstRoute", 10, new Island[] {malta, corsica}, "test 1"); maltaAndCorsica.constructProbabilityMap(50, 50, 50);
+		Route maltaAndIbiza = new Route("firstRoute", 10, new Island[] {malta, ibiza}, "test 1"); maltaAndIbiza.constructProbabilityMap(50, 50, 50);
+		Route ibizaAndCorsica = new Route("firstRoute", 10, new Island[] {ibiza, corsica}, "test 1"); ibizaAndCorsica.constructProbabilityMap(50, 50, 50);
+
 		// Create an island array, required for game environment constructor
-		Island[] islands = new Island[] {currentIsland, currentIsland, currentIsland, currentIsland};
+		Island[] islands = new Island[] {cyprus, sicily, corsica, malta, ibiza};
 		
 		// Initiate the UI and Game Environment
 		GameUi ui;
