@@ -270,7 +270,17 @@ public class GameEnvironment {
 	 * @return The amount the player can sell all his sellable items for plus his bank balance. 
 	 */
 	public int liquidValue() {
-		return 10;
+		ArrayList<Item> items = ship.getItems();
+		Store currStore = currentIsland.getIslandStore();
+		HashMap<String, HashMap<String, Integer>> buyCatalogue = currStore.getBuyCatalogue();
+		int liquidGoodsVal = 0;
+		
+		for (Item item: items) {
+			if (buyCatalogue.containsKey(item.getName())) {
+				liquidGoodsVal += buyCatalogue.get(item).get("price");
+			}
+		}
+		return liquidGoodsVal + player.getMoneyBalance();
 	}
 	
 	// ################## METHODS FOR VISTING A STORE ###################

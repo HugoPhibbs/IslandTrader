@@ -57,12 +57,8 @@ public class Main {
 		
 		// Create Routes for the first island
 		// for testing
-		
-		// TODO change bellow did this for testing!
-		Island currentIsland = ibiza;
-		Store currStore = ibiza.getIslandStore();
-		Route firstRoute = new Route("firstRoute", 10, currentIsland, currentIsland, "test 1"); firstRoute.constructProbabilityMap(100, 50, 50);
-		Route secondRoute = new Route("secondRoute", 20, currentIsland, currentIsland, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
+		Route firstRoute = new Route("firstRoute", 10, cyprus, currentIsland, "test 1"); firstRoute.constructProbabilityMap(100, 50, 50);
+		Route secondRoute = new Route("secondRoute", 20, cyprus, currentIsland, "test 2"); secondRoute.constructProbabilityMap(50, 50, 50);
 		Route[] currIslandRoutes = new Route[] {firstRoute, secondRoute};
 		currentIsland.setRouteArray(currIslandRoutes);
 		
