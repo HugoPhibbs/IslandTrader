@@ -187,17 +187,8 @@ public class CmdLineUi implements GameUi {
     	// if itemStoreToBuyName is null, then visitStoreBuySellHelper is handling case when user wants to go back menus
     	if (itemStoreToSellName != null) {
         	try {
-        		// TODO move bellow if statement into ge
-        		Item itemToSell = gameEnvironment.buyFromStore(itemStoreToSellName);
-        		if (!itemToSell.getWithPlayer()) {
-        			// Print string for reason item wasnt sold, since it isnt with player. 
-        			// NB Different checking compared to visitStoreBuyFromPlayer() bellow
-        			System.out.println(Store.sellItemChecker(gameEnvironment.getPlayer(), itemToSell));
-        		}
-        		else {
-        			// If item was found, print transaction statement
-        			System.out.format("You just bought %s for %s pirate bucks! \n", itemToSell.getName(), itemToSell.getPlayerBuyPrice());
-        		}
+        		// Call GE to handle
+        		System.out.println(gameEnvironment.sellToPlayerHelper(itemStoreToSellName));
         	}
         	catch (IllegalStateException ise) {
         		System.out.print(ise.getMessage());
@@ -207,7 +198,7 @@ public class CmdLineUi implements GameUi {
     	return; // stops recursion
 	}
 	
-	/** Recursive Method for selling an Item to a store
+	/** Recursive method for selling an Item to a store
 	 * 
 	 */
 	private void visitStoreBuyFromPlayer() {
@@ -218,16 +209,8 @@ public class CmdLineUi implements GameUi {
 		// if itemStoreToBuyName is null, then visitStoreBuySellHelper is handling case when user wants to go back menus
 		if (itemStoreToBuyName != null) {
 	    	try {
-	    		// Get item that will be sold to store
-	    		Item itemToBuy = gameEnvironment.sellToStore(itemStoreToBuyName);
-	    		if (itemToBuy == null) {
-	    			// wasn't successful in getting item, print reason why from store
-	    			System.out.println(Store.buyItemChecker(gameEnvironment.getPlayer(), itemToBuy));
-	    		}
-	    		else {
-	    			// If item was found, print transaction statement
-	    			System.out.format("You just sold %s for %s pirate bucks! \n", itemToBuy.getName(), itemToBuy.getPlayerSellPrice());
-	    		}	
+	    		// Call GE to handle
+	    		System.out.println(gameEnvironment.buyFromPlayerHelper(itemStoreToBuyName));
 	    	}
 	    	catch (IllegalStateException ise) {
 	    		System.out.println(ise.getMessage());
@@ -259,6 +242,10 @@ public class CmdLineUi implements GameUi {
     	return Store.getChosenItemName(optionsArrayList, itemNum);
 	}
 	
+	
+	/** Method to handle exiting from a store
+	 * 
+	 */
 	private void exitStore() {
 		String exitStoreMessage = "Are you sure you want to leave the store? \n"
 				+ "Please enter action number:";
