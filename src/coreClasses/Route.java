@@ -16,11 +16,8 @@ public class Route {
 	// The distance of this route, expressed in nautical miles. 
 	private int distance;
 	
-	// The island the route starts at.
-	private Island origin;
-	
-	// The island that the route finishes at. 
-	private Island destination;
+	// An array of the two islands this route connects.
+	private Island[] islands;
 	
 	/**
 	 * String description of the Route. Must include indaction's about the how dangerous
@@ -44,11 +41,10 @@ public class Route {
 	 * @param destination The island the route ends at
 	 * @param description A description of the route. 
 	 */
-	public Route(String name, int distance, Island origin, Island destination, String description) {
+	public Route(String name, int distance, Island[] islands, String description) {
 		this.routeName = name;
 		this.distance = distance;
-		this.origin = origin;
-		this.destination = destination;
+		this.islands = islands;
 		this.description = description;
 	}
 	
@@ -70,9 +66,7 @@ public class Route {
 	
 	public int getDistance() {return distance;}
 	
-	public Island getOrigin() {return origin;}
-	
-	public Island getDestination() {return destination;}
+	public Island[] getIslands() {return islands;}
 	
 	public String getDescription() {return description;}
 	
