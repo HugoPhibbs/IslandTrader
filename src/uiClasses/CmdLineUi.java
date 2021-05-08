@@ -394,7 +394,9 @@ public class CmdLineUi implements GameUi {
 						+ "Please sell some items or choose a shorter route.");
 				return;
 			}
-			System.out.println("Repairing ship and paying wages");
+			System.out.println("Press Enter to repair your ship pay your crew, and set sail!");
+			scanner.nextLine();
+			scanner.nextLine();
 			gameEnvironment.setSail(chosenRoute);
 			System.out.println("You have arrived at " + gameEnvironment.getCurrentIsland().getIslandName());
 			playGame();
