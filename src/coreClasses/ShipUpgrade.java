@@ -20,7 +20,7 @@ public class ShipUpgrade extends Item{
     public ShipUpgrade(String name, int spaceTaken, int price, int defenseBoost){
     	// Call Item constructor
     	super(name, spaceTaken, price);
-    	setDefenseBoost(defenseBoost);
+    	setDefenseBoost(defenseBoost); // code handles errors
     }
     
     /** Getter method for the defense boost of ShipUpgrade object
@@ -33,7 +33,7 @@ public class ShipUpgrade extends Item{
      * 
      * @param defenseBoost Integer for the defense boost to be set
      */
-    public void setDefenseBoost(int defenseBoost) {
+    private void setDefenseBoost(int defenseBoost) {
     	if (defenseBoostIsValid(defenseBoost)) {
     		this.defenseBoost = defenseBoost;
     		}
