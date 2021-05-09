@@ -62,9 +62,12 @@ public class Store {
     	
     	if (itemName.endsWith("(upgrade)")) {
     		// cast down to a shipUpgrade, using inheritance.
-    		ShipUpgrade upgradeToSell = (ShipUpgrade) itemToSell; 
+    		ShipUpgrade upgradeToSell = new ShipUpgrade(itemToSell.getName(), itemToSell.getSpaceTaken(), 
+    				itemToSell.getPlayerBuyPrice(), 
+    				sellCatalogue.get(itemToSell.getName()).get("defenseBoost")); 
+    		
     		// set defenseCapability of new upgradeToSellObject
-    		upgradeToSell.setDefenseBoost(sellCatalogue.get(upgradeToSell.getName()).get("defenseBoost"));
+    		//upgradeToSell.setDefenseBoost(sellCatalogue.get(upgradeToSell.getName()).get("defenseBoost"));
     		if (!canSellUpgrade(player).equals("Can sell")) {
     			return (Item) upgradeToSell;
     		}
@@ -112,7 +115,7 @@ public class Store {
      */
     public static String canSellUpgrade(Player player) {
     	// other checking is done by canSellItem Method above
-    	if (player.getShip().getDefenseCapability() < 50) {
+    	if (player.getShip().getDefenseCapability() >= 50) {
     		return "Can't sell Upgrade, Ship already has max defense Capability";
     	}
     	return "Can sell";
