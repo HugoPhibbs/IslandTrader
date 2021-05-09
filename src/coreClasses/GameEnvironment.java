@@ -305,7 +305,7 @@ public class GameEnvironment {
 		}
 		else {
 			// If item was found, print transaction statement
-			return String.format("You just bought %s for %s pirate bucks! \n", itemToSell.getName(), itemToSell.getPlayerBuyPrice());
+			return String.format("You just bought %s for %s Pirate Bucks! \n", itemToSell.getName(), itemToSell.getPlayerBuyPrice());
 	    }
 	}
 	
