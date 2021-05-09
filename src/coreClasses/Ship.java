@@ -123,7 +123,7 @@ public class Ship {
     * @param item Item object to be added to cargo hold
     * @throws InsufficientCargoException Exception thrown if the remaining cargo space is not enough to store item
     */
-   public void addItem(Item item) throws InsufficientCargoSpaceException{
+   public void addItem(Item item){
    	   // Adds an Item to the ship's cargo hold
    	   // If the ship has enough cargo space, Item is added
        // otherwise an Exception is thrown

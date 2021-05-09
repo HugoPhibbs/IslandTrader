@@ -425,7 +425,7 @@ public class CmdLineUi implements GameUi {
 			System.out.format("(%d) %s \n", (i+1), optionsArrayList.get(i));
     	}
 		if (canGoBack) {
-			System.out.format("(%d) Go back \n", optionsArrayList.size());
+			System.out.format("(%d) Go back \n", optionsArrayList.size()+1);
 		}
 	}
 	
@@ -435,7 +435,7 @@ public class CmdLineUi implements GameUi {
 			System.out.format("(%d) %s \n", (i+1), optionsArray[i]);
 		}
 		if (canGoBack) {
-			System.out.format("(%d) Go back \n", optionsArray.length);
+			System.out.format("(%d) Go back \n", optionsArray.length+1);
 		}
 	}
 	
