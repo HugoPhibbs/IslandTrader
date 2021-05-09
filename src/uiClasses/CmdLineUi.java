@@ -59,7 +59,7 @@ public class CmdLineUi implements GameUi {
 		while (!finish) {
 			String[] coreOptions = new String[] {
 					"View your money and days remaining.", 
-					"View the propeties of your ship.", 
+					"View the properties of your ship.", 
 					"View the goods you have purchased.", 
 					"View the properties of each Island.",
 					String.format("Visit %s's store", gameEnvironment.getCurrentIsland().getIslandName()), 
@@ -206,7 +206,7 @@ public class CmdLineUi implements GameUi {
 		if (itemStoreToBuyName != null) {
 	    	try {
 	    		// Call GE to handle
-	    		System.out.println(gameEnvironment.buyFromPlayerHelper(itemStoreToBuyName));
+	    		System.out.println(gameEnvironment.sellToStoreHelper(itemStoreToBuyName));
 	    	}
 	    	catch (IllegalStateException ise) {
 	    		System.out.println(ise.getMessage());
@@ -217,6 +217,9 @@ public class CmdLineUi implements GameUi {
 	}
 	
 	/** Helper method for buying and selling from/to a store
+	 *  takes code that was originally being used by both buying and selling, but was made general with parameter
+	 *  'operation' to work with both. 
+	 *  
 	 * 
 	 * @param operation String for what operation is happening "buy" or "sell"
 	 * @param catalogue HashMap containing the items that a store buys or sells
@@ -232,7 +235,7 @@ public class CmdLineUi implements GameUi {
 		printOptions(optionsArrayList, buySellMessage, true);
 		
     	int itemNum = getInt(1, catalogue.size()+1);
-    	if (itemNum == catalogue.size()) {
+    	if (itemNum == catalogue.size()+1) {
     		return null; // user wants to go back menus
     	}
     	return Store.getChosenItemName(optionsArrayList, itemNum);
@@ -453,7 +456,7 @@ public class CmdLineUi implements GameUi {
 				if (lowerBound <= input && input <= upperBound) { 
 					return input;
 				}
-				System.out.format("Please enter a number between %d and %d (inlcusive). \n", lowerBound, upperBound);
+				System.out.format("Please enter a number between %d and %d (inclusive). \n", lowerBound, upperBound);
 				
 			} catch (InputMismatchException e) {
 				System.out.println("Invalid input. Please enter an integer.");
