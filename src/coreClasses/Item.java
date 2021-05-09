@@ -23,10 +23,6 @@ public class Item{
      */
     public Item(String name, int spaceTaken, int playerBuyPrice){
     	
-    	if (!CheckValidInput.nameIsValid(name)) {
-    		throw new IllegalArgumentException("Name for Item must have no more than 1 consecutive white space and be between 3 and 15 characters in length!");
-    	}
-    	
     	this.name = name;
     	this.spaceTaken = spaceTaken;
     	this.playerBuyPrice = playerBuyPrice; 
