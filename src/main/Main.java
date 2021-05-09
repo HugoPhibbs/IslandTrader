@@ -29,13 +29,15 @@ public class Main {
 		Ship[] shipArray = createShips();
 		
 		// Create the first island and its store
-		ArrayList<HashMap<String, HashMap<String, Integer>>> catalogues = createBuyCatalogues();
-		Store cyprusStore = new Store("War Goods", "Pies", catalogues.get(0), catalogues.get(0)); 
+		ArrayList<HashMap<String, HashMap<String, Integer>>> buyCatalogues = createBuyCatalogues();
+		ArrayList<HashMap<String, HashMap<String, Integer>>> sellCatalogues = createSellCatalogues();
+		
+		Store cyprusStore = new Store("War Goods", "Pies", buyCatalogues.get(0), sellCatalogues.get(0)); 
 		Island cyprus = new Island("Cyprus", cyprusStore, "arb description");
 		cyprusStore.setStoreIsland(cyprus);
 		
 		// Create the second island and its store
-		Store sicilyStore = new Store("Pasta and Co", "WWW", catalogues.get(0), catalogues.get(0));
+		Store sicilyStore = new Store("Pasta and Co", "WWW", buyCatalogues.get(0), sellCatalogues.get(0));
 		Island sicily = new Island("Sicily", sicilyStore, "arb1"); 
 		sicilyStore.setStoreIsland(sicily);
 		
@@ -95,7 +97,7 @@ public class Main {
 	}
 	
 	public static ArrayList<HashMap<String, HashMap<String, Integer>>> createBuyCatalogues(){
-		// Find a way to directly initialize these!!!
+		// NOTE stores do not buy upgrades!
 		HashMap<String, HashMap<String, Integer>> buyCatalogue = new HashMap<String, HashMap<String, Integer>>();
 		HashMap<String, Integer> goldProperties = new HashMap<String, Integer>();
 		goldProperties.put("spaceTaken", 2);
@@ -106,9 +108,14 @@ public class Main {
 		HashMap<String, Integer> bananaProperties = new HashMap<String, Integer>();
 		bananaProperties.put("spaceTaken", 1);
 		bananaProperties.put("price", 1);
+		HashMap<String, Integer> canonProperties = new HashMap<String, Integer>();
+		canonProperties.put("spaceTaken", 2);
+		canonProperties.put("price", 2);
+		canonProperties.put("defenseBoost", 2);
 		buyCatalogue.put("Gold", goldProperties);
 		buyCatalogue.put("Silver", silverProperties);
 		buyCatalogue.put("Banana", bananaProperties);
+		buyCatalogue.put("Canon(upgrade)", canonProperties);
 		ArrayList<HashMap<String, HashMap<String, Integer>>> catalogues = new ArrayList<HashMap<String, HashMap<String, Integer>>>();
 		catalogues.add(buyCatalogue);
 		return catalogues;
