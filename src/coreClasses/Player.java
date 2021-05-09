@@ -52,7 +52,7 @@ public class Player {
     	}
     	String result = "All items that have been bought and their details: \n";
     	for (Item item : purchasedItems) {
-    		result += String.format("Item %s was bought for %d", item.getName(), item.getPlayerBuyPrice());
+    		result += String.format("Item %s was bought for %d Pirate Bucks", item.getName(), item.getPlayerBuyPrice());
     		if (item.getPlayerSellPrice() != -1) {
     			result += String.format(" and was sold for %d at %s. \n", item.getPlayerSellPrice(), item.getStoreIslandSoldAt().getIslandName());
     		}
@@ -77,6 +77,7 @@ public class Player {
 	 * there balance by that amount
 	 * 
 	 * @param amountSpent The amount the purchase costs.
+	 * @return Boolean value if money was spent or not, ie player had enough cash to pay
 	 */
 	public boolean spendMoney(int amountSpent) {
 		if (amountSpent <= moneyBalance) {
