@@ -28,8 +28,8 @@ public class Ship {
     /** Constructor for Ship
      *
      * @param name A String for the name of the ship
-     * @param crewArray Array for the crew of the ship
-     * @param maxCargoCapacity Integer for the max amount of cargo capacity of the ship
+     * @param crewSize Integer for the number of crew onboard
+     * @param maxItemSpace Integer for the max amount of Items that a crew can hold
      * @param speed Integer for the speed of the ship as it travels between islands (assume constant)
      */
     public Ship(String name, int speed, int crewSize, int maxItemSpace){    	
@@ -54,13 +54,11 @@ public class Ship {
     /** Enacts damage onto Ship Object
      *
      * @param damage Integer for damage to be inflicted onto ship
-     * @return A boolean value if the ship survived the attack!
      */
-    public boolean takeDamage(int damage) {
+    public void takeDamage(int damage) {
     	// TODO, ceiling of below calculations
-        healthStatus -= (int) damage * (1-defenseCapability/100); 
-        // in practicality will always be above 0, because max damage of unfortunate weather is 99
-        return (healthStatus <= 0); 
+        healthStatus -= (int) damage * (1-(float)defenseCapability/100); 
+        // in practicality health status will always be above 0, because max damage of unfortunate weather is 99
     }
     
     /** Repairs a Ship object
@@ -81,14 +79,12 @@ public class Ship {
      *
      * @param route Route object that the Ship is sailing on between two islands
      * @param player Player object for player that is currently playing
+     * @return Boolean if wages were paid or not
      */
     public boolean payWages(Route route, Player player) {
     	// Called every time a player wants to sell sail to another island
         int totalWageCost = getRouteWageCost(route);
-    	if (!player.spendMoney(totalWageCost)) {
-    		return false; // not enough money
-    	}
-    	return true;
+    	return player.spendMoney(totalWageCost);
     }
    
     // ########################### MANAGING SHIP UPGRADES #######################################
@@ -103,7 +99,7 @@ public class Ship {
     public void addUpgrade(ShipUpgrade upgrade) {
         remainingItemSpace -= upgrade.getSpaceTaken();
         addDefenseBoost(upgrade);
-        items.add(upgrade);
+        upgrades.add(upgrade);
     }
     
     /** Helper method for addUpgrade(ShipUpgrade upgrade)
@@ -113,7 +109,9 @@ public class Ship {
     private void addDefenseBoost(ShipUpgrade upgrade) {
     	// checking if upgrade can be added is done by store class. 
     	defenseCapability += upgrade.getDefenseBoost();
-        defenseCapability = 50;
+    	if (defenseCapability > 50) { // so it doesnt go above max 
+    		defenseCapability = 50;
+    	}
     }
    
     // ########################### MANAGING SHIP ITEMS ###########################################
@@ -121,13 +119,8 @@ public class Ship {
     /** Adds an Item Object to this Ship's cargo hold
     *
     * @param item Item object to be added to cargo hold
-    * @throws InsufficientCargoException Exception thrown if the remaining cargo space is not enough to store item
     */
    public void addItem(Item item){
-   	   // Adds an Item to the ship's cargo hold
-   	   // If the ship has enough cargo space, Item is added
-       // otherwise an Exception is thrown
-	   
 	   // checking that you can add an item is done by store
        remainingItemSpace -= item.getSpaceTaken();
        items.add(item);
@@ -145,8 +138,8 @@ public class Ship {
     	// otherwise throws an exception if the item is not present
     	// called by Store class when ever a a player wants to sell an upgrade
     	
-    	for (Item currItem : items) {
-    		// Bellow line took a while to realise that == points to the SAME object.
+    	for (Item currItem : 	items) {
+    		// Bellow line took a while to realize that == points to the SAME object.
     		if (currItem.getName().equals(itemName)) {
     			items.remove(currItem);
     			return currItem;
@@ -158,11 +151,13 @@ public class Ship {
     // ########################### GETTER METHODS ###########################################
     
     public String getDescription() {
-    	return String.format("Ship %s, has stats: \n"
+    	return String.format("Ship %s, has properties: \n"
     			+ "Max Item-Space: %d \n"
+    			+ "Remaining Item-Space: %d \n"
     			+ "Speed: %d \n"
-    			+ "Crew-size: %d"
-    			, name, maxItemSpace, speed, crewSize);
+    			+ "Crew-size: %d \n"
+    			+ "Defense Capability : %d"
+    			, name, maxItemSpace, remainingItemSpace, speed, crewSize, defenseCapability);
     }
     
     /** Getter method for the daily wage of a ship's crew
