@@ -1,6 +1,5 @@
 package coreClasses;
 
-import exceptions.GameOverException;
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -53,7 +52,7 @@ public class Pirates {
      * @param ship Ship object to have goods taken from
      * @return String for the result of taking ship goods. 
      */
-    private static String takeGoods(Ship ship){
+    public static String takeGoods(Ship ship){
     	// public for testing
     	
     	Random random = new Random();
@@ -98,12 +97,14 @@ public class Pirates {
      * @param ship Ship object that contains items to be searched
      * @return Item object that is the largest belonging to a ship 
      */
-    private static Item getLargestShipItem(Ship ship) {
+    public static Item getLargestShipItem(Ship ship) {
     	// public for testing
     	ArrayList<Item> itemsArrayList = ship.getItems();
     	int biggestSize = -1;
     	Item biggestItem = null;
     	for (int i = 0; i < itemsArrayList.size(); i++) {
+    		String itemName = itemsArrayList.get(i).getName();
+    		// pirates cannot take upgrades, no capability for this in ship!
     		if (itemsArrayList.get(i).getSpaceTaken() > biggestSize) {
     			biggestItem = itemsArrayList.get(i);
     			biggestSize = biggestItem.getSpaceTaken();
