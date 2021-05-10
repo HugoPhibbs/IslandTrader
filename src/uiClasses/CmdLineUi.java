@@ -74,6 +74,7 @@ public class CmdLineUi implements GameUi {
 	
 	@Override
 	public void finishGame(String message) {
+		finish = true;
 		System.out.format("\nGame Over %s!\n", gameEnvironment.getPlayer().getName());
 		System.out.println(message);
 		int selectedDays = gameEnvironment.getDaysSelected();
@@ -354,7 +355,7 @@ public class CmdLineUi implements GameUi {
 	 * so that the player can choose a route to the island they selected. 
 	 */
 	private void travelToIsland() {
-		while(true) {
+		while(finish == false) {
 			Island[] otherIslands = gameEnvironment.getOtherIslands();
 			
 			System.out.println("Enter the number of the island you would like to travel to.");
@@ -404,8 +405,10 @@ public class CmdLineUi implements GameUi {
 			scanner.nextLine();
 			
 			gameEnvironment.setSail(chosenRoute, island);
-			System.out.println("You have arrived at " + gameEnvironment.getCurrentIsland().getIslandName());
-			playGame();
+			if (finish == false) {
+				System.out.println("You have arrived at " + gameEnvironment.getCurrentIsland().getIslandName());
+				playGame();
+			}
 		}
 	}
 	
@@ -508,7 +511,6 @@ public class CmdLineUi implements GameUi {
 		// Roll die
 		System.out.println(Pirates.getDescription());
 		System.out.println("(Press enter to roll)");
-		scanner.nextLine();
 		scanner.nextLine();
 		int roll = Pirates.rollDice();
 		System.out.format("You got a %d!\n", roll);
