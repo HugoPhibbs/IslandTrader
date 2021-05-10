@@ -398,7 +398,8 @@ public class CmdLineUi implements GameUi {
 				return;
 			}
 			// Following 3 lines make player press enter to continue.
-			System.out.println("Press Enter to repair your ship pay your crew, and set sail!");
+			int sailCost = gameEnvironment.getShip().getRepairCost() + gameEnvironment.getShip().getRouteWageCost(chosenRoute);
+			System.out.format("Press Enter to repair your ship pay your crew for $%d, and set sail!\n", sailCost);
 			scanner.nextLine();
 			scanner.nextLine();
 			
