@@ -3,6 +3,7 @@ package main;
 import java.util.ArrayList; 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import coreClasses.GameEnvironment;
 import coreClasses.Island;
@@ -76,15 +77,18 @@ public class Main {
 		Route[] allRoutes = new Route[] {cyprusAndSicily, cyprusAndCorsica, cyprusAndMalta, cyprusAndIbiza, sicilyAndIbiza, sicilyAndCorsica, 
 				sicilyAndMalta, maltaAndCorsica, maltaAndIbiza, ibizaAndCorsica};
 		for (Island island: islands) {
-			Route[] routesToIsland = new Route[4];
-			int index = 0;
+			List<Route> routesToIsland = new ArrayList<Route>();
 			for(Route route: allRoutes) {
 				if (island == route.getIslands()[0] || island == route.getIslands()[1]) {
-					routesToIsland[index] = route;
-					index++;
+					routesToIsland.add(route);
 				}
 			}
-			island.setRouteArray(routesToIsland);
+			// Convert route list to route array
+			Route[] routeArray = new Route[routesToIsland.size()];
+			for (int i = 0; i < routesToIsland.size(); i++) {
+				routeArray[i] = routesToIsland.get(i);
+			}
+			island.setRouteArray(routeArray);
 		}
 		
 		// Initiate the UI and Game Environment
