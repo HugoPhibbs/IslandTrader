@@ -62,8 +62,7 @@ public class Pirates {
     		 Item biggestItem = getLargestShipItem(ship);
     		 if (biggestItem == null || biggestItem.getSpaceTaken() < randomGoodDemand) {
     			 String gameOverMessage = "You have less goods than what the pirates demand. \n"
-    	        			+ "You and your crew have to walk the plank! \n"
-    	        			+ "GAME OVER!";
+    	        			+ "You and your crew have to walk the plank!";
     	        	return gameOverMessage;
     		 }
     		 ship.takeItem(biggestItem.getName());

@@ -74,7 +74,7 @@ public class CmdLineUi implements GameUi {
 	
 	@Override
 	public void finishGame(String message) {
-		System.out.format("Game Over %s!\n", gameEnvironment.getPlayer().getName());
+		System.out.format("\nGame Over %s!\n", gameEnvironment.getPlayer().getName());
 		System.out.println(message);
 		int selectedDays = gameEnvironment.getDaysSelected();
 		System.out.format("You played for %d days out of a selected %d days.\n", 
