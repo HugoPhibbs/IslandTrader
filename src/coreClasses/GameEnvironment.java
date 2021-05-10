@@ -166,10 +166,10 @@ public class GameEnvironment {
 		if (route.getPirateProb() >= random.nextInt(100)) {
 			ui.pirateAttack();
 		}
-		if (route.getWeatherProb() >= random.nextInt(100)) {
+		else if (route.getWeatherProb() >= random.nextInt(100)) {
 			UnfortunateWeather.damageShip(ship);
 		}
-		if (route.getRescueProb() >= random.nextInt(100)) {
+		else if (route.getRescueProb() >= random.nextInt(100)) {
 			// roll dice
 			RescuedSailors.giveMoney(player);
 		}
