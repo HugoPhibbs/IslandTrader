@@ -144,7 +144,7 @@ public class GameEnvironment {
 	 * new Island. May encounter random events based on the probabilities of the particular route. 
 	 * @param route The Route the player has chosen. 
 	 */
-	public void setSail(Route route) {
+	public void setSail(Route route, Island newIsland) {
     	// Repair ship and pay wages before setting sail.
 		ship.repairShip();
 		ship.payWages(route, player);
@@ -153,7 +153,7 @@ public class GameEnvironment {
 		// Arrive at new island
 		int routeDuration = route.getDistance() / ship.getSpeed();
 		reduceDaysRemaining(routeDuration);
-		setCurrentIsland(route.getDestination());	
+		setCurrentIsland(newIsland);	
     }
     
 	/**

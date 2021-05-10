@@ -341,7 +341,7 @@ public class CmdLineUi implements GameUi {
 		printOptions(proceedOptions, "Enter the number of the action you wish to take.", true);
 		int proceedInput = getInt(1, otherIslands.length+1);
 		// if input was to go back
-		if (proceedInput == otherIslands.length) {
+		if (proceedInput == 2) {
 			return;
 		}
 		else {
@@ -402,7 +402,7 @@ public class CmdLineUi implements GameUi {
 			scanner.nextLine();
 			scanner.nextLine();
 			
-			gameEnvironment.setSail(chosenRoute);
+			gameEnvironment.setSail(chosenRoute, island);
 			System.out.println("You have arrived at " + gameEnvironment.getCurrentIsland().getIslandName());
 			playGame();
 		}
@@ -522,7 +522,6 @@ public class CmdLineUi implements GameUi {
 		else {
 			finishGame(pirateOutcome);
 		}
-		
 	}
 	
 	public void checkSufficientMoney() {
