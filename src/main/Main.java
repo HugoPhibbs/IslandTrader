@@ -79,7 +79,7 @@ public class Main {
 			Route[] routesToIsland = new Route[4];
 			int index = 0;
 			for(Route route: allRoutes) {
-				if (island == route.getIslands()[0] || island == route.getIslands()[0]) {
+				if (island == route.getIslands()[0] || island == route.getIslands()[1]) {
 					routesToIsland[index] = route;
 					index++;
 				}

@@ -58,23 +58,18 @@ public class Pirates {
     	Random random = new Random();
     	int randomGoodDemand = random.nextInt(120); //arbitrary upper bound, can be adjusted if need be
     	    			
-        if (randomGoodDemand > ship.getOccupiedCargoCapacity()){
-        	/* IMPORTANT due to this implementation, item and ship upgrades must be 
-        	 * stored separately within a ship!
-        	 */
-        	String gameOverMessage = "You have less goods than what the pirates demand. \n"
-        			+ "You and your crew have to walk the plank! \n"
-        			+ "GAME OVER!";
-        	return gameOverMessage;
-        }
-        else{
-        	while (randomGoodDemand > 0) {
-        		 Item biggestItem = getLargestShipItem(ship);
-        		 ship.takeItem(biggestItem.getName());
-        		 randomGoodDemand -= biggestItem.getSpaceTaken();
-        	}
-        	return "attack_successful";
-        }
+    	while (randomGoodDemand > 0) {
+    		 Item biggestItem = getLargestShipItem(ship);
+    		 if (biggestItem == null || biggestItem.getSpaceTaken() < randomGoodDemand) {
+    			 String gameOverMessage = "You have less goods than what the pirates demand. \n"
+    	        			+ "You and your crew have to walk the plank! \n"
+    	        			+ "GAME OVER!";
+    	        	return gameOverMessage;
+    		 }
+    		 ship.takeItem(biggestItem.getName());
+    		 randomGoodDemand -= biggestItem.getSpaceTaken();
+    	}
+    	return "attack_successful";
     }
     
     /** Method for rolling dice for a pirates random event
@@ -103,7 +98,6 @@ public class Pirates {
     	int biggestSize = -1;
     	Item biggestItem = null;
     	for (int i = 0; i < itemsArrayList.size(); i++) {
-    		String itemName = itemsArrayList.get(i).getName();
     		// pirates cannot take upgrades, no capability for this in ship!
     		if (itemsArrayList.get(i).getSpaceTaken() > biggestSize) {
     			biggestItem = itemsArrayList.get(i);
