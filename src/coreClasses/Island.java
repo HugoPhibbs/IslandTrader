@@ -129,6 +129,3 @@ public class Island {
 	 */
 	public void setRouteArray(Route[] routes) {this.routeArray = routes;}
 }
-
-
-while dict[value] != 
