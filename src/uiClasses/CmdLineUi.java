@@ -59,7 +59,7 @@ public class CmdLineUi implements GameUi {
 		while (!finish) {
 			String[] coreOptions = new String[] {
 					"View your money and days remaining.", 
-					"View the properties of your ship.", 
+					"View the properties of your ship and any upgrades bought.", 
 					"View the goods you have purchased.", 
 					"View the properties of each Island.",
 					String.format("Visit %s's store", gameEnvironment.getCurrentIsland().getIslandName()), 
@@ -279,8 +279,17 @@ public class CmdLineUi implements GameUi {
 	
 	private void viewShipProperties() {
 		System.out.println(gameEnvironment.getShip().getDescription());
-	}	
-
+		String viewShipMessage = "Would you like to see the upgrades that you equipped for this ship? \nEnter an action number";
+		printOptions(new String[] {"View upgrades for this ship."}, viewShipMessage, true);
+		int input = getInt(1, 2);
+		
+		switch(input) {
+		case 1:
+			System.out.println(gameEnvironment.getShip().upgradesToString());
+		case 2:
+			return;
+		}
+	}
 	
 	/**
 	 * Prints information about the player and there position in the game. 
@@ -534,7 +543,7 @@ public class CmdLineUi implements GameUi {
 	public void checkSufficientMoney() {
 		gameEnvironment.minMoneyRequired();
 		int balance = gameEnvironment.getPlayer().getMoneyBalance();
-		if (balance < gameEnvironment.liquidValue()) {
+		if (balance < gameEnvironment.getLiquidValue()) {
 			finishGame("You don't have enough money and can't sell enough goods to repair your ship and pay your crew wages. You are stranded!");
 		}
 		// If player has less money than min money required to travel, prints a message warning them.
