@@ -21,7 +21,8 @@ import uiClasses.GameUi;
 
 // TODO need to have a method that handles a player not having any cash
 
-/** Represents the game environment of an 'Island Trader' game
+/** Represents the game environment of an 'Island Trader' game. 
+ * Contains necessary Game objects, along with general methods that dont really belong anywhere else
  * 
  * @author Jordan Vegar and Hugo Phibbs
  * @version 8/5/21
@@ -144,7 +145,7 @@ public class GameEnvironment {
 	 * new Island. May encounter random events based on the probabilities of the particular route. 
 	 * @param route The Route the player has chosen. 
 	 */
-	public void setSail(Route route, Island newIsland) {
+	public void setSail(Route route) {
     	// Repair ship and pay wages before setting sail.
 		ship.repairShip();
 		ship.payWages(route, player);
@@ -153,7 +154,7 @@ public class GameEnvironment {
 		// Arrive at new island
 		int routeDuration = route.getDistance() / ship.getSpeed();
 		reduceDaysRemaining(routeDuration);
-		setCurrentIsland(newIsland);	
+		setCurrentIsland(route.getDestination());	
     }
     
 	/**
@@ -166,10 +167,10 @@ public class GameEnvironment {
 		if (route.getPirateProb() >= random.nextInt(100)) {
 			ui.pirateAttack();
 		}
-		else if (route.getWeatherProb() >= random.nextInt(100)) {
+		if (route.getWeatherProb() >= random.nextInt(100)) {
 			UnfortunateWeather.damageShip(ship);
 		}
-		else if (route.getRescueProb() >= random.nextInt(100)) {
+		if (route.getRescueProb() >= random.nextInt(100)) {
 			// roll dice
 			RescuedSailors.giveMoney(player);
 		}
@@ -282,49 +283,5 @@ public class GameEnvironment {
 		}
 		return liquidGoodsVal + player.getMoneyBalance();
 	}
-	
-	// ################## METHODS FOR VISTING A STORE ###################
-	
-	/** Helper method for buying from a store in UI
-	 * 
-	 * @param itemStoreToSellName String for the name of Item object attempting to be sold to a player
-	 * @return String representation for the result of the transaction
-	 */
-	public String sellToPlayerHelper(String itemStoreToSellName) {
-		// helper method for ui classes 
-		Item itemToSell = currentIsland.getIslandStore().sellItemToPlayer(itemStoreToSellName, player);
-		if (!itemToSell.getWithPlayer()) {
-			// Since item didnt come in possession with player, find reason why not
-			
-			// check if item wasnt sold because of an error to do with it being an upgrade
-			if (itemToSell.getName().endsWith("(upgrade)") && !Store.canSellUpgrade(player).equals("Can sell")){
-				return Store.canSellUpgrade(player); // return reason why cant sell upgrade.
-			}
-			// otherwise find reason inherent in being an item
-			return Store.canSellItem(player, itemToSell);
-		}
-		else {
-			// If item was found, print transaction statement
-			return String.format("You just bought %s for %s Pirate Bucks! \n", itemToSell.getName(), itemToSell.getPlayerBuyPrice());
-	    }
-	}
-	
-	/** Helper for method for selling to a store in UI
-	 * 
-	 * @param itemStoreToBuyName String for the name of Item object attempting to be sold to a store
-	 * @return String representation for the result of the transaction
-	 */
-	public String sellToStoreHelper(String itemStoreToBuyName) {
-		// helper method for ui
-		Item itemToBuy = currentIsland.getIslandStore().buyItemFromPlayer(itemStoreToBuyName, player);
-		if (itemToBuy == null) {
-			// wasn't successful in getting item, print reason why from store
-			return Store.canBuyItem(player, itemToBuy);
-		}
-		else {
-			// If item was found, print transaction statement
-			return String.format("You just sold %s for %s pirate bucks! \n", itemToBuy.getName(), itemToBuy.getPlayerSellPrice());
-		}	
-	}	
 }	
 
