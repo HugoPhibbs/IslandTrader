@@ -17,6 +17,7 @@ public class Ship {
     private final int speed;             // unit distance per day
     private final int crewSize; 
 	private final int COST_PER_CREW_PER_DAY = 5;
+	private final int maxDefenseCapability;
     private Player owner;
     // Non-final class variables
     private int remainingItemSpace;
@@ -28,23 +29,23 @@ public class Ship {
     /** Constructor for Ship
      *
      * @param name A String for the name of the ship
-     * @param crewSize Integer for the number of crew onboard
-     * @param maxItemSpace Integer for the max amount of Items that a crew can hold
+     * @param shipSize Integer for the size of the ship, influences crew size and the max cargo space of a ship
      * @param speed Integer for the speed of the ship as it travels between islands (assume constant)
      */
-    public Ship(String name, int speed, int crewSize, int maxItemSpace){    	
+    public Ship(String name, int speed, int shipSize, int maxDefenseCapability){    	
     	if (!CheckValidInput.nameIsValid(name)) {
     	    String msg1 = "Name for ship must have no more than 1 consecutive white space and be between 3 and 15 characters in length!";
     		throw new IllegalArgumentException(msg1);
     	}
-    	if (maxItemSpace > 100) {
-    		String msg2 = "Max item space cannot be more than 100!";
+    	if (shipSize * 10 > 100) {
+    		String msg2 = "Ship size cannot be more than 10!";
     		throw new IllegalArgumentException(msg2);
     	}
     	this.name = name;
     	this.speed = speed;
-    	this.crewSize = crewSize;
-    	this.maxItemSpace = maxItemSpace;
+    	this.crewSize = shipSize; // neat numbers
+    	this.maxItemSpace = shipSize * 10; // ie for every unit of crewSize max item space adjusts with this. arbitary constant
+    	this.maxDefenseCapability = maxDefenseCapability;
     	
     	remainingItemSpace = maxItemSpace;
     }
@@ -97,7 +98,6 @@ public class Ship {
      * Exception thrown if the remaining upgrade slots is not enough to store upgrade
      */
     public void addUpgrade(ShipUpgrade upgrade) {
-        remainingItemSpace -= upgrade.getSpaceTaken();
         addDefenseBoost(upgrade);
         upgrades.add(upgrade);
     }
@@ -109,11 +109,25 @@ public class Ship {
     private void addDefenseBoost(ShipUpgrade upgrade) {
     	// checking if upgrade can be added is done by store class. 
     	defenseCapability += upgrade.getDefenseBoost();
-    	if (defenseCapability > 50) { // so it doesnt go above max 
-    		defenseCapability = 50;
+    	if (defenseCapability > maxDefenseCapability) { // so it doesnt go above max 
+    		defenseCapability = maxDefenseCapability;
     	}
     }
-   
+    
+    public String upgradesToString() {
+    	if (upgrades.size() == 0) {
+    		return "Ship isnt equipped with any upgrades yet";
+    	}
+    	String result = String.format("%s, has upgrades: \n", name);
+    	for (ShipUpgrade shipUpgrade : upgrades) {
+    		String upgradeName = shipUpgrade.getName();
+    		int index = upgradeName.lastIndexOf("(upgrade)");
+    		upgradeName = upgradeName.substring(0, index);
+    		result += String.format("%s, defense boost: %d, space taken: %d \n", upgradeName, shipUpgrade.getDefenseBoost(), shipUpgrade.getSpaceTaken());
+    	}
+    	return result;
+    }
+
     // ########################### MANAGING SHIP ITEMS ###########################################
     
     /** Adds an Item Object to this Ship's cargo hold
@@ -156,8 +170,10 @@ public class Ship {
     			+ "Remaining Item-Space: %d \n"
     			+ "Speed: %d \n"
     			+ "Crew-size: %d \n"
-    			+ "Defense Capability : %d"
-    			, name, maxItemSpace, remainingItemSpace, speed, crewSize, defenseCapability);
+    			+ "Defense Capability: %d \n"
+    			+ "Max Defense Capability: %d \n"
+    			, name, maxItemSpace, remainingItemSpace, speed, crewSize, defenseCapability, maxDefenseCapability);
+    	
     }
     
     /** Getter method for the daily wage of a ship's crew
