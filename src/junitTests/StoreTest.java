@@ -13,6 +13,7 @@ class StoreTest {
 	private Store testStore;
 	private Player testPlayer;
 	private Ship testShip;
+	private GameEnvironment gameEnvironment;
 
 	@BeforeEach
 	void setUpBeforeClass() throws Exception {
@@ -37,22 +38,22 @@ class StoreTest {
 		
 		// Test with player having no money
 		testPlayer.spendMoney(testPlayer.getMoneyBalance()); 
-		Item goldItem = testStore.sellItemToPlayer("Gold", testPlayer);
+		Item goldItem = testStore.sellItemToPlayer(null, "Gold", testPlayer);
 		assertEquals(false, goldItem.getWithPlayer());
 		
 		// Test with player having the exact amount of money
 		testPlayer.earnMoney(goldItem.getPlayerBuyPrice());
-		assertEquals(true, testStore.sellItemToPlayer("Gold", testPlayer).getWithPlayer());
+		assertEquals(true, testStore.sellItemToPlayer(null, "Gold", testPlayer).getWithPlayer());
 		
 		// Test with testPlayer ship not having enough space on board ship
 		testPlayer.earnMoney(100);
 		testPlayer.setShip(new Ship("Batmobile", 10, 10, 2));
 		testPlayer.earnMoney(goldItem.getPlayerBuyPrice());
-		assertEquals(false, testStore.sellItemToPlayer("Silver", testPlayer).getWithPlayer());
+		assertEquals(false, testStore.sellItemToPlayer(null, "Silver", testPlayer).getWithPlayer());
 		
 		// Test with testPlayer ship having exact enough space on board ship
 		testPlayer.setShip(new Ship("Batmobile", 10, 10, 3));
-		assertEquals(true, testStore.sellItemToPlayer("Silver", testPlayer).getWithPlayer());
+		assertEquals(true, testStore.sellItemToPlayer(null, "Silver", testPlayer).getWithPlayer());
 	}
 	
 	@Test
