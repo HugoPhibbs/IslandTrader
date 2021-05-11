@@ -56,8 +56,11 @@ public class Player {
     		if (item.getPlayerSellPrice() != -1) {
     			result += String.format(" and was sold for %d at %s. \n", item.getPlayerSellPrice(), item.getStoreIslandSoldAt().getIslandName());
     		}
-    		else {
+    		else if (!item.getName().endsWith("(upgrade)")){
     			result += " and has not yet been sold to a store. \n";
+    		}
+    		else { //because upgrades cannot be sold back
+    			result += "\n";
     		}
     	}
     	return result;
