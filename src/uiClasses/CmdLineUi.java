@@ -185,7 +185,7 @@ public class CmdLineUi implements GameUi {
     	if (itemStoreToSellName != null) {
         	try {
         		// Call GE to handle
-        		System.out.println(gameEnvironment.sellToPlayerHelper(itemStoreToSellName));
+        		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().sellToPlayerHelper(itemStoreToSellName, gameEnvironment.getPlayer()));
         	}
         	catch (IllegalStateException ise) {
         		System.out.print(ise.getMessage());
@@ -207,7 +207,7 @@ public class CmdLineUi implements GameUi {
 		if (itemStoreToBuyName != null) {
 	    	try {
 	    		// Call GE to handle
-	    		System.out.println(gameEnvironment.sellToStoreHelper(itemStoreToBuyName));
+	    		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().sellToPlayerHelper(itemStoreToBuyName, gameEnvironment.getPlayer()));
 	    	}
 	    	catch (IllegalStateException ise) {
 	    		System.out.println(ise.getMessage());
