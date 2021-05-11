@@ -242,8 +242,8 @@ public class GameEnvironment {
 	 * @return The amount of money required to take the cheapest sail option. 
 	 */
 	public void minMoneyRequired() {
-		int cost = ship.getRepairCost();
-		minMoneyToTravel += ship.getRouteWageCost(shortestRoute());
+		int repairCost = ship.getRepairCost();
+		minMoneyToTravel += ship.getRouteWageCost(getShortestRoute()) + repairCost;
 	}
 	
 	/**
@@ -252,7 +252,7 @@ public class GameEnvironment {
 	 * 
 	 * @return the Route with lowest distance from currentIsland.
 	 */
-	private Route shortestRoute() {
+	private Route getShortestRoute() {
 		Route shortest = null;
 		int minDist = 999999;		// effectively infinite in this situation, but an int.
 		for (Island island: getOtherIslands()) {
@@ -270,7 +270,7 @@ public class GameEnvironment {
 	 * Based on your items you can sell at the current island's store, works out your players liquid value.
 	 * @return The amount the player can sell all his sellable items for plus his bank balance. 
 	 */
-	public int liquidValue() {
+	public int getLiquidValue() {
 		ArrayList<Item> items = ship.getItems();
 		Store currStore = currentIsland.getIslandStore();
 		HashMap<String, HashMap<String, Integer>> buyCatalogue = currStore.getBuyCatalogue();
@@ -278,7 +278,7 @@ public class GameEnvironment {
 		
 		for (Item item: items) {
 			if (buyCatalogue.containsKey(item.getName())) {
-				liquidGoodsVal += buyCatalogue.get(item).get("price");
+				liquidGoodsVal += buyCatalogue.get(item.getName()).get("price");
 			}
 		}
 		return liquidGoodsVal + player.getMoneyBalance();
