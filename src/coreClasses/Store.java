@@ -250,7 +250,14 @@ public class Store {
     		String itemName = (String) mapElement.getKey();
     		int itemPrice = catalogue.get(itemName).get("price");
     		int itemSpaceTaken = catalogue.get(itemName).get("spaceTaken");
-    		displayArrayList.add(String.format("%s for %d Pirate Bucks, taking up %d space", itemName, itemPrice, itemSpaceTaken));
+    		String result = String.format("%s for %d Pirate Bucks", itemName, itemPrice);
+    		if (itemName.endsWith("(upgrade)")) {
+    			result += String.format(", with a defense boost of %d", catalogue.get(itemName).get("defenseBoost"));
+    		}
+    		else {
+    			result += String.format(", taking up %d space", itemSpaceTaken);
+    		}
+    		displayArrayList.add(result);
         }
     	return displayArrayList;
     }
