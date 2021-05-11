@@ -36,14 +36,32 @@ public class Store {
     }
   
     // #################### METHODS FOR SELLING AN ITEM TO A PLAYER #####################
-
+    
+	/** Helper for method for selling to a store in UI
+	 * 
+	 * @param itemStoreToBuyName String for the name of Item object attempting to be sold to a store
+	 * @return String representation for the result of the transaction
+	 */
+	public String sellToStoreHelper(String itemStoreToBuyName, Player player) {
+		// helper method for ui
+		Item itemToBuy = buyItemFromPlayer(itemStoreToBuyName, player);
+		if (itemToBuy == null) {
+			// wasn't successful in getting item, print reason why from store
+			return Store.canBuyItem(player, itemToBuy);
+		}
+		else {
+			// If item was found, print transaction statement
+			return String.format("You just sold %s for %s pirate bucks! \n", itemToBuy.getName(), itemToBuy.getPlayerSellPrice());
+		}	
+	}	
+	
     /** Creates and sells and item to a player 
      * 
      * @param itemName String for the name of Item to be created
      * @param player PLayer object to receive Item
      * @return Boolean, if transaction was successful
      */
-    public Item sellItemToPlayer(String itemName, Player player) {
+    private Item sellItemToPlayer(String itemName, Player player) {
     	// returns the item that was sold either way, this is to make handling alternative flow
     	// ALOT easier!
     	if (sellCatalogue.get(itemName) == null) {
@@ -123,13 +141,39 @@ public class Store {
     
     // ############## METHODS FOR BUYING AN ITEM FROM A PLAYER #################
     
+	/** Helper method for buying from a store. Prepper method, handles situations before handing functionality
+	 * off to buyItemFromPlayer(Stirng itemName, Player player) if everything works out alright
+	 * 
+	 * @param itemStoreToSellName String for the name of Item object attempting to be sold to a player
+	 * @return String representation for the result of the transaction
+	 */
+	public String sellToPlayerHelper(String itemStoreToSellName, Player player) {
+		// helper method for ui classes
+		// fyi i moved this method from ge to store, made much more sense, wasnt a general method at all
+		Item itemToSell = sellItemToPlayer(itemStoreToSellName, player);
+		if (!itemToSell.getWithPlayer()) {
+			// Since item didnt come in possession with player, find reason why not
+			
+			// check if item wasnt sold because of an error to do with it being an upgrade
+			if (itemToSell.getName().endsWith("(upgrade)") && !Store.canSellUpgrade(player).equals("Can sell")){
+				return Store.canSellUpgrade(player); // return reason why cant sell upgrade.
+			}
+			// otherwise find reason inherent in being an item
+			return Store.canSellItem(player, itemToSell);
+		}
+		else {
+			// If item was found, print transaction statement
+			return String.format("You just bought %s for %s Pirate Bucks! \n", itemToSell.getName(), itemToSell.getPlayerBuyPrice());
+	    }
+	}
+	
     /** Buys an item from a Player to a store
      * 
      * @param itemName String for the name of Item to be bought 
      * @param player Player object that is selling an Item
      * @return Boolean if transaction was successful
      */
-    public Item buyItemFromPlayer(String itemName, Player player) {
+    private Item buyItemFromPlayer(String itemName, Player player) {
     	if (buyCatalogue.get(itemName) == null) {
     		throw new IllegalStateException("BUG store does not buy this item!");
     	}
