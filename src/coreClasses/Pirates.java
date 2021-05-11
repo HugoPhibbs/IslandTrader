@@ -32,7 +32,8 @@ public class Pirates {
     	
     	/* based on a game of chance
     	 * defense capability is multiplied by the number that is rolled by dice. 
-    	 * random int is chosen because max defense capability is 50, tf max effectivity is
+    	 * random int is chosen because max defense capability is 50, which is the max
+    	 * for all the ships in the game, some of them may have a max defense capability that is less
     	 * 300, so there is a chance of 18% of loosing with a perfect turn!, max dice
     	 * roll and max defense capability
     	 */
