@@ -183,9 +183,13 @@ public class CmdLineUi implements GameUi {
     	
     	// if itemStoreToBuyName is null, then visitStoreBuySellHelper is handling case when user wants to go back menus
     	if (itemStoreToSellName != null) {
+    		// in gui: check player wants to buy. if there is a string returned by method in stirng, have a pop up appear. 
+    		// player will have to either choose continue, or go back. if go back is selected then exectution flow is diverted back to buying items screen
+    		// if they want to continue, then the item is bought
+    		// ie in gui if checkPlayerWantsToBuy(ge, itemName) != null: ask them, take input then do as above
         	try {
         		// Call GE to handle
-        		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().sellToPlayerHelper(itemStoreToSellName, gameEnvironment.getPlayer()));
+        		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().sellItemToPlayerHelper(gameEnvironment, itemStoreToSellName, gameEnvironment.getPlayer()));
         	}
         	catch (IllegalStateException ise) {
         		System.out.print(ise.getMessage());
@@ -207,7 +211,7 @@ public class CmdLineUi implements GameUi {
 		if (itemStoreToBuyName != null) {
 	    	try {
 	    		// Call GE to handle
-	    		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().sellToPlayerHelper(itemStoreToBuyName, gameEnvironment.getPlayer()));
+	    		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().buyItemFromPlayerHelper(itemStoreToBuyName, gameEnvironment.getPlayer()));
 	    	}
 	    	catch (IllegalStateException ise) {
 	    		System.out.println(ise.getMessage());
