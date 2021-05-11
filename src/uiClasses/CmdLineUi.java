@@ -39,7 +39,7 @@ public class CmdLineUi implements GameUi {
 		String playerName = getName("Enter a name for your player: ");
 		int gameDuration = getDuration();
 		Island startIsland = gameEnvironment.getIslandArray()[0];
-		Player player = new Player(playerName, 100);
+		Player player = new Player(playerName, 1000);
 		// and ship
 		Ship ship = pickShip();
 		ship.setOwner(player);

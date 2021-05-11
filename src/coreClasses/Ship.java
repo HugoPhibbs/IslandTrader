@@ -175,7 +175,7 @@ public class Ship {
      */
     public int getRepairCost() {
     	int damageInflicted = 100-healthStatus;
-    	int REPAIRCOSTCONSTANT = 10; // Arbitrary value for the cost per unit of damge
+    	int REPAIRCOSTCONSTANT = ; // Arbitrary value for the cost per unit of damge
     	return damageInflicted * REPAIRCOSTCONSTANT;
     }
     
