@@ -46,7 +46,7 @@ public class Store {
      * @param player
      * @return
      */
-	public String (GameEnvironment gameEnvironment, String itemName) {
+	public String checkPlayerWantsToBuy(GameEnvironment gameEnvironment, String itemName) {
 		if (sellCatalogue.get(itemName).get("price") > gameEnvironment.getMinMoneyToTravel()) {
 			return "If you buy this item you will need to sell some of your items if you want to travel to another island. \n"
 					+ "Are you sure you want to buy this item?";
@@ -88,7 +88,7 @@ public class Store {
      * @param player PLayer object to receive Item
      * @return Boolean, if transaction was successful
      */
-    private Item sellItemToPlayer(GameEnvironment gameEnvironment, String itemName, Player player) {
+    public Item sellItemToPlayer(GameEnvironment gameEnvironment, String itemName, Player player) {
     	// returns the item that was sold either way, this is to make handling alternative flow
     	// ALOT easier!
     	if (sellCatalogue.get(itemName) == null) {
@@ -146,7 +146,9 @@ public class Store {
     	if (player.getMoneyBalance() < itemToSell.getPlayerBuyPrice()) {
     		return "Can't sell Item, Player does not have enough money to buy this item!";
     	}
-    	else if (player.getShip().getRemainingItemSpace() < itemToSell.getSpaceTaken()) {
+    	
+    	// need to check seperarately for an upgrade in terms of space
+    	else if (player.getShip().getRemainingItemSpace() < itemToSell.getSpaceTaken() && !itemToSell.getName().endsWith("(upgrade)")) {
     		return "Can't sell Item, Player does not have enough space to store this item!";
     	}
     	else if (gameEnvironment.getLiquidValue() - itemToSell.getPlayerBuyPrice() + sellCatalogue.get(itemToSell.getName()).get("price") < gameEnvironment.getMinMoneyToTravel())
@@ -162,6 +164,9 @@ public class Store {
      */
     public static String canSellUpgradeToPlayer(Player player) {
     	// other checking is done by canSellItem Method above
+    	
+    	// dont need to check for the size of an upgrade, as there is no mention of this in a ship
+    	// this is limited by the max defenseCapability, which can in of sort act like a maxUpgradeSpace, which makes so much more sense!!!!!!!!!!!!!
     	if (player.getShip().getDefenseCapability() >= 50) {
     		return "Can't sell Upgrade, Ship already has max defense Capability";
     	}
