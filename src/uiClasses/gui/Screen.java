@@ -1,5 +1,10 @@
 package uiClasses.gui;
 
-public class Screen {
+import javax.swing.*;
+
+
+public abstract class Screen {
+	
+	private final JFrame frame;
 
 }
