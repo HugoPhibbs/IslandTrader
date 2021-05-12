@@ -191,8 +191,8 @@ public class Ship {
      */
     public int getRepairCost() {
     	int damageInflicted = 100-healthStatus;
-    	int REPAIRCOSTCONSTANT = 10; // Arbitrary value for the cost per unit of damge
-    	return damageInflicted * REPAIRCOSTCONSTANT;
+    	int REPAIR_COST_CONSTANT = 1; // can be adjusted for balance
+    	return damageInflicted * crewSize * REPAIR_COST_CONSTANT;
     }
     
     /** Getter for the max cargo capacity of Ship Object
@@ -242,6 +242,12 @@ public class Ship {
      * @return Integer value for the speed of a ship object
      */
     public int getSpeed() {return speed;}
+    
+    /** Getter method for the max defense capability of a ship object
+     * 
+     * @return Interger value for the max defense capability of a ship object
+     */
+    public int getMaxDefenseCapability() {return maxDefenseCapability;}
     
     // // ########################### SETTER METHODS ###########################################
     /** Sets the Ship's owner
