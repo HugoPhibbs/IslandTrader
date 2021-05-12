@@ -54,40 +54,43 @@ public class Store {
 		return null;
 	}
 	
-	/** Helper method for buying from a store. Prepper method, handles situations before handing functionality
-	 * off to buyItemFromPlayer(Stirng itemName, Player player) if everything works out alright
-	 * 
-	 * @param itemStoreToSellName String for the name of Item object attempting to be sold to a player
-	 * @return String representation for the result of the transaction
-	 */
-	public String sellItemToPlayerHelper(GameEnvironment gameEnvironment, String itemStoreToSellName) {
-		// helper method for ui classes
-		// fyi i moved this method from ge to store, made much more sense, wasnt a general method at all
-		Item itemToSell = sellItemToPlayer(gameEnvironment, itemStoreToSellName);
-		
-		// handle result of selling
-		if (!itemToSell.getWithPlayer()) {
-			// Since item didnt come in possession with player, find reason why not
+	public String sellItemsToPlayerHelper(GameEnvironment gameEnvironment, String itemStoreToSellName, int numItemsRequested) {
+        String result = "";
+        
+        int numItemsBought = 0;
+        int totalCost = 0;
+		for (int i = 0 ; i < numItemsRequested; i++) {
+			Item itemToSell = sellItemToPlayer(gameEnvironment, itemStoreToSellName);
 			
-			// check if item wasnt sold because of an error to do with it being an upgrade
-			if (itemToSell.getName().endsWith("(upgrade)") && !Store.canSellUpgradeToPlayer(gameEnvironment.getPlayer()).equals("Can sell")){
-				return Store.canSellUpgradeToPlayer(gameEnvironment.getPlayer()); // return reason why cant sell upgrade.
-			}
+			// handle result of selling
+			if (!itemToSell.getWithPlayer()) {
+				// Since item didnt come in possession with player, find reason why not
 			
-			// otherwise find reason inherent in being an item
-			return canSellItemToPlayer(gameEnvironment, itemToSell);
-		}
-		else {
-			// If item was found, print transaction statement
-			String result = String.format("You just bought %s for %s Pirate Bucks! \n", itemToSell.getName(), itemToSell.getPlayerBuyPrice());
-			if (itemToSell.getName().endsWith("(upgrade)")){
-				result += getUpgradeSellReciept(itemToSell, gameEnvironment.getPlayer());
+				
+				// check if item wasnt sold because of an error to do with it being an upgrade
+				if (itemToSell.getName().endsWith("(upgrade)") && !Store.canSellUpgradeToPlayer(gameEnvironment.getPlayer()).equals("Can sell")){
+					result += Store.canSellUpgradeToPlayer(gameEnvironment.getPlayer()) + '\n'; // return reason why cant sell upgrade.
+				}
+				
+				// otherwise find reason inherent in being an item
+				result += canSellItemToPlayer(gameEnvironment, itemToSell) + '\n';
+				break;
 			}
-			return result;
+			else {
+				// If item was found, print transaction statement
+				numItemsBought += 1;
+				totalCost += itemToSell.getPlayerBuyPrice();
+		    }
 	    }
-	}
+		
+		result += String.format("%d out of requested %d %s bought \nTotal cost of transaction: %d Pirate Bucks \n", numItemsBought, numItemsRequested, itemStoreToSellName, totalCost);
 	
-	private String getUpgradeSellReciept(Item upgrade, Player player) {
+		if (itemStoreToSellName.endsWith("(upgrade)")){
+			result += getUpgradeSellReciept(gameEnvironment.getPlayer());
+	    }
+		return result;
+	
+	private String getUpgradeSellReciept(Player player) {
 		if (player.getShip().getDefenseCapability() == player.getShip().getMaxDefenseCapability()) {
 			return String.format("Your defense capability is now maxed at %d! \n", player.getShip().getMaxDefenseCapability());
 		}
@@ -189,24 +192,29 @@ public class Store {
     
     // ############## METHODS FOR BUYING AN ITEM FROM A PLAYER #################
     
-    
-	/** Helper for method for selling to a store in UI
-	 * 
-	 * @param itemStoreToBuyName String for the name of Item object attempting to be sold to a store
-	 * @return String representation for the result of the transaction
-	 */
-	public String buyItemFromPlayerHelper(String itemStoreToBuyName, Player player) {
-		// helper method for ui
-		Item itemToBuy = buyItemFromPlayer(itemStoreToBuyName, player);
-		if (itemToBuy == null) {
-			// wasn't successful in getting item, print reason why from store
-			return Store.canBuyItemFromPlayer(player, itemToBuy);
-		}
-		else {
-			// If item was found, print transaction statement
-			return String.format("You just sold %s for %s pirate bucks! \n", itemToBuy.getName(), itemToBuy.getPlayerSellPrice());
-		}	
-	}	
+    public String buyItemsFromPlayerHelper(String itemStoreToBuyName, Player player, int numItems) {
+    	String result = "";
+    	
+    	int numItemsSold = 0;
+    	int totalGain= 0;
+    	
+    	for (int i=0; i < numItems; i++) {
+    		Item itemToBuy = buyItemFromPlayer(itemStoreToBuyName, player);
+    		if (itemToBuy == null) {
+    			// wasn't successful in getting item, print reason why from store
+    			result += Store.canBuyItemFromPlayer(player, itemToBuy) +'\n';
+    			break;
+    		}
+    		else {
+    			// If item was found, print transaction statement
+    			numItemsSold += 1;
+    			totalGain += itemToBuy.getPlayerSellPrice();
+    		}	
+    	}
+    	
+    	result += String.format("%d out of a requested %d %s was sold to the store \nTotal monetary gain: %d ", numItemsSold, numItems, itemStoreToBuyName, totalGain);
+    	return result;
+    }
 	
     /** Buys an item from a Player to a store
      * 

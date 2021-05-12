@@ -179,17 +179,19 @@ public class CmdLineUi implements GameUi {
 		//view and buy items that store sells
 		HashMap<String, HashMap<String, Integer>> sellCatalogue = gameEnvironment.getCurrentIsland().getIslandStore().getSellCatalogue();
 		
-    	String itemStoreToSellName = visitStoreBuySellHelper("buy", sellCatalogue);
+    	String[] infoList = visitStoreBuySellHelper("buy", sellCatalogue);
     	
     	// if itemStoreToBuyName is null, then visitStoreBuySellHelper is handling case when user wants to go back menus
-    	if (itemStoreToSellName != null) {
+    	if (infoList != null) {
     		// in gui: check player wants to buy. if there is a string returned by method in stirng, have a pop up appear. 
     		// player will have to either choose continue, or go back. if go back is selected then exectution flow is diverted back to buying items screen
     		// if they want to continue, then the item is bought
     		// ie in gui if checkPlayerWantsToBuy(ge, itemName) != null: ask them, take input then do as above
         	try {
-        		// Call GE to handle
-        		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().sellItemToPlayerHelper(gameEnvironment, itemStoreToSellName, gameEnvironment.getPlayer()));
+            	String itemStoreToSellName = infoList[0];
+            	int numItems = Integer.parseInt(infoList[1]);
+        		// Call Store to handle
+        		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().sellItemsToPlayerHelper(gameEnvironment, itemStoreToSellName, numItems));
         	}
         	catch (IllegalStateException ise) {
         		System.out.print(ise.getMessage());
@@ -205,13 +207,15 @@ public class CmdLineUi implements GameUi {
 	private void visitStoreBuyFromPlayer() {
 		HashMap<String, HashMap<String, Integer>> buyCatalogue = gameEnvironment.getCurrentIsland().getIslandStore().getBuyCatalogue();
 		
-		String itemStoreToBuyName = visitStoreBuySellHelper("sell", buyCatalogue);
+		String[] infoList = visitStoreBuySellHelper("sell", buyCatalogue);
 		
 		// if itemStoreToBuyName is null, then visitStoreBuySellHelper is handling case when user wants to go back menus
-		if (itemStoreToBuyName != null) {
+		if (infoList != null) {
 	    	try {
-	    		// Call GE to handle
-	    		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().buyItemFromPlayerHelper(itemStoreToBuyName, gameEnvironment.getPlayer()));
+	         	String itemStoreToBuyName = infoList[0];
+            	int numItems = Integer.parseInt(infoList[1]);
+	    		// Call Store to handle
+	    		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().buyItemsFromPlayerHelper(itemStoreToBuyName, gameEnvironment.getPlayer(), numItems));
 	    	}
 	    	catch (IllegalStateException ise) {
 	    		System.out.println(ise.getMessage());
@@ -230,7 +234,7 @@ public class CmdLineUi implements GameUi {
 	 * @param catalogue HashMap containing the items that a store buys or sells
 	 * @return String name of the chosen item that is being sold or bought
 	 */
-	private String visitStoreBuySellHelper(String operation, HashMap<String, HashMap<String, Integer>> catalogue) {
+	private String[]visitStoreBuySellHelper(String operation, HashMap<String, HashMap<String, Integer>> catalogue) {
 		if (catalogue.isEmpty()) {
 			System.out.format("%s catalogue for this store is empty!", operation);
 			return null;
@@ -243,7 +247,14 @@ public class CmdLineUi implements GameUi {
     	if (itemNum == catalogue.size()+1) {
     		return null; // user wants to go back menus
     	}
-    	return Store.getChosenItemName(optionsArrayList, itemNum);
+   
+    	String itemName =  Store.getChosenItemName(optionsArrayList, itemNum);
+    	
+    	String howManyMessage = String.format("How many %s would you like to %s? ", itemName, operation);
+    	System.out.println(howManyMessage);
+    	int numItems = getUnboundedInt();
+    	
+    	return new String[] {itemName, Integer.toString(numItems)};
 	}
 	
 	
@@ -474,6 +485,18 @@ public class CmdLineUi implements GameUi {
 					return input;
 				}
 				System.out.format("Please enter a number between %d and %d (inclusive). \n", lowerBound, upperBound);
+				
+			} catch (InputMismatchException e) {
+				System.out.println("Invalid input. Please enter an integer.");
+			}
+		}
+	}
+	
+	private int getUnboundedInt() {
+		while (true) {
+			try {
+				int input = scanner.nextInt();
+			    return input;
 				
 			} catch (InputMismatchException e) {
 				System.out.println("Invalid input. Please enter an integer.");
