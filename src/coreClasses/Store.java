@@ -89,6 +89,8 @@ public class Store {
 			result += getUpgradeSellReciept(gameEnvironment.getPlayer());
 	    }
 		return result;
+	}
+	
 	
 	private String getUpgradeSellReciept(Player player) {
 		if (player.getShip().getDefenseCapability() == player.getShip().getMaxDefenseCapability()) {
@@ -166,10 +168,10 @@ public class Store {
     	
     	// need to check seperarately for an upgrade in terms of space
     	else if (gameEnvironment.getPlayer().getShip().getRemainingItemSpace() < itemToSell.getSpaceTaken() && !itemToSell.getName().endsWith("(upgrade)")) {
-    		return "Can't sell Item, Player does not have enough space to store this item!";
+    		return "Can't sell Item(s), Player does not have enough space to store item(s)!";
     	}
     	else if (gameEnvironment.getLiquidValue() - itemToSell.getPlayerBuyPrice() + sellCatalogue.get(itemToSell.getName()).get("price") < gameEnvironment.getMinMoneyToTravel())
-    		return "Can't sell Item, Player wouldn't be able to travel anywhere if Item was bought!";
+    		return "Can't sell Item(s), Player wouldn't be able to travel anywhere if Item was bought!";
     	return "Can sell";
     }
     
@@ -185,7 +187,7 @@ public class Store {
     	// dont need to check for the size of an upgrade, as there is no mention of this in a ship
     	// this is limited by the max defenseCapability, which can in of sort act like a maxUpgradeSpace, which makes so much more sense!!!!!!!!!!!!!
     	if (player.getShip().getDefenseCapability() >= 50) {
-    		return "Can't sell Upgrade, Ship already has max defense Capability";
+    		return "Can't sell Upgrade(s), Ship already has max defense Capability";
     	}
     	return "Can sell";
     }
