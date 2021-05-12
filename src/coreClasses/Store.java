@@ -53,33 +53,47 @@ public class Store {
 		}
 		return null;
 	}
+	
 	/** Helper method for buying from a store. Prepper method, handles situations before handing functionality
 	 * off to buyItemFromPlayer(Stirng itemName, Player player) if everything works out alright
 	 * 
 	 * @param itemStoreToSellName String for the name of Item object attempting to be sold to a player
 	 * @return String representation for the result of the transaction
 	 */
-	public String sellItemToPlayerHelper(GameEnvironment gameEnvironment, String itemStoreToSellName, Player player) {
+	public String sellItemToPlayerHelper(GameEnvironment gameEnvironment, String itemStoreToSellName) {
 		// helper method for ui classes
 		// fyi i moved this method from ge to store, made much more sense, wasnt a general method at all
-		Item itemToSell = sellItemToPlayer(gameEnvironment, itemStoreToSellName, player);
+		Item itemToSell = sellItemToPlayer(gameEnvironment, itemStoreToSellName);
 		
 		// handle result of selling
 		if (!itemToSell.getWithPlayer()) {
 			// Since item didnt come in possession with player, find reason why not
 			
 			// check if item wasnt sold because of an error to do with it being an upgrade
-			if (itemToSell.getName().endsWith("(upgrade)") && !Store.canSellUpgradeToPlayer(player).equals("Can sell")){
-				return Store.canSellUpgradeToPlayer(player); // return reason why cant sell upgrade.
+			if (itemToSell.getName().endsWith("(upgrade)") && !Store.canSellUpgradeToPlayer(gameEnvironment.getPlayer()).equals("Can sell")){
+				return Store.canSellUpgradeToPlayer(gameEnvironment.getPlayer()); // return reason why cant sell upgrade.
 			}
 			
 			// otherwise find reason inherent in being an item
-			return canSellItemToPlayer(gameEnvironment, player, itemToSell);
+			return canSellItemToPlayer(gameEnvironment, itemToSell);
 		}
 		else {
 			// If item was found, print transaction statement
-			return String.format("You just bought %s for %s Pirate Bucks! \n", itemToSell.getName(), itemToSell.getPlayerBuyPrice());
+			String result = String.format("You just bought %s for %s Pirate Bucks! \n", itemToSell.getName(), itemToSell.getPlayerBuyPrice());
+			if (itemToSell.getName().endsWith("(upgrade)")){
+				result += getUpgradeSellReciept(itemToSell, gameEnvironment.getPlayer());
+			}
+			return result;
 	    }
+	}
+	
+	private String getUpgradeSellReciept(Item upgrade, Player player) {
+		if (player.getShip().getDefenseCapability() == player.getShip().getMaxDefenseCapability()) {
+			return String.format("Your defense capability is now maxed at %d! \n", player.getShip().getMaxDefenseCapability());
+		}
+		else {
+			return String.format("Your defense capability is now %d! \n", player.getShip().getDefenseCapability());
+		}
 	}
 	
     /** Creates and sells and item to a player 
@@ -88,7 +102,7 @@ public class Store {
      * @param player PLayer object to receive Item
      * @return Boolean, if transaction was successful
      */
-    public Item sellItemToPlayer(GameEnvironment gameEnvironment, String itemName, Player player) {
+    public Item sellItemToPlayer(GameEnvironment gameEnvironment, String itemName) {
     	// returns the item that was sold either way, this is to make handling alternative flow
     	// ALOT easier!
     	if (sellCatalogue.get(itemName) == null) {
@@ -101,7 +115,7 @@ public class Store {
     	
     	Item itemToSell = new Item(itemName, sellCatalogue.get(itemName).get("spaceTaken"), sellCatalogue.get(itemName).get("price"));
     	
-    	if (!canSellItemToPlayer(gameEnvironment, player, itemToSell).equals("Can sell")){
+    	if (!canSellItemToPlayer(gameEnvironment, itemToSell).equals("Can sell")){
     		return itemToSell; // handled by ui
     	}
     	
@@ -113,19 +127,19 @@ public class Store {
     		
     		// set defenseCapability of new upgradeToSellObject
     		//upgradeToSell.setDefenseBoost(sellCatalogue.get(upgradeToSell.getName()).get("defenseBoost"));
-    		if (!canSellUpgradeToPlayer(player).equals("Can sell")) {
+    		if (!canSellUpgradeToPlayer(gameEnvironment.getPlayer()).equals("Can sell")) {
     			return (Item) upgradeToSell;
     		}
-    		player.getShip().addUpgrade(upgradeToSell);
+    		gameEnvironment.getPlayer().getShip().addUpgrade(upgradeToSell);
     	}
     	else { // regular item
-    		player.getShip().addItem(itemToSell);
+    		gameEnvironment.getPlayer().getShip().addItem(itemToSell);
     	}
     	
     	// set with player, used by ui to check if transaction was completed
     	itemToSell.setWithPlayer(true);
-    	player.spendMoney(itemToSell.getPlayerBuyPrice());
-    	player.addPurchasedItem(itemToSell);
+    	gameEnvironment.getPlayer().spendMoney(itemToSell.getPlayerBuyPrice());
+    	gameEnvironment.getPlayer().addPurchasedItem(itemToSell);
     
     	return itemToSell; // note that if we handled a shipUpgrade, it would return it. 
     }
@@ -142,13 +156,13 @@ public class Store {
      * @param itemToSell Item being checked if it can be sold 
      * @return String representation if item can be sold or not, along with a reason if not. 
      */
-    public String canSellItemToPlayer(GameEnvironment gameEnvironment, Player player, Item itemToSell) {
-    	if (player.getMoneyBalance() < itemToSell.getPlayerBuyPrice()) {
+    public String canSellItemToPlayer(GameEnvironment gameEnvironment, Item itemToSell) {
+    	if (gameEnvironment.getPlayer().getMoneyBalance() < itemToSell.getPlayerBuyPrice()) {
     		return "Can't sell Item, Player does not have enough money to buy this item!";
     	}
     	
     	// need to check seperarately for an upgrade in terms of space
-    	else if (player.getShip().getRemainingItemSpace() < itemToSell.getSpaceTaken() && !itemToSell.getName().endsWith("(upgrade)")) {
+    	else if (gameEnvironment.getPlayer().getShip().getRemainingItemSpace() < itemToSell.getSpaceTaken() && !itemToSell.getName().endsWith("(upgrade)")) {
     		return "Can't sell Item, Player does not have enough space to store this item!";
     	}
     	else if (gameEnvironment.getLiquidValue() - itemToSell.getPlayerBuyPrice() + sellCatalogue.get(itemToSell.getName()).get("price") < gameEnvironment.getMinMoneyToTravel())
