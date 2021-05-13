@@ -66,6 +66,28 @@ public class Player {
     	return result;
     }
     
+    public String[] purchasedItemsToArray(){
+    	ArrayList<String> purchasedItemsArrayList = new ArrayList<String>();
+    	if (purchasedItems.size() == 0) {
+    		purchasedItemsArrayList.add("You haven't bought any items yet, you can buy items at any Store! \n");
+    	}
+    	else {
+    		for (Item item : purchasedItems) {
+    			String result = "";
+    			result += String.format("Item %s was bought for %d Pirate Bucks", item.getName(), item.getPlayerBuyPrice());
+    			
+        		if (item.getPlayerSellPrice() != -1) {
+        			result += String.format(" and was sold for %d at %s.", item.getPlayerSellPrice(), item.getStoreIslandSoldAt().getIslandName());
+        		}
+        		else if (!item.getName().endsWith("(upgrade)")){
+        			result += " and has not yet been sold to a store.";
+        		}
+        		purchasedItemsArrayList.add(result);
+    		}
+    	}
+    	return (String []) purchasedItemsArrayList.toArray();
+    }
+    
 	/**
 	 * Adds an item the player has purchased to purchasedItems.
 	 * 
