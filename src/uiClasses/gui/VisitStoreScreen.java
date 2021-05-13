@@ -62,6 +62,7 @@ public class VisitStoreScreen {
 		frame.getContentPane().setLayout(null);
 		
 		// Label for welcoming user to store
+		//JLabel welcomeLabel = new JLabel(String.format("Hello %s, welcome to the %s store", gameEnvironment.getPlayer().getName(), gameEnvironment.getCurrentIsland().getIslandStore().getName()));
 		JLabel welcomeLabel = new JLabel("Hello <playerName>, welcome to the <storeName> store");
 		welcomeLabel.setBounds(208, 22, 307, 14);
 		frame.getContentPane().add(welcomeLabel);
