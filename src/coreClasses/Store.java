@@ -265,11 +265,14 @@ public class Store {
      * @param catalogue Catalogue to be parsed into a displayArrayList
      * @return ArrayList for what you can buy or sell from a store
      */
-    public static ArrayList<String> catalogueToArrayList(HashMap<String, HashMap<String, Integer>> catalogue){
+    public String[] catalogueToArray(String operation){
     	ArrayList<String> displayArrayList = new ArrayList<String>();
     	/*
     	 *  used bellow code from online https://www.geeksforgeeks.org/traverse-through-a-hashmap-in-java/
     	 */
+    	
+    	HashMap<String, HashMap<String, Integer>> catalogue = getCatalogue(operation);
+    	
     	for (Map.Entry<String, HashMap<String, Integer>> mapElement : catalogue.entrySet()) {
     		String itemName = (String) mapElement.getKey();
     		int itemPrice = catalogue.get(itemName).get("price");
@@ -283,7 +286,7 @@ public class Store {
     		}
     		displayArrayList.add(result);
         }
-    	return displayArrayList;
+    	return (String[]) displayArrayList.toArray();
     }
     
     /**
@@ -332,6 +335,18 @@ public class Store {
     	// display ArrayList must have form {"itemName for ..."}, key thing being itemName is in first position
     	
     	return (String) Array.get(displayArrayList.get(chosenItemNum-1).split(" "), 0);
+    }
+    
+    public HashMap<String, HashMap<String, Integer>> getCatalogue(String operation){
+    	// gets the catalogue, used by ui and locally alike
+    	if (operation == "buy") {
+    		HashMap<String, HashMap<String, Integer>> catalogue = buyCatalogue;
+    	}
+    	else {
+    		HashMap<String, HashMap<String, Integer>> catalogue = sellCatalogue;
+    	}
+    	
+    	return catalogue;
     }
     
     /** Gets the description of the store
