@@ -177,9 +177,7 @@ public class CmdLineUi implements GameUi {
 	private void visitStoreSellToPlayer() {
 		// turn bellow into a method
 		//view and buy items that store sells
-		HashMap<String, HashMap<String, Integer>> sellCatalogue = gameEnvironment.getCurrentIsland().getIslandStore().getSellCatalogue();
-		
-    	String[] infoList = visitStoreBuySellHelper("buy", sellCatalogue);
+    	String[] infoList = visitStoreBuySellHelper("buy");
     	
     	// if itemStoreToBuyName is null, then visitStoreBuySellHelper is handling case when user wants to go back menus
     	if (infoList != null) {
@@ -205,9 +203,8 @@ public class CmdLineUi implements GameUi {
 	 * 
 	 */
 	private void visitStoreBuyFromPlayer() {
-		HashMap<String, HashMap<String, Integer>> buyCatalogue = gameEnvironment.getCurrentIsland().getIslandStore().getBuyCatalogue();
 		
-		String[] infoList = visitStoreBuySellHelper("sell", buyCatalogue);
+		String[] infoList = visitStoreBuySellHelper("sell");
 		
 		// if itemStoreToBuyName is null, then visitStoreBuySellHelper is handling case when user wants to go back menus
 		if (infoList != null) {
@@ -234,15 +231,12 @@ public class CmdLineUi implements GameUi {
 	 * @param catalogue HashMap containing the items that a store buys or sells
 	 * @return String name of the chosen item that is being sold or bought
 	 */
-	private String[]visitStoreBuySellHelper(String operation, HashMap<String, HashMap<String, Integer>> catalogue) {
-		if (catalogue.isEmpty()) {
-			System.out.format("%s catalogue for this store is empty!", operation);
-			return null;
-		}
+	private String[]visitStoreBuySellHelper(String operation) {
 		String buySellMessage  = String.format("Enter the number corresponding to the Item that you want to %s! \n", operation);
-		ArrayList<String> optionsArrayList = Store.catalogueToArrayList(catalogue);
+		ArrayList<String> optionsArrayList = gameEnvironment.getCurrentIsland().getIslandStore().catalogueToArrayList(operation);
 		printOptions(optionsArrayList, buySellMessage, true);
 		
+		HashMap<String, HashMap<String, Integer>> catalogue = gameEnvironment.getCurrentIsland().getIslandStore().getCatalogue(operation);
     	int itemNum = getInt(1, catalogue.size()+1);
     	if (itemNum == catalogue.size()+1) {
     		return null; // user wants to go back menus
