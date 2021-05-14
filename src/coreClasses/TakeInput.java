@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 public final class TakeInput {
 	
-	/**
+	/** Method for inputting and returning a String for the command line UI
 	 * 
 	 * @param message String that is printed to prompt the user for input. 
 	 * @return inputStr the user's input as a string, converted to lower case for simple comparison.
@@ -23,8 +23,13 @@ public final class TakeInput {
 		return inputStr;
 	}
 	
-	// TODO: final return statement never executes, is only there to satisfy the compiler. Rewrite to make better style.
+	/** Method for inputing and returning an Integer for the command line UI
+	 * 
+	 * @param message String that is printed to prompt the user for input
+	 * @return Integer that was inputed by user after type checking
+	 */
 	public static int inputInt(String message) {
+		// TODO: final return statement never executes, is only there to satisfy the compiler. Rewrite to make better style.
 		System.out.println(message);
 		boolean successful = false;
 		while (!successful) {
@@ -38,7 +43,11 @@ public final class TakeInput {
 		return 0;
 	}
 	
-	public static int inputIntHelper() {
+	/** Helper for inputInt method. Asks a user to input an integer
+	 * 
+	 * @return Integer that was inputed by a user
+	 */
+	private static int inputIntHelper() {
 		Scanner scan = new Scanner(System.in);
 		if (!scan.hasNext()) {
 			scan.next();
