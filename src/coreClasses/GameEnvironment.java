@@ -225,7 +225,7 @@ public class GameEnvironment {
 	 * @return The players score at time of call.
 	 */
 	public int getScore(int startMoney) {
-		int profit = getPlayer().getMoneyBalance() - 100;
+		int profit = getPlayer().getMoneyBalance() - 1000;
 		int daysPlayed = getDaysSelected() - getDaysRemaining();
 		
 		if (daysPlayed == 0) {
