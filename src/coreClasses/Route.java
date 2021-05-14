@@ -79,7 +79,7 @@ public class Route {
 	// Returns a string which gives a complete description of the route.
 	@Override
 	public String toString() {
-		return String.format("%s: Takes %d days. %s", routeName, distance, description);
+		return String.format("%s: Is %d km long. %s", routeName, distance, description);
 	}
 
 }

@@ -31,7 +31,7 @@ class IslandTests {
 
 	
 	// Note will probably transfer the code that sets up the stores islands and routes to a before each/all method. 
-	@BeforeAll
+	@BeforeEach
 	void createRequiredObjects() {
 		/*
 		 * Create the buy and sell catalogues for the main island's store, required so Island.getFullInfo() can be
@@ -62,12 +62,12 @@ class IslandTests {
 		Store mainStore = new Store("Main Store", "This store is sells and buys things!", testSellCatalogue, testBuyCatalogue);
 		mainIsland = new Island("Main Island", mainStore, "An island with a nice store and even nicer tests");
 		
-		// Create other islands so the main isalnd t be tested has routes.
-		Store testStore1 = new Store("TestIsland1", "sorry, we are closed", null, null);
-		testIsland1 = new Island("Test1", testStore1, "Island exists only for its routes :(");
+		// Create other islands so the main island t be tested has routes.
+		Store testStore1 = new Store("First Store", "sorry, we are closed", null, null);
+		testIsland1 = new Island("First Island", testStore1, "Island exists only for its routes :(");
 		
-		Store testStore2 = new Store("TestIsland1", "sorry, we are closed", null, null);
-		testIsland2 = new Island("Test1", testStore2, "Island exists only for its routes :(");
+		Store testStore2 = new Store("Second Store", "sorry, we are closed", null, null);
+		testIsland2 = new Island("Second Island", testStore2, "Island exists only for its routes :(");
 		
 		// Create routes between the main island and the test islands.
 		Island[] islands1 = new Island[] {mainIsland, testIsland1};
@@ -94,7 +94,7 @@ class IslandTests {
 	@Test
 	void testViewRoutes() {
 		ArrayList<Route> routesToView1 = new ArrayList<Route>(List.of(mainAndTest1Fun, mainAndTest1Scary));
-		String expectedResult1 = "Routes to Test1:\n - fun route: Is 100 km long. fun!\n - scary route: Is 150 km long. scary!";
+		String expectedResult1 = "Routes to First Island:\n - fun route: Is 100 km long. fun!\n - scary route: Is 150 km long. scary!";
 		assertEquals(expectedResult1, mainIsland.getPossibleRoutes(testIsland1));
 	}
 	
