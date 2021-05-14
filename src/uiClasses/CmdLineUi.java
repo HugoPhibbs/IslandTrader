@@ -19,9 +19,6 @@ public class CmdLineUi implements GameUi {
 	private GameEnvironment gameEnvironment;
 	private Scanner scanner;
 	private boolean finish = false;
-	enum PlayOptions{
-		// TODO add these
-	}
 	
 	public CmdLineUi() {
 		this.scanner = new Scanner(System.in);
@@ -564,7 +561,7 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
-	public void checkSufficientMoney() {
+	private void checkSufficientMoney() {
 		gameEnvironment.minMoneyRequired();
 		int balance = gameEnvironment.getPlayer().getMoneyBalance();
 		if (balance < gameEnvironment.getLiquidValue()) {
