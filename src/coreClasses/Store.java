@@ -322,7 +322,7 @@ public class Store {
     		}
     		displayArrayList.add(result);
         }
-    	return (String[]) displayArrayList.toArray();
+    	return displayArrayList.toArray(new String[displayArrayList.size()]);
     }
     
     /**
