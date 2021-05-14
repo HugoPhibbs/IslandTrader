@@ -31,4 +31,16 @@ class PlayerTests {
 		assertEquals("You have a balance of: 1000 pirate bucks", testPlayer.moneyBalanceToString());
 	}
 	
+	@Test
+	void testPurchasedItemsToString() {
+		assertEquals("You haven't bought any items yet, you can buy items at any Store! \n",
+				testPlayer.purchasedItemsToString());
+		// Create an item and add to the players items.
+		testPlayer.addPurchasedItem(new Item("Tomato", 2, 3));
+		String expectedString = "All items that have been bought and their details: \nItem Tomato was bought "
+				+ "for 3 Pirate Bucks and has not yet been sold to a store. \n";
+		assertEquals(expectedString, testPlayer.purchasedItemsToString());
+		
+		
+	}
 }

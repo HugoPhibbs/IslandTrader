@@ -94,7 +94,8 @@ class IslandTests {
 	@Test
 	void testViewRoutes() {
 		ArrayList<Route> routesToView1 = new ArrayList<Route>(List.of(mainAndTest1Fun, mainAndTest1Scary));
-		String expectedResult1 = "Routes to Main Island:\n - fun route: Is 100 km long. fun!\n - scary route: Is 150 km long. scary!\n";
+		String expectedResult1 = "Routes to Main Island:\n - fun route: Is 100 km long. fun!\n - scary route:"
+				+ "Is 150 km long. scary!\n";
 		assertEquals(expectedResult1, mainIsland.viewRoutes(routesToView1));
 	}
 	
