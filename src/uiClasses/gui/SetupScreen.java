@@ -190,23 +190,38 @@ public class SetupScreen {
 		panel_1.setLayout(null);
 		
 		JButton btnNewButton_1_3 = new JButton("New button");
-		btnNewButton_1_3.setBounds(12, 12, 167, 226);
+		btnNewButton_1_3.setBounds(12, 12, 156, 226);
 		panel_1.add(btnNewButton_1_3);
 		
+		JLabel lblSelectAnIsland = new JLabel("Select an Island!");
+		lblSelectAnIsland.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 16));
+		lblSelectAnIsland.setBounds(869, 12, 196, 40);
+		panel_1.add(lblSelectAnIsland);
+		
+		JTextPane txtpnThisIslandSells = new JTextPane();
+		txtpnThisIslandSells.setText("This island sells tomatos and buys gold. It has routes ot all other isalnds.");
+		txtpnThisIslandSells.setBounds(869, 76, 184, 135);
+		panel_1.add(txtpnThisIslandSells);
+		
+		JLabel lblInfo = new JLabel("Info:");
+		lblInfo.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblInfo.setBounds(869, 52, 70, 15);
+		panel_1.add(lblInfo);
+		
 		JButton btnNewButton_1_3_1 = new JButton("New button");
-		btnNewButton_1_3_1.setBounds(191, 12, 167, 226);
+		btnNewButton_1_3_1.setBounds(180, 12, 156, 226);
 		panel_1.add(btnNewButton_1_3_1);
 		
 		JButton btnNewButton_1_3_2 = new JButton("New button");
-		btnNewButton_1_3_2.setBounds(370, 12, 167, 226);
+		btnNewButton_1_3_2.setBounds(348, 12, 156, 226);
 		panel_1.add(btnNewButton_1_3_2);
 		
 		JButton btnNewButton_1_3_3 = new JButton("New button");
-		btnNewButton_1_3_3.setBounds(549, 12, 167, 226);
+		btnNewButton_1_3_3.setBounds(516, 12, 156, 226);
 		panel_1.add(btnNewButton_1_3_3);
 		
 		JButton btnNewButton_1_3_4 = new JButton("New button");
-		btnNewButton_1_3_4.setBounds(728, 12, 167, 226);
+		btnNewButton_1_3_4.setBounds(684, 12, 156, 226);
 		panel_1.add(btnNewButton_1_3_4);
 	}
 }
