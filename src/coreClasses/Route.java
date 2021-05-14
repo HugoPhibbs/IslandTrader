@@ -38,8 +38,7 @@ public class Route {
 	 * 
 	 * @param name The name of the route.
 	 * @param distance The distance of the route
-	 * @param origin The island the route starts at
-	 * @param destination The island the route ends at
+	 * @param islands An array of the two island objects this route is between.
 	 * @param description A description of the route. 
 	 */
 	public Route(String name, int distance, Island[] islands, String description) {
