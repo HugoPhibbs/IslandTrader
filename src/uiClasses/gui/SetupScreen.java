@@ -60,7 +60,7 @@ public class SetupScreen {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel.setBounds(12, 158, 1065, 250);
+		panel.setBounds(12, 184, 1065, 250);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -134,7 +134,7 @@ public class SetupScreen {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(899, 722, 178, 25);
+		btnNewButton.setBounds(910, 739, 178, 25);
 		frame.getContentPane().add(btnNewButton);
 		
 		JLabel lblWelcome = new JLabel("Welcome to Island Trader!");
@@ -149,7 +149,7 @@ public class SetupScreen {
 		
 		JLabel lblAskDays = new JLabel("How many days would you like to play for?");
 		lblAskDays.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblAskDays.setBounds(26, 91, 377, 19);
+		lblAskDays.setBounds(26, 101, 377, 19);
 		frame.getContentPane().add(lblAskDays);
 		
 		textFieldName = new JTextField();
@@ -164,28 +164,28 @@ public class SetupScreen {
 		sliderDays.setMinorTickSpacing(1);
 		sliderDays.setMinimum(20);
 		sliderDays.setMaximum(50);
-		sliderDays.setBounds(693, 93, 299, 19);
+		sliderDays.setBounds(693, 103, 299, 19);
 		frame.getContentPane().add(sliderDays);
 		
 		JLabel lblDisplayDays = new JLabel("30");
 		lblDisplayDays.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDisplayDays.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblDisplayDays.setBounds(1008, 95, 44, 17);
+		lblDisplayDays.setBounds(1008, 105, 44, 17);
 		frame.getContentPane().add(lblDisplayDays);
 		
 		JLabel lblPickship = new JLabel("Pick a Ship");
 		lblPickship.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblPickship.setBounds(26, 132, 96, 19);
+		lblPickship.setBounds(26, 153, 96, 19);
 		frame.getContentPane().add(lblPickship);
 		
 		JLabel lblPickIsland = new JLabel("Pick an Island");
 		lblPickIsland.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblPickIsland.setBounds(26, 420, 122, 19);
+		lblPickIsland.setBounds(26, 446, 122, 19);
 		frame.getContentPane().add(lblPickIsland);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_1.setBounds(12, 446, 1065, 250);
+		panel_1.setBounds(12, 477, 1065, 250);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -223,5 +223,11 @@ public class SetupScreen {
 		JButton btnNewButton_1_3_4 = new JButton("New button");
 		btnNewButton_1_3_4.setBounds(684, 12, 156, 226);
 		panel_1.add(btnNewButton_1_3_4);
+		
+		JLabel lblNewLabel = new JLabel("Must be 3-15 characters, and have not special characters");
+		lblNewLabel.setForeground(Color.RED);
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 11));
+		lblNewLabel.setBounds(682, 77, 370, 14);
+		frame.getContentPane().add(lblNewLabel);
 	}
 }
