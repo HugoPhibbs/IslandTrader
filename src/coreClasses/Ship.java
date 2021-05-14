@@ -6,7 +6,7 @@ import exceptions.*;
 
 /** Represents a ship
  * @author Hugo Phibbs
- * @version 6/5/2021
+ * @version 14/5/2021
  * @since 2/4/2021
  */
 
@@ -28,11 +28,13 @@ public class Ship {
 
     /** Constructor for Ship
      *
+     * @throws IllegalArgumentException if constructor parameters are invalid
      * @param name A String for the name of the ship
      * @param shipSize Integer for the size of the ship, influences crew size and the max cargo space of a ship
      * @param speed Integer for the speed of the ship as it travels between islands (assume constant)
+     * @param maxDefenseCapability Integer for the max defense capability of a ship
      */
-    public Ship(String name, int speed, int shipSize, int maxDefenseCapability){    	
+    public Ship(String name, int speed, int shipSize, int maxDefenseCapability) throws IllegalArgumentException{    	
     	if (!CheckValidInput.nameIsValid(name)) {
     	    String msg1 = "Name for ship must have no more than 1 consecutive white space and be between 3 and 15 characters in length!";
     		throw new IllegalArgumentException(msg1);
@@ -50,19 +52,20 @@ public class Ship {
     	remainingItemSpace = maxItemSpace;
     }
     
-    // ########################### GENERAL SHIP METHODS ###########################################
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////// GENERAL SHIP METHODS ////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     
     /** Enacts damage onto Ship Object
      *
      * @param damage Integer for damage to be inflicted onto ship
      */
     public void takeDamage(int damage) {
-    	// TODO, ceiling of below calculations
         healthStatus -= (int) damage * (1-(float)defenseCapability/100); 
         // in practicality health status will always be above 0, because max damage of unfortunate weather is 99
     }
     
-    /** Repairs a Ship object
+    /** Repairs a Ship object. Repairs ship if a Player has enough money to pay the cost. 
      * 
      * @return A boolean value if ship was repaired
      */
@@ -87,15 +90,14 @@ public class Ship {
         int totalWageCost = getRouteWageCost(route);
     	return player.spendMoney(totalWageCost);
     }
-   
-    // ########################### MANAGING SHIP UPGRADES #######################################
     
-    /** Adds a new upgrade to this Ship
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////// MANAGING SHIP UPGRADES ///////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    /** Adds a new upgrade to this Ship. Checking if a ship can add this upgrade is handled by Store
      *
      * @param upgrade Upgrade object to be added to ship
-     * @return Boolean value if the item was added to ship successfully
-     * @throws InsufficientUpgradeSlotsRemaining
-     * Exception thrown if the remaining upgrade slots is not enough to store upgrade
      */
     public void addUpgrade(ShipUpgrade upgrade) {
         addDefenseBoost(upgrade);
@@ -114,9 +116,13 @@ public class Ship {
     	}
     }
     
+    /** Method for converting upgrades that a Ship has into String form
+     * 
+     * @return String representation of the upgrades that a Ship has
+     */
     public String upgradesToString() {
     	if (upgrades.size() == 0) {
-    		return "Ship isnt equipped with any upgrades yet";
+    		return "Ship isn't equipped with any upgrades yet";
     	}
     	String result = String.format("%s, has upgrades: \n", name);
     	for (ShipUpgrade shipUpgrade : upgrades) {
@@ -127,8 +133,9 @@ public class Ship {
     	}
     	return result;
     }
-
-    // ########################### MANAGING SHIP ITEMS ###########################################
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////// MANAGING SHIP ITEMS ///////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     
     /** Adds an Item Object to this Ship's cargo hold
     *
@@ -143,7 +150,7 @@ public class Ship {
     /** Takes Item from ship and returns it
      * 
      * @param itemName String name for the name of Item to be removed
-     * @return Item object with name matching itemName
+     * @return Item object with name matching itemName. Returns null if a match wasnt found
      */
     
     public Item takeItem(String itemName) {
@@ -161,9 +168,14 @@ public class Ship {
     	}
     	return null; // did not find and/or remove inputted item
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////// GETTER AND SETTER METHODS //////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     
-    // ########################### GETTER METHODS ###########################################
-    
+    /** Getter method for the description of a Ship
+     * 
+     * @return String representation of a ship
+     */
     public String getDescription() {
     	return String.format("Ship %s, has properties: \n"
     			+ "Max Item-Space: %d \n"
@@ -245,11 +257,10 @@ public class Ship {
     
     /** Getter method for the max defense capability of a ship object
      * 
-     * @return Interger value for the max defense capability of a ship object
+     * @return Integer value for the max defense capability of a ship object
      */
     public int getMaxDefenseCapability() {return maxDefenseCapability;}
     
-    // // ########################### SETTER METHODS ###########################################
     /** Sets the Ship's owner
      * 
      * @param owner Player object for owner of the ship
