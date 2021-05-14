@@ -1,15 +1,14 @@
 package coreClasses;
 
-/** Represents a ship upgrade
+/** Represents a Ship Upgrade
  * 
  * @author Hugo Phibbs
- * @version 8/5/2021
+ * @version 14/5/2021
  * @since 2/4/2021
  */
 public class ShipUpgrade extends Item{
     private int defenseBoost; 
     
-    // TODO remove constructor if we arent using it!
     /** Constructor method for ShipUpgrade object
      * 
      * @param name String for the name of ShipUpgrade
@@ -29,11 +28,12 @@ public class ShipUpgrade extends Item{
      */
     public int getDefenseBoost() { return defenseBoost; }    
     
-    /** Setter method for the defense boost of a Ship Upgrade object
+    /** Setter method for the defense boost of a Ship Upgrade objects
      * 
+     * @throws IllegalArgumentException if Defense Boost is invalid
      * @param defenseBoost Integer for the defense boost to be set
      */
-    private void setDefenseBoost(int defenseBoost) {
+    private void setDefenseBoost(int defenseBoost) throws IllegalArgumentException {
     	if (defenseBoostIsValid(defenseBoost)) {
     		this.defenseBoost = defenseBoost;
     		}
