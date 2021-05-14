@@ -204,13 +204,15 @@ public class CmdLineUi implements GameUi {
 	 */
 	private void visitStoreBuyFromPlayer() {
 		
-		String[] infoList = visitStoreBuySellHelper("sell");
+		// Get Array for the chosen item, and the number of items requested
+		String[] infoArray = visitStoreBuySellHelper("sell");
 		
 		// if itemStoreToBuyName is null, then visitStoreBuySellHelper is handling case when user wants to go back menus
-		if (infoList != null) {
+		if (infoArray != null) {
 	    	try {
-	         	String itemStoreToBuyName = infoList[0];
-            	int numItems = Integer.parseInt(infoList[1]);
+	    		// Get necessary info from the infoArray 
+	         	String itemStoreToBuyName = infoArray[0];
+            	int numItems = Integer.parseInt(infoArray[1]);
 	    		// Call Store to handle
 	    		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().buyItemsFromPlayerHelper(itemStoreToBuyName, gameEnvironment.getPlayer(), numItems));
 	    	}
@@ -233,10 +235,15 @@ public class CmdLineUi implements GameUi {
 	 */
 	private String[]visitStoreBuySellHelper(String operation) {
 		String buySellMessage  = String.format("Enter the number corresponding to the Item that you want to %s! \n", operation);
-		ArrayList<String> optionsArrayList = gameEnvironment.getCurrentIsland().getIslandStore().catalogueToArrayList(operation);
-		printOptions(optionsArrayList, buySellMessage, true);
 		
+		// Get the catalogue assosiatted with this operation, and parse it into an Array form
 		HashMap<String, HashMap<String, Integer>> catalogue = gameEnvironment.getCurrentIsland().getIslandStore().getCatalogue(operation);
+		String [] optionsArray = gameEnvironment.getCurrentIsland().getIslandStore().catalogueToArray(catalogue);
+		
+		// Print the items that a player can buy or sell
+		printOptions(optionsArray, buySellMessage, true);
+		
+		// Get the action number that the user wants
     	int itemNum = getInt(1, catalogue.size()+1);
     	if (itemNum == catalogue.size()+1) {
     		return null; // user wants to go back menus
