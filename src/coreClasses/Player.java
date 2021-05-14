@@ -1,12 +1,12 @@
 package coreClasses;
 
-import exceptions.*;
 import java.util.ArrayList;
-
+ 
 /**
  * 
- * @author Jordan Vegar
- * @version 1.1
+ * @author Jordan Vegar and Hugo Phibbs
+ * @version 14/5/2021
+ * @since 2/4/2021
  */
 public class Player {
 	
@@ -18,6 +18,7 @@ public class Player {
 	private ArrayList<Item> purchasedItems = new ArrayList<Item>();
 	
 	private Ship ship;
+	
 	/**
 	 * Constructor method
 	 * 
@@ -29,23 +30,53 @@ public class Player {
 		this.moneyBalance = startingCash;
 	}
 	
+	/** Setter method for the Ship belonging to a Player
+	 * 
+	 * @param ship Ship object to be set to belong to a Player
+	 */
 	public void setShip(Ship ship) {
 		this.ship = ship;
 	}
+	
+	/** Getter method for the Ship object belonging to a Player
+	 * 
+	 * @return Ship object belonging to a Player
+	 */
 	public Ship getShip() {
 		return ship;
 	}
 	
+	/** Getter method for the name of a Player
+	 * 
+	 * @return String for the name of a Player
+	 */
 	public String getName() {return name;}
 	
+	/** Getter method for the current money balance of a Player
+	 * 
+	 * @return Integer of the money balance of a player
+	 */
 	public int getMoneyBalance() {return moneyBalance;}
 	
+	/** Getter method for the purchased items of a Player
+	 * Both ones that have been bought and sold back to a store
+	 * 
+	 * @return ArrayList<Item> the purchased items of a player
+	 */
 	public ArrayList<Item> getPurchasedItems() {return purchasedItems;}
 	
+	/** Method to convert a Players money balance into a String representation
+	 * 
+	 * @return String representation of a Player's money balance
+	 */
 	public String moneyBalanceToString() {
 		return String.format("You have a balance of: %d pirate bucks", moneyBalance);
 	}
 	
+	/** Method to convert a Player's purchased Items into a String representation
+	 * 
+	 * @return String representation of a Players purchased Items
+	 */
     public String purchasedItemsToString() {
     	if (purchasedItems.size() == 0) {
     		return "You haven't bought any items yet, you can buy items at any Store! \n";
@@ -66,26 +97,38 @@ public class Player {
     	return result;
     }
     
-    public String[] purchasedItemsToArray(){
-    	ArrayList<String> purchasedItemsArrayList = new ArrayList<String>();
+    /** Converts purchased items of a Player into array format.
+     * returned String[][] array is in tabular format, so it can easily be used by GUI
+     * 
+     * @return String[][] nested Array representation of the purchased items of a Player. 
+     */
+    public String[][] purchasedItemsToArray(){
+    	
+    	// used by GUI
+    	
+    	// componenents in array have (<name>, <buyPrice>, <sellPrice>)
+    	ArrayList<ArrayList<String>> purchasedItemsArrayList = new ArrayList<ArrayList<String>>();
+    	
     	if (purchasedItems.size() == 0) {
-    		purchasedItemsArrayList.add("You haven't bought any items yet, you can buy items at any Store! \n");
+    		// return null if purchased items is empty, gui handles 
+    		return null;
     	}
     	else {
-    		for (Item item : purchasedItems) {
-    			String result = "";
-    			result += String.format("Item %s was bought for %d Pirate Bucks", item.getName(), item.getPlayerBuyPrice());
+    		for (int i=0; i < purchasedItems.size(); i++) {
+    			Item currItem = purchasedItems.get(i);
     			
-        		if (item.getPlayerSellPrice() != -1) {
-        			result += String.format(" and was sold for %d at %s.", item.getPlayerSellPrice(), item.getStoreIslandSoldAt().getIslandName());
-        		}
-        		else if (!item.getName().endsWith("(upgrade)")){
-        			result += " and has not yet been sold to a store.";
-        		}
-        		purchasedItemsArrayList.add(result);
+    			purchasedItemsArrayList.get(i).add(currItem.getName());
+    			purchasedItemsArrayList.get(i).add(Integer.toString(currItem.getPlayerBuyPrice()));
+    			
+    			if (currItem.getPlayerSellPrice() != -1) {
+    				purchasedItemsArrayList.get(i).add(Integer.toString(currItem.getPlayerSellPrice()));
+    			}
+    			else {
+    				purchasedItemsArrayList.get(i).add("N/A");
+    			}
     		}
     	}
-    	return (String []) purchasedItemsArrayList.toArray();
+    	return (String [][]) purchasedItemsArrayList.toArray();
     }
     
 	/**
