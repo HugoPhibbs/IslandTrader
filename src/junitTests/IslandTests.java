@@ -50,10 +50,10 @@ class IslandTests {
 		// buy cataogue
 		HashMap<String, HashMap<String, Integer>> testBuyCatalogue = new HashMap<String, HashMap<String, Integer>>();
 		HashMap<String, Integer> goldProperties = new HashMap<String, Integer>();
-		goldProperties.put("spaceTaken", 0);
+		goldProperties.put("spaceTaken", 2);
 		goldProperties.put("price", 30);
 		HashMap<String, Integer> limeProperties = new HashMap<String, Integer>();
-		limeProperties.put("spaceTaken", 0);
+		limeProperties.put("spaceTaken", 1);
 		limeProperties.put("price", 10);
 		testBuyCatalogue.put("Gold", goldProperties);
 		testBuyCatalogue.put("Lime", limeProperties);
@@ -88,24 +88,23 @@ class IslandTests {
 		assertEquals(expectedResult1, mainIsland.getPossibleRoutes(testIsland1));
 		
 		ArrayList<Route> expectedResult2 = new ArrayList<Route>(List.of(mainAndTest2));
-		assertEquals(expectedResult1, mainIsland.getPossibleRoutes(testIsland2));
+		assertEquals(expectedResult2, mainIsland.getPossibleRoutes(testIsland2));
 	}
 	
 	@Test
 	void testViewRoutes() {
 		ArrayList<Route> routesToView1 = new ArrayList<Route>(List.of(mainAndTest1Fun, mainAndTest1Scary));
-		String expectedResult1 = "Routes to First Island:\n - fun route: Is 100 km long. fun!\n - scary route: Is 150 km long. scary!";
-		assertEquals(expectedResult1, mainIsland.getPossibleRoutes(testIsland1));
+		String expectedResult1 = "Routes to Main Island:\n - fun route: Is 100 km long. fun!\n - scary route: Is 150 km long. scary!\n";
+		assertEquals(expectedResult1, mainIsland.viewRoutes(routesToView1));
 	}
 	
 	@Test
 	void testGetFullInfo() {
 		ArrayList<Route> routesFromTest1toMain = new ArrayList<Route>(List.of(mainAndTest1Fun, mainAndTest1Scary));
 		String expectedMainInfoString = "About Main Island: An island with a nice store and even nicer tests\n"
-				+ "Routes to Main Island:\n - fun route: Is 100 km long. fun!\n - scary route: Is 150 km long. scary!"
-				+ "The store on this island sells:\nTomato; Rum; \n"
-				+ "The store on this island buys:\nGold; Lime; \n";
-		
+				+ "Routes to Main Island:\n - fun route: Is 100 km long. fun!\n - scary route: Is 150 km long. scary!\n"
+				+ "The store on this island sells:\nRum for 4 Pirate Bucks, taking up 3 space; Tomato for 3 Pirate Bucks, taking up 1 space; \n"
+				+ "The store on this island buys:\nGold for 30 Pirate Bucks, taking up 2 space; Lime for 10 Pirate Bucks, taking up 1 space; \n";
 		assertEquals(expectedMainInfoString, mainIsland.getFullInfo(routesFromTest1toMain));
 	}
 }
