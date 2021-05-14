@@ -1,13 +1,13 @@
 package coreClasses;
 
-import java.lang.reflect.Array;  
+import java.lang.reflect.Array;   
 
 import java.util.*;
 
 /** Represents a Store object
  * 
  * @author Hugo Phibbs
- * @version 8/5/2021
+ * @version 14/5/2021
  * @since 2/4/2021
  */
 
@@ -21,6 +21,7 @@ public class Store {
     /** Constructor for Store Class
      * 
      * @param name String name of Store object to be created
+     * @param specialty String for the specialty of a Store
      * @param sellCatalogue HashMap<String, HashMap> of Items that the store sells
      * @param buyCatalogue HashMap<String, HashMap> of Items that a store buys
      */
@@ -34,17 +35,20 @@ public class Store {
     	this.sellCatalogue = sellCatalogue;
     	this.buyCatalogue = buyCatalogue;
     }
-  
-    // #################### METHODS FOR SELLING AN ITEM TO A PLAYER #####################
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////// METHODS FOR SELLING AN ITEM TO A PLAYER ///////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////
     
     /** Method to check if a player wants to buy an item. If buying an item puts them in a possition where they need
      *  to sell items in order to travel to another island, then it returns a string. 
      *  otherwise returns null if they dont need to be asked. 
-     *  used by Ui before buying an item
-     * @param gameEnvironment
-     * @param itemName
-     * @param player
-     * @return
+     *  Used by Ui before buying an item
+     *  
+     * @param gameEnvironment GameEnivornment object belonging to the current object
+     * @param itemName String for the requested item that is wanted to be bought
+     * @param player Player object that wants to buy an item
+     * @return String Asking user to confirm that they want to sell an item if applicable, otherwise null
      */
 	public String checkPlayerWantsToBuy(GameEnvironment gameEnvironment, String itemName) {
 		if (sellCatalogue.get(itemName).get("price") > gameEnvironment.getMinMoneyToTravel()) {
@@ -54,20 +58,29 @@ public class Store {
 		return null;
 	}
 	
-	public String sellItemsToPlayerHelper(GameEnvironment gameEnvironment, String itemStoreToSellName, int numItemsRequested) {
+	/** Entry point for selling an item to a player. Calls Item sellItemToPlayer(GameEnvironment gameEnvironment, String itemName)
+	 * for individual selling of items
+	 * 
+	 * @param gameEnvironment GameEnvironment object for the current game
+	 * @param itemStoreToSellName String of the name of the requested item to sell to a player
+	 * @param numItemsRequested Integer for the number of items requested to sell to a player
+	 * @return String for the receipt of this transaction
+	 */
+	public String sellItemsToPlayer(GameEnvironment gameEnvironment, String itemStoreToSellName, int numItemsRequested) {
         String result = "";
         
+        // Set counting variables
         int numItemsBought = 0;
         int totalCost = 0;
 		for (int i = 0 ; i < numItemsRequested; i++) {
+			// Sell items individually until counter has reached numItemsRequested or a player cannot buy any more
 			Item itemToSell = sellItemToPlayer(gameEnvironment, itemStoreToSellName);
 			
-			// handle result of selling
+			// Handle result of selling
 			if (!itemToSell.getWithPlayer()) {
-				// Since item didnt come in possession with player, find reason why not
+				// Since item didn't come in possession with player, find reason why not
 			
-				
-				// check if item wasnt sold because of an error to do with it being an upgrade
+				// check if item wasn't sold because of an error to do with it being an upgrade
 				if (itemToSell.getName().endsWith("(upgrade)") && !Store.canSellUpgradeToPlayer(gameEnvironment.getPlayer()).equals("Can sell")){
 					result += Store.canSellUpgradeToPlayer(gameEnvironment.getPlayer()) + '\n'; // return reason why cant sell upgrade.
 				}
@@ -77,22 +90,28 @@ public class Store {
 				break;
 			}
 			else {
-				// If item was found, print transaction statement
+				// Otherwise if an Item is now in possession with a player increase counters
 				numItemsBought += 1;
 				totalCost += itemToSell.getPlayerBuyPrice();
 		    }
 	    }
 		
+		// Create a receipt String for this transaction
 		result += String.format("%d out of requested %d %s bought \nTotal cost of transaction: %d Pirate Bucks \n", numItemsBought, numItemsRequested, itemStoreToSellName, totalCost);
 	
+		// Add to receipt if Item is an upgrade, this includes info on a player's ship defense capability
 		if (itemStoreToSellName.endsWith("(upgrade)")){
-			result += getUpgradeSellReciept(gameEnvironment.getPlayer());
+			result += upgradeSellReciept(gameEnvironment.getPlayer());
 	    }
 		return result;
 	}
 	
-	
-	private String getUpgradeSellReciept(Player player) {
+	/** Method to for getting the receipt from selling an upgrade to a Player
+	 * 
+	 * @param player Player object that an Item was sold to
+	 * @return Stirng describing the new Defense Capability of a Player's Ship
+	 */
+	private String upgradeSellReciept(Player player) {
 		if (player.getShip().getDefenseCapability() == player.getShip().getMaxDefenseCapability()) {
 			return String.format("Your defense capability is now maxed at %d! \n", player.getShip().getMaxDefenseCapability());
 		}
@@ -107,7 +126,7 @@ public class Store {
      * @param player PLayer object to receive Item
      * @return Boolean, if transaction was successful
      */
-    public Item sellItemToPlayer(GameEnvironment gameEnvironment, String itemName) {
+    private Item sellItemToPlayer(GameEnvironment gameEnvironment, String itemName) {
     	// returns the item that was sold either way, this is to make handling alternative flow
     	// ALOT easier!
     	if (sellCatalogue.get(itemName) == null) {
@@ -155,7 +174,8 @@ public class Store {
     
     // how to access upgrades, should these be in their own catalogue, doesnt really make any sense to do it like that!
     
-    /** Checks if selling an item from a store is permissible
+    /** Checks if selling an item from a store is permissible. Returns "Can sell" if permissable otherwise returns 
+     * a String returning the reason why not. 
      * 
      * @param player Player object that item is trying to be sold to 
      * @param itemToSell Item being checked if it can be sold 
@@ -175,7 +195,8 @@ public class Store {
     	return "Can sell";
     }
     
-    /** Checks if a store can sell an upgrade
+    /** Checks if a store can sell an upgrade to a player. Returns "Can sell" if it can, otherwise
+     * returns a String for the reason explaining why not. 
      * 
      * @param player Player object that upgrade is trying to be sold to 
      * @param upgradeToSell ShipUpgrade object that is trying to be sold
@@ -192,9 +213,20 @@ public class Store {
     	return "Can sell";
     }
     
-    // ############## METHODS FOR BUYING AN ITEM FROM A PLAYER #################
+    /////////////////////////////////////////////////////////////////////////////
+    ////////////////// METHODS FOR BUYING AN ITEM FROM A PLAYER /////////////////
+    /////////////////////////////////////////////////////////////////////////////
     
-    public String buyItemsFromPlayerHelper(String itemStoreToBuyName, Player player, int numItems) {
+    /** Method for buying items from a player ##############
+     *  Calls buyItemFromPlayer(String itemName, Player player) for individual items
+     *  Buys multiple instances of the Item given by itemStoreToBuyName
+     *  
+     * @param itemStoreToBuyName String for the requested item to be bought from a player
+     * @param player Player object who is selling items to a store
+     * @param numItems Integer for the number of items requested to sell
+     * @return String for the receipt of the transaction
+     */
+    public String buyItemsFromPlayer(String itemStoreToBuyName, Player player, int numItems) {
     	String result = "";
     	
     	int numItemsSold = 0;
@@ -218,11 +250,12 @@ public class Store {
     	return result;
     }
 	
-    /** Buys an item from a Player to a store
+    /** Buys an item from a Player to a store. Returns the itemToBuy whether the transaction is
+     * successful or not. Other methods check if transaction was successful
      * 
      * @param itemName String for the name of Item to be bought 
      * @param player Player object that is selling an Item
-     * @return Boolean if transaction was successful
+     * @return Item object involved in the transaction
      */
     private Item buyItemFromPlayer(String itemName, Player player) {
     	if (buyCatalogue.get(itemName) == null) {
@@ -248,10 +281,12 @@ public class Store {
     }
     
     /** Checks if buying an item from a PLAYER TO A STORE is permissible
-     *  if it is, returns null, otherwise returns String for reason why not
+     * if it is returns the string "Can buy" otherwise returns a string explaining
+     * why it cannot be done. 
      * 
-     * @param player
-     * @return
+     * @param player Player object trying to buy an item
+     * @param itemToBuy Item object trying to be bought by a player
+     * @return String for explaining if buying is permissible or not
      */
     public static String canBuyItemFromPlayer(Player player, Item itemToBuy) {
     	if (itemToBuy == null) {
@@ -260,19 +295,20 @@ public class Store {
     	return "Can buy";
     }
     
+    //////////////////////////////////////////////////////////////////////////////
+    //////////////////////// DEALING WITH CATALOGUES /////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////
+    
     /** Converts a sell or buy catalogue into an an Array List that can be easily displayed
      * 
-     * @param catalogue Catalogue to be parsed into a displayArrayList
+     * @param catalogue Catalogue to be parsed into an Array
      * @return ArrayList for what you can buy or sell from a store
      */
-    public String[] catalogueToArray(String operation){
+    public String[] catalogueToArray(HashMap<String, HashMap<String, Integer>> catalogue){
     	ArrayList<String> displayArrayList = new ArrayList<String>();
     	/*
     	 *  used bellow code from online https://www.geeksforgeeks.org/traverse-through-a-hashmap-in-java/
     	 */
-    	
-    	HashMap<String, HashMap<String, Integer>> catalogue = getCatalogue(operation);
-    	
     	for (Map.Entry<String, HashMap<String, Integer>> mapElement : catalogue.entrySet()) {
     		String itemName = (String) mapElement.getKey();
     		int itemPrice = catalogue.get(itemName).get("price");
@@ -300,7 +336,7 @@ public class Store {
     public String catalogueToString(HashMap<String, HashMap<String, Integer>> catalogue, String buyOrSell) {
     	String catalogueString = "The store on this island " + buyOrSell + "s:\n";
     	try {
-    		for (String itemString: catalogueToArrayList(catalogue)) {
+    		for (String itemString: catalogueToArray(catalogue)) {
         		catalogueString += itemString + "; ";
     	    }
     		return catalogueString + "\n";
@@ -309,11 +345,14 @@ public class Store {
     		return String.format("This Store doesnt have a %s catalogue yet, please add one!", buyOrSell);
     	}
     }
-    // ##################### GETTER METHODS ########################
+    
+    /////////////////////////////////////////////////////////////////////////
+    ////////////////////////// GETTER METHODS ///////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
     
     /** Gets the visit options for a store, used by ui
      * 
-     * @return ArrayList for the options for visiting a store
+     * @return String[] for the options of visiting a store
      */
     public static String [] getVisitOptions() {
     	String[] optionsArray = 
@@ -326,27 +365,32 @@ public class Store {
     
     /** Gets the name of a chosen item to be sold or bought
      * 
-     * @param displayArrayList ArrayList that details items that can be sold or bought
+     * @param displayArray Array that details items that can be sold or bought
      * @param chosenItemNum ItemNum action int chosen by cmd line ui of chosen item
      * @return
      */
-    public static String getChosenItemName(ArrayList<String> displayArrayList, int chosenItemNum) {
+    public static String getChosenItemName(String[] displayArray, int chosenItemNum) {
     	// gets the name of a chosen, as in implemented code from game environment, just nice to have here
     	// display ArrayList must have form {"itemName for ..."}, key thing being itemName is in first position
     	
-    	return (String) Array.get(displayArrayList.get(chosenItemNum-1).split(" "), 0);
+    	return (String) Array.get(displayArray[chosenItemNum-1].split(" "), 0);
     }
     
+    /** General getter method for getting either the buyCatalogue or sellCatalogue of a 
+     * store. Useful for use in UI to increase code usability and maintainability. 
+     *  
+     * @param operation String for the operation requested, should be "buy" or "sell" otherwise 
+     * method returns null. 
+     * @return HashMap<String, HashMap<String, Integer>> catalogue associated with 'operation'
+     */
     public HashMap<String, HashMap<String, Integer>> getCatalogue(String operation){
-    	// gets the catalogue, used by ui and locally alike
     	if (operation == "buy") {
-    		HashMap<String, HashMap<String, Integer>> catalogue = buyCatalogue;
+    		return buyCatalogue;
     	}
-    	else {
-    		HashMap<String, HashMap<String, Integer>> catalogue = sellCatalogue;
+    	else if (operation == "sell"){
+    		return sellCatalogue;
     	}
-    	
-    	return catalogue;
+    	return null;
     }
     
     /** Gets the description of the store
@@ -378,7 +422,7 @@ public class Store {
    
     /** Gets the sellCatalogue for a store
      * 
-     * @return HashMap<String, Hashmap> representation of the things that a store sells
+     * @return HashMap<String, HashMap> representation of the things that a store sells
      */
     public HashMap<String, HashMap<String, Integer>> getSellCatalogue() {return sellCatalogue;}
     
@@ -388,7 +432,9 @@ public class Store {
      */
     public HashMap<String, HashMap<String, Integer>> getBuyCatalogue() {return buyCatalogue;}
     
-    // ##################### SETTER METHODS ########################
+    ////////////////////////////////////////////////////////////////////////
+    ///////////////////////// SETTER METHODS ///////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
     
     /** Sets the Island that a store belongs to
      * 
