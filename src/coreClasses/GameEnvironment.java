@@ -280,5 +280,13 @@ public class GameEnvironment {
 	
 	public void setCurrentIsland(Island newCurrentIsland) {currentIsland = newCurrentIsland;}
 	
+	
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+	
+	public void setShip(Ship ship) {
+		this.ship = ship;
+	}
 }	
 
