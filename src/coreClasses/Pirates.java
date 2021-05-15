@@ -12,6 +12,12 @@ import java.util.ArrayList;
 public class Pirates {
 	// in ui, it separately calls, getDescription(), rollDice(), attackShip(int diceInt, Ship ship)
 	// and in that order
+	
+	private int MAX_DAMAGE;
+	
+	public Pirates(int maxDamage) {
+		this.MAX_DAMAGE = maxDamage;
+	}
     
 	/** Getter method for the description of a pirates random event.
 	 * Called before Pirates class methods by other classes
@@ -28,7 +34,7 @@ public class Pirates {
      * @param ship Ship object to be attacked
      * @return String representation for the outcome of an attack
      */
-    public static String attackShip(int diceInt, Ship ship) {
+    public String attackShip(int diceInt, Ship ship) {
     	
     	/* based on a game of chance
     	 * defense capability is multiplied by the number that is rolled by dice. 
@@ -39,7 +45,7 @@ public class Pirates {
     	 */
     	
     	Random random = new Random();
-    	int randomAttack = random.nextInt(366); //arbitrary upper bound, can be adjusted if need be
+    	int randomAttack = random.nextInt(MAX_DAMAGE); //arbitrary upper bound, can be adjusted if need be
     	
     	if (randomAttack > ship.getDefenseCapability()*diceInt) {
     		return takeGoods(ship);
@@ -105,5 +111,13 @@ public class Pirates {
     		}
     	}
     	return biggestItem;
+    }
+    
+    public void setMaxDamage(int maxDamage) {
+    	this.MAX_DAMAGE = maxDamage;
+    }
+    
+    public int getMaxDamage() {
+    	return MAX_DAMAGE;
     }
 }
