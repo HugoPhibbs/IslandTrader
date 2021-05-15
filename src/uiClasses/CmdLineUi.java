@@ -1,7 +1,6 @@
 package uiClasses;
 
-import coreClasses.*;
-import exceptions.InsufficientMoneyException;
+import coreClasses.*; 
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -186,7 +185,7 @@ public class CmdLineUi implements GameUi {
             	String itemStoreToSellName = infoList[0];
             	int numItems = Integer.parseInt(infoList[1]);
         		// Call Store to handle
-        		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().sellItemsToPlayerHelper(gameEnvironment, itemStoreToSellName, numItems));
+        		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().sellItemsToPlayer(gameEnvironment, itemStoreToSellName, numItems));
         	}
         	catch (IllegalStateException ise) {
         		System.out.print(ise.getMessage());
@@ -211,7 +210,7 @@ public class CmdLineUi implements GameUi {
 	         	String itemStoreToBuyName = infoArray[0];
             	int numItems = Integer.parseInt(infoArray[1]);
 	    		// Call Store to handle
-	    		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().buyItemsFromPlayerHelper(itemStoreToBuyName, gameEnvironment.getPlayer(), numItems));
+	    		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().buyItemsFromPlayer(itemStoreToBuyName, gameEnvironment.getPlayer(), numItems));
 	    	}
 	    	catch (IllegalStateException ise) {
 	    		System.out.println(ise.getMessage());
@@ -230,7 +229,7 @@ public class CmdLineUi implements GameUi {
 	 * @param catalogue HashMap containing the items that a store buys or sells
 	 * @return String name of the chosen item that is being sold or bought
 	 */
-	private String[]visitStoreBuySellHelper(String operation) {
+	private String[] visitStoreBuySellHelper(String operation) {
 		String buySellMessage  = String.format("Enter the number corresponding to the Item that you want to %s! \n", operation);
 		
 		// Get the catalogue assosiatted with this operation, and parse it into an Array form
@@ -246,7 +245,7 @@ public class CmdLineUi implements GameUi {
     		return null; // user wants to go back menus
     	}
    
-    	String itemName =  Store.getChosenItemName(optionsArrayList, itemNum);
+    	String itemName =  Store.chosenItemName(optionsArray, itemNum);
     	
     	String howManyMessage = String.format("How many %s would you like to %s? ", itemName, operation);
     	System.out.println(howManyMessage);
@@ -421,7 +420,7 @@ public class CmdLineUi implements GameUi {
 				return;
 			}
 			// Following 3 lines make player press enter to continue.
-			int sailCost = gameEnvironment.getShip().getRepairCost() + gameEnvironment.getShip().getRouteWageCost(chosenRoute);
+			int sailCost = gameEnvironment.getShip().repairCost() + gameEnvironment.getShip().routeWageCost(chosenRoute);
 			System.out.format("Press Enter to repair your ship pay your crew for $%d, and set sail!\n", sailCost);
 			scanner.nextLine();
 			scanner.nextLine();
@@ -549,7 +548,8 @@ public class CmdLineUi implements GameUi {
 		int roll = Pirates.rollDice();
 		System.out.format("You got a %d!\n", roll);
 		// Pirate Attack 
-		String pirateOutcome = Pirates.attackShip(roll, gameEnvironment.getShip());
+		Pirates pirates = gameEnvironment.getPirates();
+		String pirateOutcome = pirates.attackShip(roll, gameEnvironment.getShip());
 		if (pirateOutcome.equals("attack_failed")) {
 			System.out.println("You successful fended of the pirates!");
 		}
