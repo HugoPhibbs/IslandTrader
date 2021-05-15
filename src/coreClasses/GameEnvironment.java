@@ -1,18 +1,10 @@
 package coreClasses;
 
-
-import java.io.ByteArrayInputStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 import java.util.Random;
 
-import exceptions.*;
 import uiClasses.GameUi;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /* TODO 
  * how do we do message handling of errors, since they are all caught GameEnvironment, should we use
@@ -42,6 +34,8 @@ public class GameEnvironment {
 	private Ship ship;
 	// The minimum amount of money to travel off your particular island. 
 	private int minMoneyToTravel;
+	
+	private Pirates pirates;
 	private RescuedSailors rescuedSailors;
 	
 	/** Constructor for GameEnvironment class
@@ -50,66 +44,15 @@ public class GameEnvironment {
 	 * @param shipArray Ship[] array containing ships that can be chosen by player
 	 * @param ui GameUi implementation to be used by game
 	 */
-	public GameEnvironment(Island[] islandArray, Ship[] shipArray, uiClasses.GameUi ui) {
+	public GameEnvironment(Island[] islandArray, Ship[] shipArray, uiClasses.GameUi ui, Pirates pirates, RescuedSailors rescuedSailors) {
 		this.islandArray = islandArray;
 		this.shipArray = shipArray;
 		this.ui = ui;
+		this.rescuedSailors = rescuedSailors;
+		this.pirates = pirates;
 	}
 	
-	/** Getter method for in game Player object
-	 * 
-	 * @return Player object belonging to GameEnvironment
-	 */
-	public Player getPlayer() {return player;}
-	
-	/** Getter method for Island Array 
-	 * 
-	 * @return Island[] array belonging to GameEnvironment
-	 */
-	public Island[] getIslandArray() {return islandArray;}
-	
-	/** Getter method for ui object
-	 * 
-	 * @return GameUi implementation being used
-	 */
-	public GameUi getUi() {return ui;}
-	
-	/** Getter method for game days remaining
-	 * 
-	 * @return Integer for the number of game days remaining
-	 */
-	public int getDaysRemaining() {return daysRemaining;}	
-	
-	/** Getter method for current game island
-	 * 
-	 * @return Island object for current game island
-	 */
-	public Island getCurrentIsland() {return currentIsland;}
-	
-	/** Getter method for in game Ship object
-	 * 
-	 * @return Ship object belonging to GameEnvironment
-	 */
-	public Ship getShip() {return ship;}
-	
-	/** Getter method for Ship Array
-	 * 
-	 * @return Ship[] Array containing all ships in game
-	 */
-	public Ship[] getShipArray() {return shipArray;}
-	
-	/** Getter method for days selected for a game
-	 * 
-	 * @return Integer for the number of days selected for a game
-	 */
-	public int getDaysSelected() {return daysSelected;}
-	
-	/** Getter method for the minimum amount of money to travel to another island
-	 * 
-	 * @return Integer for the minimum amount of money to travel to another island
-	 */
-	public int getMinMoneyToTravel() {return minMoneyToTravel;}
-	
+
 	/** Method to reduce in-game days
 	 * 
 	 * @param daysPassed Integer for the number of in-game days passed
@@ -118,8 +61,7 @@ public class GameEnvironment {
 		daysRemaining -= daysPassed;
 	}
 	
-	public void setCurrentIsland(Island newCurrentIsland) {currentIsland = newCurrentIsland;}
-	
+
 	/**
 	 * Method that is called when the user has entered all necessary information for setup, 
 	 * and all objects that required this information have been created. This method passes
@@ -173,7 +115,7 @@ public class GameEnvironment {
 		}
 		if (route.getRescueProb() >= random.nextInt(100)) {
 			// roll dice
-			RescuedSailors.giveMoney(player);
+			rescuedSailors.giveMoney(player);
 		}
 	}
 	
@@ -184,7 +126,7 @@ public class GameEnvironment {
 	 * @return cost The total amount that needs to be paid before sailing that route. 
 	 */
 	public int getCost(Route route) {
-		int cost = ship.getRepairCost();
+		int cost = ship.repairCost();
 		// get cost of paying wages based on number of crew, distance or route (days sailing) and cost per crew per day.
 		return cost;
 	}
@@ -243,8 +185,8 @@ public class GameEnvironment {
 	 * @return The amount of money required to take the cheapest sail option. 
 	 */
 	public void minMoneyRequired() {
-		int repairCost = ship.getRepairCost();
-		minMoneyToTravel += ship.getRouteWageCost(currentIsland.getShortestRoute(getOtherIslands())) + repairCost;
+		int repairCost = ship.repairCost();
+		minMoneyToTravel += ship.routeWageCost(currentIsland.getShortestRoute(getOtherIslands())) + repairCost;
 	}
 	
 	
@@ -265,5 +207,78 @@ public class GameEnvironment {
 		}
 		return liquidGoodsVal + player.getMoneyBalance();
 	}
+	
+	 /////////////////////////////////////////////////////////////////////////
+    ///////////////////// GETTER AND SETTER METHODS //////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+	
+	/** Getter method for in game Player object
+	 * 
+	 * @return Player object belonging to GameEnvironment
+	 */
+	public Player getPlayer() {return player;}
+	
+	/** Getter method for Island Array 
+	 * 
+	 * @return Island[] array belonging to GameEnvironment
+	 */
+	public Island[] getIslandArray() {return islandArray;}
+	
+	/** Getter method for Pirates object belonging to GameEnvironment
+	 * 
+	 * @return Pirates object belonging to Game Environment
+	 */
+	public Pirates getPirates() {return pirates;}
+	
+	/** Getter method for RescuedSailors object belonging to GameEnvironment
+	 * 
+	 * @return RescuedSailors object belonging to GameEnvironment
+	 */
+	public RescuedSailors getRescuedSailors() {return rescuedSailors;}
+	
+	/** Getter method for ui object
+	 * 
+	 * @return GameUi implementation being used
+	 */
+	public GameUi getUi() {return ui;}
+	
+	/** Getter method for game days remaining
+	 * 
+	 * @return Integer for the number of game days remaining
+	 */
+	public int getDaysRemaining() {return daysRemaining;}	
+	
+	/** Getter method for current game island
+	 * 
+	 * @return Island object for current game island
+	 */
+	public Island getCurrentIsland() {return currentIsland;}
+	
+	/** Getter method for in game Ship object
+	 * 
+	 * @return Ship object belonging to GameEnvironment
+	 */
+	public Ship getShip() {return ship;}
+	
+	/** Getter method for Ship Array
+	 * 
+	 * @return Ship[] Array containing all ships in game
+	 */
+	public Ship[] getShipArray() {return shipArray;}
+	
+	/** Getter method for days selected for a game
+	 * 
+	 * @return Integer for the number of days selected for a game
+	 */
+	public int getDaysSelected() {return daysSelected;}
+	
+	/** Getter method for the minimum amount of money to travel to another island
+	 * 
+	 * @return Integer for the minimum amount of money to travel to another island
+	 */
+	public int getMinMoneyToTravel() {return minMoneyToTravel;};
+	
+	public void setCurrentIsland(Island newCurrentIsland) {currentIsland = newCurrentIsland;}
+	
 }	
 
