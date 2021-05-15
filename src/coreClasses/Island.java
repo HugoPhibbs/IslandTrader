@@ -60,11 +60,14 @@ public class Island {
 	 */
 	public String getIslandName() {return islandName;}
 	
-	/** Getter method for the description of an island object
+	/** Getter method for the description of an island object. Also includes 
+	 * information on what the specialty of the Island Store is
 	 * 
 	 * @return String representation for the description of an Island object
 	 */
-	public String getDescription() {return description;}
+	public String getDescription() {
+		return String.format("%s, Store specialises in %s", description, islandStore.getSpecialty());
+	}
 
 	/**
 	 * Searches through the current island's routes to find those that go to the island the player
