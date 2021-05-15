@@ -71,7 +71,7 @@ public class Ship {
      */
     public boolean repairShip() {
     	// Called if the ship has less than 100 health before setting off for another island
-    	int repairCost = getRepairCost();
+    	int repairCost = repairCost();
     	if (owner.spendMoney(repairCost)) {
     		this.healthStatus = 100;
     		return true; // not enough money
@@ -87,7 +87,7 @@ public class Ship {
      */
     public boolean payWages(Route route, Player player) {
     	// Called every time a player wants to sell sail to another island
-        int totalWageCost = getRouteWageCost(route);
+        int totalWageCost = routeWageCost(route);
     	return player.spendMoney(totalWageCost);
     }
     
@@ -133,6 +133,28 @@ public class Ship {
     	}
     	return result;
     }
+    
+    
+    /** Method that returns the total wage cost for traveling along a route
+     * 
+     * @param route Route object that a Ship wishes to travel on
+     * @return Integer for the total wage cost to travel along this route
+     */
+    public int routeWageCost(Route route) {
+    	int daysSailing = route.getDistance() / speed; // days sailing dependent on ship speed. 
+    	return COST_PER_CREW_PER_DAY * crewSize * daysSailing;
+    }
+    
+    /** Method that returns the cost to repair ship because of damage
+     * 
+     * @return Integer for the cost of a ship repair
+     */
+    public int repairCost() {
+    	int damageInflicted = 100-healthStatus;
+    	int REPAIR_COST_CONSTANT = 1; // can be adjusted for balance
+    	return damageInflicted * crewSize * REPAIR_COST_CONSTANT;
+    }
+   
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////// MANAGING SHIP ITEMS ///////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -168,6 +190,7 @@ public class Ship {
     	}
     	return null; // did not find and/or remove inputted item
     }
+    
     ////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////// GETTER AND SETTER METHODS //////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,25 +209,6 @@ public class Ship {
     			+ "Max Defense Capability: %d \n"
     			, name, maxItemSpace, remainingItemSpace, speed, crewSize, defenseCapability, maxDefenseCapability);
     	
-    }
-    
-    /** Getter method for the daily wage of a ship's crew
-     * 
-     * @return Integer for the total wage cost of the ship's crew
-     */
-    public int getRouteWageCost(Route route) {
-    	int daysSailing = route.getDistance() / speed; // days sailing dependent on ship speed. 
-    	return COST_PER_CREW_PER_DAY * crewSize * daysSailing;
-    }
-   
-    /** Getter method for the cost to repair ship because of damage
-     * 
-     * @return Integer for the cost of a ship repair
-     */
-    public int getRepairCost() {
-    	int damageInflicted = 100-healthStatus;
-    	int REPAIR_COST_CONSTANT = 1; // can be adjusted for balance
-    	return damageInflicted * crewSize * REPAIR_COST_CONSTANT;
     }
     
     /** Getter for the max cargo capacity of Ship Object
