@@ -128,4 +128,25 @@ public class Island {
 	 * @param routes The list of routes that routeArray is to be assigned to. 
 	 */
 	public void setRouteArray(Route[] routes) {this.routeArray = routes;}
+	
+	/**
+	 * Searches through every route from this Island to any other Island to find the one with 
+	 * lowest distance. Allows calculating if the player has enough money to continue playing
+	 * 
+	 * @param otherIslands an Array of all islands in the game except the player's current island.
+	 * @return the Route with lowest distance from currentIsland.
+	 */
+	public Route getShortestRoute(Island[] otherIslands) {
+		Route shortest = null;
+		int minDist = 999999;		// effectively infinite in this situation, but an int.
+		for (Island island: otherIslands) {
+			for (Route route: getPossibleRoutes(island)) {
+				if (route.getDistance() < minDist) {
+					minDist = route.getDistance();
+					shortest = route;
+				}
+			}
+		}
+		return shortest;
+	}
 }

@@ -243,28 +243,9 @@ public class GameEnvironment {
 	 */
 	public void minMoneyRequired() {
 		int repairCost = ship.getRepairCost();
-		minMoneyToTravel += ship.getRouteWageCost(getShortestRoute()) + repairCost;
+		minMoneyToTravel += ship.getRouteWageCost(currentIsland.getShortestRoute(getOtherIslands())) + repairCost;
 	}
 	
-	/**
-	 * Searches through every route off the current island to any other island to find the
-	 * one with lowest distance. 
-	 * 
-	 * @return the Route with lowest distance from currentIsland.
-	 */
-	private Route getShortestRoute() {
-		Route shortest = null;
-		int minDist = 999999;		// effectively infinite in this situation, but an int.
-		for (Island island: getOtherIslands()) {
-			for (Route route: currentIsland.getPossibleRoutes(island)) {
-				if (route.getDistance() < minDist) {
-					minDist = route.getDistance();
-					shortest = route;
-				}
-			}
-		}
-		return shortest;
-	}
 	
 	/**
 	 * Based on your items you can sell at the current island's store, works out your players liquid value.
