@@ -81,7 +81,7 @@ public class CmdLineUi implements GameUi {
 	}
 
 	
-	/**
+	/** 
 	 * Based on the players input, calls the appropriate method to execute the action they have selected.
 	 * @param input a valid integer that corresponds with an action available to the player.
 	 */
@@ -173,7 +173,7 @@ public class CmdLineUi implements GameUi {
 	private void visitStoreSellToPlayer() {
 		// turn bellow into a method
 		//view and buy items that store sells
-    	String[] infoList = visitStoreBuySellHelper("buy");
+    	String[] infoList = visitStoreBuySellHelper("sell");
     	
     	// if itemStoreToBuyName is null, then visitStoreBuySellHelper is handling case when user wants to go back menus
     	if (infoList != null) {
@@ -201,7 +201,7 @@ public class CmdLineUi implements GameUi {
 	private void visitStoreBuyFromPlayer() {
 		
 		// Get Array for the chosen item, and the number of items requested
-		String[] infoArray = visitStoreBuySellHelper("sell");
+		String[] infoArray = visitStoreBuySellHelper("buy");
 		
 		// if itemStoreToBuyName is null, then visitStoreBuySellHelper is handling case when user wants to go back menus
 		if (infoArray != null) {
