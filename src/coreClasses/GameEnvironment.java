@@ -42,6 +42,7 @@ public class GameEnvironment {
 	private Ship ship;
 	// The minimum amount of money to travel off your particular island. 
 	private int minMoneyToTravel;
+	private RescuedSailors rescuedSailors;
 	
 	/** Constructor for GameEnvironment class
 	 * 

@@ -74,6 +74,7 @@ public class Player {
 	}
 	
 	/** Method to convert a Player's purchased Items into a String representation
+	 * Used for Command Line Only
 	 * 
 	 * @return String representation of a Players purchased Items
 	 */
