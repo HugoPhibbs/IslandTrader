@@ -5,6 +5,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.GridBagLayout;
+import javax.swing.JPanel;
+import javax.swing.JTextPane;
+import java.awt.Color;
+import javax.swing.JButton;
 
 public class GameOverScreen {
 
@@ -42,25 +46,18 @@ public class GameOverScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Game Over!");
-		lblNewLabel.setBounds(173, 30, 65, 14);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel titleLabel = new JLabel("Game Over!");
+		titleLabel.setForeground(Color.RED);
+		titleLabel.setBounds(160, 12, 133, 14);
+		frame.getContentPane().add(titleLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Reason: <reason>");
-		lblNewLabel_1.setBounds(137, 66, 101, 14);
-		frame.getContentPane().add(lblNewLabel_1);
+		JTextPane summaryTextPane = new JTextPane();
+		summaryTextPane.setBounds(24, 58, 401, 155);
+		frame.getContentPane().add(summaryTextPane);
+		summaryTextPane.setText("here can go a summary of the game\n\nreason: <reason>\ndays played: <daysPlayed>\nfinal cash amount: <cash>\nfinal score: <finalScore>");
 		
-		JLabel lblNewLabel_2 = new JLabel("Final score: <finalScore>");
-		lblNewLabel_2.setBounds(137, 102, 127, 14);
-		frame.getContentPane().add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_3 = new JLabel("Days Survived: <days>");
-		lblNewLabel_3.setBounds(137, 131, 115, 14);
-		frame.getContentPane().add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_4 = new JLabel("Final cash amount: <player.getMoneyBalance()>");
-		lblNewLabel_4.setBounds(137, 156, 291, 14);
-		frame.getContentPane().add(lblNewLabel_4);
+		JButton continueButton = new JButton("Continue");
+		continueButton.setBounds(308, 225, 117, 25);
+		frame.getContentPane().add(continueButton);
 	}
-
 }
