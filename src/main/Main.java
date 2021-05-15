@@ -1,17 +1,11 @@
 package main;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;  
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import coreClasses.GameEnvironment;
-import coreClasses.Island;
-import coreClasses.Item;
-import coreClasses.Player;
-import coreClasses.Store;
-import coreClasses.Route;
-import coreClasses.Ship;
+import coreClasses.*;
 import uiClasses.*;
 
 
@@ -25,21 +19,47 @@ import uiClasses.*;
 public class Main {
 	
 	public static void main(String[] args) {
-		// Create objects required to initiate GameEnvironement
+		initializeObjects();
+	}
+	
+	private static void initializeObjects() {
+		// Initializes all the objects needed to run a game
 		
-		// Create Ships to choose from, and an array to store
-		Ship[] shipArray = createShips();
+		// called by main
+        Ship[] shipArray = createShips();
+        
+		// Create pirates object to be used throughout game
+		Pirates pirates = new Pirates(350);;
+		
+		// Create Rescued Sailors object to be used throughout game
+		RescuedSailors rescuedSailors = new RescuedSailors(50);
 		
 		// Create buy and sell catalogues
 		ArrayList<HashMap<String, HashMap<String, Integer>>> buyCatalogues = createBuyCatalogues();
 		ArrayList<HashMap<String, HashMap<String, Integer>>> sellCatalogues = createSellCatalogues();
 		
-		// Create an island array, required for game environment constructor
+		// Create an island array, required for GameEnvironment constructor
 		Island[] islands = createIslands(buyCatalogues, sellCatalogues);
 	
 		// Create Routes
 		Route[] routes = createRoutes(islands);
 		
+		// Set the Routes for every island
+		islands = setIslandRoutes(routes, islands);
+		
+		// Initiate the UI and Game Environment
+		GameUi ui;
+		ui = new CmdLineUi();
+		// ui = new Gui();
+		GameEnvironment gameEnrvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
+		// TODO: needs to be changed later to allow both UIs to work.
+		// THis is however easier for testing the command line user interface
+		
+		// Setup UI with gameEnvironment object that was just created
+		ui.setup(gameEnrvironment);
+	}
+	
+	public static Island[] setIslandRoutes(Route[] routes, Island[] islands) {
 		for (Island island: islands) {
 			List<Route> routesToIsland = new ArrayList<Route>();
 			for(Route route: routes) {
@@ -54,14 +74,7 @@ public class Main {
 			}
 			island.setRouteArray(routeArray);
 		}
-		
-		// Initiate the UI and Game Environment
-		GameUi ui;
-		// TODO: needs to be changed later to allow both UIs to work.
-		// THis is however easier for testing the command line user interface
-		ui = new CmdLineUi();
-		GameEnvironment gameEnrviron = new GameEnvironment(islands, shipArray, ui);
-		ui.setup(gameEnrviron);
+		return islands;
 	}
 	
 	public static Ship[] createShips() {
