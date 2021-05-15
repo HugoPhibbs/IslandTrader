@@ -37,6 +37,23 @@ public class Store {
     }
     
     ///////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////// GENERAL STORE METHODS ////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    
+    /** Gets the name of a chosen item to be sold or bought
+     * 
+     * @param displayArray Array that details items that can be sold or bought
+     * @param chosenItemNum ItemNum action int chosen by cmd line ui of chosen item
+     * @return
+     */
+    public static String chosenItemName(String[] displayArray, int chosenItemNum) {
+    	// gets the name of a chosen, as in implemented code from game environment, just nice to have here
+    	// display ArrayList must have form {"itemName for ..."}, key thing being itemName is in first position
+    	
+    	return (String) Array.get(displayArray[chosenItemNum-1].split(" "), 0);
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////// METHODS FOR SELLING AN ITEM TO A PLAYER ///////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////
     
@@ -361,19 +378,6 @@ public class Store {
 				,"View previously bought items."
 				,"View the amount of money that you have."};
     	return optionsArray;
-    }
-    
-    /** Gets the name of a chosen item to be sold or bought
-     * 
-     * @param displayArray Array that details items that can be sold or bought
-     * @param chosenItemNum ItemNum action int chosen by cmd line ui of chosen item
-     * @return
-     */
-    public static String getChosenItemName(String[] displayArray, int chosenItemNum) {
-    	// gets the name of a chosen, as in implemented code from game environment, just nice to have here
-    	// display ArrayList must have form {"itemName for ..."}, key thing being itemName is in first position
-    	
-    	return (String) Array.get(displayArray[chosenItemNum-1].split(" "), 0);
     }
     
     /** General getter method for getting either the buyCatalogue or sellCatalogue of a 
