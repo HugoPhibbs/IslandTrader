@@ -43,6 +43,12 @@ public class Ship {
     		String msg2 = "Ship size cannot be more than 10!";
     		throw new IllegalArgumentException(msg2);
     	}
+    	
+    	if (maxDefenseCapability > 50) {
+    		String msg3 = "Max defense capability cannot be more than 50";
+    		throw new IllegalArgumentException(msg3);
+    	}
+    	
     	this.name = name;
     	this.speed = speed;
     	this.crewSize = shipSize; // neat numbers
@@ -275,4 +281,12 @@ public class Ship {
      * @param owner Player object for owner of the ship
      */
     public void setOwner(Player owner) {this.owner = owner;}  
+    
+    /** Method to set the remaining item space of a ship
+     * 
+     * @param remainingItemSpace Integer for the remaining Item space for a ship
+     */
+    public void setRemainingItemSpace(int remainingItemSpace) {
+    	this.remainingItemSpace = remainingItemSpace;
+    }
 }
