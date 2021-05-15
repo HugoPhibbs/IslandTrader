@@ -80,16 +80,16 @@ public class Store {
 	 * 
 	 * @param gameEnvironment GameEnvironment object for the current game
 	 * @param itemStoreToSellName String of the name of the requested item to sell to a player
-	 * @param numItemsRequested Integer for the number of items requested to sell to a player
+	 * @param numItems Integer for the number of items requested to sell to a player
 	 * @return String for the receipt of this transaction
 	 */
-	public String sellItemsToPlayer(GameEnvironment gameEnvironment, String itemStoreToSellName, int numItemsRequested) {
+	public String sellItemsToPlayer(GameEnvironment gameEnvironment, String itemStoreToSellName, int numItems) {
         String result = "";
         
         // Set counting variables
         int numItemsBought = 0;
         int totalCost = 0;
-		for (int i = 0 ; i < numItemsRequested; i++) {
+		for (int i = 0 ; i < numItems; i++) {
 			// Sell items individually until counter has reached numItemsRequested or a player cannot buy any more
 			Item itemToSell = sellItemToPlayer(gameEnvironment, itemStoreToSellName);
 			
@@ -114,7 +114,7 @@ public class Store {
 	    }
 		
 		// Create a receipt String for this transaction
-		result += String.format("%d out of requested %d %s bought \nTotal cost of transaction: %d Pirate Bucks \n", numItemsBought, numItemsRequested, itemStoreToSellName, totalCost);
+		result += String.format("%d out of requested %d %s bought \nTotal cost of transaction: %d Pirate Bucks \n", numItemsBought, numItems, itemStoreToSellName, totalCost);
 	
 		// Add to receipt if Item is an upgrade, this includes info on a player's ship defense capability
 		if (itemStoreToSellName.endsWith("(upgrade)")){
@@ -146,8 +146,9 @@ public class Store {
     private Item sellItemToPlayer(GameEnvironment gameEnvironment, String itemName) {
     	// returns the item that was sold either way, this is to make handling alternative flow
     	// ALOT easier!
+    	
     	if (sellCatalogue.get(itemName) == null) {
-    		throw new IllegalStateException("BUG store does not sell this item!");
+    		throw new IllegalArgumentException("BUG store does not sell this item!");
     	}
     	
     	// check whether itemName is an upgrade, then call a helper method to handle. 
@@ -200,7 +201,7 @@ public class Store {
      */
     public String canSellItemToPlayer(GameEnvironment gameEnvironment, Item itemToSell) {
     	if (gameEnvironment.getPlayer().getMoneyBalance() < itemToSell.getPlayerBuyPrice()) {
-    		return "Can't sell Item, Player does not have enough money to buy this item!";
+    		return "Can't sell Item(s), Player does not have enough money to buy this item!";
     	}
     	
     	// need to check seperarately for an upgrade in terms of space
@@ -263,7 +264,7 @@ public class Store {
     		}	
     	}
     	
-    	result += String.format("%d out of a requested %d %s was sold to the store \nTotal monetary gain: %d ", numItemsSold, numItems, itemStoreToBuyName, totalGain);
+    	result += String.format("%d out of a requested %d %s was sold to the store \nTotal monetary gain: %d", numItemsSold, numItems, itemStoreToBuyName, totalGain);
     	return result;
     }
 	
