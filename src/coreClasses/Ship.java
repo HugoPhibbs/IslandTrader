@@ -142,7 +142,11 @@ public class Ship {
      */
     public int routeWageCost(Route route) {
     	int daysSailing = route.getDistance() / speed; // days sailing dependent on ship speed. 
-    	return COST_PER_CREW_PER_DAY * crewSize * daysSailing;
+    	return getDailyWageCost() * daysSailing;
+    }
+    
+    public int getDailyWageCost() {
+    	return COST_PER_CREW_PER_DAY * crewSize;
     }
     
     /** Method that returns the cost to repair ship because of damage
@@ -205,9 +209,10 @@ public class Ship {
     			+ "Remaining Item-Space: %d \n"
     			+ "Speed: %d \n"
     			+ "Crew-size: %d \n"
+    			+ "Wage Cost per day: %d \n"
     			+ "Defense Capability: %d \n"
     			+ "Max Defense Capability: %d \n"
-    			, name, maxItemSpace, remainingItemSpace, speed, crewSize, defenseCapability, maxDefenseCapability);
+    			, name, maxItemSpace, remainingItemSpace, speed, crewSize, getDailyWageCost(), defenseCapability, maxDefenseCapability);
     	
     }
     
