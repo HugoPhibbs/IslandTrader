@@ -1,7 +1,5 @@
 package coreClasses;
 
-import java.util.HashMap;
-
 /** General class to check for valid input across project
  * 
  * @author Hugo Phibbs and Jordan Vegar
@@ -10,9 +8,10 @@ import java.util.HashMap;
  */
 public class CheckValidInput {
 	
-	/**
-	 * Checks that chosen duration of the game is between 20 and 50 days. 
-	 * @param days
+	/**Checks that chosen duration of the game is between 20 and 50 days. 
+	 * 
+	 * @param days Integer for the number of days to be checked.
+	 * @return boolean if the given game duration is valid
 	 */
 	public static boolean durationIsValid(int days) {
 		if (20 <= days && days <= 50) {
@@ -21,10 +20,13 @@ public class CheckValidInput {
 		return false;
 	}
 	
+	/** Checks if an inputed name is valid.
+	 * Name must have no more than 2 consecutive white space, and be between 3 and 15 chars long
+	 * 
+	 * @param name String for the name to be checked
+	 * @return boolean if the inputed name is valid
+	 */
 	public static boolean nameIsValid(String name) {
-		/** 
-		 * TODO: Do we need to check that the string doesn't have any leading white space, or should we remove this when inputting?
-		 */
 				
 		boolean prevWhiteSpace = false;
 		

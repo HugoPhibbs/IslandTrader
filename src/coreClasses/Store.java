@@ -137,7 +137,7 @@ public class Store {
 	/** Method to for getting the receipt from selling an upgrade to a Player
 	 * 
 	 * @param player Player object that an Item was sold to
-	 * @return Stirng describing the new Defense Capability of a Player's Ship
+	 * @return String describing the new Defense Capability of a Player's Ship
 	 */
 	private String upgradeSellReciept(Player player) {
 		if (player.getShip().getDefenseCapability() == player.getShip().getMaxDefenseCapability()) {
@@ -151,7 +151,7 @@ public class Store {
     /** Creates and sells and item to a player 
      * 
      * @param itemName String for the name of Item to be created
-     * @param player PLayer object to receive Item
+     * @param player Player object to receive Item
      * @return Boolean, if transaction was successful
      */
     private Item sellItemToPlayer(GameEnvironment gameEnvironment, String itemName) {
@@ -330,7 +330,7 @@ public class Store {
     
     /** Converts a sell or buy catalogue into an an Array List that can be easily displayed
      * 
-     * @param catalogue Catalogue to be parsed into an Array
+     * @param catalogue HashMap<String, HashMap<String, Integer>> catalogue to be parsed into an Array
      * @return ArrayList for what you can buy or sell from a store
      */
     public String[] catalogueToArray(HashMap<String, HashMap<String, Integer>> catalogue){
@@ -354,8 +354,7 @@ public class Store {
     	return displayArrayList.toArray(new String[displayArrayList.size()]);
     }
     
-    /**
-     * Creates and returns a string representation of the given catalogue, useful for giving a quick overview
+    /** Creates and returns a string representation of the given catalogue, useful for giving a quick overview
      * of what a store buys or sells. Is called by island.fullInfo.
      * 
      * @param catalogue The catalogue (either buy or sell) to be made into a string. 

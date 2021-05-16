@@ -3,11 +3,10 @@ package coreClasses;
 /** Represents a Ship Upgrade
  * 
  * @author Hugo Phibbs
- * @version 14/5/2021
+ * @version 17/5/2021
  * @since 2/4/2021
  */
 public class ShipUpgrade extends Item{
-	// Class variables //
 	/** Defense boost that an upgrade provides to a ship when equipped */
     private int defenseBoost; 
     
