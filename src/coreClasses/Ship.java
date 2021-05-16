@@ -1,8 +1,6 @@
 package coreClasses;
 
-import java.util.*;  
-
-import exceptions.*;
+import java.util.*;   
 
 /** Represents a ship
  * @author Hugo Phibbs
@@ -11,25 +9,49 @@ import exceptions.*;
  */
 
 public class Ship {
+	// Class variables //
 	// Final class variables
+	/** Name for the ship */
     private final String name;
+    
+    /** Max amount of Item object that a ship can hold */
     private final int maxItemSpace;
-    private final int speed;             // unit distance per day
+    
+    /** Max defense capability that can be reached with adding upgrades to a ship */
+    private final int maxDefenseCapability;
+    
+    /** Speed of a ship for traveling between islands, unit distance per day */
+    private final int speed; 
+    
+    /** Size of a ships crew */
     private final int crewSize; 
+    
+    /** The daily wage cost of a single crew member */
 	private final int COST_PER_CREW_PER_DAY = 5;
-	private final int maxDefenseCapability;
+	
+	/** Player object that owns this Ship object in a game */
     private Player owner;
+    
     // Non-final class variables
+    /** The remaining amount of Items that a ship can carry */
     private int remainingItemSpace;
+    
+    /** Current defense capability of a ship from adding upgrades */
     private int defenseCapability = 0;
+    
+    /** Current health status of a ship, can take damage from unfortunate weather event */
     private int healthStatus = 100;
+    
+    /** ArrayList containing all the Items that a ship is currently carrying */
     private ArrayList<Item> items = new ArrayList<Item>();
+    
+    /** ArrayList containing all the Upgrades that a ship currently has equipped */
     private ArrayList<ShipUpgrade> upgrades = new ArrayList<ShipUpgrade>();
 
-    /** Constructor for Ship
+    /** Constructor for a Ship object
      *
      * @throws IllegalArgumentException if constructor parameters are invalid
-     * @param name A String for the name of the ship
+     * @param name String for the name of the ship
      * @param shipSize Integer for the size of the ship, influences crew size and the max cargo space of a ship
      * @param speed Integer for the speed of the ship as it travels between islands (assume constant)
      * @param maxDefenseCapability Integer for the max defense capability of a ship
@@ -52,7 +74,7 @@ public class Ship {
     	this.name = name;
     	this.speed = speed;
     	this.crewSize = shipSize; // neat numbers
-    	this.maxItemSpace = shipSize * 10; // ie for every unit of crewSize max item space adjusts with this. arbitary constant
+    	this.maxItemSpace = shipSize * 10; // ie for every unit of crewSize max item space adjusts with this. arbitrary constant
     	this.maxDefenseCapability = maxDefenseCapability;
     	
     	remainingItemSpace = maxItemSpace;

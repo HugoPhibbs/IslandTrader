@@ -20,6 +20,7 @@ public class UnfortunateWeather{
 	
 	/** Method for damaging a ship object
 	 * imparts damage up to 99 as to avoid reducing ship health to 0
+	 * 
 	 * @param ship Ship object to be damaged
 	 */
 	public static void damageShip(Ship ship) {

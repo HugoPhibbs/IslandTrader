@@ -1,12 +1,13 @@
 package coreClasses;
 
-import java.util.InputMismatchException;
+import java.util.InputMismatchException; 
 import java.util.Scanner;
 
-/**
+/** A helper class for CmdLineUi to take input from a user
  * 
  * @author Jordan Vegar
- *
+ * @version 2/4/21
+ * @since 2/4/21
  */
 public final class TakeInput {
 	

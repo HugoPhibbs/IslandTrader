@@ -1,33 +1,35 @@
 package coreClasses;
 
-import java.util.ArrayList; 
-import exceptions.GoBackException;
+import java.util.ArrayList;  
 
 /** Represents an Island object
  * 
  * @author Jordan Vegar
- * @version 8/5/2021
+ * @version 17/5/2021
  * @since 2/4/2021
  */
 public class Island {
-	
-	// The name of the island.
+	// Class variables //
+	/** The name of the island. */
     private String islandName;
-	// The object of Store that models the store on this island. 
+    
+	/** The object of Store that models the store on this island. */
 	private Store islandStore;
-	// An array of all the routes from this island to another island.
+	
+	/** An array of all the routes from this island to another island.*/
 	private Route[] routeArray;
-	/**
-	 * A brief description of the characteristics of this island, including an
+	
+	/** A brief description of the characteristics of this island, including an
 	 * indication of what the store sells and buys. 
 	 */
 	private String description;
 	
-	/** Constructor method for Island object
+	
+	/** Constructor method for an Island object
 	 * 
-	 * @param name the name of the Island
-	 * @param store the Store on the Island
-	 * @param description test description of the island, gives an indication
+	 * @param name String for the name of the Island
+	 * @param store Store object on the Island
+	 * @param description String brief description of the island, gives an indication
 	 * 		  of what it's store will buy and sell. 
 	 */
 	public Island(String name, Store store, String description) {
@@ -69,12 +71,11 @@ public class Island {
 		return String.format("%s, Store specialises in %s", description, islandStore.getSpecialty());
 	}
 
-	/**
-	 * Searches through the current island's routes to find those that go to the island the player
+	/** Searches through the current island's routes to find those that go to the island the player
 	 * wishes to travel to.
 	 * 
-	 * @param destination The Island you want to see routes to (from the player's current island)
-	 * @return an ArrayList of routes from the current island to the destination island. 
+	 * @param destination Island object that you want to see routes to (from the player's current island)
+	 * @return ArrayList of the routes from the current island to the destination island. 
 	 */
 	public ArrayList<Route> getPossibleRoutes(Island destination) {
 		
@@ -92,7 +93,7 @@ public class Island {
 	
 	/** Method for the getting a string representation of routes from an island
 	 * 
-	 * @param destination The Island you want to see routes to (from the player's current island)
+	 * @param routes ArrayList<Route> containing all the routes from a particular island. (from the player's current island)
 	 * @return String representation of all the routes from a given island
 	 */
 	public String viewRoutes(ArrayList<Route> routes) {
@@ -105,12 +106,11 @@ public class Island {
 		return routeStr;
 	}
 	
-	/**
-	 * Creates a detailed description of this island, including info about the routes to it 
+	/** Creates a detailed description of this island, including info about the routes to it 
 	 * (from current island) and a list of items the store buys and sells.
 	 *  
-	 * @param routes A list of routes from the player's current island to this island.
-	 * @return fullInfo A string giving a detailed description of this island.
+	 * @param routes ArrayList<Route> of routes from the player's current island to this island.
+	 * @return fullInfo String giving a detailed description of this island.
 	 */
 	public String getFullInfo(ArrayList<Route> routes) {
 		String fullInfo = String.format("About %s: %s\n", getIslandName(), getDescription());
@@ -123,21 +123,19 @@ public class Island {
 		return fullInfo;
 	}
 	
-	/**
-	 * Route objects require Island objects to be created, so an islands routes are created
+	/** Route objects require Island objects to be created, so an islands routes are created
 	 * after the island is created. For this reason the routeArray cannot be included in the
 	 * constructor. This method initializes the variable routeArray.
 	 * 
-	 * @param routes The list of routes that routeArray is to be assigned to. 
+	 * @param routes Route[] array of routes that routeArray is to be assigned to. 
 	 */
 	public void setRouteArray(Route[] routes) {this.routeArray = routes;}
 	
-	/**
-	 * Searches through every route from this Island to any other Island to find the one with 
+	/** Searches through every route from this Island to any other Island to find the one with 
 	 * lowest distance. Allows calculating if the player has enough money to continue playing
 	 * 
-	 * @param otherIslands an Array of all islands in the game except the player's current island.
-	 * @return the Route with lowest distance from currentIsland.
+	 * @param otherIslands Island[] array of all islands in the game except the player's current island.
+	 * @return Route with the lowest distance from currentIsland.
 	 */
 	public Route getShortestRoute(Island[] otherIslands) {
 		Route shortest = null;

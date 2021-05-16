@@ -6,11 +6,6 @@ import uiClasses.GameUi;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/* TODO 
- * how do we do message handling of errors, since they are all caught GameEnvironment, should we use
- * getMessage(), or create the messages themselves within GameEnvironment?
- */
-
 // TODO need to have a method that handles a player not having any cash
 
 /** Represents the game environment of an 'Island Trader' game. 
@@ -22,26 +17,26 @@ import java.util.HashMap;
  */
 public class GameEnvironment {
 	
-	// TODO need to have a method that handles random events
-
+	// Final class variables
+	private final Island[] islandArray;
+	private final Ship[] shipArray;
+	private final GameUi ui;
+	// Non final class variables
 	private Player player;
-	private Island[] islandArray;
-	private Ship[] shipArray;
-	private GameUi ui;
 	private int daysSelected;
+	private Pirates pirates; // Object for a pirates random event
+	private RescuedSailors rescuedSailors; // Object for rescued sailors random event
 	private int daysRemaining;
 	private Island currentIsland;
 	private Ship ship;
-	// The minimum amount of money to travel off your particular island. 
-	private int minMoneyToTravel;
-	
-	private Pirates pirates;
-	private RescuedSailors rescuedSailors;
+		private int minMoneyToTravel; // The minimum amount of money to travel off your particular island. 
 	
 	/** Constructor for GameEnvironment class
 	 * 
 	 * @param islandArray Island[] array containing islands to be used in game
 	 * @param shipArray Ship[] array containing ships that can be chosen by player
+	 * @param pirates Pirates object for a pirate attack random event
+	 * @param rescuedSailors RescuedSailors object for a rescued sailors random event
 	 * @param ui GameUi implementation to be used by game
 	 */
 	public GameEnvironment(Island[] islandArray, Ship[] shipArray, uiClasses.GameUi ui, Pirates pirates, RescuedSailors rescuedSailors) {
@@ -52,18 +47,9 @@ public class GameEnvironment {
 		this.pirates = pirates;
 	}
 	
-
-	/** Method to reduce in-game days
+	/** Method for finishing the set up for a game. 
 	 * 
-	 * @param daysPassed Integer for the number of in-game days passed
-	 */
-	public void reduceDaysRemaining(int daysPassed) {
-		daysRemaining -= daysPassed;
-	}
-	
-
-	/**
-	 * Method that is called when the user has entered all necessary information for setup, 
+	 * Is called when the user has entered all necessary information for setup, 
 	 * and all objects that required this information have been created. This method passes
 	 * those objects to the current instance of GameEnvironment. 
 	 * @param player
@@ -83,9 +69,18 @@ public class GameEnvironment {
 		ui.playGame();
 	}
 	
-	/**
+	/** Method to reduce in-game days
+	 * 
+	 * @param daysPassed Integer for the number of in-game days passed
+	 */
+	public void reduceDaysRemaining(int daysPassed) {
+		daysRemaining -= daysPassed;
+	}
+	
+	/** Method for setting sail to another island in a game.
 	 * Makes the necessary payments before sailing, then sails along a particular route to a 
 	 * new Island. May encounter random events based on the probabilities of the particular route. 
+	 * 
 	 * @param route The Route the player has chosen. 
 	 */
 	public void setSail(Route route, Island destination) {
@@ -100,9 +95,10 @@ public class GameEnvironment {
 		setCurrentIsland(destination);	
     }
     
-	/**
+	/** Performs random events while on route to another island
 	 * Based on the probabilities of each event for the specific route, uses a random number to decide
 	 * if any random events will occur. Makes the necessary calls if they are to occur. 
+	 * 
 	 * @param route The route the player is traveling along.
 	 */
 	private void randomEvents(Route route) {
@@ -119,11 +115,24 @@ public class GameEnvironment {
 		}
 	}
 	
-	/**
-	 * Works out the amount that has to be spent before this route can be sailed.
+	/** Calculates the amount that needs to be paid before the cheapest route available can be sailed. 
+	 * cost is dependent on amount of damage to the ship that needs to be repaired, as well as cost of wages to be paid. 
+	 * 
+	 * @return The amount of money required to take the cheapest sail option. 
+	 */
+	public void minMoneyRequired() {
+		int repairCost = ship.repairCost();
+		minMoneyToTravel += ship.routeWageCost(currentIsland.getShortestRoute(getOtherIslands())) + repairCost;
+	}
+	
+	//////////////////////////////////////////////////////////////
+    /////////////////////// HELPER METHODS ///////////////////////
+    //////////////////////////////////////////////////////////////
+
+	/** Works out the amount that has to be spent before this route can be sailed.
 	 * Based on the cost to repair the ship and pay crew wages. 
 	 * 
-	 * @return cost The total amount that needs to be paid before sailing that route. 
+	 * @return cost Integer for the total amount that needs to be paid before sailing that route. 
 	 */
 	public int getCost(Route route) {
 		int cost = ship.repairCost();
@@ -149,7 +158,7 @@ public class GameEnvironment {
 	
 	/** Getter method for the descriptions of every ship that a player can choose
 	 * 
-	 * @return Ship[] array containing descriptions of every ship that a player can choose
+	 * @return ArrayList<String> ArrayList containing descriptions of every ship that a player can choose
 	 */
 	public ArrayList<String> getShipDescriptionArrayList() {
 		// TODO implement
@@ -161,11 +170,10 @@ public class GameEnvironment {
 		return shipDescriptionArrayList;
 	}
 	
-	/**
-	 * Calculates a score by dividing profit by days played.
+	/** Calculates a score by dividing profit by days played.
 	 * 
-	 * @param the amount of money the player started with, needed for profit calculation.  
-	 * @return The players score at time of call.
+	 * @param Integer for the amount of money the player started with, needed for profit calculation.  
+	 * @return Integer for the player's score at time of call.
 	 */
 	public int getScore(int startMoney) {
 		int profit = getPlayer().getMoneyBalance() - 1000;
@@ -176,23 +184,12 @@ public class GameEnvironment {
 		} else {
 			return profit / daysPlayed;
 		}
-	}
+	}	
 	
-	/**
-	 * Calculates the amount that needs to be paid before the cheapest route available can be sailed. 
-	 * cost is dependent on amount of damage to the ship that needs to be repaired, as well as cost of wages to be paid. 
-	 * 
-	 * @return The amount of money required to take the cheapest sail option. 
-	 */
-	public void minMoneyRequired() {
-		int repairCost = ship.repairCost();
-		minMoneyToTravel += ship.routeWageCost(currentIsland.getShortestRoute(getOtherIslands())) + repairCost;
-	}
-	
-	
-	/**
+	/** Gets the current liquid value of a player in a game 
 	 * Based on your items you can sell at the current island's store, works out your players liquid value.
-	 * @return The amount the player can sell all his sellable items for plus his bank balance. 
+	 * 
+	 * @return Integer for the amount the player can sell all his sellable items for plus his bank balance. 
 	 */
 	public int getLiquidValue() {
 		ArrayList<Item> items = ship.getItems();
@@ -238,7 +235,7 @@ public class GameEnvironment {
 	
 	/** Getter method for ui object
 	 * 
-	 * @return GameUi implementation being used
+	 * @return GameUi object implementation being used
 	 */
 	public GameUi getUi() {return ui;}
 	
@@ -278,15 +275,22 @@ public class GameEnvironment {
 	 */
 	public int getMinMoneyToTravel() {return minMoneyToTravel;};
 	
+	/** Method for setting the current Island object in a game
+	 *  
+	 * @param newCurrentIsland Island object that the player at a game is currently located at
+	 */
 	public void setCurrentIsland(Island newCurrentIsland) {currentIsland = newCurrentIsland;}
 	
+	/** Method for setting a player object gor a game
+	 * 
+	 * @param player Player object to be set for a game
+	 */
+	public void setPlayer(Player player) {this.player = player;}
 	
-	public void setPlayer(Player player) {
-		this.player = player;
-	}
-	
-	public void setShip(Ship ship) {
-		this.ship = ship;
-	}
+	/** Method for setting the ship object belonging to a player in a game
+	 * 
+	 * @param ship Ship object belonging to a player in a game
+	 */
+	public void setShip(Ship ship) {this.ship = ship;}
 }	
 

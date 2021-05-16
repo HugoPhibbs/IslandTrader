@@ -3,17 +3,29 @@ package coreClasses;
 /** Represents an Item object
  * 
  * @author Hugo Phibbs
- * @version 8/5/2021
+ * @version 17/5/2021
  * @since 2/4/2021
  */
 public class Item{
-
-    private Island storeIslandSoldAt; // island where the item was sold from player to store
+	// Class variables //
+	/** Name of an Item */
     private String name;
+    
+    /** The amount of space taken by an Item when held in a Ship */
     private int spaceTaken;
+    
+    /** The island that an Item was sold to a player from a store */
+    private Island storeIslandSoldAt; // island where the item was sold from player to store
+    
+    /** Keeps track of if an Item object is with a player or not */
     private boolean withPlayer; // keeps track of whether an item is currently with a player or not!
+    
+    /** The price paid for an Item by a Player to a Store */
     private int playerBuyPrice; // Price of Item within a store for a player to buy
+    
+    /** The price paid for an Item by a Store to a player, because of a consignment purchase */
     private int playerSellPrice = -1; // Price of item that a player sells back to a store, default value -1 if it hasnt been sold to a store yet
+    
     
     /** Constructor method for an Item object
      * 

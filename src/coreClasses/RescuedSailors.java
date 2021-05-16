@@ -3,11 +3,11 @@ package coreClasses;
 /** Represents a RescuedSailors random event
  * 
  * @author Hugo Phibbs
- * @version 14/5/2021
+ * @version 17/5/2021
  * @since 2/4/2021
  */
 public class RescuedSailors {
-	
+	/** Amount of money given to a player for saving sailors */
 	private int REWARD_MONEY;
 	
 	/** Constructor method for a RescuedSailors event
@@ -28,7 +28,7 @@ public class RescuedSailors {
 	
 	/** Method to give reward money to a player. Gives an arbitary amount
 	 * 
-	 * @param player
+	 * @param player Player object to recieve money 
 	 */
 	public void giveMoney(Player player) {
 		player.earnMoney(REWARD_MONEY); // arbitrary value, not based on chance in specs, so just make it 50

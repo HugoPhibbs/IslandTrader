@@ -12,11 +12,22 @@ import java.util.*;
  */
 
 public class Store {
+	// Class attributes //
+	/** Name of the store*/
     private String name; 
-    private String specialty; // just to be more creative
+    
+    /** Specialty of a store, indicates what it can buy and sell*/
+    private String specialty; 
+    
+    /** Store object belonging to an island*/
     private Island storeIsland;
+    
+    /** Collection describing the Items that a store can sell to a player */
     private HashMap<String, HashMap<String, Integer>> sellCatalogue;
+    
+    /** Collection describing the Items that a store can buy from a player */
     private HashMap<String, HashMap<String, Integer>> buyCatalogue;
+    
     
     /** Constructor for Store Class
      * 

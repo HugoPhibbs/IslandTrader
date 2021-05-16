@@ -1,26 +1,29 @@
 package coreClasses;
 
-import java.util.Random;
+import java.util.Random; 
 import java.util.ArrayList;
 
 /** Represents a pirates random event
  * 
  * @author Hugo Phibbs
- * @version 8/5/2021
+ * @version 17/5/2021
  * @since 2/4/2021
  */
 public class Pirates {
-	// in ui, it separately calls, getDescription(), rollDice(), attackShip(int diceInt, Ship ship)
-	// and in that order
-	
+	/** Max damage that a Pirates random event can impose onto a Ship object */
 	private int MAX_DAMAGE;
 	
+	/** Constructor method for a Pirates random event
+	 * 
+	 * @param maxDamage Integer for the max damage that Pirates random event can impose onto a Ship object 
+	 */
 	public Pirates(int maxDamage) {
 		this.MAX_DAMAGE = maxDamage;
 	}
     
 	/** Getter method for the description of a pirates random event.
 	 * Called before Pirates class methods by other classes
+	 * 
 	 * @return String representation of the unfortunate weather event
 	 */
     public static String getDescription(){
@@ -113,11 +116,19 @@ public class Pirates {
     	return biggestItem;
     }
     
-    public void setMaxDamage(int maxDamage) {
-    	this.MAX_DAMAGE = maxDamage;
-    }
-    
+    /** Getter method for the max damage a Pirates random event can put onto a ship
+     * 
+     * @return Integer for the max damage of a Pirates attack
+     */
     public int getMaxDamage() {
     	return MAX_DAMAGE;
+    }
+    
+    /** Setter for the max damage that a Pirates random event can put onto a ship
+     * 
+     * @param maxDamage Integer for the max damage of a Pirates attack
+     */
+    public void setMaxDamage(int maxDamage) {
+    	this.MAX_DAMAGE = maxDamage;
     }
 }
