@@ -9,7 +9,6 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
-import java.awt.TextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -63,17 +62,17 @@ public class chooseRouteScreen {
 		JLabel lblSelectRoute = new JLabel("Please select a route to continue");
 		lblSelectRoute.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblSelectRoute.setForeground(new Color(51, 51, 51));
-		lblSelectRoute.setBounds(78, 167, 297, 19);
+		lblSelectRoute.setBounds(76, 146, 297, 19);
 		frame.getContentPane().add(lblSelectRoute);
 		
 		JLabel lblIslandImage = new JLabel("This will be a picture of the island you are travelling to!");
 		lblIslandImage.setBackground(Color.CYAN);
-		lblIslandImage.setBounds(504, 28, 259, 137);
+		lblIslandImage.setBounds(509, 7, 259, 137);
 		frame.getContentPane().add(lblIslandImage);
 		
 		JPanel panelRouteSelection = new JPanel();
 		panelRouteSelection.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelRouteSelection.setBounds(12, 206, 776, 308);
+		panelRouteSelection.setBounds(12, 177, 776, 308);
 		frame.getContentPane().add(panelRouteSelection);
 		panelRouteSelection.setLayout(null);
 		
@@ -135,5 +134,9 @@ public class chooseRouteScreen {
 		lblRescueOdds.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblRescueOdds.setBounds(698, 265, 49, 15);
 		panelRouteSelection.add(lblRescueOdds);
+		
+		JButton btnConfirm = new JButton("Confirm");
+		btnConfirm.setBounds(626, 489, 162, 25);
+		frame.getContentPane().add(btnConfirm);
 	}
 }
