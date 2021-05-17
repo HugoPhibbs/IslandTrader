@@ -193,7 +193,7 @@ public class SetupScreen {
 		btnNewButton_1_3.setBounds(12, 12, 156, 226);
 		panel_1.add(btnNewButton_1_3);
 		
-		JLabel lblSelectAnIsland = new JLabel("Select an Island!");
+		JLabel lblSelectAnIsland = new JLabel("Select an island!");
 		lblSelectAnIsland.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 16));
 		lblSelectAnIsland.setBounds(869, 12, 196, 40);
 		panel_1.add(lblSelectAnIsland);
