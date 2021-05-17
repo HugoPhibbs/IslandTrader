@@ -137,6 +137,7 @@ public class GameEnvironment {
 	public int getCost(Route route) {
 		int cost = ship.repairCost();
 		// get cost of paying wages based on number of crew, distance or route (days sailing) and cost per crew per day.
+		cost += ship.routeWageCost(route);
 		return cost;
 	}
 	
