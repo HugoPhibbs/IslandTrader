@@ -12,19 +12,25 @@ import coreClasses.*;
 class GameEnvironmentTests {
 	
 	private GameEnvironment testGame;
+	private Island homeIsland;
+	private Ship testShip;
+	private Player testPlayer;
+
+	private Island island1;
+	private Island island2;
 	
 	@BeforeEach
 	void createRequiredObjects() {
 		// Main testing objects
-		Ship testShip = new Ship("Black Pearl", 50,  5, 30);
-		Player testPlayer = new Player("Jack Sparrow", 1000);
+		testShip = new Ship("Black Pearl", 50,  5, 30);
+		testPlayer = new Player("Jack Sparrow", 1000);
 		Store homeStore = new Store("home store", "nothing", null, null);
-		Island homeIsland = new Island("home", homeStore, "my home island");
+		homeIsland = new Island("home", homeStore, "my home island");
 		// Other islands for the island array
 		Store store1 = new Store("store one", "tests", null, null);
-		Island island1 = new Island("island one", store1, "first other island for tests");
+		island1 = new Island("island one", store1, "first other island for tests");
 		Store store2 = new Store("store two", "tests", null, null);
-		Island island2 = new Island("island two", store2, "first other island for tests");
+		island2 = new Island("island two", store2, "first other island for tests");
 		Island[] islands = new Island[] {homeIsland, island1, island2};
 		// Make routes
 		Route a = new Route("a", 50, new Island[] {homeIsland, island1}, null);
@@ -40,24 +46,29 @@ class GameEnvironmentTests {
 		testGame.setShip(testShip);
 	}
 	
+	// Not testing getCost as it literally just returns repairCost and routeWageCost,
+	// which tested when ship is tested. 
+	
 	@Test
-	void testGetCost() {
+	void testOtherIslands() {
+		assertEquals(island1, testGame.otherIslands()[0]);
+		assertEquals(island2, testGame.otherIslands()[1]);
 		
+		testGame.setCurrentIsland(island1);
+		assertEquals(homeIsland, testGame.otherIslands()[0]);
+		assertEquals(island2, testGame.otherIslands()[1]);
+	}
+	
+	// should we test shipDescriptionArrayList()?
+	
+	@Test
+	void testCalculatecore() {
 		
 	}
 	
-	@Test
-	void testGetOtherIslands() {
-		
-	}
 	
-	// should we test getShipDescriptionArrayList()?
-	
-	@Test
-	void testGetScore() {
-		
-	}
-	
+	// Might not need to test, just adds the result of two other methods together, and those 
+	// other methods are tested elsewhere.
 	@Test
 	void testMinMoneyRequired() {
 		
