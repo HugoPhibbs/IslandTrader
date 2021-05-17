@@ -121,8 +121,7 @@ public class GameEnvironment {
 	 * @return The amount of money required to take the cheapest sail option. 
 	 */
 	public void minMoneyRequired() {
-		int repairCost = ship.repairCost();
-		minMoneyToTravel += ship.routeWageCost(currentIsland.shortestRoute(otherIslands())) + repairCost;
+		minMoneyToTravel = ship.routeWageCost(currentIsland.shortestRoute(otherIslands())) + ship.repairCost();
 	}
 	
 	//////////////////////////////////////////////////////////////
