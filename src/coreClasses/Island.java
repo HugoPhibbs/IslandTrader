@@ -77,7 +77,7 @@ public class Island {
 	 * @param destination Island object that you want to see routes to (from the player's current island)
 	 * @return ArrayList of the routes from the current island to the destination island. 
 	 */
-	public ArrayList<Route> getPossibleRoutes(Island destination) {
+	public ArrayList<Route> possibleRoutes(Island destination) {
 		
 		
 		ArrayList<Route> routesToDestination = new ArrayList<Route>();
@@ -112,7 +112,7 @@ public class Island {
 	 * @param routes ArrayList<Route> of routes from the player's current island to this island.
 	 * @return fullInfo String giving a detailed description of this island.
 	 */
-	public String getFullInfo(ArrayList<Route> routes) {
+	public String fullInfo(ArrayList<Route> routes) {
 		String fullInfo = String.format("About %s: %s\n", getIslandName(), getDescription());
 		
 		fullInfo += viewRoutes(routes);
@@ -137,11 +137,11 @@ public class Island {
 	 * @param otherIslands Island[] array of all islands in the game except the player's current island.
 	 * @return Route with the lowest distance from currentIsland.
 	 */
-	public Route getShortestRoute(Island[] otherIslands) {
+	public Route shortestRoute(Island[] otherIslands) {
 		Route shortest = null;
 		int minDist = 999999;		// effectively infinite in this situation, but an int.
 		for (Island island: otherIslands) {
-			for (Route route: getPossibleRoutes(island)) {
+			for (Route route: possibleRoutes(island)) {
 				if (route.getDistance() < minDist) {
 					minDist = route.getDistance();
 					shortest = route;

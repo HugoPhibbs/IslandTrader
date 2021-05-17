@@ -85,10 +85,10 @@ class IslandTests {
 	@Test
 	void testGetPossibleRoutes() {
 		ArrayList<Route> expectedResult1 = new ArrayList<Route>(List.of(mainAndTest1Fun, mainAndTest1Scary));
-		assertEquals(expectedResult1, mainIsland.getPossibleRoutes(testIsland1));
+		assertEquals(expectedResult1, mainIsland.possibleRoutes(testIsland1));
 		
 		ArrayList<Route> expectedResult2 = new ArrayList<Route>(List.of(mainAndTest2));
-		assertEquals(expectedResult2, mainIsland.getPossibleRoutes(testIsland2));
+		assertEquals(expectedResult2, mainIsland.possibleRoutes(testIsland2));
 	}
 	
 	@Test
@@ -106,7 +106,7 @@ class IslandTests {
 				+ "Routes to Main Island:\n - fun route: Is 100 km long. fun!\n - scary route: Is 150 km long. scary!\n"
 				+ "The store on this island sells:\nRum for 4 Pirate Bucks, taking up 3 space; Tomato for 3 Pirate Bucks, taking up 1 space; \n"
 				+ "The store on this island buys:\nGold for 30 Pirate Bucks, taking up 2 space; Lime for 10 Pirate Bucks, taking up 1 space; \n";
-		assertEquals(expectedMainInfoString, mainIsland.getFullInfo(routesFromTest1toMain));
+		assertEquals(expectedMainInfoString, mainIsland.fullInfo(routesFromTest1toMain));
 	}
 }
 

@@ -83,7 +83,7 @@ public class GameEnvironment {
 	 * 
 	 * @param route The Route the player has chosen. 
 	 */
-	public void setSail(Route route, Island destination) {
+	public void sailToNewIsland(Route route, Island destination) {
     	// Repair ship and pay wages before setting sail.
 		ship.repairShip();
 		ship.payWages(route, player);
@@ -122,7 +122,7 @@ public class GameEnvironment {
 	 */
 	public void minMoneyRequired() {
 		int repairCost = ship.repairCost();
-		minMoneyToTravel += ship.routeWageCost(currentIsland.getShortestRoute(getOtherIslands())) + repairCost;
+		minMoneyToTravel += ship.routeWageCost(currentIsland.shortestRoute(otherIslands())) + repairCost;
 	}
 	
 	//////////////////////////////////////////////////////////////
@@ -145,7 +145,7 @@ public class GameEnvironment {
 	 * 
 	 * @return Island[] array containing every game island besides the current island
 	 */
-	public Island[] getOtherIslands() {
+	public Island[] otherIslands() {
 		Island[] otherIslands =  new Island[islandArray.length-1];
 		int i =0;
 		for (Island island: islandArray) {
@@ -161,7 +161,7 @@ public class GameEnvironment {
 	 * 
 	 * @return ArrayList<String> ArrayList containing descriptions of every ship that a player can choose
 	 */
-	public ArrayList<String> getShipDescriptionArrayList() {
+	public ArrayList<String> shipDescriptionArrayList() {
 		// TODO implement
 		ArrayList<String> shipDescriptionArrayList = new ArrayList<String>();
 		for (Ship ship: shipArray) {
@@ -176,7 +176,7 @@ public class GameEnvironment {
 	 * @param Integer for the amount of money the player started with, needed for profit calculation.  
 	 * @return Integer for the player's score at time of call.
 	 */
-	public int getScore(int startMoney) {
+	public int calculateScore(int startMoney) {
 		int profit = getPlayer().getMoneyBalance() - 1000;
 		int daysPlayed = getDaysSelected() - getDaysRemaining();
 		
@@ -192,7 +192,7 @@ public class GameEnvironment {
 	 * 
 	 * @return Integer for the amount the player can sell all his sellable items for plus his bank balance. 
 	 */
-	public int getLiquidValue() {
+	public int calculateLiquidValue() {
 		ArrayList<Item> items = ship.getItems();
 		Store currStore = currentIsland.getIslandStore();
 		HashMap<String, HashMap<String, Integer>> buyCatalogue = currStore.getBuyCatalogue();

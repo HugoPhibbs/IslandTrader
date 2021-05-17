@@ -219,7 +219,7 @@ public class Store {
     	else if (gameEnvironment.getPlayer().getShip().getRemainingItemSpace() < itemToSell.getSpaceTaken() && !itemToSell.getName().endsWith("(upgrade)")) {
     		return "Can't sell Item(s), Player does not have enough space to store item(s)!";
     	}
-    	else if (gameEnvironment.getLiquidValue() - itemToSell.getPlayerBuyPrice() + sellCatalogue.get(itemToSell.getName()).get("price") < gameEnvironment.getMinMoneyToTravel())
+    	else if (gameEnvironment.calculateLiquidValue() - itemToSell.getPlayerBuyPrice() + sellCatalogue.get(itemToSell.getName()).get("price") < gameEnvironment.getMinMoneyToTravel())
     		return "Can't sell Item(s), Player wouldn't be able to travel anywhere if Item was bought!";
     	return "Can sell";
     }

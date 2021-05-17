@@ -77,7 +77,7 @@ public class CmdLineUi implements GameUi {
 		System.out.format("You played for %d days out of a selected %d days.\n", 
 				(selectedDays - gameEnvironment.getDaysRemaining()), selectedDays);
 		System.out.format("You made $%d profit, and your final score was %d!\n", 
-				(gameEnvironment.getPlayer().getMoneyBalance() -STARTING_MONEY), gameEnvironment.getScore(STARTING_MONEY));
+				(gameEnvironment.getPlayer().getMoneyBalance() -STARTING_MONEY), gameEnvironment.calculateScore(STARTING_MONEY));
 	}
 
 	
@@ -280,7 +280,7 @@ public class CmdLineUi implements GameUi {
 	 */
 	private Ship pickShip() { 
 		String pickShipMessage = "Please choose a ship, enter an action number corresponding to the ship that you want:\n";
-		printOptions(gameEnvironment.getShipDescriptionArrayList(), pickShipMessage, false);
+		printOptions(gameEnvironment.shipDescriptionArrayList(), pickShipMessage, false);
 		int chosenShipNum = getInt(1, 4);
 		return gameEnvironment.getShipArray()[chosenShipNum-1];
 	}
@@ -319,7 +319,7 @@ public class CmdLineUi implements GameUi {
 	 */
 	private void viewOtherIslands() {
 		
-		Island[] otherIslands = gameEnvironment.getOtherIslands();
+		Island[] otherIslands = gameEnvironment.otherIslands();
 		
 		while (true) {
 			System.out.println("To view more information about an island, enter the number of the island.");
@@ -356,8 +356,8 @@ public class CmdLineUi implements GameUi {
 	 */
 	private void viewIslandDetails(Island[] otherIslands, Island selectedIsland) {
 		// print full info of selected island
-		ArrayList<Route> routes = gameEnvironment.getCurrentIsland().getPossibleRoutes(selectedIsland);
-		System.out.println(selectedIsland.getFullInfo(routes));
+		ArrayList<Route> routes = gameEnvironment.getCurrentIsland().possibleRoutes(selectedIsland);
+		System.out.println(selectedIsland.fullInfo(routes));
 		
 		String[] proceedOptions = new String[] {"Travel to this island"};
 		printOptions(proceedOptions, "Enter the number of the action you wish to take.", true);
@@ -377,7 +377,7 @@ public class CmdLineUi implements GameUi {
 	 */
 	private void travelToIsland() {
 		while(finish == false) {
-			Island[] otherIslands = gameEnvironment.getOtherIslands();
+			Island[] otherIslands = gameEnvironment.otherIslands();
 			
 			System.out.println("Enter the number of the island you would like to travel to.");
 			
@@ -402,7 +402,7 @@ public class CmdLineUi implements GameUi {
 	 * @param island The island the player wants to travel to. 
 	 */
 	private void chooseRoute(Island island) {
-		ArrayList<Route> routes = gameEnvironment.getCurrentIsland().getPossibleRoutes(island);
+		ArrayList<Route> routes = gameEnvironment.getCurrentIsland().possibleRoutes(island);
 		
 		System.out.println("Enter a number to choose a route to travel along.");
 		printRoutes(routes);
@@ -425,7 +425,7 @@ public class CmdLineUi implements GameUi {
 			scanner.nextLine();
 			scanner.nextLine();
 			
-			gameEnvironment.setSail(chosenRoute, island);
+			gameEnvironment.sailToNewIsland(chosenRoute, island);
 			if (finish == false) {
 				System.out.println("You have arrived at " + gameEnvironment.getCurrentIsland().getIslandName());
 				playGame();
@@ -564,7 +564,7 @@ public class CmdLineUi implements GameUi {
 	private void checkSufficientMoney() {
 		gameEnvironment.minMoneyRequired();
 		int balance = gameEnvironment.getPlayer().getMoneyBalance();
-		if (balance < gameEnvironment.getLiquidValue()) {
+		if (balance < gameEnvironment.calculateLiquidValue()) {
 			finishGame("You don't have enough money and can't sell enough goods to repair your ship and pay your crew wages. You are stranded!");
 		}
 		// If player has less money than min money required to travel, prints a message warning them.
