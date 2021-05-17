@@ -178,9 +178,9 @@ public class SetupScreen {
 		lblPickship.setBounds(26, 153, 96, 19);
 		frame.getContentPane().add(lblPickship);
 		
-		JLabel lblPickIsland = new JLabel("Pick an Island");
+		JLabel lblPickIsland = new JLabel("Pick a Starting Island");
 		lblPickIsland.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblPickIsland.setBounds(26, 446, 122, 19);
+		lblPickIsland.setBounds(26, 446, 188, 19);
 		frame.getContentPane().add(lblPickIsland);
 		
 		JPanel panel_1 = new JPanel();
