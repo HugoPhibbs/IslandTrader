@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
+/** JUnit tests for Island
+ * 
  * @author Jordan Vegar
  *
  */

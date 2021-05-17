@@ -8,6 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import coreClasses.*;
 
+/** JUnit tests for Route 
+ * 
+ * @author Jordan Vegar
+ *
+ */
 class routeTests {
 	
 	private Route testRoute;

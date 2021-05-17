@@ -5,7 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import coreClasses.*;
 
-/**
+/** JUnit tests for GameEnvironment Object
+ * 
  * @author Jordan Vegar
  *
  */

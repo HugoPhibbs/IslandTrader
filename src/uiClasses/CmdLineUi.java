@@ -1,31 +1,43 @@
 package uiClasses;
 
-import coreClasses.*; 
+import coreClasses.*;  
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-/** Represents command line object for playing 'Island Trader' game
+/** Represents Command Line UI for playing 'Island Trader' game
  * 
  * @author Hugo Phibbs and Jordan Vegar
- * @version 8/5/21
+ * @version 17/5/21
  * @since 26/4/21
  */
 public class CmdLineUi implements GameUi {
 	
+	/** GameEnvironment object for this game, used to store all necessary objects needed for the game */
 	private GameEnvironment gameEnvironment;
+	/** Scanner object for taking input from a user */
 	private Scanner scanner;
+	/** Boolean value keeping track if a game is over, ends if true */
 	private boolean finish = false;
 	
+	/** Constructor for CmdLineUi
+	 * Initializes scanner object needed for running of UI
+	 * 
+	 */
 	public CmdLineUi() {
 		this.scanner = new Scanner(System.in);
 	}
 	
-	/**
-	 * Gets the input required to create the player and ship objects, then passes them to gameEnvironment
+	/////////////////////////////////////////////////////////////////////////////
+    ////////////////////////// GAME HANDLING METHODS ////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
+	
+	/** Gets the input required to create the player and ship objects, then passes them to gameEnvironment
 	 * to complete its setup. 
+	 * 
+	 * @param gameEnvironment GameEnvironment object for the current object
 	 */
 	@Override
 	public void setup(GameEnvironment gameEnvironment) {
@@ -44,9 +56,9 @@ public class CmdLineUi implements GameUi {
 		gameEnvironment.onSetupFinished(player, ship, gameDuration, startIsland);
 	}
 	
-	/**
-	 * While the game has not been finished, playGame calls methods to print the actions available
+	/** While the game has not been finished, playGame calls methods to print the actions available
 	 * to the player, take input from the player and handles that input to perform actions.
+	 * 
 	 */
 	@Override
 	public void playGame() {
@@ -68,22 +80,10 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
-	@Override
-	public void finishGame(String message) {
-		finish = true;
-		System.out.format("\nGame Over %s!\n", gameEnvironment.getPlayer().getName());
-		System.out.println(message);
-		int selectedDays = gameEnvironment.getDaysSelected();
-		System.out.format("You played for %d days out of a selected %d days.\n", 
-				(selectedDays - gameEnvironment.getDaysRemaining()), selectedDays);
-		System.out.format("You made $%d profit, and your final score was %d!\n", 
-				(gameEnvironment.getPlayer().getMoneyBalance() -STARTING_MONEY), gameEnvironment.calculateScore(STARTING_MONEY));
-	}
-
-	
-	/** 
+	/** Method to handle the choice of a user for the main options of the game
 	 * Based on the players input, calls the appropriate method to execute the action they have selected.
-	 * @param input a valid integer that corresponds with an action available to the player.
+	 * 
+	 * @param input Integer that corresponds with an action available to the player.
 	 */
 	private void handleCoreChoice(int input) {
 		switch (input) {
@@ -113,9 +113,34 @@ public class CmdLineUi implements GameUi {
 			break;
 	    }
 	}
+	
+	/** Method for finishing a game, prints messages detailing the game just played. 
+	 * I.e. displays days survived, profit made and the final score
+	 * 
+	 * @param message String detailing the reason why a game ended
+	 */
+	@Override
+	public void finishGame(String message) {
+		finish = true;
+		System.out.format("\nGame Over %s!\n", gameEnvironment.getPlayer().getName());
+		System.out.println(message);
+		int selectedDays = gameEnvironment.getDaysSelected();
+		System.out.format("You played for %d days out of a selected %d days.\n", 
+				(selectedDays - gameEnvironment.getDaysRemaining()), selectedDays);
+		System.out.format("You made $%d profit, and your final score was %d!\n", 
+				(gameEnvironment.getPlayer().getMoneyBalance() -STARTING_MONEY), gameEnvironment.calculateScore(STARTING_MONEY));
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////
+    //////////////////////////// STORE METHODS //////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
 
-	// #################### VISITING STORE METHODS ######################## 
-
+	/** Entry method for a store. Gets the choice of a user for further interaction
+	 * Functionality is stretched from visitStorePreper() to getStoreVisitChoice(String)
+	 * to allow a user to do further actions with a store, without getting a welcome message as if
+	 * its their first time visiting. 
+	 * 
+	 */
 	private void visitStorePreper() {
 		/* twin method for the visitStore method from game environment
 		 * is a bit special compared to the gui version, bc this actually prints out things
@@ -126,12 +151,20 @@ public class CmdLineUi implements GameUi {
 		getStoreVisitChoice(visitStoreMessage);
 	}
 	
+	/** Method to get the choice to interact with a Store from a player
+	 * 
+	 * @param visitStoreMessage String welcoming a player to a store for the first time, or coming back for more interaction
+	 */
 	private void getStoreVisitChoice(String visitStoreMessage) {
 		printOptions(Store.getVisitOptions(), visitStoreMessage, true);
 		int input = getInt(1, 5);
 		handleStoreChoice(input);
 	}
 	
+	/** Method for handling the choice of a player to interact with a Store
+	 * 
+	 * @param input Integer for the action number that a player has chosen corresponding to the action that they want to perform
+	 */
 	private void handleStoreChoice(int input) {
 		String welcomeBackMsg = "Welcome back to the Store, please enter a number to further interact with this store!";
 		switch (input) {
@@ -167,12 +200,11 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
-	/** Recursive method for selling an Item to a player
+	/** Recursive method for selling an Item to a player. Keeps recursing until the user asks to exit
 	 * 
 	 */
 	private void visitStoreSellToPlayer() {
-		// turn bellow into a method
-		//view and buy items that store sells
+		// Get an array representation of the items that a store sells
     	String[] infoList = visitStoreBuySellHelper("sell");
     	
     	// if itemStoreToBuyName is null, then visitStoreBuySellHelper is handling case when user wants to go back menus
@@ -182,9 +214,11 @@ public class CmdLineUi implements GameUi {
     		// if they want to continue, then the item is bought
     		// ie in gui if checkPlayerWantsToBuy(ge, itemName) != null: ask them, take input then do as above
         	try {
+        		// Try to sell items to a player
+        		// Get the name of the Item that a player has chosen
             	String itemStoreToSellName = infoList[0];
             	int numItems = Integer.parseInt(infoList[1]);
-        		// Call Store to handle
+        		// Call Store to handle, will print result of transaction from Store
         		System.out.println(gameEnvironment.getCurrentIsland().getIslandStore().sellItemsToPlayer(gameEnvironment, itemStoreToSellName, numItems));
         	}
         	catch (IllegalStateException ise) {
@@ -195,11 +229,10 @@ public class CmdLineUi implements GameUi {
     	return; // stops recursion
 	}
 	
-	/** Recursive method for selling an Item to a store
+	/** Recursive method for selling an Item to a store from a player. Keeps recursing until a user asks to exit
 	 * 
 	 */
 	private void visitStoreBuyFromPlayer() {
-		
 		// Get Array for the chosen item, and the number of items requested
 		String[] infoArray = visitStoreBuySellHelper("buy");
 		
@@ -224,7 +257,6 @@ public class CmdLineUi implements GameUi {
 	 *  takes code that was originally being used by both buying and selling, but was made general with parameter
 	 *  'operation' to work with both. 
 	 *  
-	 * 
 	 * @param operation String for what operation is happening "buy" or "sell"
 	 * @param catalogue HashMap containing the items that a store buys or sells
 	 * @return String name of the chosen item that is being sold or bought
@@ -244,18 +276,20 @@ public class CmdLineUi implements GameUi {
     	if (itemNum == catalogue.size()+1) {
     		return null; // user wants to go back menus
     	}
-   
+  
+    	// Get the name of the Item that a user has chosen
     	String itemName =  Store.chosenItemName(optionsArray, itemNum);
     	
     	String howManyMessage = String.format("How many %s would you like to %s? ", itemName, operation);
     	System.out.println(howManyMessage);
     	int numItems = getUnboundedInt();
     	
+    	// Return an array containing the information needed for other methods.
     	return new String[] {itemName, Integer.toString(numItems)};
 	}
 	
 	
-	/** Method to handle exiting from a store
+	/** Method to handle exiting from a store. Prints queries and then asks user for input
 	 * 
 	 */
 	private void exitStore() {
@@ -272,10 +306,12 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
-	// ############### SHIP METHODS #################
+	/////////////////////////////////////////////////////////////////////////////
+    //////////////////////////// SHIP METHODS ///////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
 	
-	/**
-	 * Displays a list of ships and their qualities, and takes input to choose which will be used.
+	/** Displays a list of ships and their qualities, and takes input to choose which will be used.
+	 * 
 	 * @return myShip the ship you have chosen to use in this play through.
 	 */
 	private Ship pickShip() { 
@@ -285,6 +321,11 @@ public class CmdLineUi implements GameUi {
 		return gameEnvironment.getShipArray()[chosenShipNum-1];
 	}
 	
+	/** View the properties of the Ship that a user has chosen for a game.
+	 * And then asks if they would like to see the upgrades equipped. This is done to avoid
+	 * cluttering up the command line with information that a user may not want to see.
+	 * 
+	 */
 	private void viewShipProperties() {
 		System.out.println(gameEnvironment.getShip().getDescription());
 		String viewShipMessage = "Would you like to see the upgrades that you equipped for this ship? \nEnter an action number";
@@ -299,23 +340,32 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
-	/**
-	 * Prints information about the player and there position in the game. 
+	/////////////////////////////////////////////////////////////////////////////
+    //////////////////////////// PLAYER METHODS /////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
+	
+	/** Prints information about the player and their position in the game. 
+	 * 
 	 */
 	private void viewPlayerInfo() {
 		Player player = gameEnvironment.getPlayer();
 		System.out.format("%s has $%d and %d days remaining.\n", player.getName(), player.getMoneyBalance(), gameEnvironment.getDaysRemaining());
 	}
 
-	
+	/** Display all the goods purchased by a Player in a game
+	 * 
+	 */
 	private void viewGoodsPurchased() {
 		System.out.print(gameEnvironment.getPlayer().purchasedItemsToString());
 	}
 	
-	// ############### ISLAND METHODS ###############
-	/**
-	 * Displays a list of all the islands the player can travel to (all except the player's current island), 
+	/////////////////////////////////////////////////////////////////////////////
+    //////////////////////////// ISLAND METHODS /////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
+	
+	/** Displays a list of all the islands the player can travel to (all except the player's current island), 
 	 * then gives the player the option of seeing more detail on any of the islands. 
+	 * 
 	 */
 	private void viewOtherIslands() {
 		
@@ -337,9 +387,9 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
-	/**
-	 * Prints the name and a brief description of each island in the list given. 
-	 * @param islands list of islands that can be traveled to.
+	/** Prints the name and a brief description of each island in the list given. 
+	 * 
+	 * @param islands Island[] array of islands that can be traveled to.
 	 */
 	private void printIslands(Island[] islands) {
 		for (int i = 0; i < islands.length; i++) {
@@ -348,11 +398,11 @@ public class CmdLineUi implements GameUi {
 		System.out.format("(%d) %s\n", (islands.length+1), "Go back");
 	}
 	
-	/**
-	 * Gives more detail about a selected island, then asks the player if the would like to go back or travel to the
+	/** Gives more detail about a selected island, then asks the player if the would like to go back or travel to the
 	 * island they are viewing info about.
-	 * @param otherIslands array f all islands in the game except the current island (islands that can be traveled to).
-	 * @param selectedIsland The island the player has chosen to see more info on.
+	 * 
+	 * @param otherIslands Island[] array of all islands in the game except the current island (islands that can be traveled to).
+	 * @param selectedIsland Island that the player has chosen to see more info on.
 	 */
 	private void viewIslandDetails(Island[] otherIslands, Island selectedIsland) {
 		// print full info of selected island
@@ -371,9 +421,9 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
-	/**
-	 * Makes the necessary calls and takes input to choose an island to travel to, before calling chooseRoute
-	 * so that the player can choose a route to the island they selected. 
+	/** Makes the necessary calls and takes input to choose an island to travel to, before calling chooseRoute
+	 * so that the player can choose a route to the island they selected.
+	 *  
 	 */
 	private void travelToIsland() {
 		while(finish == false) {
@@ -392,10 +442,11 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
-	// ################## ROUTE METHODS ####################
+	/////////////////////////////////////////////////////////////////////////////
+    //////////////////////////// ROUTE METHODS //////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
 	
-	/**
-	 * Allows the user to see the routes to the island they have chosen (and info about each) and pick
+	/** Allows the user to see the routes to the island they have chosen (and info about each) and pick
 	 * one to travel along. It then checks the player has enough money to do the necessary action before
 	 * sailing along the chosen route, and calls set sail to travel along the route.
 	 * 
@@ -433,10 +484,9 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
-	/**
-	 * Prints the name and a short description of each route in the parameter routes.
+	/** Prints the name and a short description of each route in the parameter routes.
 	 * 
-	 * @param routes list of routes to print out.
+	 * @param routes ArrayList<Route> contains all of the routes to print out.
 	 */
 	private void printRoutes(ArrayList<Route> routes) {
 		for (int i = 0; i < routes.size(); i++) {
@@ -445,8 +495,17 @@ public class CmdLineUi implements GameUi {
 		System.out.format("(%d) %s\n", (routes.size()+1), "Go back");
 	}
 	
-	//################### GENERAL HELPER METHODS ########################
+	/////////////////////////////////////////////////////////////////////////////
+    //////////////////////// GENERAL HELPER METHODS /////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
 	
+	/** Prints the options that a player can choose.
+	 * 
+	 * @param optionsArrayList ArrayList<String> containing all the options that a player can perform
+	 * @param message String a message from a other functions asking them for input for a specific purpose
+	 * @param canGoBack boolean value to dictate if a user can go back. If they can then it prints an extra line, 
+	 * with the number to press in order to go back
+	 */
 	private void printOptions(ArrayList<String> optionsArrayList, String message, boolean canGoBack) {
 		System.out.print(message);
 		for (int i = 0; i < optionsArrayList.size(); i++) {
@@ -457,6 +516,13 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
+	/** Prints the options that a player can choose.
+	 * 
+	 * @param optionsArrayList String[] containing all the options that a player can perform
+	 * @param message String a message from a other functions asking them for input for a specific purpose
+	 * @param canGoBack boolean value to dictate if a user can go back. If they can then it prints an extra line, 
+	 * with the number to press in order to go back
+	 */
 	private void printOptions(String[] optionsArray, String message, boolean canGoBack) {
 		System.out.println(message); //header
 		for (int i = 0; i < optionsArray.length; i++) {
@@ -467,12 +533,11 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
-	/**
-	 * Reads user input and ensures it is an integer within a specified range. 
+	/** Reads user input and ensures it is an integer within a specified range.
 	 * 
-	 * @param lowerBound - minimum acceptable number for input
-	 * @param upperBound - maximum acceptable number for input
-	 * @return input - an integer between the lower and upper bounds. 
+	 * @param lowerBound Integer for the minimum acceptable number for input
+	 * @param upperBound Integer for the maximum acceptable number for input
+	 * @return input Integer between the lower and upper bounds, representing the action number that a player has chosen
 	 */
 	private int getInt(int lowerBound, int upperBound) {
 		while (true) {
@@ -489,6 +554,12 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
+	/** Gets a number with no bounds from a player. Useful for getting numbers
+	 * that have no theoretical limit. Eg asking a user how many Items they would like to
+	 * buy/sell to/from a store
+	 * 
+	 * @return Integer representing the number that a user has chosen
+	 */
 	private int getUnboundedInt() {
 		while (true) {
 			try {
@@ -501,11 +572,10 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
-	// ################## GETTER METHODS #########################
-	/**
+	/** Method for getting the name of a user upon the beginning of a game
 	 * 
 	 * @param message message to be printed to tell the user what the name is for.
-	 * @return 
+	 * @return String name that a user has inputed and is valid. 
 	 */
 	private String getName(String message) {
 		System.out.println(message);
@@ -518,9 +588,9 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
-	/**
-	 * Prompts the user to enter a game duration and reads the user input. Returns days if the input meets
+	/** Prompts the user to enter a game duration and reads the user input. Returns days if the input meets
 	 * the criteria. 
+	 * 
 	 * @return days the number of days the game will last if it is completed.
 	 */
 	private int getDuration() {
@@ -537,8 +607,12 @@ public class CmdLineUi implements GameUi {
 			}
 			scanner.nextLine();
 		}
-	}		
+	}
 	
+	/** Method to perform a Pirate attack onto a user. Prints a stream of information
+	 * detailing the current progress of the attack
+	 * 
+	 */
 	@Override
 	public void pirateAttack() {
 		// Roll die
@@ -561,6 +635,11 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
+	/** Method to check if a player has enough money in order to continue a game
+	 * If they dont have enough money, then the finishGame(String) method if called to 
+	 * end the current game
+	 * 
+	 */
 	private void checkSufficientMoney() {
 		gameEnvironment.minMoneyRequired();
 		int balance = gameEnvironment.getPlayer().getMoneyBalance();

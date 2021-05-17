@@ -9,6 +9,11 @@ import java.util.*;
 
 import org.junit.jupiter.api.*;
 
+/** JUnit tests for Store
+ * 
+ * @author Hugo Phibbs
+ *
+ */
 class StoreTest {
 	private Store testStore;
 	private Island testIsland;

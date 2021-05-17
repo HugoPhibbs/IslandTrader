@@ -6,6 +6,11 @@ import org.junit.jupiter.api.*;
 
 import coreClasses.*;
 
+/** JUnit tests for Ship
+ * 
+ * @author Hugo Phibbs
+ *
+ */
 class ShipTest {
 	
 	private Ship testShip;
