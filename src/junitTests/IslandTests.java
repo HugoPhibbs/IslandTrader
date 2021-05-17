@@ -59,7 +59,7 @@ class IslandTests {
 		testBuyCatalogue.put("Lime", limeProperties);
 		
 		
-		Store mainStore = new Store("Main Store", "This store is sells and buys things!", testSellCatalogue, testBuyCatalogue);
+		Store mainStore = new Store("Main Store", "precious metals", testSellCatalogue, testBuyCatalogue);
 		mainIsland = new Island("Main Island", mainStore, "An island with a nice store and even nicer tests");
 		
 		// Create other islands so the main island t be tested has routes.
@@ -75,6 +75,7 @@ class IslandTests {
 		mainAndTest1Scary = new Route("scary route", 150, islands1, "scary!");
 		mainAndTest2 = new Route("only route", 200, new Island[] {testIsland2, mainIsland}, "ur only choice");
 		mainIsland.setRouteArray(new Route[] {mainAndTest1Fun, mainAndTest1Scary, mainAndTest2});
+		testIsland2.setRouteArray(new Route[] {mainAndTest2});
 	}
 	
 	@Test
@@ -83,7 +84,7 @@ class IslandTests {
 	}
 	
 	@Test
-	void testGetPossibleRoutes() {
+	void testPossibleRoutes() {
 		ArrayList<Route> expectedResult1 = new ArrayList<Route>(List.of(mainAndTest1Fun, mainAndTest1Scary));
 		assertEquals(expectedResult1, mainIsland.possibleRoutes(testIsland1));
 		
@@ -94,19 +95,27 @@ class IslandTests {
 	@Test
 	void testViewRoutes() {
 		ArrayList<Route> routesToView1 = new ArrayList<Route>(List.of(mainAndTest1Fun, mainAndTest1Scary));
-		String expectedResult1 = "Routes to Main Island:\n - fun route: Is 100 km long. fun!\n - scary route:"
-				+ "Is 150 km long. scary!\n";
+		String expectedResult1 = "Routes to Main Island:\n - fun route is 100 km long. fun!\n - scary route "
+				+ "is 150 km long. scary!\n";
 		assertEquals(expectedResult1, mainIsland.viewRoutes(routesToView1));
 	}
 	
 	@Test
-	void testGetFullInfo() {
+	void testFullInfo() {
 		ArrayList<Route> routesFromTest1toMain = new ArrayList<Route>(List.of(mainAndTest1Fun, mainAndTest1Scary));
-		String expectedMainInfoString = "About Main Island: An island with a nice store and even nicer tests\n"
-				+ "Routes to Main Island:\n - fun route: Is 100 km long. fun!\n - scary route: Is 150 km long. scary!\n"
+		String expectedMainInfoString = "About Main Island: An island with a nice store and even nicer tests, Store specialises in precious metals\n"
+				+ "Routes to Main Island:\n - fun route is 100 km long. fun!\n - scary route is 150 km long. scary!\n"
 				+ "The store on this island sells:\nRum for 4 Pirate Bucks, taking up 3 space; Tomato for 3 Pirate Bucks, taking up 1 space; \n"
 				+ "The store on this island buys:\nGold for 30 Pirate Bucks, taking up 2 space; Lime for 10 Pirate Bucks, taking up 1 space; \n";
 		assertEquals(expectedMainInfoString, mainIsland.fullInfo(routesFromTest1toMain));
+	}
+	
+	@Test
+	void testShortestRoute() {
+		Island[] otherIslands1 = new Island[] {testIsland1, testIsland2};
+		assertEquals(mainAndTest1Fun, mainIsland.shortestPossibleRoute(otherIslands1));
+		Island[] otherIslands2 = new Island[] {mainIsland, testIsland1};
+		assertEquals(mainAndTest2, testIsland2.shortestPossibleRoute(otherIslands2));
 	}
 }
 

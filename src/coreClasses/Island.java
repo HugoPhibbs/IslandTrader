@@ -137,7 +137,7 @@ public class Island {
 	 * @param otherIslands Island[] array of all islands in the game except the player's current island.
 	 * @return Route with the lowest distance from currentIsland.
 	 */
-	public Route shortestRoute(Island[] otherIslands) {
+	public Route shortestPossibleRoute(Island[] otherIslands) {
 		Route shortest = null;
 		int minDist = 999999;		// effectively infinite in this situation, but an int.
 		for (Island island: otherIslands) {
