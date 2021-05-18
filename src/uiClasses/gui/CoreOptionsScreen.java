@@ -10,31 +10,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 
-public class CoreOptionsScreen {
+import coreClasses.GameEnvironment;
+
+public class CoreOptionsScreen extends Screen{
 
 	private JFrame frame;
 	private JTable table;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CoreOptionsScreen window = new CoreOptionsScreen();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JPanel tablePanel;
 
 	/**
 	 * Create the application.
 	 */
-	public CoreOptionsScreen() {
+	public CoreOptionsScreen(GameEnvironment gameEnvironment) {
+		// Make the parent of the setup screen to be null
+		super("Core options screen", gameEnvironment, null);
 		initialize();
 	}
 	
@@ -61,6 +50,7 @@ public class CoreOptionsScreen {
 		JButton viewShipPropertiesButton = new JButton("View Ship Properties");
 		viewShipPropertiesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 			}
 		});
 		viewShipPropertiesButton.setBounds(25, 24, 400, 100);
@@ -78,6 +68,7 @@ public class CoreOptionsScreen {
 		visitStoreButton.setBounds(25, 279, 400, 100);
 		optionsPanel.add(visitStoreButton);
 		
+		// Use html to display text as two lines instead of one!
 		JButton viewVisitOtherIslandsButton = new JButton("<html>      View other islands<br>and travel to another island</html>");
 		viewVisitOtherIslandsButton.setBounds(25, 395, 400, 122);
 		optionsPanel.add(viewVisitOtherIslandsButton);
@@ -88,12 +79,14 @@ public class CoreOptionsScreen {
 	}
 	
 	public void initializeTablePanel() {
-		JPanel tablePanel = new JPanel();
+		this.tablePanel = new JPanel();
 		tablePanel.setBounds(512, 196, 546, 542);
 		frame.getContentPane().add(tablePanel);
 		tablePanel.setLayout(null);
-		
-		table = new JTable();
+	}
+	
+	public void createTable(String [][] rows, String[] columns) {
+		table = new JTable(rows, columns);
 		table.setBounds(168, 269, 1, 1);
 		tablePanel.add(table);
 	}
@@ -123,5 +116,23 @@ public class CoreOptionsScreen {
 		JLabel currentScoreLabel = new JLabel("Current Score");
 		currentScoreLabel.setBounds(624, 105, 285, 15);
 		gameFactsPanel.add(currentScoreLabel);
+	}
+	
+	public void vistStore() {
+		 // TODO implement
+		Screen visitStoreScreen = new VisitStoreScreen(this.getGame());
+	}
+	
+	public void viewShipDetails() {
+		// TODO implement
+		// Show ship details in the info box opposite
+		
+		
+	}
+
+	@Override
+	protected void initialize(String title) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -29,7 +29,7 @@ public class GameEnvironment {
 	private int daysRemaining;
 	private Island currentIsland;
 	private Ship ship;
-		private int minMoneyToTravel; // The minimum amount of money to travel off your particular island. 
+	private int minMoneyToTravel; // The minimum amount of money to travel off your particular island. 
 	
 	/** Constructor for GameEnvironment class
 	 * 
