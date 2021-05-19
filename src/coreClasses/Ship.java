@@ -51,8 +51,8 @@ public class Ship {
      *
      * @throws IllegalArgumentException if constructor parameters are invalid
      * @param name String for the name of the ship
-     * @param shipSize Integer for the size of the ship, influences crew size and the max cargo space of a ship
      * @param speed Integer for the speed of the ship as it travels between islands (assume constant)
+     * @param shipSize Integer for the size of the ship, influences crew size and the max cargo space of a ship
      * @param maxDefenseCapability Integer for the max defense capability of a ship
      */
     public Ship(String name, int speed, int shipSize, int maxDefenseCapability) throws IllegalArgumentException{    	
@@ -73,7 +73,7 @@ public class Ship {
     	this.name = name;
     	this.speed = speed;
     	this.crewSize = shipSize; // neat numbers
-    	this.maxItemSpace = shipSize * 10; // ie for every unit of crewSize max item space adjusts with this. arbitrary constant
+    	this.maxItemSpace = (int) shipSize * 10; // ie for every unit of crewSize max item space adjusts with this. arbitrary constant
     	this.maxDefenseCapability = maxDefenseCapability;
     	
     	remainingItemSpace = maxItemSpace;
@@ -99,7 +99,7 @@ public class Ship {
     	int repairCost = repairCost();
     	if (owner.spendMoney(repairCost)) {
     		this.healthStatus = 100;
-    		return true; // not enough money
+    		return true;
     	}
         return false;
     }
@@ -132,7 +132,7 @@ public class Ship {
      * @param upgrade Upgrade object to be added to ship
      */
     private void addDefenseBoost(ShipUpgrade upgrade) {
-    	// checking if upgrade can be added is done by store class. 
+    	// Checking if upgrade can be added is done by Store class. 
     	defenseCapability += upgrade.getDefenseBoost();
     	if (defenseCapability > maxDefenseCapability) { // so it doesnt go above max 
     		defenseCapability = maxDefenseCapability;
@@ -148,12 +148,15 @@ public class Ship {
     		return "Ship isn't equipped with any upgrades yet";
     	}
     	String result = String.format("%s, has upgrades: \n", name);
+    	
     	for (ShipUpgrade shipUpgrade : upgrades) {
     		String upgradeName = shipUpgrade.getName();
     		int index = upgradeName.lastIndexOf("(upgrade)");
     		upgradeName = upgradeName.substring(0, index);
+    		
     		result += String.format("%s, defense boost: %d, space taken: %d \n", upgradeName, shipUpgrade.getDefenseBoost(), shipUpgrade.getSpaceTaken());
     	}
+    	
     	return result;
     }
     
@@ -166,10 +169,6 @@ public class Ship {
     public int routeWageCost(Route route) {
     	int daysSailing = route.getDistance() / speed; // days sailing dependent on ship speed. 
     	return getDailyWageCost() * daysSailing;
-    }
-    
-    public int getDailyWageCost() {
-    	return COST_PER_CREW_PER_DAY * crewSize;
     }
     
     /** Method that returns the cost to repair ship because of damage
@@ -203,17 +202,14 @@ public class Ship {
     public Item takeItem(String itemName) {
     	// Takes an input of a string itemName, and removes&returns the first 
     	// occurance of an Item object with the name itemName
-    	// otherwise throws an exception if the item is not present
-    	// called by Store class when ever a a player wants to sell an upgrade
     	
     	for (Item currItem : 	items) {
-    		// Bellow line took a while to realize that == points to the SAME object.
     		if (currItem.getName().equals(itemName)) {
     			items.remove(currItem);
     			return currItem;
     		}
     	}
-    	return null; // did not find and/or remove inputted item
+    	return null; // did not find an Item with name 'itemName'
     }
     
     /////////////////////////////// GETTER AND SETTER METHODS //////////////////////////////////////
@@ -234,6 +230,12 @@ public class Ship {
     			, name, maxItemSpace, remainingItemSpace, speed, crewSize, getDailyWageCost(), defenseCapability, maxDefenseCapability);
     	
     }
+    
+    /** Getter method for the daily wage cost of all the crew on board a Ship
+     * 
+     * @return Integer for the daily wage cost of all the crew on board a Ship
+     */
+    public int getDailyWageCost() {return COST_PER_CREW_PER_DAY * crewSize;}
     
     /** Getter for the max cargo capacity of Ship Object
      * 

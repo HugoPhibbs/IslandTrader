@@ -22,7 +22,7 @@ class ShipTest {
 	void setUpBeforeClass() {
 		
 		// Ship(String name, int speed, int crewSize, int maxUpgradeSpace, int maxCargoCapacity)
-		testShip = new Ship("Black Pearl", 10,  5, 30);
+		testShip = new Ship("Black Pearl", 10,  5, 50);
 		
 		testStore = new Store("Bobs shack", "Burgers", null, null);
 		testIsland = new Island("Shipwreck Cove", testStore, "Has alot of sand");
@@ -94,6 +94,27 @@ class ShipTest {
 		assertEquals(50, testShip.getDefenseCapability()); // should now be maxed
 	}
 	
+	@Test
+	void upgradesToStringTest(){
+		// Test when ship has no upgrades
+		assertEquals("Ship isn't equipped with any upgrades yet", testShip.upgradesToString());
+		
+		// Test Normally
+		ShipUpgrade testUpgrade1 = new ShipUpgrade("Canon(upgrade)", 2, 90, 20);
+		ShipUpgrade testUpgrade2 = new ShipUpgrade("Armour(upgrade)", 2, 50, 10);
+		ShipUpgrade testUpgrade3 = new ShipUpgrade("Crows-Nest(upgrade)", 2, 30, 3);
+		testShip.addUpgrade(testUpgrade1);
+		testShip.addUpgrade(testUpgrade2);
+		testShip.addUpgrade(testUpgrade3);
+		
+		String expectedString = 
+				"Black Pearl, has upgrades: \n"+
+				"Canon, defense boost: 20, space taken: 2 \n"+
+		        "Armour, defense boost: 10, space taken: 2 \n"+
+				"Crows-Nest, defense boost: 3, space taken: 2 \n";
+		assertEquals(expectedString,  testShip.upgradesToString());
+	}
+	
 	
 	@Test
 	void takeItemTest() {
@@ -115,6 +136,6 @@ class ShipTest {
 	void getRepairCostTest() {
 		// simple calculation, no real boundary conditions
 		testShip.takeDamage(50);
-		assertEquals(500, testShip.repairCost());
+		assertEquals(250, testShip.repairCost());
 	}
 }

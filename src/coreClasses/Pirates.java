@@ -20,16 +20,7 @@ public class Pirates {
 	public Pirates(int maxDamage) {
 		this.MAX_DAMAGE = maxDamage;
 	}
-    
-	/** Getter method for the description of a pirates random event.
-	 * Called before Pirates class methods by other classes
-	 * 
-	 * @return String representation of the unfortunate weather event
-	 */
-    public static String getDescription(){
-    	return "You have encountered pirates, roll the die to play your chances!";
-    }
-
+   
     /** Method for attacking a ship object
      * Damage is based on chance and the dice number rolled by player
      * 
@@ -116,6 +107,15 @@ public class Pirates {
     	return biggestItem;
     }
     
+	/** Getter method for the description of a pirates random event.
+	 * Called before Pirates class methods by other classes
+	 * 
+	 * @return String representation of the unfortunate weather event
+	 */
+    public static String getDescription(){
+    	return "You have encountered pirates, roll the die to play your chances!";
+    }
+
     /** Getter method for the max damage a Pirates random event can put onto a ship
      * 
      * @return Integer for the max damage of a Pirates attack

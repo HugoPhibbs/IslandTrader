@@ -1,13 +1,12 @@
 package junitTests;
 
-import coreClasses.Ship;
+import coreClasses.Ship; 
 import coreClasses.Item;
 import coreClasses.Pirates;
 import coreClasses.ShipUpgrade;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** JUnit Tests for Pirates
@@ -19,7 +18,7 @@ class PiratesTest {
 	
 	@Test
 	void attackShipTest() {
-		Ship ship1 = new Ship("Black Pearl", 100, 10, 100);
+		Ship ship1 = new Ship("Black Pearl", 100, 10, 50);
 		ShipUpgrade upgrade1 = new ShipUpgrade("Canon", 10, 10, 10);
 		ShipUpgrade upgrade2 = new ShipUpgrade("Crows Nest", 10, 10, 5);
 		ShipUpgrade upgrade3 = new ShipUpgrade("Armour", 10, 10, 7);
@@ -32,12 +31,12 @@ class PiratesTest {
 
 	@Test 
 	void rollDiceTest() {
-		
+		// Cant test because it relies on randomness
 	}
 	
 	@Test
 	void takeGoodsTest() {
-		
+		// Again hard to test because method relies on randomness
 	}
 	
 	@Test
@@ -45,7 +44,7 @@ class PiratesTest {
 		/* boundary conditions:
 		 * equal size items
 		 */
-		Ship ship1 = new Ship("Black Pearl", 10, 13, 20);
+		Ship ship1 = new Ship("Black Pearl", 10, 10, 20);
 		Item item1 = new Item("Gold", 10, 10);
 		Item item2 = new Item("Silver", 7, 10);
 		Item item3 = new Item("Large Chest", 20, 10);
@@ -61,7 +60,7 @@ class PiratesTest {
 		ship1.takeItem(item1.getName());
 		assertEquals(item2, Pirates.getLargestShipItem(ship1));
 		
-		Ship ship2 = new Ship("Bat Mobile", 100, 10, 100);
+		Ship ship2 = new Ship("Bat Mobile", 100, 10, 50);
 		assertEquals(null, Pirates.getLargestShipItem(ship2)); // no items belonging to Ship
 	}
 }
