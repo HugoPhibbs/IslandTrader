@@ -4,13 +4,12 @@ import java.util.*;
 
 /** Represents a ship
  * @author Hugo Phibbs
- * @version 14/5/2021
+ * @version 19/5/2021
  * @since 2/4/2021
  */
 
 public class Ship {
 	// Class variables //
-	// Final class variables
 	/** Name for the ship */
     private final String name;
     
@@ -32,7 +31,6 @@ public class Ship {
 	/** Player object that owns this Ship object in a game */
     private Player owner;
     
-    // Non-final class variables
     /** The remaining amount of Items that a ship can carry */
     private int remainingItemSpace;
     
@@ -48,6 +46,7 @@ public class Ship {
     /** ArrayList containing all the Upgrades that a ship currently has equipped */
     private ArrayList<ShipUpgrade> upgrades = new ArrayList<ShipUpgrade>();
 
+    
     /** Constructor for a Ship object
      *
      * @throws IllegalArgumentException if constructor parameters are invalid
@@ -79,10 +78,8 @@ public class Ship {
     	
     	remainingItemSpace = maxItemSpace;
     }
-    
-    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     ////////////////////////////////// GENERAL SHIP METHODS ////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     
     /** Enacts damage onto Ship Object
      *
@@ -119,9 +116,7 @@ public class Ship {
     	return player.spendMoney(totalWageCost);
     }
     
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////// MANAGING SHIP UPGRADES ///////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     
     /** Adds a new upgrade to this Ship. Checking if a ship can add this upgrade is handled by Store
      *
@@ -187,9 +182,7 @@ public class Ship {
     	return damageInflicted * crewSize * REPAIR_COST_CONSTANT;
     }
    
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////// MANAGING SHIP ITEMS ///////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     
     /** Adds an Item Object to this Ship's cargo hold
     *
@@ -223,9 +216,7 @@ public class Ship {
     	return null; // did not find and/or remove inputted item
     }
     
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////// GETTER AND SETTER METHODS //////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     
     /** Getter method for the description of a Ship
      * 

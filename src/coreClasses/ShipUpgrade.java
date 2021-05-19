@@ -10,6 +10,7 @@ public class ShipUpgrade extends Item{
 	/** Defense boost that an upgrade provides to a ship when equipped */
     private int defenseBoost; 
     
+    
     /** Constructor method for ShipUpgrade object
      * 
      * @param name String for the name of ShipUpgrade

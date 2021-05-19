@@ -39,8 +39,6 @@ public class VisitStoreScreen extends Screen{
 	// Core Class objects
 	private GameEnvironment gameEnvironment;
 	
-	private Screen parent;
-	
 	// Swing objects
 	private JFrame frame;
 	private JTextField numItemsTextField;

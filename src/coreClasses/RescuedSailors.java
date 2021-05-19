@@ -24,7 +24,7 @@ public class RescuedSailors {
 	 * @param player Player object to recieve money 
 	 */
 	public void giveMoney(Player player) {
-		player.earnMoney(REWARD_MONEY); // arbitrary value, not based on chance in specs, so just make it 50
+		player.earnMoney(REWARD_MONEY); 
 	}
 	
 	/** Getter method for the description of a RescuedSailors event

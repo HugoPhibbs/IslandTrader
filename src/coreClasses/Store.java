@@ -12,7 +12,7 @@ import java.util.*;
  */
 
 public class Store {
-	// Class attributes //
+	// Class variables //
 	/** Name of the store*/
     private String name; 
     

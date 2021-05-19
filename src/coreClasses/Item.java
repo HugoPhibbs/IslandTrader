@@ -40,8 +40,6 @@ public class Item{
     	this.playerBuyPrice = playerBuyPrice; 
     }
     
-    // ################### GETTER METHODS ##########################
-    
     /** Getter method for whether an item is with a player or not
      * 
      * @return Boolean value for whether an Item is with a player or not
@@ -77,9 +75,7 @@ public class Item{
      * @return Integer value for the sell price of an item back to a store
      */
     public int getPlayerSellPrice() {return playerSellPrice;}
-    
-    // ###################### SETTER METHODS #######################
-    
+  
     /** Setter method for the Island that an Item as sold at
     *
     * @param islandSoldAt Island object that an Item was sold at

@@ -6,30 +6,48 @@ import uiClasses.GameUi;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-// TODO need to have a method that handles a player not having any cash
-
 /** Represents the game environment of an 'Island Trader' game. 
  * Contains necessary Game objects, along with general methods that dont really belong anywhere else
  * 
  * @author Jordan Vegar and Hugo Phibbs
- * @version 8/5/21
+ * @version 19/5/21
  * @since 2/4/21
  */
 public class GameEnvironment {
-	
-	// Final class variables
+	// Class Variables //
+	/** Array to hold all the islands that a user can go to */
 	private final Island[] islandArray;
+	
+	/** Array to hold all the ships that a user can choose from, one is chosen */
 	private final Ship[] shipArray;
+	
+	/** UI object for this current game */
 	private final GameUi ui;
-	// Non final class variables
+	
+	/** Player object for this game */
 	private Player player;
+	
+	/** The number of days that a user had decided to make the game last for */
 	private int daysSelected;
-	private Pirates pirates; // Object for a pirates random event
-	private RescuedSailors rescuedSailors; // Object for rescued sailors random event
+	
+	/** Pirates object for a pirates random event */
+	private Pirates pirates; 
+	
+	/** RescuedSailors object for rescued sailors random event */
+	private RescuedSailors rescuedSailors;
+	
+	/** The number of days remaining for this current game */
 	private int daysRemaining;
+	
+	/** The current Island that a Player is located on */
 	private Island currentIsland;
+	
+	/** Ship Object belonging to an in game Player object */
 	private Ship ship;
-	private int minMoneyToTravel; // The minimum amount of money to travel off your particular island. 
+	
+	/** The minimum amount of money to travel off your particular island. */
+	private int minMoneyToTravel; 
+	
 	
 	/** Constructor for GameEnvironment class
 	 * 
@@ -48,10 +66,10 @@ public class GameEnvironment {
 	}
 	
 	/** Method for finishing the set up for a game. 
-	 * 
 	 * Is called when the user has entered all necessary information for setup, 
 	 * and all objects that required this information have been created. This method passes
 	 * those objects to the current instance of GameEnvironment. 
+	 * 
 	 * @param player
 	 * @param ship
 	 * @param duration
@@ -161,7 +179,6 @@ public class GameEnvironment {
 	 * @return ArrayList<String> ArrayList containing descriptions of every ship that a player can choose
 	 */
 	public ArrayList<String> shipDescriptionArrayList() {
-		// TODO implement
 		ArrayList<String> shipDescriptionArrayList = new ArrayList<String>();
 		for (Ship ship: shipArray) {
 			shipDescriptionArrayList.add(ship.getDescription());
@@ -205,9 +222,7 @@ public class GameEnvironment {
 		return liquidGoodsVal + player.getMoneyBalance();
 	}
 	
-	 /////////////////////////////////////////////////////////////////////////
     ///////////////////// GETTER AND SETTER METHODS //////////////////////////
-    //////////////////////////////////////////////////////////////////////////
 	
 	/** Getter method for in game Player object
 	 * 
