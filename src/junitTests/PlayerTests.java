@@ -6,6 +6,8 @@ package junitTests;
 import coreClasses.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -41,17 +43,24 @@ class PlayerTests {
 		String expectedString = "All items that have been bought and their details: \nItem Tomato was bought "
 				+ "for 3 Pirate Bucks and has not yet been sold to a store. \n";
 		assertEquals(expectedString, testPlayer.purchasedItemsToString());
-		
-		
 	}
+	
+	@Test
+	void testPurchasedItemsToArray() {
+		testPlayer.addPurchasedItem(new Item("Tomato", 2, 1));
+		testPlayer.addPurchasedItem(new Item("Gold", 5, 25));
+		String[][] testArray = new String[][] {{"Tomato", "1", "N/A"}, {"Gold", "25", "N/A"}};
+		assertEquals(testArray, testPlayer.purchasedItemsToArray());
+	}
+	
 	
 	@Test
 	void testSpendMoney() {
 		assertEquals(true, testPlayer.spendMoney(500));
 		assertEquals(500, testPlayer.getMoneyBalance());
-		
+	
 		assertEquals(false, testPlayer.spendMoney(501));
-		
-		
+		assertEquals(false, testPlayer.spendMoney(-10));
+		assertEquals(500, testPlayer.getMoneyBalance());
 	}
 }
