@@ -41,23 +41,8 @@ public class SetupScreen extends Screen {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					chooseRouteScreen window = new chooseRouteScreen();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-				
+	private void initialize() {	
 		frame.setBounds(100, 100, 1100, 800);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
-		completeScreenSetup(frame, "Setup Game");
 		
 		JPanel panelPickShip = new JPanel();
 		panelPickShip.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -127,7 +112,6 @@ public class SetupScreen extends Screen {
 		
 		
 		textFieldName = new JTextField();
-		textFieldName.setToolTipText("your name here");
 		textFieldName.setFont(new Font("Dialog", Font.PLAIN, 16));
 		textFieldName.setBounds(693, 50, 359, 23);
 		frame.getContentPane().add(textFieldName);
