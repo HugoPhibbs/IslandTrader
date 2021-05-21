@@ -6,6 +6,7 @@ import java.util.List;
 
 import coreClasses.*;
 import uiClasses.*;
+import uiClasses.gui.Gui;
 
 
 /** The entry point to the program, creates instances of the classes required 
@@ -18,20 +19,13 @@ import uiClasses.*;
 public class Main {
 	
 	/** Main method
-	 * Entry Point into the Island Trader Game	`
+	 * Entry Point into the Island Trader Game
+	 * Initializing all the objects needed for a game
+	 * Most of the functionality is handled by Main's other methods`
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		initializeObjects();
-	}
-	
-	/** Method for initializing all the objects needed for a game
-	 * Most of the functionality is handled by Main's other methods
-	 */
-	private static void initializeObjects() {
-		// Initializes all the objects needed to run a game
-		
-		// called by main
+		// Initialize all the objects needed to run a game
         Ship[] shipArray = createShips();
         
 		// Create pirates object to be used throughout game
@@ -55,15 +49,19 @@ public class Main {
 		
 		// Initiate the UI and Game Environment
 		GameUi ui;
-		ui = new CmdLineUi();
-		// ui = new Gui();
+		ui = new Gui();
 		GameEnvironment gameEnrvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
-		// TODO: needs to be changed later to allow both UIs to work.
-		// THis is however easier for testing the command line user interface
 		
-		// Setup UI with gameEnvironment object that was just created
-		ui.setup(gameEnrvironment);
+//		if (args.length > 0 && (args[0].equals("cmd"))) {
+//			ui = new CmdLineUi();
+//			GameEnvironment gameEnrvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
+//			ui.setup(gameEnrvironment);
+//		} else {
+//			ui = new Gui();
+//			GameEnvironment gameEnrvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
+//		}
 	}
+
 	
 	/** Method for Setting the routes between every pair of Islands
 	 * 
