@@ -44,4 +44,14 @@ class PlayerTests {
 		
 		
 	}
+	
+	@Test
+	void testSpendMoney() {
+		assertEquals(true, testPlayer.spendMoney(500));
+		assertEquals(500, testPlayer.getMoneyBalance());
+		
+		assertEquals(false, testPlayer.spendMoney(501));
+		
+		
+	}
 }
