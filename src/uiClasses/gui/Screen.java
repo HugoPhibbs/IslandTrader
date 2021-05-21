@@ -16,10 +16,10 @@ import coreClasses.GameEnvironment;
  * @since 18/5/21
  * 
  */
-public abstract class Screen {
+public class Screen {
 	
 	/** GameEnvironment object for this current game */
-	private final GameEnvironment game;
+	public final GameEnvironment game;
 	/** Screen that called this screen. Makes it easy to go back. CoreOptionsScreen and
 	 * SetupScreen dont have parents
 	 */
@@ -27,7 +27,7 @@ public abstract class Screen {
 	/**
 	 * The frame for this screen. Holds all components and other containers. 
 	 */
-	private JFrame frame;
+	public JFrame frame;
 	
 	/** Constructor for the Screen class
 	 * 
@@ -38,7 +38,6 @@ public abstract class Screen {
 	protected Screen(String title, GameEnvironment gameEvironment, Screen parent) {
 		this.game = gameEvironment;
 		this.parent = parent;
-		initialize(title);
 	}
 	
 	
@@ -46,8 +45,7 @@ public abstract class Screen {
 	 * Initializes the Screen
 	 * @param title String the title of the Screen
 	 */
-	private void initialize(final String title) {
-		frame = new JFrame();
+	protected void completeScreenSetup(JFrame frame, final String title) {
 		frame.setTitle(title);
 		
 		// Prevent the user from quiting immediately when quit is clicked.
@@ -58,16 +56,7 @@ public abstract class Screen {
 				confirmQuit();
 			}
 		});
-		initialize(frame);
 	}
-	
-	/**
-     * Creates and adds the required graphical components to the given container.
-     *
-     * @param container The container to add content to
-     */
-    protected abstract void initialize(Container container);
-	
 	
 	protected GameEnvironment getGame() {
 		return game;
@@ -98,11 +87,6 @@ public abstract class Screen {
 		frame.dispose();
 	}
 	
-	/**
-	 * Abstract method. Classes which extend screen will implement goBack() to re-create
-	 * the screen of the prior (parent) screen. Will then close the current screen.
-	 */
-	public abstract void goBack();
 	
 	/**
 	 * Displays any Error to the user.
