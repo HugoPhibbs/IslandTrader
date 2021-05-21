@@ -16,40 +16,27 @@ import javax.swing.JTextField;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
+import coreClasses.GameEnvironment;
+
 import java.awt.Color;
+import java.awt.Container;
+
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.JList;
 
-public class SetupScreen {
+public class SetupScreen extends Screen {
 
-	private JFrame frame;
 	private JTextField textFieldName;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SetupScreen window = new SetupScreen();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
 	 */
-	public SetupScreen() {
+	public SetupScreen(GameEnvironment game) {
+		super("Setup Game", game, null);
 		initialize();
 	}
-	
-	
 	
 	/**
 	 * Initialize the contents of the frame.
@@ -59,10 +46,15 @@ public class SetupScreen {
 		frame.setBounds(100, 100, 1100, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		completeScreenSetup(frame, "Setup Game");
+		
+		createMainLabels();
+		createOtherComponents();
+		createPickShipComponents();
+		createPickIslandComponents();
 	}
 		
-		
-	
 	public void createMainLabels() {
 		JLabel lblWelcome = new JLabel("Welcome to Island Trader!");
 		lblWelcome.setFont(new Font("Dialog", Font.BOLD, 22));
@@ -128,7 +120,7 @@ public class SetupScreen {
 		frame.getContentPane().add(sliderDays);
 	}
 	
-	public void pickShipComponents() {
+	public void createPickShipComponents() {
 		JPanel panelPickShip = new JPanel();
 		panelPickShip.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelPickShip.setBounds(12, 184, 1065, 250);
@@ -201,7 +193,7 @@ public class SetupScreen {
 		panelPickShip.add(lblSpeed_1_3);
 	}
 	
-	public void pickIslandComponents() {
+	public void createPickIslandComponents() {
 		JPanel panelPickIsland = new JPanel();
 		panelPickIsland.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelPickIsland.setBounds(12, 477, 1065, 250);
@@ -243,5 +235,4 @@ public class SetupScreen {
 		btnNewButton_1_3_4.setBounds(684, 12, 156, 226);
 		panelPickIsland.add(btnNewButton_1_3_4);
 	}
-
 }
