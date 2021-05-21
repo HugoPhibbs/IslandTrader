@@ -10,7 +10,8 @@ public class Gui implements GameUi{
 	
 	public void setup(GameEnvironment gameEnvironment) {
 		this.gameEnvironment = gameEnvironment;
-		// TODO implement
+		screen = new SetupScreen(gameEnvironment);
+		screen.show();
 	}
 	
 	public void play() {
