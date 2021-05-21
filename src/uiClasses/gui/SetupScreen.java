@@ -41,25 +41,14 @@ public class SetupScreen extends Screen {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {	
+	@Override
+	protected void initialize() {	
 		frame.setBounds(100, 100, 1100, 800);
-		
-		JPanel panelPickShip = new JPanel();
-		panelPickShip.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelPickShip.setBounds(12, 184, 1065, 250);
-		frame.getContentPane().add(panelPickShip);
-		panelPickShip.setLayout(null);
-		
-		JPanel panelPickIsland = new JPanel();
-		panelPickIsland.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelPickIsland.setBounds(12, 477, 1065, 250);
-		frame.getContentPane().add(panelPickIsland);
-		panelPickIsland.setLayout(null);
 		
 		createMainLabels();
 		createOtherComponents();
-		createPickShipComponents(panelPickShip);
-		createPickIslandComponents(panelPickIsland);
+		createPickShipComponents();
+		createPickIslandComponents();
 	}
 		
 	public void createMainLabels() {
@@ -126,7 +115,13 @@ public class SetupScreen extends Screen {
 		frame.getContentPane().add(sliderDays);
 	}
 	
-	public void createPickShipComponents(JPanel panelPickShip) {
+	public void createPickShipComponents() {
+		
+		JPanel panelPickShip = new JPanel();
+		panelPickShip.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelPickShip.setBounds(12, 184, 1065, 250);
+		frame.getContentPane().add(panelPickShip);
+		panelPickShip.setLayout(null);
 		
 		JLabel lblSelectedShip = new JLabel("Select a ship!");
 		lblSelectedShip.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 16));
@@ -194,7 +189,13 @@ public class SetupScreen extends Screen {
 		panelPickShip.add(lblSpeed_1_3);
 	}
 	
-	public void createPickIslandComponents(JPanel panelPickIsland) {
+	public void createPickIslandComponents() {
+		
+		JPanel panelPickIsland = new JPanel();
+		panelPickIsland.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelPickIsland.setBounds(12, 477, 1065, 250);
+		frame.getContentPane().add(panelPickIsland);
+		panelPickIsland.setLayout(null);
 		
 		JButton btnNewButton_1_3 = new JButton("New button");
 		btnNewButton_1_3.setBounds(12, 12, 156, 226);

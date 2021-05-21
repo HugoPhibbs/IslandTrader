@@ -16,7 +16,7 @@ import coreClasses.GameEnvironment;
  * @since 18/5/21
  * 
  */
-public class Screen {
+public abstract class Screen {
 	
 	/** GameEnvironment object for this current game */
 	public final GameEnvironment game;
@@ -42,6 +42,7 @@ public class Screen {
 		this.parent = parent;
 		
 		setFrameCharacteristics();
+		initialize();
 	}
 	/**
 	 * Sets the characteristics of the frame that are common to all screens.
@@ -60,6 +61,11 @@ public class Screen {
 		frame.getContentPane().setLayout(null);
 	}
 	
+	/**
+	 * This is where the bounds of your frame will be set and methods which create the components
+	 * will be called. Is called at the end of the constructor method.
+	 */
+	protected abstract void initialize();
 	
 	protected GameEnvironment getGame() {
 		return game;
