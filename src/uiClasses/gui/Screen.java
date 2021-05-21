@@ -37,17 +37,16 @@ public class Screen {
 	 */
 	protected Screen(String title, GameEnvironment gameEvironment, Screen parent) {
 		this.game = gameEvironment;
-		this.parent = parent;
-	}
-	
-	
-	/**
-	 * Initializes the Screen
-	 * @param title String the title of the Screen
-	 */
-	protected void completeScreenSetup(JFrame frame, final String title) {
+		this.frame = new JFrame();
 		frame.setTitle(title);
+		this.parent = parent;
 		
+		setFrameCharacteristics();
+	}
+	/**
+	 * Sets the characteristics of the frame that are common to all screens.
+	 */
+	private void setFrameCharacteristics() {
 		// Prevent the user from quiting immediately when quit is clicked.
 		// Code copied from Rocket Manager Example
 		frame.addWindowListener(new WindowAdapter() {
@@ -56,7 +55,11 @@ public class Screen {
 				confirmQuit();
 			}
 		});
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 	}
+	
 	
 	protected GameEnvironment getGame() {
 		return game;
