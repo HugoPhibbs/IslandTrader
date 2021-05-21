@@ -108,7 +108,7 @@ public class Player {
 	 * @return Boolean value if money was spent or not, ie player had enough cash to pay
 	 */
 	public boolean spendMoney(int amountSpent) {
-		if (amountSpent <= moneyBalance) {
+		if (amountSpent <= moneyBalance && amountSpent >= 0) {
 			moneyBalance -= amountSpent;
 			return true;
 		}
