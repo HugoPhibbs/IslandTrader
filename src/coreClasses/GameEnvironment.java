@@ -87,6 +87,7 @@ public class GameEnvironment {
 		ui.playGame();
 	}
 	
+
 	/** Method to reduce in-game days
 	 * 
 	 * @param daysPassed Integer for the number of in-game days passed
