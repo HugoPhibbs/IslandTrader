@@ -58,7 +58,7 @@ public abstract class Screen {
 				confirmQuit();
 			}
 		});
-		
+		initialize(frame);
 	}
 	
 	/**
@@ -66,7 +66,7 @@ public abstract class Screen {
      *
      * @param container The container to add content to
      */
-    protected abstract void initialise(Container container);
+    protected abstract void initialize(Container container);
 	
 	
 	protected GameEnvironment getGame() {
