@@ -51,6 +51,7 @@ public class Main {
 		GameUi ui;
 		ui = new Gui();
 		GameEnvironment gameEnrvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
+		ui.setup(gameEnrvironment);
 		
 //		if (args.length > 0 && (args[0].equals("cmd"))) {
 //			ui = new CmdLineUi();
@@ -59,6 +60,7 @@ public class Main {
 //		} else {
 //			ui = new Gui();
 //			GameEnvironment gameEnrvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
+//			ui.setup(gameEnrvironment);
 //		}
 	}
 
