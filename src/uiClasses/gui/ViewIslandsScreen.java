@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+
+import coreClasses.*;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -13,79 +16,78 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ViewislandsScreen {
+public class ViewIslandsScreen extends Screen {
 
 	private JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ViewislandsScreen window = new ViewislandsScreen();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
+	/** Island selected by the player.*/
+	private Island selectedIsland;
 
 	/**
 	 * Create the application.
 	 */
-	public ViewislandsScreen() {
+	public ViewIslandsScreen(GameEnvironment game) {
+		super("View Islands", game, null);
 		initialize();
 	}
-
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
-		frame = new JFrame();
+	@Override
+	protected void initialize() {
 		frame.setBounds(100, 100, 800, 530);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 		
+		createSelectIslandComponents();
+		createOtherComponenets();
+	}
+	
+	private void createSelectIslandComponents() {
 		JPanel panelIslandSelection = new JPanel();
 		panelIslandSelection.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelIslandSelection.setBounds(12, 43, 776, 411);
 		frame.getContentPane().add(panelIslandSelection);
 		panelIslandSelection.setLayout(null);
 		
-		JLabel lblSelectAnIsland = new JLabel("Select an island!");
-		lblSelectAnIsland.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 16));
-		lblSelectAnIsland.setBounds(593, 12, 184, 32);
-		panelIslandSelection.add(lblSelectAnIsland);
+		JLabel lblSelectedIsland = new JLabel("Select an island!");
+		lblSelectedIsland.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 16));
+		lblSelectedIsland.setBounds(593, 12, 184, 32);
+		panelIslandSelection.add(lblSelectedIsland);
 		
 		JLabel lblInfo = new JLabel("Info:");
 		lblInfo.setFont(new Font("Dialog", Font.BOLD, 14));
 		lblInfo.setBounds(593, 43, 70, 15);
 		panelIslandSelection.add(lblInfo);
 		
-		JTextPane txtpnThisIslandSells = new JTextPane();
-		txtpnThisIslandSells.setText("This island sells tomatos and buys gold. It has routes ot all other isalnds.");
-		txtpnThisIslandSells.setBounds(593, 71, 174, 328);
-		panelIslandSelection.add(txtpnThisIslandSells);
+		JTextPane textPaneIslandInfo = new JTextPane();
+		textPaneIslandInfo.setText("This island sells tomatos and buys gold. It has routes ot all other isalnds.");
+		textPaneIslandInfo.setBounds(593, 71, 174, 328);
+		panelIslandSelection.add(textPaneIslandInfo);
+		
+		Island[] islandsToView = game.otherIslands();
 		
 		JButton btnIsland1 = new JButton("New button");
 		btnIsland1.setBounds(12, 12, 274, 187);
+		btnIsland1.addActionListener(e -> changeIslandInfo(islandsToView[0] , lblSelectedIsland, textPaneIslandInfo));
 		panelIslandSelection.add(btnIsland1);
 		
 		JButton btnIsland2 = new JButton("New button");
 		btnIsland2.setBounds(298, 12, 274, 187);
+		btnIsland2.addActionListener(e -> changeIslandInfo(islandsToView[1] , lblSelectedIsland, textPaneIslandInfo));
 		panelIslandSelection.add(btnIsland2);
 		
 		JButton btnIsland3 = new JButton("New button");
 		btnIsland3.setBounds(12, 212, 274, 187);
+		btnIsland3.addActionListener(e -> changeIslandInfo(islandsToView[2] , lblSelectedIsland, textPaneIslandInfo));
 		panelIslandSelection.add(btnIsland3);
 		
 		JButton btnIsland4 = new JButton("New button");
 		btnIsland4.setBounds(298, 212, 274, 187);
+		btnIsland4.addActionListener(e -> changeIslandInfo(islandsToView[3] , lblSelectedIsland, textPaneIslandInfo));
 		panelIslandSelection.add(btnIsland4);
-		
+	}
+
+	private void createOtherComponenets() {
 		JButton btnBack = new JButton("GO BACK");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -104,4 +106,9 @@ public class ViewislandsScreen {
 		frame.getContentPane().add(lblInstructions);
 	}
 
+	private void changeIslandInfo(Island island, JLabel name, JTextPane islandInfo) {
+		name.setText(island.getIslandName());
+		islandInfo.setText(island.fullInfo(game.getCurrentIsland().possibleRoutes(island)));
+		selectedIsland = island;
+	}
 }
