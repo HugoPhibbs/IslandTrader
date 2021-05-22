@@ -17,8 +17,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ViewIslandsScreen extends Screen {
-
-	private JFrame frame;
 	
 	/** Island selected by the player.*/
 	private Island selectedIsland;
@@ -40,6 +38,12 @@ public class ViewIslandsScreen extends Screen {
 		
 		createSelectIslandComponents();
 		createOtherComponenets();
+	}
+	
+	private void viewRoutes() {
+		this.hide();
+		Screen chooseRoute = new chooseRouteScreen(game, selectedIsland);
+		chooseRoute.show();
 	}
 	
 	private void createSelectIslandComponents() {
@@ -66,22 +70,22 @@ public class ViewIslandsScreen extends Screen {
 		
 		Island[] islandsToView = game.otherIslands();
 		
-		JButton btnIsland1 = new JButton("New button");
+		JButton btnIsland1 = new JButton(islandsToView[0].getIslandName());
 		btnIsland1.setBounds(12, 12, 274, 187);
 		btnIsland1.addActionListener(e -> changeIslandInfo(islandsToView[0] , lblSelectedIsland, textPaneIslandInfo));
 		panelIslandSelection.add(btnIsland1);
 		
-		JButton btnIsland2 = new JButton("New button");
+		JButton btnIsland2 = new JButton(islandsToView[1].getIslandName());
 		btnIsland2.setBounds(298, 12, 274, 187);
 		btnIsland2.addActionListener(e -> changeIslandInfo(islandsToView[1] , lblSelectedIsland, textPaneIslandInfo));
 		panelIslandSelection.add(btnIsland2);
 		
-		JButton btnIsland3 = new JButton("New button");
+		JButton btnIsland3 = new JButton(islandsToView[2].getIslandName());
 		btnIsland3.setBounds(12, 212, 274, 187);
 		btnIsland3.addActionListener(e -> changeIslandInfo(islandsToView[2] , lblSelectedIsland, textPaneIslandInfo));
 		panelIslandSelection.add(btnIsland3);
 		
-		JButton btnIsland4 = new JButton("New button");
+		JButton btnIsland4 = new JButton(islandsToView[3].getIslandName());
 		btnIsland4.setBounds(298, 212, 274, 187);
 		btnIsland4.addActionListener(e -> changeIslandInfo(islandsToView[3] , lblSelectedIsland, textPaneIslandInfo));
 		panelIslandSelection.add(btnIsland4);
@@ -98,6 +102,7 @@ public class ViewIslandsScreen extends Screen {
 		
 		JButton btnTravel = new JButton("TRAVEL TO SELECTED ISLAND");
 		btnTravel.setBounds(554, 466, 234, 25);
+		btnTravel.addActionListener(e -> viewRoutes());
 		frame.getContentPane().add(btnTravel);
 		
 		JLabel lblInstructions = new JLabel("Select an Island to see info about that Island. ");
