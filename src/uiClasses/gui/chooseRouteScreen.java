@@ -48,6 +48,7 @@ public class chooseRouteScreen extends Screen {
 		createRouteChooseComponents();
 	}
 	
+	/** Creates the labels on the screen not in a sub container.*/
 	private void createMainLabels() {
 		
 		JLabel lblIsland = new JLabel("You are travelling to ", SwingConstants.CENTER);
@@ -72,6 +73,7 @@ public class chooseRouteScreen extends Screen {
 		frame.getContentPane().add(lblIslandImage);
 	}
 	
+	/** Creates the miscellaneous components on the screen not in a sub container.*/
 	private void createOtherComponents() {
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.setBounds(626, 489, 162, 25);
@@ -82,6 +84,7 @@ public class chooseRouteScreen extends Screen {
 		frame.getContentPane().add(btnBack);
 	}
 	
+	/** Creates the Jpanel and its components used to select a route.*/
 	public void createRouteChooseComponents() {
 		JPanel panelRouteSelection = new JPanel();
 		panelRouteSelection.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -158,6 +161,17 @@ public class chooseRouteScreen extends Screen {
 		}
 	}
 	
+	/**
+	 * Changes the displayed route info to that of the selected route. Called each time a Route's button
+	 * is clicked. 
+	 * @param route Route
+	 * @param name JLabel
+	 * @param description JTextField
+	 * @param distance JLabel
+	 * @param pirate JLabel
+	 * @param weather JLabel
+	 * @param rescue JLabel
+	 */
 	private void changeRouteInfo(Route route, JLabel name, JTextField description, JLabel distance, JLabel pirate,  JLabel weather, JLabel rescue) {
 		name.setText(route.getRouteName());
 		description.setText(route.getDescription());

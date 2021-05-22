@@ -40,12 +40,17 @@ public class ViewIslandsScreen extends Screen {
 		createOtherComponenets();
 	}
 	
+	/**
+	 * Method called when confirm button is clicked. Hides this instance of screen and creates the 
+	 * Screen used to select a route to the selected island. 
+	 */
 	private void viewRoutes() {
 		Screen chooseRoute = new chooseRouteScreen(game, selectedIsland);
 		this.hide();
 		chooseRoute.show();
 	}
 	
+	/** Creates the JPanel and its components used to select an Island.*/
 	private void createSelectIslandComponents() {
 		JPanel panelIslandSelection = new JPanel();
 		panelIslandSelection.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -91,6 +96,7 @@ public class ViewIslandsScreen extends Screen {
 		panelIslandSelection.add(btnIsland4);
 	}
 
+	/** Creates the miscellaneous components the screen requires.*/
 	private void createOtherComponenets() {
 		JButton btnBack = new JButton("GO BACK");
 		btnBack.addActionListener(new ActionListener() {
@@ -111,6 +117,13 @@ public class ViewIslandsScreen extends Screen {
 		frame.getContentPane().add(lblInstructions);
 	}
 
+	/**
+	 * Changes the info displayed to be info on the selected island. Method is called each time an
+	 * Island's button is clicked. 
+	 * @param island Island
+	 * @param name JLabe;
+	 * @param islandInfo JTextPane
+	 */
 	private void changeIslandInfo(Island island, JLabel name, JTextPane islandInfo) {
 		name.setText(island.getIslandName());
 		islandInfo.setText(island.fullInfo(game.getCurrentIsland().possibleRoutes(island)));
