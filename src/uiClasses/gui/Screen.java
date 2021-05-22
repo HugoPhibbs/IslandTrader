@@ -78,6 +78,10 @@ public abstract class Screen {
 		frame.setVisible(true);
 	}
 	
+	protected void hide() {
+		frame.setVisible(false);
+	}
+	
 	/**
 	 * Displays a Dialog to allow the user to confirm whether they would like to quit
 	 * @return Boolean true if would like to quit, else false
