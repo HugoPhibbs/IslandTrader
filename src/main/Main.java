@@ -50,8 +50,8 @@ public class Main {
 		// Initiate the UI and Game Environment
 		GameUi ui;
 		ui = new Gui();
-		GameEnvironment gameEnrvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
-		ui.setup(gameEnrvironment);
+		GameEnvironment gameEnvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
+		ui.setup(gameEnvironment);
 		
 //		if (args.length > 0 && (args[0].equals("cmd"))) {
 //			ui = new CmdLineUi();
@@ -63,7 +63,6 @@ public class Main {
 //			ui.setup(gameEnrvironment);
 //		}
 	}
-
 	
 	/** Method for Setting the routes between every pair of Islands
 	 * 

@@ -23,9 +23,9 @@ public class Gui implements GameUi{
 
 	@Override
 	public void finishGame(String message) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
+\
 
 	@Override
 	public void pirateAttack() {
