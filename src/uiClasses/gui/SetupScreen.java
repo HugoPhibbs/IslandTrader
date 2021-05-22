@@ -44,6 +44,7 @@ public class SetupScreen extends Screen {
 	private JTextField textFieldName;
 	private JSlider sliderDays;
 	private JLabel lblDisplayDays;
+	private JButton btnConfirm;
 	/**
 	 * Create the application.
 	 */
@@ -60,7 +61,9 @@ public class SetupScreen extends Screen {
 		frame.setBounds(100, 100, 1100, 800);
 		
 		createMainLabels();
-		createOtherComponents();
+		createTextField();
+		createConfirmButton();
+		createDaysSlider();
 		createPickShipComponents();
 		createPickIslandComponents();
 	}
@@ -71,7 +74,7 @@ public class SetupScreen extends Screen {
 	 * Game Environment. GE then calls ui.play() to complete the setup process.
 	 */
 	private void setupComplete() {
-		Player player = new Player(textFieldName.getText(), sliderDays.getValue());
+		Player player = new Player("Test Name", sliderDays.getValue()); //TODO: Replace name once fix bug
 		game.onSetupFinished(player, selectedShip, sliderDays.getValue(), selectedIsland);
 	}
 		
@@ -114,7 +117,7 @@ public class SetupScreen extends Screen {
 		frame.getContentPane().add(lblNameError);
 	}
 	
-	public void createOtherComponents() {
+	public void createTextField() {
 		textFieldName = new JTextField();
 		textFieldName.setFont(new Font("Dialog", Font.PLAIN, 16));
 		textFieldName.setBounds(693, 50, 359, 23);
@@ -125,23 +128,24 @@ public class SetupScreen extends Screen {
 			}
 		});
 		frame.getContentPane().add(textFieldName);
-		
-		JButton btnNewButton = new JButton("Confirm Choices");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		btnNewButton.setBounds(910, 739, 178, 25);
-		frame.getContentPane().add(btnNewButton);
-		
+	}
+	
+	private void createConfirmButton() {
+		btnConfirm = new JButton("Confirm Choices");
+		btnConfirm.addActionListener(e -> setupComplete());
+		btnConfirm.setBounds(910, 739, 178, 25);
+		btnConfirm.setEnabled(false);
+		frame.getContentPane().add(btnConfirm);
+	}
+
+	private void createDaysSlider() {
 		sliderDays = new JSlider();
 		sliderDays.setPaintLabels(true);
 		sliderDays.setMinorTickSpacing(1);
 		sliderDays.setMinimum(20);
 		sliderDays.setMaximum(50);
 		sliderDays.setBounds(693, 103, 299, 19);
-		sliderDays.addChangeListener(e -> lblDisplayDays.setText("40"));
+		sliderDays.addChangeListener(e -> lblDisplayDays.setText(String.valueOf(sliderDays.getValue())));
 		frame.getContentPane().add(sliderDays);
 	}
 	
@@ -296,6 +300,18 @@ public class SetupScreen extends Screen {
 		} else {
 			System.out.println("False");
 			lblNameError.setVisible(false);
+		}
+	}
+	
+	/**
+	 * Checks whether all necessary information to continue has been entered. If it has, confirm
+	 * button is enabled. 
+	 */
+	private void readyToConfirm() {
+		if (!lblNameError.isVisible() && selectedShip != null && selectedIsland != null) {
+			btnConfirm.setEnabled(true);
+		} else {
+			btnConfirm.setEnabled(false);
 		}
 	}
 }
