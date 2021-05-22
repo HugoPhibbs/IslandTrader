@@ -8,49 +8,48 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+
+import coreClasses.*;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class chooseRouteScreen {
+public class chooseRouteScreen extends Screen {
 
 	private JFrame frame;
-	private JTextField txtRouteDescription;
-	private JTextField textField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					chooseRouteScreen window = new chooseRouteScreen();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	/** the island the player os viewing routes to.*/
+	private Island island;
+	/** Route selected by the player.*/
+	private Route selectedRoute;
 
 	/**
 	 * Create the application.
 	 */
-	public chooseRouteScreen() {
+	public chooseRouteScreen(GameEnvironment game, Island island) {
+		super("Choose Route", game, null);
+		this.island = island;
 		initialize();
 	}
-
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
-		frame = new JFrame();
+	@Override
+	protected void initialize() {
 		frame.setBounds(100, 100, 800, 550);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		
+		createMainLabels();
+		createOtherComponents();
+		createRouteChooseComponents();
+	}
+	
+	private void createMainLabels() {
 		
 		JLabel lblTravelling = new JLabel("You are travelling to ");
 		lblTravelling.setFont(new Font("Dialog", Font.BOLD, 16));
@@ -72,27 +71,27 @@ public class chooseRouteScreen {
 		lblIslandImage.setBackground(Color.CYAN);
 		lblIslandImage.setBounds(509, 7, 259, 137);
 		frame.getContentPane().add(lblIslandImage);
-		
+	}
+	
+	private void createOtherComponents() {
+		JButton btnConfirm = new JButton("Confirm");
+		btnConfirm.setBounds(626, 489, 162, 25);
+		frame.getContentPane().add(btnConfirm);
+	}
+	
+	public void createRouteChooseComponents() {
 		JPanel panelRouteSelection = new JPanel();
 		panelRouteSelection.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelRouteSelection.setBounds(12, 177, 776, 308);
 		frame.getContentPane().add(panelRouteSelection);
 		panelRouteSelection.setLayout(null);
 		
-		JButton btnRoute1 = new JButton("New button");
-		btnRoute1.setBounds(12, 12, 233, 284);
-		panelRouteSelection.add(btnRoute1);
+		JLabel lblSelectedRoute = new JLabel("Select a route!");
+		lblSelectedRoute.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 16));
+		lblSelectedRoute.setBounds(551, 12, 196, 40);
+		panelRouteSelection.add(lblSelectedRoute);
 		
-		JButton btnRoute2 = new JButton("New button");
-		btnRoute2.setBounds(257, 12, 233, 284);
-		panelRouteSelection.add(btnRoute2);
-		
-		JLabel lblRouteName = new JLabel("Select a route!");
-		lblRouteName.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 16));
-		lblRouteName.setBounds(551, 12, 196, 40);
-		panelRouteSelection.add(lblRouteName);
-		
-		txtRouteDescription = new JTextField();
+		JTextField txtRouteDescription = new JTextField();
 		txtRouteDescription.setText("description of route here");
 		txtRouteDescription.setBounds(551, 54, 203, 60);
 		panelRouteSelection.add(txtRouteDescription);
@@ -138,19 +137,31 @@ public class chooseRouteScreen {
 		lblRescueOdds.setBounds(698, 265, 49, 15);
 		panelRouteSelection.add(lblRescueOdds);
 		
-		JButton btnConfirm = new JButton("Confirm");
-		btnConfirm.setBounds(626, 489, 162, 25);
-		frame.getContentPane().add(btnConfirm);
+		ArrayList<Route> routes = game.getCurrentIsland().possibleRoutes(island);
 		
-		textField = new JTextField();
-		textField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				System.out.println("a" + textField.getText());
-			}
-		});
-		textField.setBounds(353, 99, 114, 19);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		JButton btnRoute1 = new JButton("New button");
+		btnRoute1.addActionListener(e -> changeRouteInfo(routes.get(0), 
+				lblSelectedRoute, txtRouteDescription, lblDistanceVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
+		btnRoute1.setBounds(12, 12, 233, 284);
+		panelRouteSelection.add(btnRoute1);
+		
+		JButton btnRoute2 = new JButton("New button");
+		btnRoute2.setBounds(257, 12, 233, 284);
+		btnRoute1.addActionListener(e -> changeRouteInfo(routes.get(1), 
+				lblSelectedRoute, txtRouteDescription, lblDistanceVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
+		panelRouteSelection.add(btnRoute2);
+		if (routes.size() < 2) {
+			btnRoute2.setEnabled(false);
+		}
+	}
+	
+	private void changeRouteInfo(Route route, JLabel name, JTextField description, JLabel distance, JLabel pirate,  JLabel weather, JLabel rescue) {
+		name.setText(route.getRouteName());
+		description.setText(route.getDescription());
+		distance.setText(String.valueOf(route.getDistance()));
+		pirate.setText(String.valueOf(route.getPirateProb()));
+		weather.setText(String.valueOf(route.getWeatherProb()));
+		rescue.setText(String.valueOf(route.getRescueProb()));
+		selectedRoute = route;
 	}
 }
