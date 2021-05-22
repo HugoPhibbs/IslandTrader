@@ -39,8 +39,7 @@ public class VisitStoreScreen extends Screen{
 	// Core Class objects
 	private GameEnvironment gameEnvironment;
 	
-	// Swing objects
-	private JFrame frame;
+	// Swing objectsx
 	private JTextField numItemsTextField;
 	
 	private JLabel receiptJLabel;
@@ -55,22 +54,22 @@ public class VisitStoreScreen extends Screen{
 	private JPanel tablePanel;
 	
 	private JLabel howManyItemsLabel;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GameEnvironment ge = new GameEnvironment(null, null, null, null, null);
-					VisitStoreScreen window = new VisitStoreScreen(ge, null);
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					GameEnvironment ge = new GameEnvironment(null, null, null, null, null);
+//					VisitStoreScreen window = new VisitStoreScreen(ge, null);
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the application.
@@ -83,7 +82,7 @@ public class VisitStoreScreen extends Screen{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	protected void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1100, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,7 +107,9 @@ public class VisitStoreScreen extends Screen{
 		goBackButton.setBounds(949, 716, 118, 23);
 		goBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// call go back screen to handle
+				// Create a new coreOptions screen
+				getParent().show();
+				quit();
 			}
 		});
 		frame.getContentPane().add(goBackButton);
@@ -517,18 +518,7 @@ public class VisitStoreScreen extends Screen{
 		}
 		return true;
 	}
-
-	@Override
-	protected void initialize(Container container) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void initialize(String title) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }
 
 

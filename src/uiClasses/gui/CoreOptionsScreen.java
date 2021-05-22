@@ -14,9 +14,26 @@ import coreClasses.GameEnvironment;
 
 public class CoreOptionsScreen extends Screen{
 
-	private JFrame frame;
 	private JTable table;
 	private JPanel tablePanel;
+
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GameEnvironment ge = new GameEnvironment(null, null, null, null, null);
+					CoreOptionsScreen window = new CoreOptionsScreen(ge);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the application.
@@ -30,7 +47,7 @@ public class CoreOptionsScreen extends Screen{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	protected void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1100, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +67,7 @@ public class CoreOptionsScreen extends Screen{
 		JButton viewShipPropertiesButton = new JButton("View Ship Properties");
 		viewShipPropertiesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				viewShipDetails();
 			}
 		});
 		viewShipPropertiesButton.setBounds(25, 24, 400, 100);
@@ -63,6 +80,7 @@ public class CoreOptionsScreen extends Screen{
 		JButton visitStoreButton = new JButton("Visit <islandName> Store");
 		visitStoreButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				visitStore();
 			}
 		});
 		visitStoreButton.setBounds(25, 279, 400, 100);
@@ -83,12 +101,15 @@ public class CoreOptionsScreen extends Screen{
 		tablePanel.setBounds(512, 196, 546, 542);
 		frame.getContentPane().add(tablePanel);
 		tablePanel.setLayout(null);
+	
 	}
 	
 	public void createTable(String [][] rows, String[] columns) {
-		table = new JTable(rows, columns);
-		table.setBounds(168, 269, 1, 1);
-		tablePanel.add(table);
+		tablePanel.removeAll();
+		JTable newTable = new JTable(rows, columns);
+		newTable.setBounds(168, 269, 1, 1);
+		tablePanel.add(newTable);
+		newTable.setVisible(true);
 	}
 	
 	public void initializeGameInfoPanel() {
@@ -118,21 +139,22 @@ public class CoreOptionsScreen extends Screen{
 		gameFactsPanel.add(currentScoreLabel);
 	}
 	
-	public void vistStore() {
+	public void visitStore() {
 		 // TODO implement
-		Screen visitStoreScreen = new VisitStoreScreen(this.getGame());
+		hide();
+		Screen visitStoreScreen = new VisitStoreScreen(getGame(), this);
+		visitStoreScreen.show();
+		
 	}
 	
 	public void viewShipDetails() {
 		// TODO implement
 		// Show ship details in the info box opposite
-		
-		
-	}
-
-	@Override
-	protected void initialize(String title) {
-		// TODO Auto-generated method stub
-		
+		String[][] rows = { 
+				{"1", "3", "5"},
+				{"4", "6", "7"}
+		};
+		String[] columns ={"Test", "Test", "Test"};
+		createTable(rows, columns);
 	}
 }
