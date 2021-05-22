@@ -92,6 +92,7 @@ public class CoreOptionsScreen extends Screen{
 		optionsPanel.add(viewVisitOtherIslandsButton);
 		viewVisitOtherIslandsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				viewIsland();
 			}
 		});
 	}
@@ -144,6 +145,14 @@ public class CoreOptionsScreen extends Screen{
 		hide();
 		Screen visitStoreScreen = new VisitStoreScreen(getGame(), this);
 		visitStoreScreen.show();
+		
+	}
+	
+	public void viewIsland() {
+		 // TODO implement
+		hide();
+		Screen viewIslands = new ViewIslandsScreen(getGame());
+		viewIslands.show();
 		
 	}
 	
