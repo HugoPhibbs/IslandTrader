@@ -11,11 +11,14 @@ import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class chooseRouteScreen {
 
 	private JFrame frame;
 	private JTextField txtRouteDescription;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -138,5 +141,16 @@ public class chooseRouteScreen {
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.setBounds(626, 489, 162, 25);
 		frame.getContentPane().add(btnConfirm);
+		
+		textField = new JTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				System.out.println("a" + textField.getText());
+			}
+		});
+		textField.setBounds(353, 99, 114, 19);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
 	}
 }
