@@ -36,14 +36,19 @@ public class SetupScreen extends Screen {
 	public Ship selectedShip;
 	/** The instance of Island the player has selected to start at.*/
 	public Island selectedIsland;
-	/** JLabel that displays an error message when the name entered by the
-	 * player is not valid.
-	 */
+	/** JLabel that displays an error message when the name entered by the player is not valid.*/
 	private JLabel lblNameError;
+	/** JSlider used by the player to select the game duration.*/
 	private JSlider sliderDays;
+	/** JLabel that displays the amount of days the player has selected to play for using the slider.*/
 	private JLabel lblDisplayDays;
+	/** JButton used to confirm choices and move on to the main game.*/ 
 	private JButton btnConfirm;
+	/** String The name the player has entered.*/
 	private String playerName;
+	
+	
+	
 	/**
 	 * Create the application.
 	 */
@@ -117,6 +122,7 @@ public class SetupScreen extends Screen {
 		frame.getContentPane().add(lblNameError);
 	}
 	
+	/** Creates the JTextField the user enters their name into.*/
 	public void createTextField() {
 		JTextField textFieldName = new JTextField();
 		textFieldName.setFont(new Font("Dialog", Font.PLAIN, 16));
@@ -132,6 +138,10 @@ public class SetupScreen extends Screen {
 		frame.getContentPane().add(textFieldName);
 	}
 	
+	/**
+	 * Creates the JButton to confirm, which is only enabled when user input is valid.
+	 * Button takes you through to the game menu.
+	 */
 	private void createConfirmButton() {
 		btnConfirm = new JButton("Confirm Choices");
 		btnConfirm.addActionListener(e -> setupComplete());
@@ -139,7 +149,8 @@ public class SetupScreen extends Screen {
 		btnConfirm.setEnabled(false);
 		frame.getContentPane().add(btnConfirm);
 	}
-
+	
+	/** Creates the JSlider used to select the game duration.*/
 	private void createDaysSlider() {
 		sliderDays = new JSlider();
 		sliderDays.setPaintLabels(true);
@@ -147,10 +158,12 @@ public class SetupScreen extends Screen {
 		sliderDays.setMinimum(20);
 		sliderDays.setMaximum(50);
 		sliderDays.setBounds(693, 103, 299, 19);
+		sliderDays.setValue(30);
 		sliderDays.addChangeListener(e -> lblDisplayDays.setText(String.valueOf(sliderDays.getValue())));
 		frame.getContentPane().add(sliderDays);
 	}
 	
+	/** Creates the JPanel and all the components within it that are used for selecting a ship.*/
 	public void createPickShipComponents() {
 		
 		JPanel panelPickShip = new JPanel();
@@ -230,6 +243,7 @@ public class SetupScreen extends Screen {
 		
 	}
 	
+	/** Creates the JPanel and all the components within it that are used for selecting a starting Island.*/
 	public void createPickIslandComponents() {
 		
 		JPanel panelPickIsland = new JPanel();
@@ -278,7 +292,17 @@ public class SetupScreen extends Screen {
 		btnIsland5.setBounds(684, 12, 156, 226);
 		panelPickIsland.add(btnIsland5);
 	}
-
+	
+	/**
+	 * Method is called when the user clicks on a ship's button.
+	 * Method displays the information about the selected ship.
+	 * @param ship Ship
+	 * @param name JLabel
+	 * @param speed JLabel
+	 * @param crew JLabel
+	 * @param cargo JLabel
+	 * @param defense JLabel
+	 */
 	private void changeShipStats(Ship ship, JLabel name, JLabel speed, JLabel crew, JLabel cargo, JLabel defense) {
 		name.setText(ship.getName());
 		speed.setText(String.valueOf(ship.getSpeed()));
@@ -289,13 +313,26 @@ public class SetupScreen extends Screen {
 		readyToConfirm();
 	}
 	
+	/**
+	 * Method is called when the user clicks on an Island's button.
+	 * Method displays the information about the selected island.
+	 * @param island
+	 * @param name
+	 * @param islandInfo
+	 */
 	private void changeIslandInfo(Island island, JLabel name, JTextPane islandInfo) {
 		name.setText(island.getIslandName());
 		islandInfo.setText(island.toString());
 		selectedIsland = island;
 		readyToConfirm();
 	}
-
+	
+	/**
+	 * Verifies whether the name the user has entered is valid. If it is, error message is made invisible.
+	 * If the name isn't valid, error message is made visible. Method calls readyToConfirm so the confirm button
+	 * can be appropriately enabled or disabled. 
+	 * @param name String The name the player has entered.
+	 */
 	private void checkNameEntered(String name) {
 		
 		if (CheckValidInput.nameIsValid(name)) {
@@ -312,7 +349,7 @@ public class SetupScreen extends Screen {
 	 * button is enabled. 
 	 */
 	private void readyToConfirm() {
-		if (!lblNameError.isVisible() && selectedShip != null && selectedIsland != null) {
+		if (playerName != null &&CheckValidInput.nameIsValid(playerName) && selectedShip != null && selectedIsland != null) {
 			btnConfirm.setEnabled(true);
 		} else {
 			btnConfirm.setEnabled(false);
