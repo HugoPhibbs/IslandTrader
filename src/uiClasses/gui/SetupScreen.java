@@ -22,10 +22,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
-import coreClasses.GameEnvironment;
-import coreClasses.Island;
-import coreClasses.Ship;
-import coreClasses.CheckValidInput;
+import coreClasses.*;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -40,16 +37,13 @@ public class SetupScreen extends Screen {
 	public Ship selectedShip;
 	/** The instance of Island the player has selected to start at.*/
 	public Island selectedIsland;
-	/** The name entered by the player.*/
-	public String playerName;
 	/** JLabel that displays an error message when the name entered by the
 	 * player is not valid.
 	 */
 	private JLabel lblNameError;
 	private JTextField textFieldName;
-
-	
-	
+	private JSlider sliderDays;
+	private JLabel lblDisplayDays;
 	/**
 	 * Create the application.
 	 */
@@ -62,7 +56,7 @@ public class SetupScreen extends Screen {
 	 * Initialize the contents of the frame.
 	 */
 	@Override
-	protected void initialize() {	
+	protected void initialize() {
 		frame.setBounds(100, 100, 1100, 800);
 		
 		createMainLabels();
@@ -77,7 +71,8 @@ public class SetupScreen extends Screen {
 	 * Game Environment. GE then calls ui.play() to complete the setup process.
 	 */
 	private void setupComplete() {
-		
+		Player player = new Player(textFieldName.getText(), sliderDays.getValue());
+		game.onSetupFinished(player, selectedShip, sliderDays.getValue(), selectedIsland);
 	}
 		
 	public void createMainLabels() {
@@ -96,7 +91,7 @@ public class SetupScreen extends Screen {
 		lblAskDays.setBounds(26, 101, 377, 19);
 		frame.getContentPane().add(lblAskDays);
 		
-		JLabel lblDisplayDays = new JLabel("30");
+		lblDisplayDays = new JLabel("30");
 		lblDisplayDays.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDisplayDays.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblDisplayDays.setBounds(1008, 105, 44, 17);
@@ -120,6 +115,17 @@ public class SetupScreen extends Screen {
 	}
 	
 	public void createOtherComponents() {
+		textFieldName = new JTextField();
+		textFieldName.setFont(new Font("Dialog", Font.PLAIN, 16));
+		textFieldName.setBounds(693, 50, 359, 23);
+		textFieldName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				checkNameEntered();
+			}
+		});
+		frame.getContentPane().add(textFieldName);
+		
 		JButton btnNewButton = new JButton("Confirm Choices");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -129,24 +135,13 @@ public class SetupScreen extends Screen {
 		btnNewButton.setBounds(910, 739, 178, 25);
 		frame.getContentPane().add(btnNewButton);
 		
-		
-		textFieldName = new JTextField();
-		textFieldName.setFont(new Font("Dialog", Font.PLAIN, 16));
-		textFieldName.setBounds(693, 50, 359, 23);
-		textFieldName.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				System.out.println("a" + textFieldName.getText());
-			}
-		});
-		frame.getContentPane().add(textFieldName);
-		
-		JSlider sliderDays = new JSlider();
+		sliderDays = new JSlider();
 		sliderDays.setPaintLabels(true);
 		sliderDays.setMinorTickSpacing(1);
 		sliderDays.setMinimum(20);
 		sliderDays.setMaximum(50);
 		sliderDays.setBounds(693, 103, 299, 19);
+		sliderDays.addChangeListener(e -> lblDisplayDays.setText("40"));
 		frame.getContentPane().add(sliderDays);
 	}
 	
