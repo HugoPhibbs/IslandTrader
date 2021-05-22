@@ -253,27 +253,27 @@ public class SetupScreen extends Screen {
 		lblInfo.setBounds(869, 52, 70, 15);
 		panelPickIsland.add(lblInfo);
 
-		JButton btnIsland1 = new JButton("New button");
+		JButton btnIsland1 = new JButton("Cyprus");
 		btnIsland1.addActionListener(e -> changeIslandInfo(game.getIslandArray()[0], lblSelectedIsland, txtpnThisIslandInfo));
 		btnIsland1.setBounds(12, 12, 156, 226);
 		panelPickIsland.add(btnIsland1);
 		
-		JButton btnIsland2 = new JButton("New button");
+		JButton btnIsland2 = new JButton("Sicily");
 		btnIsland2.addActionListener(e -> changeIslandInfo(game.getIslandArray()[1], lblSelectedIsland, txtpnThisIslandInfo));
 		btnIsland2.setBounds(180, 12, 156, 226);
 		panelPickIsland.add(btnIsland2);
 		
-		JButton btnIsland3 = new JButton("New button");
+		JButton btnIsland3 = new JButton("Corsica");
 		btnIsland3.addActionListener(e -> changeIslandInfo(game.getIslandArray()[2], lblSelectedIsland, txtpnThisIslandInfo));
 		btnIsland3.setBounds(348, 12, 156, 226);
 		panelPickIsland.add(btnIsland3);
 		
-		JButton btnIsland4 = new JButton("New button");
+		JButton btnIsland4 = new JButton("Malta");
 		btnIsland4.addActionListener(e -> changeIslandInfo(game.getIslandArray()[3], lblSelectedIsland, txtpnThisIslandInfo));
 		btnIsland4.setBounds(516, 12, 156, 226);
 		panelPickIsland.add(btnIsland4);
 		
-		JButton btnIsland5 = new JButton("New button");
+		JButton btnIsland5 = new JButton("Ibiza");
 		btnIsland5.addActionListener(e -> changeIslandInfo(game.getIslandArray()[4], lblSelectedIsland, txtpnThisIslandInfo));
 		btnIsland5.setBounds(684, 12, 156, 226);
 		panelPickIsland.add(btnIsland5);
@@ -317,7 +317,6 @@ public class SetupScreen extends Screen {
 		} else {
 			btnConfirm.setEnabled(false);
 		}
-		System.out.println(btnConfirm.isEnabled());
 	}
 }
 
