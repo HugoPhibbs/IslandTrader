@@ -13,15 +13,12 @@ public class Gui implements GameUi{
 		screen = new SetupScreen(gameEnvironment);
 		screen.show();
 	}
-	
-	public void play() {
-		// TODO implement
-	}
 
 	@Override
 	public void playGame() {
-		// TODO Auto-generated method stub
-		
+		screen.quit(); // Disposes of SetupScreen instance.
+		screen = new CoreOptionsScreen(gameEnvironment);
+		screen.show();	
 	}
 
 	@Override
