@@ -41,7 +41,6 @@ public class SetupScreen extends Screen {
 	 * player is not valid.
 	 */
 	private JLabel lblNameError;
-	private JTextField textFieldName;
 	private JSlider sliderDays;
 	private JLabel lblDisplayDays;
 	private JButton btnConfirm;
@@ -118,14 +117,16 @@ public class SetupScreen extends Screen {
 	}
 	
 	public void createTextField() {
-		textFieldName = new JTextField();
+		JTextField textFieldName = new JTextField();
 		textFieldName.setFont(new Font("Dialog", Font.PLAIN, 16));
 		textFieldName.setBounds(693, 50, 359, 23);
-		textFieldName.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				checkNameEntered();
-			}
+		textFieldName.getDocument().addDocumentListener(new DocumentListener(){
+		    @Override
+		    public void insertUpdate(DocumentEvent e) { checkNameEntered(textFieldName.getText()); }
+		    @Override
+		    public void removeUpdate(DocumentEvent e) { checkNameEntered(textFieldName.getText()); }
+		    @Override
+		    public void changedUpdate(DocumentEvent e) { checkNameEntered(textFieldName.getText()); }
 		});
 		frame.getContentPane().add(textFieldName);
 	}
@@ -292,13 +293,11 @@ public class SetupScreen extends Screen {
 		selectedIsland = island;
 	}
 
-	private void checkNameEntered() {
-		System.out.println(textFieldName.getText());
-		if (CheckValidInput.nameIsValid(textFieldName.getText())) {
-			System.out.println("True");
+	private void checkNameEntered(String name) {
+		
+		if (CheckValidInput.nameIsValid(name)) {
 			lblNameError.setVisible(false);
 		} else {
-			System.out.println("False");
 			lblNameError.setVisible(false);
 		}
 	}
