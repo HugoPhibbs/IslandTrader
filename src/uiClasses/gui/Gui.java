@@ -1,6 +1,9 @@
 package uiClasses.gui;
 
 import uiClasses.GameUi;
+
+import java.awt.EventQueue;
+
 import coreClasses.GameEnvironment;
 
 public class Gui implements GameUi{

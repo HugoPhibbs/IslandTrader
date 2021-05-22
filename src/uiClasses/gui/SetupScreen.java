@@ -23,7 +23,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
 import coreClasses.*;
-
 import java.awt.Color;
 import java.awt.Container;
 
@@ -44,6 +43,7 @@ public class SetupScreen extends Screen {
 	private JSlider sliderDays;
 	private JLabel lblDisplayDays;
 	private JButton btnConfirm;
+	private String playerName;
 	/**
 	 * Create the application.
 	 */
@@ -73,7 +73,7 @@ public class SetupScreen extends Screen {
 	 * Game Environment. GE then calls ui.play() to complete the setup process.
 	 */
 	private void setupComplete() {
-		Player player = new Player("Test Name", sliderDays.getValue()); //TODO: Replace name once fix bug
+		Player player = new Player(playerName, sliderDays.getValue()); //TODO: Replace name once fix bug
 		game.onSetupFinished(player, selectedShip, sliderDays.getValue(), selectedIsland);
 	}
 		
@@ -113,6 +113,7 @@ public class SetupScreen extends Screen {
 		lblNameError.setForeground(Color.RED);
 		lblNameError.setFont(new Font("Dialog", Font.BOLD, 11));
 		lblNameError.setBounds(682, 77, 370, 14);
+		lblNameError.setVisible(false);
 		frame.getContentPane().add(lblNameError);
 	}
 	
@@ -135,7 +136,7 @@ public class SetupScreen extends Screen {
 		btnConfirm = new JButton("Confirm Choices");
 		btnConfirm.addActionListener(e -> setupComplete());
 		btnConfirm.setBounds(910, 739, 178, 25);
-		btnConfirm.setEnabled(false);
+		btnConfirm.setEnabled(true);
 		frame.getContentPane().add(btnConfirm);
 	}
 
@@ -229,15 +230,6 @@ public class SetupScreen extends Screen {
 		
 	}
 	
-	private void changeShipStats(Ship ship, JLabel name, JLabel speed, JLabel crew, JLabel cargo, JLabel defense) {
-		name.setText(ship.getName());
-		speed.setText(String.valueOf(ship.getSpeed()));
-		crew.setText(String.valueOf(ship.getCrewSize()));
-		cargo.setText(String.valueOf(ship.getRemainingItemSpace()));
-		defense.setText(String.valueOf(ship.getMaxDefenseCapability()));
-		selectedShip = ship;
-	}
-	
 	public void createPickIslandComponents() {
 		
 		JPanel panelPickIsland = new JPanel();
@@ -286,11 +278,22 @@ public class SetupScreen extends Screen {
 		btnIsland5.setBounds(684, 12, 156, 226);
 		panelPickIsland.add(btnIsland5);
 	}
+
+	private void changeShipStats(Ship ship, JLabel name, JLabel speed, JLabel crew, JLabel cargo, JLabel defense) {
+		name.setText(ship.getName());
+		speed.setText(String.valueOf(ship.getSpeed()));
+		crew.setText(String.valueOf(ship.getCrewSize()));
+		cargo.setText(String.valueOf(ship.getRemainingItemSpace()));
+		defense.setText(String.valueOf(ship.getMaxDefenseCapability()));
+		selectedShip = ship;
+		readyToConfirm();
+	}
 	
 	private void changeIslandInfo(Island island, JLabel name, JTextPane islandInfo) {
 		name.setText(island.getIslandName());
 		islandInfo.setText(island.toString());
 		selectedIsland = island;
+		readyToConfirm();
 	}
 
 	private void checkNameEntered(String name) {
@@ -298,8 +301,10 @@ public class SetupScreen extends Screen {
 		if (CheckValidInput.nameIsValid(name)) {
 			lblNameError.setVisible(false);
 		} else {
-			lblNameError.setVisible(false);
+			lblNameError.setVisible(true);
 		}
+		playerName = name;
+		readyToConfirm();
 	}
 	
 	/**
@@ -312,6 +317,7 @@ public class SetupScreen extends Screen {
 		} else {
 			btnConfirm.setEnabled(false);
 		}
+		System.out.println(btnConfirm.isEnabled());
 	}
 }
 
