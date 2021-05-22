@@ -41,8 +41,8 @@ public class ViewIslandsScreen extends Screen {
 	}
 	
 	private void viewRoutes() {
-		this.hide();
 		Screen chooseRoute = new chooseRouteScreen(game, selectedIsland);
+		this.hide();
 		chooseRoute.show();
 	}
 	

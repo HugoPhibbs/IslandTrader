@@ -136,7 +136,7 @@ public class SetupScreen extends Screen {
 		btnConfirm = new JButton("Confirm Choices");
 		btnConfirm.addActionListener(e -> setupComplete());
 		btnConfirm.setBounds(910, 739, 178, 25);
-		btnConfirm.setEnabled(true);
+		btnConfirm.setEnabled(false);
 		frame.getContentPane().add(btnConfirm);
 	}
 

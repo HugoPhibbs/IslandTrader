@@ -22,7 +22,6 @@ import java.awt.event.ActionEvent;
 
 public class chooseRouteScreen extends Screen {
 
-	private JFrame frame;
 	/** the island the player os viewing routes to.*/
 	private Island island;
 	/** Route selected by the player.*/
@@ -51,12 +50,12 @@ public class chooseRouteScreen extends Screen {
 	
 	private void createMainLabels() {
 		
-		JLabel lblTravelling = new JLabel("You are travelling to ");
-		lblTravelling.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblTravelling.setBounds(121, 28, 187, 19);
-		frame.getContentPane().add(lblTravelling);
+		JLabel lblIsland = new JLabel("You are travelling to ");
+		lblIsland.setFont(new Font("Dialog", Font.BOLD, 16));
+		lblIsland.setBounds(121, 28, 187, 19);
+		frame.getContentPane().add(lblIsland);
 		
-		JLabel lblIslandName = new JLabel("<Island Name>");
+		JLabel lblIslandName = new JLabel(island.getIslandName());
 		lblIslandName.setFont(new Font("Dialog", Font.BOLD, 20));
 		lblIslandName.setBounds(121, 61, 175, 24);
 		frame.getContentPane().add(lblIslandName);
@@ -77,6 +76,10 @@ public class chooseRouteScreen extends Screen {
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.setBounds(626, 489, 162, 25);
 		frame.getContentPane().add(btnConfirm);
+		
+		JButton btnBack = new JButton("Go Back");
+		btnBack.setBounds(12, 489, 162, 25);
+		frame.getContentPane().add(btnBack);
 	}
 	
 	public void createRouteChooseComponents() {
@@ -94,6 +97,7 @@ public class chooseRouteScreen extends Screen {
 		JTextField txtRouteDescription = new JTextField();
 		txtRouteDescription.setText("description of route here");
 		txtRouteDescription.setBounds(551, 54, 203, 60);
+		txtRouteDescription.setEditable(false);
 		panelRouteSelection.add(txtRouteDescription);
 		txtRouteDescription.setColumns(10);
 		
@@ -137,21 +141,20 @@ public class chooseRouteScreen extends Screen {
 		lblRescueOdds.setBounds(698, 265, 49, 15);
 		panelRouteSelection.add(lblRescueOdds);
 		
-		ArrayList<Route> routes = game.getCurrentIsland().possibleRoutes(island);
+		ArrayList<Route> routeList = game.getCurrentIsland().possibleRoutes(island);
 		
 		JButton btnRoute1 = new JButton("New button");
-		btnRoute1.addActionListener(e -> changeRouteInfo(routes.get(0), 
+		btnRoute1.addActionListener(e -> changeRouteInfo(routeList.get(0), 
 				lblSelectedRoute, txtRouteDescription, lblDistanceVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
 		btnRoute1.setBounds(12, 12, 233, 284);
 		panelRouteSelection.add(btnRoute1);
 		
-		JButton btnRoute2 = new JButton("New button");
-		btnRoute2.setBounds(257, 12, 233, 284);
-		btnRoute1.addActionListener(e -> changeRouteInfo(routes.get(1), 
-				lblSelectedRoute, txtRouteDescription, lblDistanceVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
-		panelRouteSelection.add(btnRoute2);
-		if (routes.size() < 2) {
-			btnRoute2.setEnabled(false);
+		if (routeList.size() == 2) {
+			JButton btnRoute2 = new JButton("New button");
+			btnRoute2.setBounds(257, 12, 233, 284);
+			btnRoute1.addActionListener(e -> changeRouteInfo(routeList.get(1), 
+					lblSelectedRoute, txtRouteDescription, lblDistanceVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
+			panelRouteSelection.add(btnRoute2);
 		}
 	}
 	

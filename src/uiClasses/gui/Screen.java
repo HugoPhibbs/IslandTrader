@@ -42,7 +42,6 @@ public abstract class Screen {
 		this.parent = parent;
 		
 		setFrameCharacteristics();
-		initialize();
 	}
 	/**
 	 * Sets the characteristics of the frame that are common to all screens.
