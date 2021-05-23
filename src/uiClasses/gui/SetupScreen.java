@@ -33,9 +33,9 @@ import javax.swing.JList;
 public class SetupScreen extends Screen {
 
 	/** The instance of Ship the player has selected.*/
-	public Ship selectedShip;
+	private Ship selectedShip;
 	/** The instance of Island the player has selected to start at.*/
-	public Island selectedIsland;
+	private Island selectedIsland;
 	/** JLabel that displays an error message when the name entered by the player is not valid.*/
 	private JLabel lblNameError;
 	/** JSlider used by the player to select the game duration.*/
@@ -78,11 +78,11 @@ public class SetupScreen extends Screen {
 	 * Game Environment. GE then calls ui.play() to complete the setup process.
 	 */
 	private void setupComplete() {
-		Player player = new Player(playerName, sliderDays.getValue()); //TODO: Replace name once fix bug
+		Player player = new Player(playerName, Gui.STARTING_MONEY); //TODO: Replace name once fix bug
 		game.onSetupFinished(player, selectedShip, sliderDays.getValue(), selectedIsland);
 	}
 		
-	public void createMainLabels() {
+	private void createMainLabels() {
 		JLabel lblWelcome = new JLabel("Welcome to Island Trader!");
 		lblWelcome.setFont(new Font("Dialog", Font.BOLD, 22));
 		lblWelcome.setBounds(321, 0, 332, 27);
@@ -123,7 +123,7 @@ public class SetupScreen extends Screen {
 	}
 	
 	/** Creates the JTextField the user enters their name into.*/
-	public void createTextField() {
+	private void createTextField() {
 		JTextField textFieldName = new JTextField();
 		textFieldName.setFont(new Font("Dialog", Font.PLAIN, 16));
 		textFieldName.setBounds(693, 50, 359, 23);
@@ -164,7 +164,7 @@ public class SetupScreen extends Screen {
 	}
 	
 	/** Creates the JPanel and all the components within it that are used for selecting a ship.*/
-	public void createPickShipComponents() {
+	private void createPickShipComponents() {
 		
 		JPanel panelPickShip = new JPanel();
 		panelPickShip.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -244,7 +244,7 @@ public class SetupScreen extends Screen {
 	}
 	
 	/** Creates the JPanel and all the components within it that are used for selecting a starting Island.*/
-	public void createPickIslandComponents() {
+	private void createPickIslandComponents() {
 		
 		JPanel panelPickIsland = new JPanel();
 		panelPickIsland.setBorder(new LineBorder(new Color(0, 0, 0)));

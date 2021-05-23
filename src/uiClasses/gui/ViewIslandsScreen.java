@@ -98,7 +98,7 @@ public class ViewIslandsScreen extends Screen {
 
 	/** Creates the miscellaneous components the screen requires.*/
 	private void createOtherComponenets() {
-		JButton btnBack = new JButton("GO BACK");
+		JButton btnBack = new JButton("Go Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CoreOptionsScreen coreOptionsScreen = new CoreOptionsScreen(game);
@@ -109,7 +109,7 @@ public class ViewIslandsScreen extends Screen {
 		btnBack.setBounds(12, 466, 117, 25);
 		frame.getContentPane().add(btnBack);
 		
-		JButton btnTravel = new JButton("TRAVEL TO SELECTED ISLAND");
+		JButton btnTravel = new JButton("Travel to selected island");
 		btnTravel.setBounds(554, 466, 234, 25);
 		btnTravel.addActionListener(e -> viewRoutes());
 		frame.getContentPane().add(btnTravel);

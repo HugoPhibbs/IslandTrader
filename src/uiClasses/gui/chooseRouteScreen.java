@@ -92,7 +92,7 @@ public class chooseRouteScreen extends Screen {
 	}
 	
 	/** Creates the Jpanel and its components used to select a route.*/
-	public void createRouteChooseComponents() {
+	private void createRouteChooseComponents() {
 		JPanel panelRouteSelection = new JPanel();
 		panelRouteSelection.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelRouteSelection.setBounds(12, 177, 776, 308);
