@@ -160,6 +160,7 @@ public class Ship {
     	return result;
     }
     
+    ///////////////////////////////// MANAGING ROUTES //////////////////////////////////////
     
     /** Method that returns the total wage cost for traveling along a route
      * 
