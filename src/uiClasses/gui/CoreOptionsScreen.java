@@ -1,22 +1,24 @@
 package uiClasses.gui;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
+import javax.swing.JTextPane;
 
 import coreClasses.GameEnvironment;
 
 public class CoreOptionsScreen extends Screen{
 
-	private JTable table;
 	private JPanel tablePanel;
-
+	private JLabel tablePanelLabel;
 	
 	/**
 	 * Launch the application.
@@ -47,18 +49,23 @@ public class CoreOptionsScreen extends Screen{
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@Override
 	protected void initialize() {
-		frame = new JFrame();
 		frame.setBounds(100, 100, 1100, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		
+		
+		JLabel welcomeLabel = new JLabel(String.format("Welcome to %s, select an option to interact with!", game.getCurrentIsland().getIslandName()));
+		welcomeLabel.setFont(new Font("Dialog", Font.BOLD, 22));
+		welcomeLabel.setBounds(150, 20, 900, 30);
+		frame.getContentPane().add(welcomeLabel);
 		
 		initializeOptionsPanel();
 		initializeTablePanel();
 		initializeGameInfoPanel();
 	}
 	
-	public void initializeOptionsPanel() {
+	private void initializeOptionsPanel() {
 		JPanel optionsPanel = new JPanel();
 		optionsPanel.setBounds(31, 196, 469, 542);
 		frame.getContentPane().add(optionsPanel);
@@ -67,17 +74,23 @@ public class CoreOptionsScreen extends Screen{
 		JButton viewShipPropertiesButton = new JButton("View Ship Properties");
 		viewShipPropertiesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				viewShipDetails();
+				viewShipProperties();
 			}
 		});
 		viewShipPropertiesButton.setBounds(25, 24, 400, 100);
 		optionsPanel.add(viewShipPropertiesButton);
 		
 		JButton viewBoughtItemsButton = new JButton("View Bought Items");
+		viewBoughtItemsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				viewPrevItems();
+			}
+		});
 		viewBoughtItemsButton.setBounds(25, 151, 400, 100);
 		optionsPanel.add(viewBoughtItemsButton);
 		
-		JButton visitStoreButton = new JButton("Visit <islandName> Store");
+//		JButton visitStoreButton = new JButton("Visit <islandName> Store");
+		JButton visitStoreButton = new JButton(String.format("Visit %s's Store", game.getCurrentIsland().getIslandName()));
 		visitStoreButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				visitStore();
@@ -97,50 +110,59 @@ public class CoreOptionsScreen extends Screen{
 		});
 	}
 	
-	public void initializeTablePanel() {
+	private void initializeTablePanel() {
 		this.tablePanel = new JPanel();
 		tablePanel.setBounds(512, 196, 546, 542);
 		frame.getContentPane().add(tablePanel);
 		tablePanel.setLayout(null);
-	
+		
+		this.tablePanelLabel = new JLabel();
+		tablePanelLabel.setBounds(100, 10, 200, 20);
+		tablePanel.add(tablePanelLabel);
 	}
 	
-	public void createTable(String [][] rows, String[] columns) {
+	private void createTable(String [][] rows, String[] columns) {
+		// Create a new table
 		tablePanel.removeAll();
+		
 		JTable newTable = new JTable(rows, columns);
-		newTable.setBounds(168, 269, 1, 1);
-		tablePanel.add(newTable);
-		newTable.setVisible(true);
+		newTable.setBounds(0, 100, 200, 200);
+		
+		JScrollPane sp = new JScrollPane(newTable);
+		sp.setSize(200, 200);s
+		
+		tablePanel.add(sp);
 	}
 	
-	public void initializeGameInfoPanel() {
+	private void initializeGameInfoPanel() {
 		JPanel gameFactsPanel = new JPanel();
-		gameFactsPanel.setBounds(31, 25, 1026, 145);
+		gameFactsPanel.setBounds(31, 40, 1026, 145);
 		frame.getContentPane().add(gameFactsPanel);
 		gameFactsPanel.setLayout(null);
 		
-		JLabel playerNameLabel = new JLabel("Player: <playerName>");
-		playerNameLabel.setBounds(24, 12, 209, 26);
-		gameFactsPanel.add(playerNameLabel);
+		JLabel gameFactsLabel = new JLabel("Quick game facts!");
+		gameFactsLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		gameFactsLabel.setBounds(24, 45, 400, 18);
+		gameFactsPanel.add(gameFactsLabel);
 		
-		JLabel playerCashLabel = new JLabel("Cash: <playerCash>");
-		playerCashLabel.setBounds(24, 61, 247, 15);
+		JLabel playerNameLabel = new JLabel(String.format("Player Name: %s", game.getPlayer().getName()));
+		playerNameLabel.setBounds(24, 65, 400, 15);	
+		gameFactsPanel.add(playerNameLabel);	
+		
+		JLabel playerCashLabel = new JLabel(String.format("Cash in possession: %s Pirate Bucks", game.getPlayer().getMoneyBalance()));
+		playerCashLabel.setBounds(24, 80, 400, 15);
 		gameFactsPanel.add(playerCashLabel);
 		
-		JLabel daysRemainingLabel = new JLabel("Days Remaining: <daysRemaining>");
-		daysRemainingLabel.setBounds(24, 88, 315, 15);
+		JLabel daysRemainingLabel = new JLabel(String.format("Days Remaining: %s", game.getDaysRemaining()));
+		daysRemainingLabel.setBounds(24, 95, 400, 15);
 		gameFactsPanel.add(daysRemainingLabel);
 		
-		JLabel currentIslandLabel = new JLabel("Current island: <currentIsland>");
-		currentIslandLabel.setBounds(351, 105, 194, 15);
+		JLabel currentIslandLabel = new JLabel(String.format("Current Island: %s", game.getCurrentIsland().getIslandName()));
+		currentIslandLabel.setBounds(24, 110, 400, 15);
 		gameFactsPanel.add(currentIslandLabel);
-		
-		JLabel currentScoreLabel = new JLabel("Current Score");
-		currentScoreLabel.setBounds(624, 105, 285, 15);
-		gameFactsPanel.add(currentScoreLabel);
 	}
 	
-	public void visitStore() {
+	private void visitStore() {
 		 // TODO implement
 		hide();
 		Screen visitStoreScreen = new VisitStoreScreen(getGame(), this);
@@ -148,7 +170,7 @@ public class CoreOptionsScreen extends Screen{
 		
 	}
 	
-	public void viewIsland() {
+	private void viewIsland() {
 		 // TODO implement
 		hide();
 		Screen viewIslands = new ViewIslandsScreen(getGame());
@@ -156,14 +178,41 @@ public class CoreOptionsScreen extends Screen{
 		
 	}
 	
-	public void viewShipDetails() {
+	private void viewPrevItems(){
+		tablePanelLabel.setText("Previously bought items!");
+		
+		// Get the purchased of a Player and create an array containing column titles
+		String[][] purchasedItems = game.getPlayer().purchasedItemsToArray();
+		
+		if (purchasedItems == null){
+			tablePanel.removeAll();
+			JLabel noPrevItemsLabel = new JLabel("You haven't bought any items yet, buy some at any store!");
+			noPrevItemsLabel.setBounds(33, 100, 200, 150);
+			tablePanel.add(noPrevItemsLabel);
+		}
+		else {
+			String[] columns = {"Name", "Purchase Price", "Consignment Price"};
+			
+			// Create the table containing all the previously bought items of a player
+			createTable(purchasedItems, columns);
+		}
+	}
+	
+	private void viewShipProperties() {
 		// TODO implement
 		// Show ship details in the info box opposite
-		String[][] rows = { 
-				{"1", "3", "5"},
-				{"4", "6", "7"}
-		};
-		String[] columns ={"Test", "Test", "Test"};
-		createTable(rows, columns);
+//		String[][] rows = { 
+//				{"1", "3", "5"},
+//				{"4", "6", "7"}
+//		};
+//		String[] columns ={"Test", "Test", "Test"};
+//		createTable(rows, columns);
+		tablePanel.removeAll();
+		
+		JTextPane detailPane = new JTextPane();
+		detailPane.setBounds(168, 10, 200, 200);
+		detailPane.setText(game.getPlayer().getShip().getDescription());
+		//detailPane.setText("This is just some test text \n with a line break!");
+		tablePanel.add(detailPane);
 	}
 }
