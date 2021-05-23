@@ -337,7 +337,7 @@ public class Store {
     
     //////////////////////// DEALING WITH CATALOGUES /////////////////////////////
     
-    /** Converts a sell or buy catalogue into an an Array that can be easily displayed by UI
+    /** Converts a sell or buy catalogue into an an Array that can be easily displayed by cmd line UI
      * 
      * @param catalogue HashMap<String, HashMap<String, Integer>> catalogue to be parsed into an Array
      * @return Array for what you can buy or sell from a store
@@ -348,7 +348,7 @@ public class Store {
     	 *  used bellow code from online https://www.geeksforgeeks.org/traverse-through-a-hashmap-in-java/
     	 */
     	for (Map.Entry<String, HashMap<String, Integer>> mapElement : catalogue.entrySet()) {
-    		// Convert a nested HashMap into an Array represnetion
+    		// Convert a nested HashMap into an Array representation
     		String itemName = (String) mapElement.getKey();
     		int itemPrice = catalogue.get(itemName).get("price");
     		int itemSpaceTaken = catalogue.get(itemName).get("spaceTaken");
@@ -365,6 +365,8 @@ public class Store {
         }
     	return displayArrayList.toArray(new String[displayArrayList.size()]);
     }
+    
+    
     
     /** Creates and returns a string representation of the given catalogue, useful for giving a quick overview
      * of what a store buys or sells. Is called by island.fullInfo.
@@ -405,7 +407,7 @@ public class Store {
     
     ////////////////////////// GETTER AND SETTER METHODS ///////////////////////////////
     
-    /** Gets the visit options for a store, used by ui
+    /** Gets the visit options for a store, used by cmd ui
      * 
      * @return String[] for the options of visiting a store
      */
