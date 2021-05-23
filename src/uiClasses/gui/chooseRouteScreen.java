@@ -82,6 +82,13 @@ public class chooseRouteScreen extends Screen {
 		JButton btnBack = new JButton("Go Back");
 		btnBack.setBounds(12, 489, 162, 25);
 		frame.getContentPane().add(btnBack);
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ViewIslandsScreen viewIslandsScreen = new ViewIslandsScreen(game);
+				viewIslandsScreen.show();
+				quit();
+			}
+		});
 	}
 	
 	/** Creates the Jpanel and its components used to select a route.*/

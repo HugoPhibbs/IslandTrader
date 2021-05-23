@@ -101,6 +101,9 @@ public class ViewIslandsScreen extends Screen {
 		JButton btnBack = new JButton("GO BACK");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				CoreOptionsScreen coreOptionsScreen = new CoreOptionsScreen(game);
+				coreOptionsScreen.show();
+				quit();
 			}
 		});
 		btnBack.setBounds(12, 466, 117, 25);
