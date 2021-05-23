@@ -28,7 +28,7 @@ public class Gui implements GameUi{
 
 	@Override
 	public void pirateAttack() {
-		// TODO Auto-generated method stub
-		
+		Screen pirateScreen = new PirateScreen(gameEnvironment);
+		pirateScreen.show();
 	}
 }

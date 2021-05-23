@@ -17,6 +17,9 @@ import java.awt.event.ActionEvent;
 public class PirateScreen extends Screen {
 
 	private Pirates pirate;
+	private JLabel lblDiceOutcome;
+	private JLabel lblAttackOutcome;
+	
 	/**
 	 * Create the application.
 	 */
@@ -38,13 +41,19 @@ public class PirateScreen extends Screen {
 		createLabels();
 	}
 	
+	private void onDiceRoll() {
+		if (lblDiceOutcome.getText() == "") {
+			int diceOutcome = Pirates.rollDice();
+			lblDiceOutcome.setText(String.format("You got a %d", diceOutcome));
+			String outcome = pirate.attackShip(diceOutcome, game.getShip());
+			lblAttackOutcome.setText(outcome);
+		}
+	}
+	
 
 	private void createRollDiceButton( ) {
 		JButton btnRollDice = new JButton("Roll the Dice");
-		btnRollDice.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		btnRollDice.addActionListener(e -> onDiceRoll());
 		btnRollDice.setFont(new Font("Dialog", Font.BOLD, 18));
 		btnRollDice.setBounds(213, 148, 210, 160);
 		frame.getContentPane().add(btnRollDice);
@@ -68,12 +77,12 @@ public class PirateScreen extends Screen {
 		lblInstructions.setBounds(81, 76, 483, 60);
 		frame.getContentPane().add(lblInstructions);
 		
-		JLabel lblDiceOutcome = new JLabel("You got a -");
+		lblDiceOutcome = new JLabel("");
 		lblDiceOutcome.setFont(new Font("Dialog", Font.BOLD, 17));
 		lblDiceOutcome.setBounds(269, 320, 118, 20);
 		frame.getContentPane().add(lblDiceOutcome);
 		
-		JLabel lblAttackOutcome = new JLabel("Outcome");
+		lblAttackOutcome = new JLabel("");
 		lblAttackOutcome.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblAttackOutcome.setBounds(23, 352, 600, 25);
 		frame.getContentPane().add(lblAttackOutcome);
