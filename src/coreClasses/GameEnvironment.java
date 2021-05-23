@@ -1,6 +1,7 @@
 package coreClasses;
 
 import java.util.Random;
+import java.lang.Math;
 
 import uiClasses.GameUi;
 import java.util.ArrayList;
@@ -106,13 +107,17 @@ public class GameEnvironment {
     	// Repair ship and pay wages before setting sail.
 		ship.repairShip();
 		ship.payWages(route, player);
-		// Set sail
-		int routeDuration = route.getDistance() / ship.getSpeed();
+		// Set sail - When calculating sail time in days, rounds up
+		int routeDuration = calculateDaysSailing(route);
 		randomEvents(route);
 		// Arrive at new island
 		reduceDaysRemaining(routeDuration);
 		setCurrentIsland(destination);	
     }
+	
+	public int calculateDaysSailing(Route route) {
+		return (int)Math.ceil((float)route.getDistance() / (float)ship.getSpeed());
+	}
     
 	/** Performs random events while on route to another island
 	 * Based on the probabilities of each event for the specific route, uses a random number to decide

@@ -50,8 +50,10 @@ public class ChooseRouteScreen extends Screen {
 	}
 	
 	private void onConfirm() {
-		game.sailToNewIsland(selectedRoute, island);
-		
+		this.quit();
+		SailingScreen sailingScreen = new SailingScreen(game, island, selectedRoute);
+		sailingScreen.show();
+		sailingScreen.sail();
 	}
 	
 	/** Creates the labels on the screen not in a sub container.*/
