@@ -1,6 +1,6 @@
 package uiClasses.gui;
 
-import java.awt.EventQueue; 
+import java.awt.EventQueue;  
 
 
 import javax.swing.JFrame;
@@ -36,10 +36,7 @@ import javax.swing.JScrollBar;
 
 public class VisitStoreScreen extends Screen{
 	
-	// Core Class objects
-	private GameEnvironment gameEnvironment;
-	
-	// Swing objectsx
+	// Swing objects
 	private JTextField numItemsTextField;
 	
 	private JLabel receiptJLabel;
@@ -54,22 +51,22 @@ public class VisitStoreScreen extends Screen{
 	private JPanel tablePanel;
 	
 	private JLabel howManyItemsLabel;
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					GameEnvironment ge = new GameEnvironment(null, null, null, null, null);
-//					VisitStoreScreen window = new VisitStoreScreen(ge, null);
-//					window.frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GameEnvironment ge = new GameEnvironment(null, null, null, null, null);
+					VisitStoreScreen window = new VisitStoreScreen(ge, null);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the application.
@@ -82,22 +79,20 @@ public class VisitStoreScreen extends Screen{
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@Override
 	protected void initialize() {
-		frame = new JFrame();
 		frame.setBounds(100, 100, 1100, 800);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 		
 		// Initialize all labels and buttons that aren't in panels
 		
 		// Label for welcoming user to store
-		//JLabel welcomeLabel = new JLabel(String.format("Hello %s, welcome to the %s store", gameEnvironment.getPlayer().getName(), gameEnvironment.getCurrentIsland().getIslandStore().getName()));
-		JLabel welcomeLabel = new JLabel("Hello <playerName>, welcome to the <storeName> store");
+		JLabel welcomeLabel = new JLabel(String.format("Hello %s, welcome to the %s store", game.getPlayer().getName(), game.getCurrentIsland().getIslandStore().getName()));
 		welcomeLabel.setBounds(301, 23, 555, 14);
 		frame.getContentPane().add(welcomeLabel);
 		
 		// need to have a listener here, because cash could change!
-		this.balanceJLabel = new JLabel("Your current balance is <player.getBalance()>\r\n");
+//		this.balanceJLabel = new JLabel("Your current balance is <player.getBalance()>\r\n");
+		this.balanceJLabel = new JLabel(String.format("Your current balance is %s", game.getPlayer().getMoneyBalance()));
 		balanceJLabel.setBounds(34, 89, 265, 23);
 		updatePlayerBalance();
 		frame.getContentPane().add(balanceJLabel);
@@ -107,8 +102,11 @@ public class VisitStoreScreen extends Screen{
 		goBackButton.setBounds(949, 716, 118, 23);
 		goBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Create a new coreOptions screen
-				getParent().show();
+				// Create a new coreOptions screen, and delete this current screen
+				// If we want to use a parent screen in the future, ie having two ways to get into
+				// The visit store screen, we will need to change the bellow code
+				CoreOptionsScreen coreOptionsScreen = new CoreOptionsScreen(game);
+				coreOptionsScreen.show();
 				quit();
 			}
 		});
@@ -181,6 +179,7 @@ public class VisitStoreScreen extends Screen{
 		// Set Panel to invisble until a user selects buy or sell items in the main options
 		buySellPanel.setVisible(false);
 		
+		
 		//TODO make colour red
 		// Label to ask user how many items they want to buy
 		this.howManyItemsLabel = new JLabel();
@@ -238,7 +237,7 @@ public class VisitStoreScreen extends Screen{
 	 */
 	private void initializeTablePanel() {
 		this.tablePanel = new JPanel();
-		tablePanel.setBounds(562, 124, 504, 352);
+		tablePanel.setBounds(562, 124, 504, 500);
 		frame.getContentPane().add(tablePanel);
 		tablePanel.setLayout(null);
 		
@@ -261,13 +260,13 @@ public class VisitStoreScreen extends Screen{
 	 * has been initialized to sell or buy items, NOT to show previously bought items
 	 * @return JTable that was created
 	 */
-	private JTable createTable(String [][] rows, String[] columns, boolean canSelect){
+	private JTable createTable(String [][] rows, String[] columns){
 		// Remove content from panel from last use
 		tablePanel.removeAll();
 		
 		// Create table
 		JTable itemsTable = new JTable(rows, columns);
-		itemsTable.setBounds(33, 100 , 447, 342);
+		itemsTable.setBounds(0, 100 , 447, 342);
 		
 		/* Create a ScrollPane that contains the Table, this is done to
 		 * ensure column titles are shown 
@@ -293,19 +292,27 @@ public class VisitStoreScreen extends Screen{
 		howManyItemsLabel.setText("");
 		
 		// Get the purchased of a Player and create an array containing column titles
-		//String[][] purchasedItems =  gameEnvironment.getPlayer().purchasedItemsToArray();
+		String[][] purchasedItems = game.getPlayer().purchasedItemsToArray();
+		if (purchasedItems == null){
+			tablePanel.removeAll();
+			JLabel noPrevItemsLabel = new JLabel("You haven't bought any items yet, you can buy some at any store!");
+			noPrevItemsLabel.setBounds(33, 100, 200, 15);
+			tablePanel.add(noPrevItemsLabel);
+		}
+		else {
+			String[] columns = {"Name", "Purchase Price", "Consignment Price"};
+			
+			// Create the table containing all the previously bought items of a player
+			createTable(purchasedItems, columns);
+		}
 		// need to handle case where player has no items bought, table should be left blank with just a message
-		String[][] purchasedItems = {
-				{"TEST", "DATA", "ONLY"},
-				{"Gold", "100", "N/A"},
-				{"Silver", "100", "N/A"},
-				{"Gold", "100", "N/A"},
-				{"Gold", "100", "N/A"},
-		};
-		String[] columns = {"Name", "Purchase Price", "Consignment Price"};
-		
-		// Create the table containing all the previously bought items of a player
-		createTable(purchasedItems, columns, false);
+//		String[][] purchasedItems = {
+//				{"TEST", "DATA", "ONLY"},
+//				{"Gold", "100", "N/A"},
+//				{"Silver", "100", "N/A"},
+//				{"Gold", "100", "N/A"},
+//				{"Gold", "100", "N/A"},
+//		};
 	}
 	
 	/** Method to update the balance of a player that is shown at the top of the frame
@@ -313,7 +320,7 @@ public class VisitStoreScreen extends Screen{
 	 */
 	private void updatePlayerBalance() {
 		//balanceJLabel.setText(String.format("Player has a balance of : %d", gameEnvironment.getPlayer().getMoneyBalance()));
-		balanceJLabel.setText(String.format("Player has a balance of : %d", 420));
+		balanceJLabel.setText(String.format("Your current balance is %s", game.getPlayer().getMoneyBalance()));
 	}
 	
 	/** Method to begin a transaction between a player and a store
@@ -340,21 +347,13 @@ public class VisitStoreScreen extends Screen{
 		String operationCap = operation.substring(0, 1).toUpperCase() + operation.substring(1);
 		buySellItemsButton.setText(String.format("%s Items", operationCap));
 		
-		// Get the catalogue for the particular operation that is being done with a store
-		//String[][] catalogueArray = gameEnvironment.getCurrentIsland().getIslandStore().catalogueToArray(operation);
-		//itemsJList.setListData(catalogueArray);
+		// Get the catalogue for the particular operation that is being done with a store\
 		
-		String[][] items = {
-				{"TEST", "DATA", "ONLY", "N/A"},
-				{"Gold", "100", "N/A", "N/A"},
-				{"Upgrade", "100", "N/A", "100"},
-				{"Gold", "100", "N/A", "N/A"},
-				{"Gold", "100", "N/A", "N/A"},
-		};
-		String[] purchasedItems = {"Name", "Price", "Space Taken", "Defense Boost"};
+		String[][] catalogueArray = game.getCurrentIsland().getIslandStore().catalogueToArray(operation);
+		String[] colNames = {"Name", "Price", "Space Taken", "Defense Boost"};
 		
 		// Create table holding all the information from catalogueArray
-		JTable itemsTable = createTable(items, purchasedItems, true);
+		JTable itemsTable = createTable(items, purchasedItems);
 
 		// Create model and action listener for user to choose an Item from the table
 		ListSelectionModel selectionModel = itemsTable.getSelectionModel();
@@ -453,7 +452,7 @@ public class VisitStoreScreen extends Screen{
 	 */
 	private void sellItemsToPlayer(String itemName, int numItems) {
 		// Get Receipt from buying an item given by item name from the store
-		String receipt = gameEnvironment.getCurrentIsland().getIslandStore().sellItemsToPlayer(gameEnvironment, itemName, numItems);
+		String receipt = game.getCurrentIsland().getIslandStore().sellItemsToPlayer(game, itemName, numItems);
 		buySellFinish(receipt);
 	}
 	
@@ -464,7 +463,7 @@ public class VisitStoreScreen extends Screen{
 	 */
 	private void buyItemsFromPlayer(String itemName, int numItems) {
 		// Get receipt from selling an item to a Store
-		String receipt = gameEnvironment.getCurrentIsland().getIslandStore().buyItemsFromPlayer(itemName, gameEnvironment.getPlayer(), numItems);
+		String receipt = game.getCurrentIsland().getIslandStore().buyItemsFromPlayer(itemName, game.getPlayer(), numItems);
 		buySellFinish(receipt);
 	}
 	
