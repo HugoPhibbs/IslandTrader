@@ -3,11 +3,10 @@ package uiClasses.gui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import java.awt.BorderLayout;
-import javax.swing.JTextPane;
 import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class SailingScreen {
 
@@ -35,9 +34,6 @@ public class SailingScreen {
 	public SailingScreen() {
 		initialize();
 	}
-	
-	// since rescued sailors and unfortunate weather events dont require any input from the player
-	// it may just be good enough to have the event appear only in the progess text pane
 
 	/**
 	 * Initialize the contents of the frame.
@@ -48,22 +44,19 @@ public class SailingScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JPanel infoPanel = new JPanel();
-		infoPanel.setBounds(28, 62, 396, 185);
-		frame.getContentPane().add(infoPanel);
-		infoPanel.setLayout(null);
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setBounds(30, 167, 390, 39);
+		frame.getContentPane().add(progressBar);
 		
-		JProgressBar sailingProgressBar = new JProgressBar();
-		sailingProgressBar.setBounds(12, 152, 372, 21);
-		infoPanel.add(sailingProgressBar);
+		JLabel lblNewLabel = new JLabel("Sailing to");
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblNewLabel.setBounds(185, 44, 80, 17);
+		frame.getContentPane().add(lblNewLabel);
 		
-		JTextPane sailingProgessTextPane = new JTextPane();
-		sailingProgessTextPane.setText("Can show current progress of the sail\neg\nleaving <islandName>\non your sail\nyou have encountered <randomEvent>\nresult of randomEvent\ncontinuing with the sail\nyou have arrived at at <itemName>");
-		sailingProgessTextPane.setBounds(12, 12, 372, 128);
-		infoPanel.add(sailingProgessTextPane);
-		
-		JLabel descriptionLabel = new JLabel("Sailing to <islandName>");
-		descriptionLabel.setBounds(26, 12, 241, 40);
-		frame.getContentPane().add(descriptionLabel);
+		JLabel lblIslandName = new JLabel("Island Name");
+		lblIslandName.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIslandName.setFont(new Font("Dialog", Font.BOLD, 20));
+		lblIslandName.setBounds(150, 91, 150, 24);
+		frame.getContentPane().add(lblIslandName);
 	}
 }
