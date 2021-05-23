@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import coreClasses.GameEnvironment;
+import uiClasses.GameUi;
 
 
 /** Represents a Screen object for GUI
@@ -29,17 +30,23 @@ public abstract class Screen {
 	 */
 	public JFrame frame;
 	
+	/**
+	 * The instance of the Gui subclass of GameUi for this game.
+	 */
+	protected GameUi ui;
+	
 	/** Constructor for the Screen class
 	 * 
 	 * @param title 
 	 * @param gameEvironment
 	 * @param parent
 	 */
-	protected Screen(String title, GameEnvironment gameEvironment, Screen parent) {
+	protected Screen(String title, GameEnvironment gameEvironment, Screen parent, GameUi ui) {
 		this.game = gameEvironment;
 		this.frame = new JFrame();
 		frame.setTitle(title);
 		this.parent = parent;
+		this.ui = ui;
 		
 		setFrameCharacteristics();
 	}

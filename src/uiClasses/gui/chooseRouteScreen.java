@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import coreClasses.*;
+import uiClasses.GameUi;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -22,7 +23,7 @@ import java.awt.event.ActionEvent;
 
 public class chooseRouteScreen extends Screen {
 
-	/** the island the player os viewing routes to.*/
+	/** the island the player to view routes to.*/
 	private Island island;
 	/** Route selected by the player.*/
 	private Route selectedRoute;
@@ -30,8 +31,8 @@ public class chooseRouteScreen extends Screen {
 	/**
 	 * Create the application.
 	 */
-	public chooseRouteScreen(GameEnvironment game, Island island) {
-		super("Choose Route", game, null);
+	public chooseRouteScreen(GameEnvironment game, GameUi ui, Island island) {
+		super("Choose Route", game, null, ui);
 		this.island = island;
 		initialize();
 	}
@@ -46,6 +47,11 @@ public class chooseRouteScreen extends Screen {
 		createMainLabels();
 		createOtherComponents();
 		createRouteChooseComponents();
+	}
+	
+	private void onConfirm() {
+		game.sailToNewIsland(selectedRoute, island);
+		
 	}
 	
 	/** Creates the labels on the screen not in a sub container.*/
@@ -76,6 +82,7 @@ public class chooseRouteScreen extends Screen {
 	/** Creates the miscellaneous components on the screen not in a sub container.*/
 	private void createOtherComponents() {
 		JButton btnConfirm = new JButton("Confirm");
+		btnConfirm.addActionListener(e -> onConfirm());
 		btnConfirm.setBounds(626, 489, 162, 25);
 		frame.getContentPane().add(btnConfirm);
 		
@@ -84,7 +91,7 @@ public class chooseRouteScreen extends Screen {
 		frame.getContentPane().add(btnBack);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ViewIslandsScreen viewIslandsScreen = new ViewIslandsScreen(game);
+				ViewIslandsScreen viewIslandsScreen = new ViewIslandsScreen(game, ui);
 				viewIslandsScreen.show();
 				quit();
 			}

@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 
 import coreClasses.GameEnvironment;
+import uiClasses.GameUi;
 
 public class CoreOptionsScreen extends Screen{
 
@@ -40,9 +41,9 @@ public class CoreOptionsScreen extends Screen{
 	/**
 	 * Create the application.
 	 */
-	public CoreOptionsScreen(GameEnvironment gameEnvironment) {
+	public CoreOptionsScreen(GameEnvironment gameEnvironment, GameUi ui) {
 		// Make the parent of the setup screen to be null
-		super("Core options screen", gameEnvironment, null);
+		super("Core options screen", gameEnvironment, null, ui);
 		initialize();
 	}
 	
@@ -173,7 +174,7 @@ public class CoreOptionsScreen extends Screen{
 	private void viewIsland() {
 		 // TODO implement
 		hide();
-		Screen viewIslands = new ViewIslandsScreen(getGame());
+		Screen viewIslands = new ViewIslandsScreen(getGame(), ui);
 		viewIslands.show();
 		
 	}

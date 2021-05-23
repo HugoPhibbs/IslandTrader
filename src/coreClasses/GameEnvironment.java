@@ -107,9 +107,9 @@ public class GameEnvironment {
 		ship.repairShip();
 		ship.payWages(route, player);
 		// Set sail
+		int routeDuration = route.getDistance() / ship.getSpeed();
 		randomEvents(route);
 		// Arrive at new island
-		int routeDuration = route.getDistance() / ship.getSpeed();
 		reduceDaysRemaining(routeDuration);
 		setCurrentIsland(destination);	
     }
@@ -125,10 +125,10 @@ public class GameEnvironment {
 		if (route.getPirateProb() >= random.nextInt(100)) {
 			ui.pirateAttack();
 		}
-		if (route.getWeatherProb() >= random.nextInt(100)) {
+		else if (route.getWeatherProb() >= random.nextInt(100)) {
 			UnfortunateWeather.damageShip(ship);
 		}
-		if (route.getRescueProb() >= random.nextInt(100)) {
+		else if (route.getRescueProb() >= random.nextInt(100)) {
 			// roll dice
 			rescuedSailors.giveMoney(player);
 		}

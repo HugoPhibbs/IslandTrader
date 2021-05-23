@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import coreClasses.*;
+import uiClasses.GameUi;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -24,8 +25,8 @@ public class ViewIslandsScreen extends Screen {
 	/**
 	 * Create the application.
 	 */
-	public ViewIslandsScreen(GameEnvironment game) {
-		super("View Islands", game, null);
+	public ViewIslandsScreen(GameEnvironment game, GameUi ui) {
+		super("View Islands", game, null, ui);
 		initialize();
 	}
 	
@@ -45,7 +46,7 @@ public class ViewIslandsScreen extends Screen {
 	 * Screen used to select a route to the selected island. 
 	 */
 	private void viewRoutes() {
-		Screen chooseRoute = new chooseRouteScreen(game, selectedIsland);
+		Screen chooseRoute = new chooseRouteScreen(game, ui, selectedIsland);
 		this.hide();
 		chooseRoute.show();
 	}

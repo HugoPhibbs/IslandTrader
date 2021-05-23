@@ -23,6 +23,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
 import coreClasses.*;
+import uiClasses.GameUi;
+
 import java.awt.Color;
 import java.awt.Container;
 
@@ -52,8 +54,8 @@ public class SetupScreen extends Screen {
 	/**
 	 * Create the application.
 	 */
-	public SetupScreen(GameEnvironment game) {
-		super("Setup Game", game, null);
+	public SetupScreen(GameEnvironment game, GameUi ui) {
+		super("Setup Game", game, null, ui);
 		initialize();
 	}
 	
@@ -79,6 +81,7 @@ public class SetupScreen extends Screen {
 	 */
 	private void setupComplete() {
 		Player player = new Player(playerName, Gui.STARTING_MONEY); //TODO: Replace name once fix bug
+		selectedShip.setOwner(player);
 		game.onSetupFinished(player, selectedShip, sliderDays.getValue(), selectedIsland);
 	}
 		

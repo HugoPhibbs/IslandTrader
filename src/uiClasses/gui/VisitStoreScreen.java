@@ -26,6 +26,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 
 import coreClasses.*;
+import uiClasses.GameUi;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.Color;
@@ -34,7 +36,7 @@ import java.awt.Container;
 import javax.swing.JTable;
 import javax.swing.JScrollBar;
 
-public class VisitStoreScreen extends Screen{
+public class VisitStoreScreen extends Screen {
 	
 	// Swing objects
 	private JTextField numItemsTextField;
@@ -71,8 +73,8 @@ public class VisitStoreScreen extends Screen{
 	/**
 	 * Create the application.
 	 */
-	public VisitStoreScreen(GameEnvironment gameEnvironment, Screen parent) {
-		super("Visit Store Screen ", gameEnvironment, parent);
+	public VisitStoreScreen(GameEnvironment gameEnvironment, Screen parent, GameUi ui) {
+		super("Visit Store Screen ", gameEnvironment, parent, ui);
 		initialize();
 	}
 	
@@ -105,7 +107,7 @@ public class VisitStoreScreen extends Screen{
 				// Create a new coreOptions screen, and delete this current screen
 				// If we want to use a parent screen in the future, ie having two ways to get into
 				// The visit store screen, we will need to change the bellow code
-				CoreOptionsScreen coreOptionsScreen = new CoreOptionsScreen(game);
+				CoreOptionsScreen coreOptionsScreen = new CoreOptionsScreen(game, ui);
 				coreOptionsScreen.show();
 				quit();
 			}

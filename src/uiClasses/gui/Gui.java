@@ -13,7 +13,7 @@ public class Gui implements GameUi{
 	
 	public void setup(GameEnvironment gameEnvironment) {
 		this.gameEnvironment = gameEnvironment;
-		screen = new SetupScreen(gameEnvironment);
+		screen = new SetupScreen(gameEnvironment, this);
 		screen.show();
 	}
 
