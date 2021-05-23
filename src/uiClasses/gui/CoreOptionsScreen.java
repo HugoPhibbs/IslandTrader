@@ -41,9 +41,9 @@ public class CoreOptionsScreen extends Screen{
 	/**
 	 * Create the application.
 	 */
-	public CoreOptionsScreen(GameEnvironment gameEnvironment, GameUi ui) {
+	public CoreOptionsScreen(GameEnvironment gameEnvironment) {
 		// Make the parent of the setup screen to be null
-		super("Core options screen", gameEnvironment, null, ui);
+		super("Core options screen", gameEnvironment);
 		initialize();
 	}
 	
@@ -166,7 +166,7 @@ public class CoreOptionsScreen extends Screen{
 	private void visitStore() {
 		 // TODO implement
 		hide();
-		Screen visitStoreScreen = new VisitStoreScreen(getGame(), this);
+		Screen visitStoreScreen = new VisitStoreScreen(getGame());
 		visitStoreScreen.show();
 		
 	}
@@ -174,7 +174,7 @@ public class CoreOptionsScreen extends Screen{
 	private void viewIsland() {
 		 // TODO implement
 		hide();
-		Screen viewIslands = new ViewIslandsScreen(getGame(), ui);
+		Screen viewIslands = new ViewIslandsScreen(getGame());
 		viewIslands.show();
 		
 	}

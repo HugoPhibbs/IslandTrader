@@ -25,8 +25,8 @@ public class ViewIslandsScreen extends Screen {
 	/**
 	 * Create the application.
 	 */
-	public ViewIslandsScreen(GameEnvironment game, GameUi ui) {
-		super("View Islands", game, null, ui);
+	public ViewIslandsScreen(GameEnvironment game) {
+		super("View Islands", game);
 		initialize();
 	}
 	
@@ -46,7 +46,7 @@ public class ViewIslandsScreen extends Screen {
 	 * Screen used to select a route to the selected island. 
 	 */
 	private void viewRoutes() {
-		Screen chooseRoute = new chooseRouteScreen(game, ui, selectedIsland);
+		Screen chooseRoute = new ChooseRouteScreen(game, selectedIsland);
 		this.hide();
 		chooseRoute.show();
 	}

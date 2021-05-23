@@ -54,8 +54,8 @@ public class SetupScreen extends Screen {
 	/**
 	 * Create the application.
 	 */
-	public SetupScreen(GameEnvironment game, GameUi ui) {
-		super("Setup Game", game, null, ui);
+	public SetupScreen(GameEnvironment game) {
+		super("Setup Game", game);
 		initialize();
 	}
 	
@@ -83,6 +83,7 @@ public class SetupScreen extends Screen {
 		Player player = new Player(playerName, Gui.STARTING_MONEY); //TODO: Replace name once fix bug
 		selectedShip.setOwner(player);
 		game.onSetupFinished(player, selectedShip, sliderDays.getValue(), selectedIsland);
+		this.quit();
 	}
 		
 	private void createMainLabels() {

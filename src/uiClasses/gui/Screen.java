@@ -21,19 +21,12 @@ public abstract class Screen {
 	
 	/** GameEnvironment object for this current game */
 	public final GameEnvironment game;
-	/** Screen that called this screen. Makes it easy to go back. CoreOptionsScreen and
-	 * SetupScreen dont have parents
-	 */
-	private final Screen parent;
+	
 	/**
 	 * The frame for this screen. Holds all components and other containers. 
 	 */
 	public JFrame frame;
 	
-	/**
-	 * The instance of the Gui subclass of GameUi for this game.
-	 */
-	protected GameUi ui;
 	
 	/** Constructor for the Screen class
 	 * 
@@ -41,12 +34,10 @@ public abstract class Screen {
 	 * @param gameEvironment
 	 * @param parent
 	 */
-	protected Screen(String title, GameEnvironment gameEvironment, Screen parent, GameUi ui) {
+	protected Screen(String title, GameEnvironment gameEvironment) {
 		this.game = gameEvironment;
 		this.frame = new JFrame();
 		frame.setTitle(title);
-		this.parent = parent;
-		this.ui = ui;
 		
 		setFrameCharacteristics();
 	}
@@ -114,9 +105,5 @@ public abstract class Screen {
 	public void showError(String error) {
         JOptionPane.showMessageDialog(frame, error, "Error", JOptionPane.ERROR_MESSAGE);
 
-	}
-	
-	public Screen getParent() {
-		return parent;
 	}
 }

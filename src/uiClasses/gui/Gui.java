@@ -1,27 +1,23 @@
 package uiClasses.gui;
 
 import uiClasses.GameUi;
-
-import java.awt.EventQueue;
-
 import coreClasses.GameEnvironment;
 
 public class Gui implements GameUi{
 	
 	private GameEnvironment gameEnvironment;
-	private Screen screen; // Screen currently interacting with GUI
+
 	
 	public void setup(GameEnvironment gameEnvironment) {
 		this.gameEnvironment = gameEnvironment;
-		screen = new SetupScreen(gameEnvironment, this);
-		screen.show();
+		Screen setupScreen = new SetupScreen(gameEnvironment);
+		setupScreen.show();
 	}
 
 	@Override
 	public void playGame() {
-		screen.quit(); // Disposes of SetupScreen instance.
-		screen = new CoreOptionsScreen(gameEnvironment);
-		screen.show();	
+		Screen optionsScreen = new CoreOptionsScreen(gameEnvironment);
+		optionsScreen.show();	
 	}
 
 	@Override

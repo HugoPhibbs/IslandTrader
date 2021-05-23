@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class chooseRouteScreen extends Screen {
+public class ChooseRouteScreen extends Screen {
 
 	/** the island the player to view routes to.*/
 	private Island island;
@@ -31,8 +31,8 @@ public class chooseRouteScreen extends Screen {
 	/**
 	 * Create the application.
 	 */
-	public chooseRouteScreen(GameEnvironment game, GameUi ui, Island island) {
-		super("Choose Route", game, null, ui);
+	public ChooseRouteScreen(GameEnvironment game, Island island) {
+		super("Choose Route", game);
 		this.island = island;
 		initialize();
 	}
@@ -91,7 +91,7 @@ public class chooseRouteScreen extends Screen {
 		frame.getContentPane().add(btnBack);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ViewIslandsScreen viewIslandsScreen = new ViewIslandsScreen(game, ui);
+				ViewIslandsScreen viewIslandsScreen = new ViewIslandsScreen(game);
 				viewIslandsScreen.show();
 				quit();
 			}

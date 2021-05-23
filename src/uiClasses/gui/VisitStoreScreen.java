@@ -61,7 +61,7 @@ public class VisitStoreScreen extends Screen {
 			public void run() {
 				try {
 					GameEnvironment ge = new GameEnvironment(null, null, null, null, null);
-					VisitStoreScreen window = new VisitStoreScreen(ge, null);
+					VisitStoreScreen window = new VisitStoreScreen(ge);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,8 +73,8 @@ public class VisitStoreScreen extends Screen {
 	/**
 	 * Create the application.
 	 */
-	public VisitStoreScreen(GameEnvironment gameEnvironment, Screen parent, GameUi ui) {
-		super("Visit Store Screen ", gameEnvironment, parent, ui);
+	public VisitStoreScreen(GameEnvironment gameEnvironment) {
+		super("Visit Store Screen ", gameEnvironment);
 		initialize();
 	}
 	
@@ -107,7 +107,7 @@ public class VisitStoreScreen extends Screen {
 				// Create a new coreOptions screen, and delete this current screen
 				// If we want to use a parent screen in the future, ie having two ways to get into
 				// The visit store screen, we will need to change the bellow code
-				CoreOptionsScreen coreOptionsScreen = new CoreOptionsScreen(game, ui);
+				CoreOptionsScreen coreOptionsScreen = new CoreOptionsScreen(game);
 				coreOptionsScreen.show();
 				quit();
 			}
