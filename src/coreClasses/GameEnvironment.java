@@ -103,16 +103,17 @@ public class GameEnvironment {
 	 * 
 	 * @param route The Route the player has chosen. 
 	 */
-	public void sailToNewIsland(Route route, Island destination) {
+	public boolean sailToNewIsland(Route route, Island destination) {
     	// Repair ship and pay wages before setting sail.
 		ship.repairShip();
 		ship.payWages(route, player);
 		// Set sail - When calculating sail time in days, rounds up
 		int routeDuration = calculateDaysSailing(route);
-		randomEvents(route);
+		boolean eventOccurred = randomEvents(route);
 		// Arrive at new island
 		reduceDaysRemaining(routeDuration);
 		setCurrentIsland(destination);	
+		return eventOccurred;
     }
 	
 	public int calculateDaysSailing(Route route) {
@@ -125,18 +126,23 @@ public class GameEnvironment {
 	 * 
 	 * @param route The route the player is traveling along.
 	 */
-	private void randomEvents(Route route) {
+	private boolean randomEvents(Route route) {
 		Random random = new Random();
+		boolean eventOccured = false;
 		if (route.getPirateProb() >= random.nextInt(100)) {
 			ui.pirateAttack();
+			eventOccured = true;
 		}
 		else if (route.getWeatherProb() >= random.nextInt(100)) {
 			UnfortunateWeather.damageShip(ship);
+			eventOccured = true;
 		}
 		else if (route.getRescueProb() >= random.nextInt(100)) {
 			// roll dice
 			rescuedSailors.giveMoney(player);
+			eventOccured = true;
 		}
+		return eventOccured;
 	}
 	
 	/** Calculates the amount that needs to be paid before the cheapest route available can be sailed. 
