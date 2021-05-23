@@ -112,7 +112,8 @@ public class Store {
 			 */
 			if (!itemToSell.getWithPlayer()) {
 				// Since item didn't come in possession with player, find reason why not
-			
+				
+				result += "Not all of the requested items were sold to a player! \n";
 				// Check if item wasn't sold because of an error to do with it being an upgrade
 				if (itemToSell.getName().endsWith("(upgrade)") && !Store.canSellUpgradeToPlayer(gameEnvironment.getPlayer()).equals("Can sell")){
 					result += Store.canSellUpgradeToPlayer(gameEnvironment.getPlayer()) + '\n'; // return reason why cant sell upgrade.
@@ -272,6 +273,7 @@ public class Store {
     		
     		// If the itemToBuy was null, then no Items with the name itemStoreToBuyName were found in a Player's Ship possession
     		if (itemToBuy == null) {
+    			result += "Not all of the requested Items were bought from a Player!";
     			// Wasn't successful in getting item, print reason why from store
     			result += Store.canBuyItemFromPlayer(player, itemToBuy) +'\n';
     			
@@ -364,6 +366,31 @@ public class Store {
     		displayArrayList.add(result);
         }
     	return displayArrayList.toArray(new String[displayArrayList.size()]);
+    }
+    
+    public String[][] catalogueToNestedArray(HashMap<String, HashMap<String, Integer>> catalogue){
+    	// converts a catalogue into a nested array to be used by GUI for tables!
+    
+    	ArrayList<String[]> tempOuterArrayList = new ArrayList<String[]>();
+    	
+    	for (Map.Entry<String, HashMap<String, Integer>> mapElement : catalogue.entrySet()) {
+    		// Convert a nested HashMap into an Array representation
+    		String itemName = (String) mapElement.getKey();
+    		String itemPrice = Integer.toString(catalogue.get(itemName).get("price"));
+    		String itemSpaceTaken = Integer.toString(catalogue.get(itemName).get("spaceTaken"));
+    		String[] infoArray = new String[] {
+					itemName, 
+					itemPrice,
+					itemSpaceTaken,
+					"N/A"};
+    		
+    		if (itemName.endsWith("(upgrade)")) {
+    			infoArray[3] = Integer.toString(catalogue.get(itemName).get("defenseBoost"));
+    			}
+    		tempOuterArrayList.add(infoArray);
+    		}
+    	// Convert the arrayList with nested String arrays into a String[][] array
+    	return tempOuterArrayList.toArray(new String[tempOuterArrayList.size()][4]);
     }
     
     
