@@ -60,10 +60,14 @@ public class Pirates {
     	
     	int totalValueStolen = 0;
     	
-    	for (Item item: ship.getItems()) {
+    	System.out.println(ship.getItems().size());
+    	
+    	while (ship.getItems().size() > 0) {
+    		Item item = ship.getItems().get(0);
     		totalValueStolen += item.getPlayerBuyPrice();
     		ship.takeItem(item.getName());
     	}
+    	
     	
     	if (totalValueStolen < goodDemandValue) {
     		return "game_over";
