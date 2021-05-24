@@ -21,7 +21,7 @@ public class ViewIslandsScreen extends Screen {
 	
 	/** Island selected by the player.*/
 	private Island selectedIsland;
-
+	
 	/**
 	 * Create the application.
 	 */

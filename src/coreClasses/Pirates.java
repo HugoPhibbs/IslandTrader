@@ -5,20 +5,23 @@ import java.util.ArrayList;
 
 /** Represents a pirates random event
  * 
- * @author Hugo Phibbs
+ * @author Hugo Phibbs and Jordan Vegar
  * @version 17/5/2021
  * @since 2/4/2021
  */
 public class Pirates {
 	/** Max damage that a Pirates random event can impose onto a Ship object */
 	private int MAX_DAMAGE;
+	/**The minimum value of goods you must have to satisfy the pirates.*/
+	private int goodDemandValue;
 	
 	/** Constructor method for a Pirates random event
 	 * 
 	 * @param maxDamage Integer for the max damage that Pirates random event can impose onto a Ship object 
 	 */
-	public Pirates(int maxDamage) {
+	public Pirates(int maxDamage, int goodDemandValue) {
 		this.MAX_DAMAGE = maxDamage;
+		this.goodDemandValue = goodDemandValue;
 	}
    
     /** Method for attacking a ship object
@@ -53,23 +56,21 @@ public class Pirates {
      * @param ship Ship object to have goods taken from
      * @return String for the result of taking ship goods. 
      */
-    public static String takeGoods(Ship ship){
-    	// public for testing
+    public String takeGoods(Ship ship) {
     	
-    	Random random = new Random();
-    	int randomGoodDemand = random.nextInt(120); //arbitrary upper bound, can be adjusted if need be
-    	    			
-    	while (randomGoodDemand > 0) {
-    		 Item biggestItem = getLargestShipItem(ship);
-    		 if (biggestItem == null || biggestItem.getSpaceTaken() < randomGoodDemand) {
-    			 String gameOverMessage = "You have less goods than what the pirates demand. \n"
-    	        			+ "You and your crew have to walk the plank!";
-    	        	return gameOverMessage;
-    		 }
-    		 ship.takeItem(biggestItem.getName());
-    		 randomGoodDemand -= biggestItem.getSpaceTaken();
+    	int totalValueStolen = 0;
+    	
+    	for (Item item: ship.getItems()) {
+    		totalValueStolen += item.getPlayerBuyPrice();
+    		ship.takeItem(item.getName());
     	}
-    	return "attack_successful";
+    	
+    	if (totalValueStolen < goodDemandValue) {
+    		return "game_over";
+    	} else {
+    		return "attack_successful";
+    	}
+  
     }
     
     /** Method for rolling dice for a pirates random event
@@ -77,7 +78,7 @@ public class Pirates {
      * @return Integer for the result of rolling a die. A pseudo random number
      * between 1 and 6
      */
-    public static int rollDice() {
+    public int rollDice() {
     	// ask for ui to rollDie, then print out what number was rolled, should
     	// be a button in gui or entry in cmd line ui to roll a dice
     	

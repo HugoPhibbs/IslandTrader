@@ -30,7 +30,7 @@ public class Main {
 		Ship[] shipArray = createShips();
 
 		// Create pirates object to be used throughout game
-		Pirates pirates = new Pirates(350);
+		Pirates pirates = new Pirates(350, 50);
 		;
 
 		// Create Rescued Sailors object to be used throughout game

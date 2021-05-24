@@ -614,15 +614,16 @@ public class CmdLineUi implements GameUi {
 	 * 
 	 */
 	@Override
-	public void pirateAttack() {
+	public void pirateAttack(Route route) {
+		Pirates pirates = gameEnvironment.getPirates();
 		// Roll die
 		System.out.println(Pirates.getDescription());
 		System.out.println("(Press enter to roll)");
 		scanner.nextLine();
-		int roll = Pirates.rollDice();
+		int roll = pirates.rollDice();
 		System.out.format("You got a %d!\n", roll);
 		// Pirate Attack 
-		Pirates pirates = gameEnvironment.getPirates();
+		
 		String pirateOutcome = pirates.attackShip(roll, gameEnvironment.getShip());
 		if (pirateOutcome.equals("attack_failed")) {
 			System.out.println("You successful fended of the pirates!");
@@ -631,7 +632,8 @@ public class CmdLineUi implements GameUi {
 			System.out.println("The pirate's boarded yur ship and stole your goods!");
 		}
 		else {
-			finishGame(pirateOutcome);
+			finishGame("You have less goods than what the pirates demand. \n"
+        			+ "You and your crew have to walk the plank!");
 		}
 	}
 	

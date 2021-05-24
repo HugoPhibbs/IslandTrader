@@ -130,7 +130,7 @@ public class GameEnvironment {
 		Random random = new Random();
 		boolean eventOccured = false;
 		if (route.getPirateProb() >= random.nextInt(100)) {
-			ui.pirateAttack();
+			ui.pirateAttack(route);
 			eventOccured = true;
 		}
 		else if (route.getWeatherProb() >= random.nextInt(100)) {

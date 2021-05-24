@@ -51,9 +51,7 @@ public class SailingScreen extends Screen {
 	public void startSail() {
 		int routeDuration = game.calculateDaysSailing(route);
 		delay = 200 * routeDuration;
-		System.out.println("3");
 		
-		fillProgressBar(delay);
 		boolean eventOccurred = game.sailToNewIsland(route, desinatonIsland);
 		if (!eventOccurred) {
 			endSail();
@@ -61,24 +59,12 @@ public class SailingScreen extends Screen {
 	}
 	
 	protected void endSail() {
-		fillProgressBar(delay);
-		
 		Screen optionsScreen = new CoreOptionsScreen(game);
 		this.quit();
 		optionsScreen.show();
 	}
 	
-	private void fillProgressBar(int delay) {
-		System.out.println("4");
-		// half full progress bar.
-		timer = new Timer(delay, new ActionListener () {
-			
-			@Override
-            public void actionPerformed(ActionEvent e) {
-                if(progress <= 50) progressBar.setValue(progress);
-            }
-		});
-	}
+	
 	
 	private void createProgressBar() {
 		progressBar = new JProgressBar(0, 100);

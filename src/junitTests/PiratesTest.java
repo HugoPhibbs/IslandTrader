@@ -28,16 +28,6 @@ class PiratesTest {
 		
 		// TODO how to test code that relies on chance?
 	}
-
-	@Test 
-	void rollDiceTest() {
-		// Cant test because it relies on randomness
-	}
-	
-	@Test
-	void takeGoodsTest() {
-		// Again hard to test because method relies on randomness
-	}
 	
 	@Test
 	void getLargestShipItemTest() {

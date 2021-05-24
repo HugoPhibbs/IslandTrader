@@ -2,12 +2,12 @@ package uiClasses.gui;
 
 import uiClasses.GameUi;
 import coreClasses.GameEnvironment;
+import coreClasses.Route;
 
 public class Gui implements GameUi{
 	
 	private GameEnvironment gameEnvironment;
 
-	
 	public void setup(GameEnvironment gameEnvironment) {
 		this.gameEnvironment = gameEnvironment;
 		Screen setupScreen = new SetupScreen(gameEnvironment);
@@ -22,13 +22,13 @@ public class Gui implements GameUi{
 
 	@Override
 	public void finishGame(String message) {
-		// TODO Auto-generated method stub	
+		System.out.println("Game Over");
 	}
 
 
 	@Override
-	public void pirateAttack() {
-		Screen pirateScreen = new PirateScreen(gameEnvironment);
+	public void pirateAttack(Route route) {
+		Screen pirateScreen = new PirateScreen(gameEnvironment, route);
 		pirateScreen.show();
 	}
 }

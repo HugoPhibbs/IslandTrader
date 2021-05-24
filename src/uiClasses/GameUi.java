@@ -19,5 +19,5 @@ public interface GameUi {
 	
 	public void finishGame(String message);
 	
-	public void pirateAttack();
+	public void pirateAttack(Route route);
 }
