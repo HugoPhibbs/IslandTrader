@@ -654,6 +654,16 @@ public class CmdLineUi implements GameUi {
 					gameEnvironment.getMinMoneyToTravel());
 		}
 	}
+
+	@Override
+	public void badWeather(Route route) {;
+		System.out.println("Oh no! You have encountered bad weather and your ship has been damamged.");
+	}
+
+	@Override
+	public void rescueSailor(Route route) {
+		System.out.println("You have encountered a stranded sailor and saved him. To show his gradiuted he has \n given you $50");
+	}
 }
 
 

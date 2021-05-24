@@ -135,11 +135,13 @@ public class GameEnvironment {
 		}
 		else if (route.getWeatherProb() >= random.nextInt(100)) {
 			UnfortunateWeather.damageShip(ship);
+			ui.badWeather(route);
 			eventOccured = true;
 		}
 		else if (route.getRescueProb() >= random.nextInt(100)) {
 			// roll dice
 			rescuedSailors.giveMoney(player);
+			ui.rescueSailor(route);
 			eventOccured = true;
 		}
 		return eventOccured;
