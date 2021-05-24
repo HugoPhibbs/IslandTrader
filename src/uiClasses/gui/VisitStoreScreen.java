@@ -3,16 +3,19 @@ package uiClasses.gui;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.Border;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
@@ -54,7 +57,6 @@ public class VisitStoreScreen extends Screen {
 	
 	/** The current name of the Item that a player has chosen from the table */
 	private String chosenItemName = "";
-	
 
 	/** Constructor for the VisitStoreScreen
 	 * 
@@ -70,7 +72,7 @@ public class VisitStoreScreen extends Screen {
 	 */
 	@Override
 	protected void initialize() {
-		frame.setBounds(100, 100, 1100, 800);
+		frame.setBounds(100, 100, 1100, 600);
 		
 		// Initialize all other necessary components
 		initializeDirectFrameComponents();
@@ -84,19 +86,20 @@ public class VisitStoreScreen extends Screen {
 	 */
 	private void initializeDirectFrameComponents() {
 		// Label for welcoming user to store
-		JLabel welcomeLabel = new JLabel(String.format("Hello %s, welcome to the %s store", game.getPlayer().getName(), game.getCurrentIsland().getIslandStore().getName()));
-		welcomeLabel.setBounds(301, 23, 555, 14);
-		frame.getContentPane().add(welcomeLabel);
+		JLabel welcomeLabel = new JLabel(String.format("Hello %s, welcome to the %s Store!", game.getPlayer().getName(), game.getCurrentIsland().getIslandStore().getName()));
+		welcomeLabel.setFont(new Font("Dialog", Font.BOLD, 22));
+		welcomeLabel.setBounds(200, 23, 900, 30);
+		frame.getContentPane().add(welcomeLabel);	
 		
 		// Create label for a Player's balance, and update it's value
 		this.balanceJLabel = new JLabel();
-		balanceJLabel.setBounds(34, 89, 265, 23);
+		balanceJLabel.setBounds(34, 89, 300, 23);
 		frame.getContentPane().add(balanceJLabel);
 		updatePlayerBalance();
 		
 		// Button for going back
 		JButton goBackButton = new JButton("Go Back");
-		goBackButton.setBounds(949, 716, 118, 23);
+		goBackButton.setBounds(950, 525, 115, 23);
 		goBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Create a new coreOptions screen, and delete this current screen
@@ -114,23 +117,24 @@ public class VisitStoreScreen extends Screen {
 	private void initializeMainStoreOptions() {
 		// Create the Panel
 		this.mainStoreOptionsPanel = new JPanel();
-		mainStoreOptionsPanel.setBounds(35, 124, 504, 352);
+		mainStoreOptionsPanel.setBorder(blackline);
+		mainStoreOptionsPanel.setBounds(35, 125, 500, 392);
 		frame.getContentPane().add(mainStoreOptionsPanel);
 		mainStoreOptionsPanel.setLayout(null);
 		
 		// Button to view Items that are for sale
 		JButton viewItemsForSaleButton = new JButton("View Items that the store sells");
-		viewItemsForSaleButton.setBounds(12, 12, 475, 100);
+		viewItemsForSaleButton.setBounds(12, 12, 475, 113);
 		mainStoreOptionsPanel.add(viewItemsForSaleButton);
 		
 		// Button to view Items that a store buys
 		JButton viewItemsStoreBuysButton = new JButton("View Items that the store buys");
-		viewItemsStoreBuysButton.setBounds(12, 124, 475, 100);
+		viewItemsStoreBuysButton.setBounds(12, 137, 475, 113);
 		mainStoreOptionsPanel.add(viewItemsStoreBuysButton);
 		
 		// Button to view previously bought items
 		JButton viewPreviousItemsButton = new JButton("View previously bought Items");
-		viewPreviousItemsButton.setBounds(12, 236, 475, 100);
+		viewPreviousItemsButton.setBounds(12, 262, 475, 113);
 		mainStoreOptionsPanel.add(viewPreviousItemsButton);
 		
 		// Add Action listeners to all the buttons above, this guides the flow of this screen
@@ -158,7 +162,8 @@ public class VisitStoreScreen extends Screen {
 		
 		// Create the panel holding everything necessary
 		this.buySellPanel = new JPanel();
-		buySellPanel.setBounds(290, 507, 507, 242);
+		buySellPanel.setBorder(blackline);
+		buySellPanel.setBounds(560, 327, 500, 190);
 		frame.getContentPane().add(buySellPanel);
 		buySellPanel.setLayout(null);
 		
@@ -175,7 +180,7 @@ public class VisitStoreScreen extends Screen {
 		 */
 		this.enterIntegerJLabel = new JLabel("Please enter an integer above 1!");
 		enterIntegerJLabel.setForeground(Color.RED);
-		enterIntegerJLabel.setBounds(12, 53, 174, 15);
+		enterIntegerJLabel.setBounds(12, 53, 300, 15);
 		buySellPanel.add(enterIntegerJLabel);
 		enterIntegerJLabel.setVisible(false);
 		
@@ -203,7 +208,7 @@ public class VisitStoreScreen extends Screen {
 		
 		// Label to contain the receipt a transaction with a store
 		this.receiptTextPane = new JTextPane();
-		receiptTextPane.setBounds(0, 85, 250, 115);
+		receiptTextPane.setBounds(12, 78, 325, 100);
 		buySellPanel.add(receiptTextPane);
 		
 		/* Button to press to buy or sell Items.
@@ -211,7 +216,7 @@ public class VisitStoreScreen extends Screen {
 		 * for the number of Items that they want to buy/sell
 		 */
 		this.buySellItemsButton = new JButton();
-		buySellItemsButton.setBounds(265, 85, 250, 115);
+		buySellItemsButton.setBounds(350, 78, 139, 100);
 		buySellPanel.add(buySellItemsButton);
 		buySellItemsButton.setEnabled(false);
 	}
@@ -222,13 +227,14 @@ public class VisitStoreScreen extends Screen {
 	private void initializeTablePanel() {
 		// Create the panel
 		this.tablePanel = new JPanel();
-		tablePanel.setBounds(562, 124, 504, 500);
+		tablePanel.setBorder(blackline);
+		tablePanel.setBounds(560, 125, 500, 190);
 		frame.getContentPane().add(tablePanel);
 		tablePanel.setLayout(null);
 		
-		// Label for JTable. For buyingm, selling and showing previously bought items
+		// Label for JTable. For buying, selling and showing previously bought items
 		this.itemsJTableLabel = new JLabel();
-		itemsJTableLabel.setBounds(673, 68, 248, 50);
+		itemsJTableLabel.setBounds(673, 80, 248, 50);
 		frame.getContentPane().add(itemsJTableLabel);
 	}
 	
@@ -243,19 +249,30 @@ public class VisitStoreScreen extends Screen {
 	 * has been initialized to sell or buy items, NOT to show previously bought items
 	 * @return JTable that was created
 	 */
-	private JTable createTable(String [][] rows, String[] columns){
+	private JTable createTable(String [][] rows, String[] columns, boolean viewPrevItems){
 		// Remove content from panel from last use
-		tablePanel.removeAll();
+		// bellow code from https://stackoverflow.com/questions/38349445/how-to-delete-all-components-in-a-jpanel-dynamically
+		clearPanel(tablePanel);
 		
 		// Create table
 		JTable itemsTable = new JTable(rows, columns);
-		itemsTable.setBounds(0, 100 , 447, 342);
+		itemsTable.setBounds(0, 0, 475, 325);
 		
 		/* Create a ScrollPane that contains the Table, this is done to
 		 * ensure column titles are shown 
 		 */
 		JScrollPane sp  = new JScrollPane(itemsTable);
-		sp.setSize(447, 342);
+		sp.setBounds(12, 12, 475, 160);
+		
+		if (viewPrevItems) {
+			sp.setBounds(12, 12, 475, 368);
+			tablePanel.setBounds(560, 125, 500, 392);
+		}
+		else {
+			sp.setBounds(12, 12, 475, 160);
+			tablePanel.setBounds(560, 125, 500, 190);
+		}
+		
 		tablePanel.add(sp);
 		
 		// Return table that was created
@@ -279,16 +296,16 @@ public class VisitStoreScreen extends Screen {
 		// Get the purchased of a Player and create an array containing column titles
 		String[][] purchasedItems = game.getPlayer().purchasedItemsToArray();
 		if (purchasedItems == null){
-			tablePanel.removeAll();
+			clearPanel(tablePanel);
 			JLabel noPrevItemsLabel = new JLabel("You haven't bought any items yet, you can buy some at any store!");
-			noPrevItemsLabel.setBounds(33, 100, 200, 15);
+			noPrevItemsLabel.setBounds(12, 90, 500, 15);
 			tablePanel.add(noPrevItemsLabel);
 		}
 		else {
 			String[] columns = {"Name", "Purchase Price", "Consignment Price"};
 			
 			// Create the table containing all the previously bought items of a player
-			createTable(purchasedItems, columns);
+			createTable(purchasedItems, columns, true);
 		}
 	}
 	
@@ -382,7 +399,7 @@ public class VisitStoreScreen extends Screen {
 		String[] colNames = {"Name", "Price", "Space Taken", "Defense Boost"};
 		
 		// Create table holding all the information from catalogueArray
-		return createTable(catalogueNestedArray, colNames);
+		return createTable(catalogueNestedArray, colNames, false);
 	}
 	
 	/** Helper method for buySellItemsStart. Adjusts relevant components to do with buying and selling Items
@@ -534,7 +551,7 @@ public class VisitStoreScreen extends Screen {
 	 */
 	private void updatePlayerBalance() {
 		//balanceJLabel.setText(String.format("Player has a balance of : %d", gameEnvironment.getPlayer().getMoneyBalance()));
-		balanceJLabel.setText(String.format("Your current balance is %s", game.getPlayer().getMoneyBalance()));
+		balanceJLabel.setText(String.format("Your current balance is %s Pirate Bucks", game.getPlayer().getMoneyBalance()));
 	}
 }
 
