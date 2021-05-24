@@ -67,19 +67,19 @@ public class GameOverScreen extends Screen {
 		lblReason.setBounds(38, 73, 616, 57);
 		frame.getContentPane().add(lblReason);
 		
-		lblScore = new JLabel("SCORE: ");
+		lblScore = new JLabel("SCORE: " + game.calculateScore());
 		lblScore.setFont(new Font("Dialog", Font.BOLD, 20));
 		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
 		lblScore.setBounds(243, 189, 236, 24);
 		frame.getContentPane().add(lblScore);
 		
-		lblProfit = new JLabel("PROFIT:");
+		lblProfit = new JLabel("PROFIT: " + (game.getPlayer().getMoneyBalance() - game.getUi().STARTING_MONEY));
 		lblProfit.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProfit.setFont(new Font("Dialog", Font.BOLD, 20));
 		lblProfit.setBounds(243, 250, 236, 24);
 		frame.getContentPane().add(lblProfit);
 		
-		lblDaysPlayed = new JLabel("DAYS PLAYED: ");
+		lblDaysPlayed = new JLabel("DAYS PLAYED: " + (game.getDaysSelected() - game.getDaysRemaining()));
 		lblDaysPlayed.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDaysPlayed.setFont(new Font("Dialog", Font.BOLD, 20));
 		lblDaysPlayed.setBounds(243, 313, 236, 24);
