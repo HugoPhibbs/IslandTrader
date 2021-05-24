@@ -20,4 +20,8 @@ public interface GameUi {
 	public void finishGame(String message);
 	
 	public void pirateAttack(Route route);
+	
+	public void badWeather(Route route);
+	
+	public void rescueSailor(Route route);
 }

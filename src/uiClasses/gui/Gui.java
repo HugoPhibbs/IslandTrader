@@ -31,4 +31,16 @@ public class Gui implements GameUi{
 		Screen pirateScreen = new PirateScreen(gameEnvironment, route);
 		pirateScreen.show();
 	}
+
+	@Override
+	public void badWeather(Route route) {
+		Screen weatherScreen = new WeatherScreen(gameEnvironment, route);
+		weatherScreen.show();
+	}
+
+	@Override
+	public void rescueSailor(Route route) {
+		Screen rescueScreen = new RescueScreen(gameEnvironment, route);
+		rescueScreen.show();
+	}
 }

@@ -1,31 +1,30 @@
 package uiClasses.gui;
 
+import java.awt.EventQueue;
+import java.awt.Font;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import coreClasses.GameEnvironment;
 import coreClasses.Route;
 
-import javax.swing.JButton;
+public class RescueScreen extends Screen {
 
-
-public class WeatherScreen extends Screen {
 
 	/** The route the attack occurs on.*/
 	private Route route;
-
 	/**
 	 * Create the application.
 	 */
-	public WeatherScreen(GameEnvironment game, Route route) {
-		super("Weather", game);
+	public RescueScreen(GameEnvironment game, Route route) {
+		super("Stranded Sailor", game);
 		this.route = route;
-		initialize();
+		initialize();	
 	}
-	
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -52,7 +51,8 @@ public class WeatherScreen extends Screen {
 	}
 	
 	private void createLabels() {
-		JLabel lblTitle = new JLabel("UNFORTUNATE WEATHER");
+		JLabel lblTitle = new JLabel("STRANDED SAILOR");
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setFont(new Font("Dialog", Font.BOLD, 32));
 		lblTitle.setBounds(66, 12, 486, 38);
 		frame.getContentPane().add(lblTitle);
@@ -62,10 +62,10 @@ public class WeatherScreen extends Screen {
 		lblImage.setBounds(53, 82, 494, 227);
 		frame.getContentPane().add(lblImage);
 		
-		JLabel lblInfo = new JLabel("<html> Oh no! You have sailed into a storm <br>and your ship has been damaged. <html>");
+		JLabel lblInfo = new JLabel("<html> You spotted a stranded sailor through your telescope and <br> saved him! He has thanked you by giving you 50 Pirate Bucks  <html>");
 		lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInfo.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblInfo.setBounds(127, 310, 368, 38);
+		lblInfo.setBounds(28, 309, 548, 38);
 		frame.getContentPane().add(lblInfo);
 	}
 }
