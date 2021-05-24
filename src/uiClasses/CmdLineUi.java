@@ -128,7 +128,7 @@ public class CmdLineUi implements GameUi {
 		System.out.format("You played for %d days out of a selected %d days.\n", 
 				(selectedDays - gameEnvironment.getDaysRemaining()), selectedDays);
 		System.out.format("You made $%d profit, and your final score was %d!\n", 
-				(gameEnvironment.getPlayer().getMoneyBalance() -STARTING_MONEY), gameEnvironment.calculateScore(STARTING_MONEY));
+				(gameEnvironment.getPlayer().getMoneyBalance() -STARTING_MONEY), gameEnvironment.calculateScore());
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////

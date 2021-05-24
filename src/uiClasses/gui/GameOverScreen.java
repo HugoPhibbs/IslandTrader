@@ -12,7 +12,7 @@ import javax.swing.SwingConstants;
 
 import coreClasses.GameEnvironment;
 
-public class GameOverScren extends Screen {
+public class GameOverScreen extends Screen {
 
 	private JLabel lblReason;
 	private JLabel lblScore;
@@ -22,7 +22,7 @@ public class GameOverScren extends Screen {
 	/**
 	 * Create the application.
 	 */
-	public GameOverScren(GameEnvironment game) {
+	public GameOverScreen(GameEnvironment game) {
 		super("Game Over", game);
 		initialize();
 	}
@@ -41,6 +41,7 @@ public class GameOverScren extends Screen {
 	
 	private void createFinishButton() {
 		JButton btnFinishGame = new JButton("Finish Game");
+		btnFinishGame.addActionListener(e -> quit());
 		btnFinishGame.setFont(new Font("Dialog", Font.BOLD, 16));
 		btnFinishGame.setBounds(292, 405, 140, 29);
 		frame.getContentPane().add(btnFinishGame);
