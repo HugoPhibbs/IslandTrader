@@ -371,7 +371,7 @@ public class Store {
     public String[][] catalogueToNestedArray(HashMap<String, HashMap<String, Integer>> catalogue){
     	// converts a catalogue into a nested array to be used by GUI for tables!
     
-    	ArrayList<String[]> tempOuterArrayList = new ArrayList<String[]>();
+    	ArrayList<String[]> catalogueArrayList = new ArrayList<String[]>();
     	
     	for (Map.Entry<String, HashMap<String, Integer>> mapElement : catalogue.entrySet()) {
     		// Convert a nested HashMap into an Array representation
@@ -387,10 +387,10 @@ public class Store {
     		if (itemName.endsWith("(upgrade)")) {
     			infoArray[3] = Integer.toString(catalogue.get(itemName).get("defenseBoost"));
     			}
-    		tempOuterArrayList.add(infoArray);
+    		catalogueArrayList.add(infoArray);
     		}
     	// Convert the arrayList with nested String arrays into a String[][] array
-    	return tempOuterArrayList.toArray(new String[tempOuterArrayList.size()][4]);
+    	return catalogueArrayList.toArray(new String[catalogueArrayList.size()][4]);
     }
     
     
