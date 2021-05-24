@@ -70,7 +70,7 @@ public class ViewIslandsScreen extends Screen {
 		panelIslandSelection.add(lblInfo);
 		
 		JTextPane textPaneIslandInfo = new JTextPane();
-		textPaneIslandInfo.setText("This island sells tomatos and buys gold. It has routes ot all other isalnds.");
+		textPaneIslandInfo.setText("");
 		textPaneIslandInfo.setBounds(593, 71, 174, 328);
 		panelIslandSelection.add(textPaneIslandInfo);
 		

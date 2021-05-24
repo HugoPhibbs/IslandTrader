@@ -27,7 +27,6 @@ public class SailingScreen extends Screen {
 	 */
 	public SailingScreen(GameEnvironment game, Island island, Route route) {
 		super("Sailing", game);
-		System.out.println("1");
 		this.desinatonIsland = island;
 		this.route = route;
 		initialize();
@@ -42,7 +41,6 @@ public class SailingScreen extends Screen {
 		
 		createProgressBar();
 		createLabels();
-		System.out.println("2");
 	}
 	
 
