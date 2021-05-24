@@ -54,13 +54,18 @@ public abstract class Screen {
 		// Prevent the user from quiting immediately when quit is clicked.
 		// Code copied from Rocket Manager Example
 		frame.addWindowListener(new WindowAdapter() {
-			@Override
 			public void windowClosing(WindowEvent e) {
-				confirmQuit();
+				int confirmed = JOptionPane.showConfirmDialog(null, 
+			        "Are you sure you want to quit?", "Confirm Quit",
+			        JOptionPane.YES_NO_OPTION);
+
+				if (confirmed == JOptionPane.YES_OPTION) {
+			    	quit();
+			    }
 			}
 		});
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 	}
 	
