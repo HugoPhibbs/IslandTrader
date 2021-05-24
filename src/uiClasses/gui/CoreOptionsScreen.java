@@ -130,7 +130,7 @@ public class CoreOptionsScreen extends Screen{
 		newTable.setBounds(0, 100, 200, 200);
 		
 		JScrollPane sp = new JScrollPane(newTable);
-		sp.setSize(200, 200);s
+		sp.setSize(200, 200);
 		
 		tablePanel.add(sp);
 	}
