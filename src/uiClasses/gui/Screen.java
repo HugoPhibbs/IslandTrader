@@ -57,7 +57,7 @@ public abstract class Screen {
 			}
 		});
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 	}
 	
@@ -93,11 +93,13 @@ public abstract class Screen {
 	 * 
 	 * @return Boolean true if would like to quit, else false
 	 */
-	protected boolean confirmQuit() {
+	protected void confirmQuit() {
 		int selection = JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?",
                 "Quit?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        return selection == JOptionPane.YES_OPTION;
+         if (selection == JOptionPane.YES_OPTION) {
+        	 quit();
+         }
 	}
 
 	
