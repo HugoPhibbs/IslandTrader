@@ -31,6 +31,7 @@ public class PirateScreen extends Screen {
 	public PirateScreen(GameEnvironment game, Route route) {
 		super("Pirate Attack", game);
 		pirate = game.getPirates();
+		this.route = route;
 		initialize();
 	}
 	
@@ -44,10 +45,6 @@ public class PirateScreen extends Screen {
 		createRollDiceButton();
 		createContinueButton();
 		createLabels();
-		
-		for (int i=0; i<10; i++) {
-			game.getShip().addItem(new Item("Test", 10, 20));
-		}
 	}
 	
 	private void onDiceRoll() {

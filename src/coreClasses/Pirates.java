@@ -68,6 +68,7 @@ public class Pirates {
     		ship.takeItem(item.getName());
     	}
     	
+    	System.out.println(ship.getItems().size());
     	
     	if (totalValueStolen < goodDemandValue) {
     		return "game_over";
