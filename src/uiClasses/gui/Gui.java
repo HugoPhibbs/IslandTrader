@@ -16,6 +16,7 @@ public class Gui implements GameUi{
 
 	@Override
 	public void playGame() {
+		
 		Screen optionsScreen = new CoreOptionsScreen(gameEnvironment);
 		optionsScreen.show();	
 	}
