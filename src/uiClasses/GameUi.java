@@ -21,7 +21,7 @@ public interface GameUi {
 	
 	public void pirateAttack(Route route);
 	
-	public void badWeather(Route route);
+	public void badWeather(Route route, int damageDone);
 	
 	public void rescueSailor(Route route);
 }

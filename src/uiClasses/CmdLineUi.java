@@ -656,8 +656,8 @@ public class CmdLineUi implements GameUi {
 	}
 
 	@Override
-	public void badWeather(Route route) {;
-		System.out.println("Oh no! You have encountered bad weather and your ship has been damamged.");
+	public void badWeather(Route route, int damageDone) {;
+		System.out.format("Oh no! You have encountered bad weather and your ship has suffered %d damamged.\n", damageDone);
 	}
 
 	@Override

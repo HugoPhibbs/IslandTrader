@@ -34,8 +34,8 @@ public class Gui implements GameUi{
 	}
 
 	@Override
-	public void badWeather(Route route) {
-		Screen weatherScreen = new WeatherScreen(gameEnvironment, route);
+	public void badWeather(Route route, int damageDone) {
+		Screen weatherScreen = new WeatherScreen(gameEnvironment, route, damageDone);
 		weatherScreen.show();
 	}
 

@@ -19,13 +19,15 @@ public class WeatherScreen extends Screen {
 
 	/** The route the attack occurs on.*/
 	private Route route;
+	private int damageDone;
 
 	/**
 	 * Create the application.
 	 */
-	public WeatherScreen(GameEnvironment game, Route route) {
+	public WeatherScreen(GameEnvironment game, Route route, int damageDone) {
 		super("Weather", game);
 		this.route = route;
+		this.damageDone = damageDone;
 		initialize();
 	}
 	
@@ -65,7 +67,8 @@ public class WeatherScreen extends Screen {
 		lblImage.setBounds(53, 82, 494, 227);
 		frame.getContentPane().add(lblImage);
 		
-		JLabel lblInfo = new JLabel("<html> Oh no! You have sailed into a storm <br>and your ship has been damaged. <html>");
+		JLabel lblInfo = new JLabel(String.format("<html> Oh no! You have sailed into a storm and the <br>"
+				+ "wild weather did %d damage to your ship. <html>", damageDone));
 		lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInfo.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblInfo.setBounds(127, 310, 368, 38);

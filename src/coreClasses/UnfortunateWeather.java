@@ -23,11 +23,12 @@ public class UnfortunateWeather{
 	 * 
 	 * @param ship Ship object to be damaged
 	 */
-	public static void damageShip(Ship ship) {
+	public static int damageShip(Ship ship) {
 		// Create a random int between 0 and 99, this is the damage imparted onto a Ship
 		Random random = new Random();
 		int damage = random.nextInt(100); // max damage of 99, can't end game
 		ship.takeDamage(damage);
+		return damage;
 	}
 }
 

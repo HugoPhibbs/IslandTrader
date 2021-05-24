@@ -134,8 +134,8 @@ public class GameEnvironment {
 			eventOccured = true;
 		}
 		else if (route.getWeatherProb() >= random.nextInt(100)) {
-			UnfortunateWeather.damageShip(ship);
-			ui.badWeather(route);
+			int damageDone =UnfortunateWeather.damageShip(ship);
+			ui.badWeather(route, damageDone);
 			eventOccured = true;
 		}
 		else if (route.getRescueProb() >= random.nextInt(100)) {
