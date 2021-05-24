@@ -10,8 +10,6 @@ import java.util.ArrayList;
  * @since 2/4/2021
  */
 public class Pirates {
-	/** Max damage that a Pirates random event can impose onto a Ship object */
-	private int MAX_DAMAGE;
 	/**The minimum value of goods you must have to satisfy the pirates.*/
 	private int goodDemandValue;
 	
@@ -19,8 +17,7 @@ public class Pirates {
 	 * 
 	 * @param maxDamage Integer for the max damage that Pirates random event can impose onto a Ship object 
 	 */
-	public Pirates(int maxDamage, int goodDemandValue) {
-		this.MAX_DAMAGE = maxDamage;
+	public Pirates(int goodDemandValue) {
 		this.goodDemandValue = goodDemandValue;
 	}
    
@@ -32,26 +29,21 @@ public class Pirates {
      * @return String representation for the outcome of an attack
      */
     public String attackShip(int diceInt, Ship ship) {
-    	
-    	/* based on a game of chance
-    	 * defense capability is multiplied by the number that is rolled by dice. 
-    	 * random int is chosen because max defense capability is 50, which is the max
-    	 * for all the ships in the game, some of them may have a max defense capability that is less
-    	 * 300, so there is a chance of 18% of loosing with a perfect turn!, max dice
-    	 * roll and max defense capability
+    	/* So for a defense capability of 0< <=10, a dice roll of 6 will be certain to win
+    	 * and then for a defense capability 10< <=20 a dice roll of 6 AND 5 will be certain to win
+    	 * 
+    	 * all the way down to when defense Capability of 40< <=50 and every dice roll should be certain to win
     	 */
     	
-    	Random random = new Random();
-    	int randomAttack = random.nextInt(MAX_DAMAGE); //arbitrary upper bound, can be adjusted if need be
-    	
-    	if (randomAttack > ship.getDefenseCapability()*diceInt) {
+    	if (!((ship.getDefenseCapability() / 10) >= (6-diceInt))){
     		return takeGoods(ship);
     	}
     	return "attack_failed";
     }
     
     /** Method for taking goods from a ship object
-     *  Called by attackShip(int, Ship) if player is lucky or not!
+     *  Called by attackShip(int, Ship) if player is
+     *   lucky or not!
      *  
      * @param ship Ship object to have goods taken from
      * @return String for the result of taking ship goods. 
@@ -60,16 +52,16 @@ public class Pirates {
     	
     	int totalValueStolen = 0;
     	
-    	System.out.println(ship.getItems().size());
-    	
+    	// Take items from the ship until there is none left
     	while (ship.getItems().size() > 0) {
     		Item item = ship.getItems().get(0);
     		totalValueStolen += item.getPlayerBuyPrice();
     		ship.takeItem(item.getName());
     	}
     	
-    	System.out.println(ship.getItems().size());
-    	
+    	/* If the value taken is less than they demand, then user can continue with travel
+    	 * otherwise the game is over
+    	 */
     	if (totalValueStolen < goodDemandValue) {
     		return "game_over";
     	} else {
@@ -120,21 +112,5 @@ public class Pirates {
 	 */
     public static String getDescription(){
     	return "You have encountered pirates, roll the die to play your chances!";
-    }
-
-    /** Getter method for the max damage a Pirates random event can put onto a ship
-     * 
-     * @return Integer for the max damage of a Pirates attack
-     */
-    public int getMaxDamage() {
-    	return MAX_DAMAGE;
-    }
-    
-    /** Setter for the max damage that a Pirates random event can put onto a ship
-     * 
-     * @param maxDamage Integer for the max damage of a Pirates attack
-     */
-    public void setMaxDamage(int maxDamage) {
-    	this.MAX_DAMAGE = maxDamage;
     }
 }

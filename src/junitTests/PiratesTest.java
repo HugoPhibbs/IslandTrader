@@ -18,15 +18,42 @@ class PiratesTest {
 	
 	@Test
 	void attackShipTest() {
-		Ship ship1 = new Ship("Black Pearl", 100, 10, 50);
-		ShipUpgrade upgrade1 = new ShipUpgrade("Canon", 10, 10, 10);
+		/* So expected result matrix:
+		 *            DC//10  
+		 *      0  1  2  3  4  5
+		 *    1 F  F  F  F  F  5
+		 *    2 F  F  F  F  S  S
+		 * DR 3 F  F  F  S  S  S
+		 *    4 F  F  S  S  S  S
+		 *    5 F  S  S  S  S  S
+		 *    6 S  S  S  S  S  S
+		 * 
+		 */
+		Ship testShip1 = new Ship("BatMobile", 0, 10, 50);
+		Pirates testPirates = new Pirates(0); // Keep it to zero to ensure that we have a black and white picture of what the if statement is doing
+		
+		/* Test with a ship having zero defense capability but with a dice roll of 6 */
+		assertEquals("attack_failed", testPirates.attackShip(6, testShip1));
+		assertEquals("attack_successful", testPirates.attackShip(5, testShip1));
+		
+		ShipUpgrade upgrade1 = new ShipUpgrade("Canon", 10, 10, 10);		
 		ShipUpgrade upgrade2 = new ShipUpgrade("Crows Nest", 10, 10, 5);
 		ShipUpgrade upgrade3 = new ShipUpgrade("Armour", 10, 10, 7);
-		ship1.addUpgrade(upgrade1);
-		ship1.addUpgrade(upgrade2);
-		ship1.addUpgrade(upgrade3);
+		testShip1.addUpgrade(upgrade1);
+		testShip1.addUpgrade(upgrade2);
+		testShip1.addUpgrade(upgrade3);
+		/* Test with ship having a defense capability of 22, so a dice roll of 4, 5, 6 should be enough for ship to survive */
+		assertEquals("attack_failed", testPirates.attackShip(4, testShip1));
+		assertEquals("attack_failed", testPirates.attackShip(6, testShip1));
+		assertEquals("attack_successful", testPirates.attackShip(3, testShip1));
+		assertEquals("attack_successful", testPirates.attackShip(1, testShip1));
 		
-		// TODO how to test code that relies on chance?
+		ShipUpgrade upgrade4 = new ShipUpgrade("Canon", 10, 10, 30);
+		testShip1.addUpgrade(upgrade4); // add this upgrade to max the defense capability of a ship
+		/* Test with ship having max in-game defense capability of 50, every dice int should now be enough to fend off pirates */
+		assertEquals("attack_failed", testPirates.attackShip(6, testShip1));
+		assertEquals("attack_failed", testPirates.attackShip(4, testShip1));
+		assertEquals("attack_failed", testPirates.attackShip(1, testShip1));
 	}
 	
 	@Test
