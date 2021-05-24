@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 
 import coreClasses.*;
@@ -14,6 +15,7 @@ import uiClasses.GameUi;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -113,12 +115,11 @@ public class ChooseRouteScreen extends Screen {
 		lblSelectedRoute.setBounds(551, 12, 196, 40);
 		panelRouteSelection.add(lblSelectedRoute);
 		
-		JTextField txtRouteDescription = new JTextField();
+		JTextPane txtRouteDescription = new JTextPane();
 		txtRouteDescription.setText("description of route here");
 		txtRouteDescription.setBounds(551, 54, 203, 60);
 		txtRouteDescription.setEditable(false);
 		panelRouteSelection.add(txtRouteDescription);
-		txtRouteDescription.setColumns(10);
 		
 		JLabel lblDistance = new JLabel("Distance:");
 		lblDistance.setBounds(551, 126, 67, 15);
@@ -188,7 +189,7 @@ public class ChooseRouteScreen extends Screen {
 	 * @param weather JLabel
 	 * @param rescue JLabel
 	 */
-	private void changeRouteInfo(Route route, JLabel name, JTextField description, JLabel distance, JLabel pirate,  JLabel weather, JLabel rescue) {
+	private void changeRouteInfo(Route route, JLabel name, JTextPane description, JLabel distance, JLabel pirate,  JLabel weather, JLabel rescue) {
 		name.setText(route.getRouteName());
 		description.setText(route.getDescription());
 		distance.setText(String.valueOf(route.getDistance()));
