@@ -220,16 +220,29 @@ public class Ship {
      * @return String representation of a ship
      */
     public String getDescription() {
-    	return String.format("Ship %s, has properties: \n"
-    			+ "Max Item-Space: %d \n"
-    			+ "Remaining Item-Space: %d \n"
-    			+ "Speed: %d \n"
+    	return String.format(
+    			  "Remaining Item-Space: %d \n"
     			+ "Crew-size: %d \n"
     			+ "Wage Cost per day: %d \n"
-    			+ "Defense Capability: %d \n"
-    			+ "Max Defense Capability: %d \n"
-    			, name, maxItemSpace, remainingItemSpace, speed, crewSize, getDailyWageCost(), defenseCapability, maxDefenseCapability);
+    			+ "Health Status: %d \n"
+    			+ "Cost to repair: %d"
+    			, remainingItemSpace, crewSize, getDailyWageCost(), healthStatus, repairCost());
     	
+    }
+    
+    /** Creates a String[][] representation of the upgrades that have been bought for a ship
+     * Used by GUI for displaying to tables
+     * 
+     * @return String[][] representation of the upgrades that have been bought
+     */
+    public String[][] upgradesToNestedArray() {
+    	ArrayList<String[]> tempArrayList = new ArrayList<String[]>();
+    	
+    	for (ShipUpgrade upgrade : upgrades) {
+    		tempArrayList.add(new String[] {upgrade.getName(), Integer.toString(upgrade.getDefenseBoost())});
+    	}
+    	
+    	return tempArrayList.toArray(new String[tempArrayList.size()][2]);
     }
     
     /** Getter method for the daily wage cost of all the crew on board a Ship
