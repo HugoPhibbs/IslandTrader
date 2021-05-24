@@ -16,9 +16,15 @@ public class Gui implements GameUi{
 
 	@Override
 	public void playGame() {
-		
-		Screen optionsScreen = new CoreOptionsScreen(gameEnvironment);
-		optionsScreen.show();	
+		String moneySituation = gameEnvironment.checkSufficientMoney();
+
+		if (moneySituation.equals("game_over")) {
+			finishGame("You don't have enough money and can't sell enough goods to repair your ship and pay your crew wages. You are stranded!");
+		}
+		else {
+			Screen optionsScreen = new CoreOptionsScreen(gameEnvironment);
+			optionsScreen.show();
+		}
 	}
 
 	@Override
