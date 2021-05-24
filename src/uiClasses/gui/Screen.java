@@ -71,6 +71,7 @@ public abstract class Screen {
 	 * 
 	 */
 	public void quit() {
+		System.out.println("dispose");
 		frame.dispose();
 	}
 	

@@ -29,6 +29,9 @@ public class MakePaymentsDialog extends JDialog {
 		setBounds(100, 100, 450, 229);
 		getContentPane().setLayout(null);
 		
+		this.route = route;
+		this.routeScreen= routeScreen;
+		
 		int costWages = game.getShip().routeWageCost(route);
 		int costRepairs = game.getShip().repairCost();
 	
@@ -39,7 +42,7 @@ public class MakePaymentsDialog extends JDialog {
 			getContentPane().add(buttonPane);
 			{
 				JButton btnMakePayment = new JButton("Make Payment of $" + String.valueOf(costWages + costRepairs));
-				btnMakePayment.addActionListener(e -> routeScreen.confirmSelection());
+				btnMakePayment .addActionListener(e -> makePayments());
 				buttonPane.add(btnMakePayment);
 				getRootPane().setDefaultButton(btnMakePayment);
 			}
@@ -58,6 +61,11 @@ public class MakePaymentsDialog extends JDialog {
 		if (costRepairs != 0) {
 			createRepairLabels(costRepairs);
 		}
+	}
+	
+	private void makePayments() {
+		routeScreen.confirmSelection();
+		this.dispose();
 	}
 	
 	private void createInstructionLabel() {

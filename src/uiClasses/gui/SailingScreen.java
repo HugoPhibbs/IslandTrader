@@ -53,12 +53,15 @@ public class SailingScreen extends Screen {
 		boolean eventOccurred = game.sailToNewIsland(route, desinatonIsland);
 		if (!eventOccurred) {
 			endSail();
+		} else {
+			quit();
 		}
 	}
 	
 	protected void endSail() {
 		Screen optionsScreen = new CoreOptionsScreen(game);
-		this.quit();
+		System.out.println("endsail");
+		quit();
 		optionsScreen.show();
 	}
 	
