@@ -131,18 +131,17 @@ public class Main {
 		sicilyStore.setStoreIsland(sicily);
 
 		// Create Corsica Island and it's Store
-		Store corsicaStore = new Store("Napoleans", "A bit of everything", sellCatalogues.get(2),
-				sellCatalogues.get(2));
+		Store corsicaStore = new Store("Napoleans", "A bit of everything", sellCatalogues.get(2), buyCatalogues.get(2));
 		Island corsica = new Island("Corsica", corsicaStore, "Has cool beaches");
 		corsicaStore.setStoreIsland(corsica);
 
 		// Create Malta Island and it's Store
-		Store maltaStore = new Store("Duty Free Store", "Exotic goods", sellCatalogues.get(3), sellCatalogues.get(3));
+		Store maltaStore = new Store("Duty Free Store", "Exotic goods", sellCatalogues.get(3), buyCatalogues.get(3));
 		Island malta = new Island("Malta", maltaStore, "Good for the rich");
 		maltaStore.setStoreIsland(malta);
 
 		// Create Ibiza Island and it's Store
-		Store ibizaStore = new Store("Party Store", "Medicines", sellCatalogues.get(4), sellCatalogues.get(4));
+		Store ibizaStore = new Store("Party Store", "Medicines", sellCatalogues.get(4), buyCatalogues.get(4));
 		Island ibiza = new Island("Ibiza", ibizaStore, "Party central");
 		ibizaStore.setStoreIsland(ibiza);
 
@@ -296,7 +295,7 @@ public class Main {
 		limePropertiesSicily.put("spaceTaken", 0);
 		limePropertiesSicily.put("price", 10);
 		sellCatalogueSicily.put("Tomato-Sauce", tomatoSaucePropertiesSicily);
-		sellCatalogueSicily.put("Bottle-O'-Rum", bottleORumPropertiesSicily);
+		sellCatalogueSicily.put("Bottle-O-Rum", bottleORumPropertiesSicily);
 		sellCatalogueSicily.put("Turtle-Meat", turtleMeatPropertiesSicily);
 		sellCatalogueSicily.put("Gold", goldPropertiesSicily);
 		sellCatalogueSicily.put("Lime", limePropertiesSicily);
@@ -313,18 +312,18 @@ public class Main {
 		HashMap<String, Integer> specialTeaPropertiesCorsica = new HashMap<String, Integer>();
 		specialTeaPropertiesCorsica.put("spaceTaken", 0);
 		specialTeaPropertiesCorsica.put("price", 50);
-		HashMap<String, Integer> cannonPropertiesCorsica = new HashMap<String, Integer>();
-		cannonPropertiesCorsica.put("spaceTaken", 0);
-		cannonPropertiesCorsica.put("price", 30);
-		cannonPropertiesCorsica.put("defenseBoost", 7);
+		HashMap<String, Integer> canonPropertiesCorsica = new HashMap<String, Integer>();
+		canonPropertiesCorsica.put("spaceTaken", 0);
+		canonPropertiesCorsica.put("price", 30);
+		canonPropertiesCorsica.put("defenseBoost", 7);
 		HashMap<String, Integer> telescopePropertiesCorsica = new HashMap<String, Integer>();
 		telescopePropertiesCorsica.put("spaceTaken", 0);
 		telescopePropertiesCorsica.put("price", 10);
-		cannonPropertiesCorsica.put("defenseBoost", 7);
+		telescopePropertiesCorsica.put("defenseBoost", 3);
 		sellCatalogueCorsica.put("Tomato-Sauce", tomatoSaucePropertiesCorsica);
 		sellCatalogueCorsica.put("Treasure-Map", treasureMapPropertiesCorsica);
 		sellCatalogueCorsica.put("Special-Tea", specialTeaPropertiesCorsica);
-		sellCatalogueCorsica.put("Canon(upgrade)", cannonPropertiesCorsica);
+		sellCatalogueCorsica.put("Canon(upgrade)", canonPropertiesCorsica);
 		sellCatalogueCorsica.put("Telescope(upgrade)", telescopePropertiesCorsica);
 		sellCatalogues.add(sellCatalogueCorsica);
 
@@ -374,7 +373,7 @@ public class Main {
 		sellCatalogueIbiza.put("Bandages", bandagesPropertiesIbiza);
 		sellCatalogueIbiza.put("Special-Tea", specialTeaPropertiesIbiza);
 		sellCatalogueIbiza.put("Lime", limePropertiesIbiza);
-		sellCatalogueIbiza.put("BottleORum", bottleORumPropertiesIbiza);
+		sellCatalogueIbiza.put("Bottle-O-Rum", bottleORumPropertiesIbiza);
 		sellCatalogueIbiza.put("Large-Chest", largeChestPropertiesIbiza);
 		sellCatalogues.add(sellCatalogueIbiza);
 
@@ -459,17 +458,9 @@ public class Main {
 		HashMap<String, Integer> specialTeaPropertiesCorsica = new HashMap<String, Integer>();
 		specialTeaPropertiesCorsica.put("spaceTaken", 0);
 		specialTeaPropertiesCorsica.put("price", 50);
-		HashMap<String, Integer> cannonPropertiesCorsica = new HashMap<String, Integer>();
-		cannonPropertiesCorsica.put("spaceTaken", 0);
-		cannonPropertiesCorsica.put("price", 30);
-		HashMap<String, Integer> telescopePropertiesCorsica = new HashMap<String, Integer>();
-		telescopePropertiesCorsica.put("spaceTaken", 0);
-		telescopePropertiesCorsica.put("price", 10);
 		buyCatalogueCorsica.put("Tomato-Sauce", tomatoSaucePropertiesCorsica);
 		buyCatalogueCorsica.put("Treasure-Map", treasureMapPropertiesCorsica);
 		buyCatalogueCorsica.put("Special-Tea", specialTeaPropertiesCorsica);
-		buyCatalogueCorsica.put("Canon(upgrade)", cannonPropertiesCorsica);
-		buyCatalogueCorsica.put("Telescope(upgrade)", telescopePropertiesCorsica);
 		buyCatalogues.add(buyCatalogueCorsica);
 
 		// Create sell catalogue for malta
@@ -486,14 +477,10 @@ public class Main {
 		HashMap<String, Integer> bandagesPropertiesMalta = new HashMap<String, Integer>();
 		bandagesPropertiesMalta.put("spaceTaken", 0);
 		bandagesPropertiesMalta.put("price", 30);
-		HashMap<String, Integer> armourPropertiesMalta = new HashMap<String, Integer>();
-		armourPropertiesMalta.put("spaceTaken", 0);
-		armourPropertiesMalta.put("price", 10);
 		buyCatalogueMalta.put("Large-Chest", largeChestPropertiesMalta);
 		buyCatalogueMalta.put("Treasure-Map", treasureMapPropertiesMalta);
 		buyCatalogueMalta.put("Gold", goldPropertiesMalta);
 		buyCatalogueMalta.put("Bandages", bandagesPropertiesMalta);
-		buyCatalogueMalta.put("Armour(upgrade)", armourPropertiesMalta);
 		buyCatalogues.add(buyCatalogueMalta);
 
 		// Create buy catalogue for ibiza
@@ -516,7 +503,7 @@ public class Main {
 		buyCatalogueIbiza.put("Bandages", bandagesPropertiesIbiza);
 		buyCatalogueIbiza.put("Special-Tea", specialTeaPropertiesIbiza);
 		buyCatalogueIbiza.put("Lime", limePropertiesIbiza);
-		buyCatalogueIbiza.put("BottleORum", bottleORumPropertiesIbiza);
+		buyCatalogueIbiza.put("Bottle-O-Rum", bottleORumPropertiesIbiza);
 		buyCatalogueIbiza.put("Large-Chest", largeChestPropertiesIbiza);
 		buyCatalogues.add(buyCatalogueIbiza);
 
