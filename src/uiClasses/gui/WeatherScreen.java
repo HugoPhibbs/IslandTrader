@@ -1,7 +1,5 @@
 package uiClasses.gui;
 
-
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -11,7 +9,12 @@ import coreClasses.Route;
 
 import javax.swing.JButton;
 
-
+/** Represents a random weather event
+ * 
+ * @author Jordan Vegar
+ * @version 24/5/21
+ * @since 18/5/21
+ */
 public class WeatherScreen extends Screen {
 
 	/** The route the attack occurs on.*/

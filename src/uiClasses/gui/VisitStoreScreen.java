@@ -3,12 +3,10 @@ package uiClasses.gui;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.Border;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.DocumentEvent;
@@ -21,6 +19,13 @@ import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import coreClasses.*;
 
+/** Represents a Screen that a user can interact within "Island Trader" in order to do
+ * operations with a Store
+ * 
+ * @author Hugo Phibbs
+ * @version 24/5/2021
+ * @since 10/5/2021
+ */
 public class VisitStoreScreen extends Screen {
 	
 	// Class Variables //
@@ -47,7 +52,7 @@ public class VisitStoreScreen extends Screen {
 	private JPanel mainStoreOptionsPanel;
 	
 	/** Panel to store components relating directly to buying and selling items with a store */
-	private JPanel buySellPanel;
+	private JPanel buySellOptionsPanel;
 	
 	/** Panel to store the table that displays Items to a user */
 	private JPanel tablePanel;
@@ -58,6 +63,7 @@ public class VisitStoreScreen extends Screen {
 	/** The current name of the Item that a player has chosen from the table */
 	private String chosenItemName = "";
 
+	
 	/** Constructor for the VisitStoreScreen
 	 * 
 	 * @param gameEnvironment GameEnvironment object for the current game 
@@ -161,19 +167,19 @@ public class VisitStoreScreen extends Screen {
 	public void initializeBuySellOptions() {
 		
 		// Create the panel holding everything necessary
-		this.buySellPanel = new JPanel();
-		buySellPanel.setBorder(blackline);
-		buySellPanel.setBounds(560, 327, 500, 190);
-		frame.getContentPane().add(buySellPanel);
-		buySellPanel.setLayout(null);
+		this.buySellOptionsPanel = new JPanel();
+		buySellOptionsPanel.setBorder(blackline);
+		buySellOptionsPanel.setBounds(560, 327, 500, 190);
+		frame.getContentPane().add(buySellOptionsPanel);
+		buySellOptionsPanel.setLayout(null);
 		
 		// Set Panel to invisible until a user selects buy or sell items in the main options
-		buySellPanel.setVisible(false);
+		buySellOptionsPanel.setVisible(false);
 		
 		// Label to ask user how many items they want to buy
 		this.howManyItemsLabel = new JLabel();
 		howManyItemsLabel.setBounds(12, 12, 393, 35);
-		buySellPanel.add(howManyItemsLabel);
+		buySellOptionsPanel.add(howManyItemsLabel);
 		
 		/* Label to tell user to enter an integer, is only visible if they
 		 * input an invalid integer in numItemsTextField
@@ -181,13 +187,13 @@ public class VisitStoreScreen extends Screen {
 		this.enterIntegerJLabel = new JLabel("Please enter an integer above 1!");
 		enterIntegerJLabel.setForeground(Color.RED);
 		enterIntegerJLabel.setBounds(12, 53, 300, 15);
-		buySellPanel.add(enterIntegerJLabel);
+		buySellOptionsPanel.add(enterIntegerJLabel);
 		enterIntegerJLabel.setVisible(false);
 		
 		// TextField for inputting number of items that you want to buy
 		this.numItemsTextField = new JTextField();
 		numItemsTextField.setBounds(417, 20, 46, 20);
-		buySellPanel.add(numItemsTextField);
+		buySellOptionsPanel.add(numItemsTextField);
 		numItemsTextField.setColumns(10);
 		
 		/* Add a listener to numItemsTextField to check if the 
@@ -209,7 +215,7 @@ public class VisitStoreScreen extends Screen {
 		// Label to contain the receipt a transaction with a store
 		this.receiptTextPane = new JTextPane();
 		receiptTextPane.setBounds(12, 78, 325, 100);
-		buySellPanel.add(receiptTextPane);
+		buySellOptionsPanel.add(receiptTextPane);
 		
 		/* Button to press to buy or sell Items.
 		 * Default is set to disabled until a user inputs a valid integer
@@ -217,7 +223,7 @@ public class VisitStoreScreen extends Screen {
 		 */
 		this.buySellItemsButton = new JButton();
 		buySellItemsButton.setBounds(350, 78, 139, 100);
-		buySellPanel.add(buySellItemsButton);
+		buySellOptionsPanel.add(buySellItemsButton);
 		buySellItemsButton.setEnabled(false);
 	}
 	
@@ -247,6 +253,7 @@ public class VisitStoreScreen extends Screen {
 	 * @param rows String[][] nested array containing all the data to be stored in the table
 	 * @param columns String[] array containing the titles for each column in the table
 	 * has been initialized to sell or buy items, NOT to show previously bought items
+	 * @param viewPrevItems boolean value if a user is using createTable to view previously bought Items
 	 * @return JTable that was created
 	 */
 	private JTable createTable(String [][] rows, String[] columns, boolean viewPrevItems){
@@ -262,8 +269,11 @@ public class VisitStoreScreen extends Screen {
 		 * ensure column titles are shown 
 		 */
 		JScrollPane sp  = new JScrollPane(itemsTable);
-		sp.setBounds(12, 12, 475, 160);
 		
+		/* Adjust table if a user wants to see previous items that they have bought.
+		 * This is done to extend the table downwards to reclaim real estate that would 
+		 * be taken up with buySellOptionsPanel
+		 */
 		if (viewPrevItems) {
 			sp.setBounds(12, 12, 475, 368);
 			tablePanel.setBounds(560, 125, 500, 392);
@@ -272,7 +282,6 @@ public class VisitStoreScreen extends Screen {
 			sp.setBounds(12, 12, 475, 160);
 			tablePanel.setBounds(560, 125, 500, 190);
 		}
-		
 		tablePanel.add(sp);
 		
 		// Return table that was created
@@ -289,7 +298,7 @@ public class VisitStoreScreen extends Screen {
 		/* Adjust components that may have been adjusted from buying or selling items
 		 * basically resets affected components to what they were before user selected anything
 		 */
-		buySellPanel.setVisible(false);
+		buySellOptionsPanel.setVisible(false);
 		itemsJTableLabel.setText("Previously bought items");
 		howManyItemsLabel.setText("");
 		
@@ -313,7 +322,7 @@ public class VisitStoreScreen extends Screen {
 	
 	/** Method to begin a transaction between a player and a store
 	 * 
-	 * @param operation String for what a user wants to do with a Store, either "buy" or "sell"
+	 * @param buyOrSell String for what a user wants to do with a Store, either "buy" or "sell"
 	 */
 	private void buySellItemsStart(String buyOrSell) {
 		// Reset components from the last use of this function
@@ -337,7 +346,7 @@ public class VisitStoreScreen extends Screen {
 		howManyItemsLabel.setText("");
 		numItemsTextField.setText("");
 		receiptTextPane.setText("");
-		buySellPanel.setVisible(true);
+		buySellOptionsPanel.setVisible(true);
 		numItemsTextField.setVisible(false);
 		buySellItemsButton.setEnabled(false);
 		enterIntegerJLabel.setVisible(false);

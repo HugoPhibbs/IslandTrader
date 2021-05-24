@@ -1,36 +1,20 @@
 package uiClasses.gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import java.awt.GridBagLayout;
 import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
 import java.awt.Font;
-import java.awt.Insets;
 import javax.swing.JPanel;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.JTextComponent;
 
 import coreClasses.*;
-import uiClasses.GameUi;
 
 import java.awt.Color;
-import java.awt.Container;
-
-import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
-import javax.swing.JList;
 
 public class SetupScreen extends Screen {
 

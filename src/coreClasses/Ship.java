@@ -4,7 +4,7 @@ import java.util.*;
 
 /** Represents a ship
  * @author Hugo Phibbs
- * @version 19/5/2021
+ * @version 25/5/2021
  * @since 2/4/2021
  */
 

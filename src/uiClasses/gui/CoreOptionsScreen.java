@@ -1,26 +1,27 @@
 package uiClasses.gui;
 
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.ScrollPane;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 import coreClasses.GameEnvironment;
-import uiClasses.GameUi;
 
+/** Represents the screen for high level interaction with the "Island Trader" game
+ * Displays the current progress of the game. And gives a user options to visit a store
+ * or travel to another island
+ * 
+ * @author Hugo Phibbs
+ * @version 24/5/2021
+ * @since 10/5/21
+ */
 public class CoreOptionsScreen extends Screen{
-
-	private JPanel contentPanel;
-	private JLabel contentPanelLabel;
 
 	/**
 	 * Create the application.
@@ -39,9 +40,7 @@ public class CoreOptionsScreen extends Screen{
 		frame.setBounds(100, 100, 1100, 595);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		
 		initializeOptionsPanel();
-		//initializeContentPanel();
 		initializeGameInfoPanel();
 		initializeShipPanel();
 	}
@@ -50,12 +49,14 @@ public class CoreOptionsScreen extends Screen{
 	 * 
 	 */
 	private void initializeOptionsPanel() {
+		// Create panel to hold relevant components
 		JPanel optionsPanel = new JPanel();
 		optionsPanel.setBorder(blackline);
 		optionsPanel.setBounds(35, 230, 450, 292);
 		frame.getContentPane().add(optionsPanel);
 		optionsPanel.setLayout(null);
 		
+		// Use html in order to display multiple lines on the button
 		JButton visitStoreButton = new JButton(String.format("<html>      Visit %s's Store<br> and view previously bought items</html>", game.getCurrentIsland().getIslandName()));
 		visitStoreButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -76,6 +77,9 @@ public class CoreOptionsScreen extends Screen{
 		});
 	}
 	
+	/** Method to initialize panel containing all of the information of a game
+	 * 
+	 */
 	private void initializeGameInfoPanel() {
 		JPanel gameFactsPanel = new JPanel();
 		gameFactsPanel.setBorder(blackline);
@@ -110,18 +114,9 @@ public class CoreOptionsScreen extends Screen{
 		gameFactsPanel.add(currentIslandLabel);
 	}
 	
-	private void visitStore() {
-		Screen visitStoreScreen = new VisitStoreScreen(getGame());
-		visitStoreScreen.show();
-		quit();
-	}
-	
-	private void viewIsland() {
-		Screen viewIslands = new ViewIslandsScreen(getGame());
-		viewIslands.show();
-		quit();
-	}
-	
+	/** Method to initialize panel containing information for a Player's Ship
+	 * 
+	 */
 	private void initializeShipPanel() {
 		// Create panel containing a description of a ship, plus any upgrades that have been boughtx
 		JPanel shipPanel = new JPanel();
@@ -163,4 +158,22 @@ public class CoreOptionsScreen extends Screen{
 			shipPanel.add(sp);
 		}
 	}	
+	
+	/** Method for visiting a store. Creates a new VisitStoreScreen and
+	 * closes this CoreOptionsScreen
+	 */
+	private void visitStore() {
+		Screen visitStoreScreen = new VisitStoreScreen(getGame());
+		visitStoreScreen.show();
+		quit();
+	}
+	
+	/** Method for viewing Islands that you can travel to. Creates a new ViewIslandsScreen
+	 * and closes this CoreOptionsScreen
+	 */
+	private void viewIsland() {
+		Screen viewIslands = new ViewIslandsScreen(getGame());
+		viewIslands.show();
+		quit();
+	}
 }
