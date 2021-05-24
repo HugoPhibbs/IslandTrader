@@ -104,7 +104,7 @@ public class SetupScreen extends Screen {
 		
 		lblDisplayDays = new JLabel("30");
 		lblDisplayDays.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDisplayDays.setFont(new Font("Dialog", Font.BOLD, 16));
+		lblDisplayDays.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblDisplayDays.setBounds(1008, 105, 44, 17);
 		frame.getContentPane().add(lblDisplayDays);
 		
@@ -124,6 +124,11 @@ public class SetupScreen extends Screen {
 		lblNameError.setBounds(682, 77, 370, 14);
 		lblNameError.setVisible(false);
 		frame.getContentPane().add(lblNameError);
+		
+		JLabel lblNewLabel = new JLabel("20                    30                    "
+				+ "40                   50");
+		lblNewLabel.setBounds(693, 120, 325, 15);
+		frame.getContentPane().add(lblNewLabel);
 	}
 	
 	/** Creates the JTextField the user enters their name into.*/
