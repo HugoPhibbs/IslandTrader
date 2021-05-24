@@ -236,6 +236,24 @@ public class GameEnvironment {
 		return liquidGoodsVal + player.getMoneyBalance();
 	}
 	
+	/** Method to check if a player has enough money in order to continue a game
+	 * If they dont have enough money, then the finishGame(String) method if called to 
+	 * end the current game
+	 * 
+	 */
+	public String checkSufficientMoney() {
+		minMoneyRequired();
+		int balance = getPlayer().getMoneyBalance();
+		if (balance < calculateLiquidValue()) {
+			return "game_over";
+		}
+		// If player has less money than min money required to travel, prints a message warning them.
+		else if (balance < getMinMoneyToTravel()) {
+			return "insufficient_to_travel";
+		}
+		return "sufficient_money";
+	}
+	
     ///////////////////// GETTER AND SETTER METHODS //////////////////////////
 	
 	/** Getter method for in game Player object

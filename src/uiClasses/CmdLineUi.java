@@ -62,7 +62,15 @@ public class CmdLineUi implements GameUi {
 	 */
 	@Override
 	public void playGame() {
-		checkSufficientMoney();
+		String moneySituation = gameEnvironment.checkSufficientMoney();
+		
+		if (moneySituation.equals("game_over")) {
+			finishGame("You don't have enough money and can't sell enough goods to repair your ship and pay your crew wages. You are stranded!");
+		}
+		else if (moneySituation.equals("insufficient_to_travel")) {
+			System.out.format("You currently don't have enough money to repair your ship and pay your crew. This requires $%d\n",
+					gameEnvironment.getMinMoneyToTravel());
+		}
 		
 		while (!finish) {
 			String[] coreOptions = new String[] {
@@ -637,23 +645,6 @@ public class CmdLineUi implements GameUi {
 		}
 	}
 	
-	/** Method to check if a player has enough money in order to continue a game
-	 * If they dont have enough money, then the finishGame(String) method if called to 
-	 * end the current game
-	 * 
-	 */
-	private void checkSufficientMoney() {
-		gameEnvironment.minMoneyRequired();
-		int balance = gameEnvironment.getPlayer().getMoneyBalance();
-		if (balance < gameEnvironment.calculateLiquidValue()) {
-			finishGame("You don't have enough money and can't sell enough goods to repair your ship and pay your crew wages. You are stranded!");
-		}
-		// If player has less money than min money required to travel, prints a message warning them.
-		else if (balance < gameEnvironment.getMinMoneyToTravel()) {
-			System.out.format("You currently don't have enough money to repair your ship and pay your crew. This requires $%d\n",
-					gameEnvironment.getMinMoneyToTravel());
-		}
-	}
 
 	@Override
 	public void badWeather(Route route) {;
