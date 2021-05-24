@@ -1,10 +1,14 @@
 package uiClasses.gui;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import coreClasses.GameEnvironment;
 import uiClasses.GameUi;
@@ -26,6 +30,8 @@ public abstract class Screen {
 	 * The frame for this screen. Holds all components and other containers. 
 	 */
 	public JFrame frame;
+	
+	public Border blackline = BorderFactory.createLineBorder(Color.black);
 	
 	
 	/** Constructor for the Screen class
@@ -105,5 +111,11 @@ public abstract class Screen {
 	public void showError(String error) {
         JOptionPane.showMessageDialog(frame, error, "Error", JOptionPane.ERROR_MESSAGE);
 
+	}
+	
+	public void clearPanel(JPanel panel) {
+		panel.removeAll();
+		panel.revalidate();
+		panel.repaint();
 	}
 }
