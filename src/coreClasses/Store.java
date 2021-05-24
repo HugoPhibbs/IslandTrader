@@ -384,7 +384,9 @@ public class Store {
 					itemSpaceTaken,
 					"N/A"};
     		
+    		System.out.println(itemName);
     		if (itemName.endsWith("(upgrade)")) {
+    			System.out.println(Integer.toString(catalogue.get(itemName).get("defenseBoost")));
     			infoArray[3] = Integer.toString(catalogue.get(itemName).get("defenseBoost"));
     			}
     		catalogueArrayList.add(infoArray);
