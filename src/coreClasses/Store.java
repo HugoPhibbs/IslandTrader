@@ -273,7 +273,7 @@ public class Store {
     		
     		// If the itemToBuy was null, then no Items with the name itemStoreToBuyName were found in a Player's Ship possession
     		if (itemToBuy == null) {
-    			result += "Not all of the requested Items were bought from a Player!";
+    			result += "Not all of the requested Items were bought from a Player! \n";
     			// Wasn't successful in getting item, print reason why from store
     			result += Store.canBuyItemFromPlayer(player, itemToBuy) +'\n';
     			
@@ -384,9 +384,7 @@ public class Store {
 					itemSpaceTaken,
 					"N/A"};
     		
-    		System.out.println(itemName);
     		if (itemName.endsWith("(upgrade)")) {
-    			System.out.println(Integer.toString(catalogue.get(itemName).get("defenseBoost")));
     			infoArray[3] = Integer.toString(catalogue.get(itemName).get("defenseBoost"));
     			}
     		catalogueArrayList.add(infoArray);
