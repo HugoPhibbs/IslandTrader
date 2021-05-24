@@ -1,108 +1,98 @@
 package uiClasses.gui;
 
-import java.awt.EventQueue;  
-
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-import java.awt.BorderLayout;
-import java.awt.Button;
-
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.awt.event.ActionEvent;
-import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
-
-import coreClasses.*;
-import uiClasses.GameUi;
-
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 import java.awt.Color;
-import java.awt.Container;
-
-import javax.swing.JTable;
-import javax.swing.JScrollBar;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.HashMap;
+import coreClasses.*;
 
 public class VisitStoreScreen extends Screen {
 	
-	// Swing objects
+	// Class Variables //
+	/** JTextField that a user enters into how many of a particular item they would like to buy */
 	private JTextField numItemsTextField;
 	
+	/** JTextPane to display the receipt of a buying or selling transaction */
 	private JTextPane receiptTextPane;
+	
+	/** JLabel as a title for the table that holds items */
 	private JLabel itemsJTableLabel;
+	
+	/** JLabel that tells a user the current money balance of a player */
 	private JLabel balanceJLabel;
+	
+	/** JLabel to ask a use to enter an Integer for the number of numbers they would like to buy */
 	private JLabel enterIntegerJLabel;
 	
+	/** JButton for a user to press if they would like to buy or sell items */
 	private JButton buySellItemsButton;
 	
+	/** Panel to Store the buttons for high level interaction with a store, 
+	 * (buying items, selling items, view previously bought items) */
 	private JPanel mainStoreOptionsPanel;
+	
+	/** Panel to store components relating directly to buying and selling items with a store */
 	private JPanel buySellPanel;
+	
+	/** Panel to store the table that displays Items to a user */
 	private JPanel tablePanel;
 	
+	/** Label to ask user how many items they would like to buy */
 	private JLabel howManyItemsLabel;
 	
+	/** The current name of the Item that a player has chosen from the table */
 	private String chosenItemName = "";
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GameEnvironment ge = new GameEnvironment(null, null, null, null, null);
-					VisitStoreScreen window = new VisitStoreScreen(ge);
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the application.
+	/** Constructor for the VisitStoreScreen
+	 * 
+	 * @param gameEnvironment GameEnvironment object for the current game 
 	 */
 	public VisitStoreScreen(GameEnvironment gameEnvironment) {
 		super("Visit Store Screen ", gameEnvironment);
 		initialize();
 	}
 	
-	/**
-	 * Initialize the contents of the frame.
+	/** Initialize the contents of the frame for VisitStoreScreen
+	 * 
 	 */
 	@Override
 	protected void initialize() {
 		frame.setBounds(100, 100, 1100, 800);
 		
-		// Initialize all labels and buttons that aren't in panels
-		
+		// Initialize all other necessary components
+		initializeDirectFrameComponents();
+		initializeMainStoreOptions();
+		initializeBuySellOptions();
+		initializeTablePanel();
+	}
+	
+	/** Create components that are directly added to the frame
+	 * 
+	 */
+	private void initializeDirectFrameComponents() {
 		// Label for welcoming user to store
 		JLabel welcomeLabel = new JLabel(String.format("Hello %s, welcome to the %s store", game.getPlayer().getName(), game.getCurrentIsland().getIslandStore().getName()));
 		welcomeLabel.setBounds(301, 23, 555, 14);
 		frame.getContentPane().add(welcomeLabel);
 		
-		// need to have a listener here, because cash could change!
-//		this.balanceJLabel = new JLabel("Your current balance is <player.getBalance()>\r\n");
-		this.balanceJLabel = new JLabel(String.format("Your current balance is %s", game.getPlayer().getMoneyBalance()));
+		// Create label for a Player's balance, and update it's value
+		this.balanceJLabel = new JLabel();
 		balanceJLabel.setBounds(34, 89, 265, 23);
-		updatePlayerBalance();
 		frame.getContentPane().add(balanceJLabel);
+		updatePlayerBalance();
 		
 		// Button for going back
 		JButton goBackButton = new JButton("Go Back");
@@ -110,29 +100,18 @@ public class VisitStoreScreen extends Screen {
 		goBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Create a new coreOptions screen, and delete this current screen
-				// If we want to use a parent screen in the future, ie having two ways to get into
-				// The visit store screen, we will need to change the bellow code
 				CoreOptionsScreen coreOptionsScreen = new CoreOptionsScreen(game);
 				coreOptionsScreen.show();
 				quit();
 			}
 		});
 		frame.getContentPane().add(goBackButton);
-		
-		
-		// Initialize main store options and buying and selling options
-		initializeMainStoreOptions();
-		initializeBuySellOptions();
-		initializeTablePanel();
 	}
 
-	/** Initialize the panel containing all the options that a user has to interact with a store
+	/** Initialize the panel containing all the high level options that a user has to interact with a store
 	 * 
 	 */
 	private void initializeMainStoreOptions() {
-		/* Panel containing core options with interacting with a store
-		 * Ie, buy items, sell items, previously bought items
-		 */
 		// Create the Panel
 		this.mainStoreOptionsPanel = new JPanel();
 		mainStoreOptionsPanel.setBounds(35, 124, 504, 352);
@@ -155,19 +134,19 @@ public class VisitStoreScreen extends Screen {
 		mainStoreOptionsPanel.add(viewPreviousItemsButton);
 		
 		// Add Action listeners to all the buttons above, this guides the flow of this screen
-		viewPreviousItemsButton.addActionListener(new ActionListener() {
+		viewItemsForSaleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				viewPrevItems();
+				buySellItemsStart("sell");
 			}
 		});
 		viewItemsStoreBuysButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				buySellStart("buy");
+				buySellItemsStart("buy");
 			}
 		});
-		viewItemsForSaleButton.addActionListener(new ActionListener() {
+		viewPreviousItemsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				buySellStart("sell");
+				viewPrevItems();
 			}
 		});
 	}
@@ -183,11 +162,9 @@ public class VisitStoreScreen extends Screen {
 		frame.getContentPane().add(buySellPanel);
 		buySellPanel.setLayout(null);
 		
-		// Set Panel to invisble until a user selects buy or sell items in the main options
+		// Set Panel to invisible until a user selects buy or sell items in the main options
 		buySellPanel.setVisible(false);
 		
-		
-		//TODO make colour red
 		// Label to ask user how many items they want to buy
 		this.howManyItemsLabel = new JLabel();
 		howManyItemsLabel.setBounds(12, 12, 393, 35);
@@ -224,7 +201,7 @@ public class VisitStoreScreen extends Screen {
 			  }
 		});
 		
-		// Lable to contain the receipt a transaction with a store
+		// Label to contain the receipt a transaction with a store
 		this.receiptTextPane = new JTextPane();
 		receiptTextPane.setBounds(0, 85, 250, 115);
 		buySellPanel.add(receiptTextPane);
@@ -239,31 +216,30 @@ public class VisitStoreScreen extends Screen {
 		buySellItemsButton.setEnabled(false);
 	}
 	
-	/** Initialize the panel holding all the items that are being displayed to a user
+	/** Initialize the panel for a table holding all the items that are being displayed to a user
 	 * 
 	 */
 	private void initializeTablePanel() {
+		// Create the panel
 		this.tablePanel = new JPanel();
 		tablePanel.setBounds(562, 124, 504, 500);
 		frame.getContentPane().add(tablePanel);
 		tablePanel.setLayout(null);
 		
-		/* TODO put the label into the panel!!. find a way to drag the table down
-		 * may be something to do with the ScrollPane that contains it
-		 */
-		
-		// Label for j list. For buying.selling and showing previously bought items
+		// Label for JTable. For buyingm, selling and showing previously bought items
 		this.itemsJTableLabel = new JLabel();
 		itemsJTableLabel.setBounds(673, 68, 248, 50);
 		frame.getContentPane().add(itemsJTableLabel);
 	}
-
+	
+	
+	///////////////////////// GENERAL HELPER METHODS ////////////////////////////////
+	
 	/** Create a table to display information about Items that a user has either bought,
 	 * items that they can buy or sell. 
 	 * 
 	 * @param rows String[][] nested array containing all the data to be stored in the table
 	 * @param columns String[] array containing the titles for each column in the table
-	 * @param canSelect boolean value to ensure that a user can only select an item the table 
 	 * has been initialized to sell or buy items, NOT to show previously bought items
 	 * @return JTable that was created
 	 */
@@ -284,7 +260,9 @@ public class VisitStoreScreen extends Screen {
 		
 		// Return table that was created
 		return itemsTable;
-	}	
+	}
+	
+	//////////////////////// VIEWING PREVOUSLY BOUGHT ITEMS  /////////////////////////////////////	
 	
 	/** Method to handle the displaying of previously bought items of a player 
 	 * in a table opposite.
@@ -314,48 +292,84 @@ public class VisitStoreScreen extends Screen {
 		}
 	}
 	
-	/** Method to update the balance of a player that is shown at the top of the frame
-	 * Is called every time Item(s) are sold or bought between a store and a player
-	 */
-	private void updatePlayerBalance() {
-		//balanceJLabel.setText(String.format("Player has a balance of : %d", gameEnvironment.getPlayer().getMoneyBalance()));
-		balanceJLabel.setText(String.format("Your current balance is %s", game.getPlayer().getMoneyBalance()));
-	}
+   //////////////////////// BUYING AND SELLING ITEMS  /////////////////////////////////////
 	
 	/** Method to begin a transaction between a player and a store
 	 * 
-	 * @param operation String for what a user wants to do, either "buy" or "sell"
+	 * @param operation String for what a user wants to do with a Store, either "buy" or "sell"
 	 */
-	private void buySellStart(String buyOrSell) {
-		System.out.println();
-		System.out.println("buyOrSell start :"+ buyOrSell);
+	private void buySellItemsStart(String buyOrSell) {
+		// Reset components from the last use of this function
 		resetBuySellComponents();
 		
+		// Create table with descriptions of the Items that a player can buy or sell
 		JTable itemsTable = setupBuySellTable(buyOrSell);
 		
+		// Create a selection model for itemsTable
+		addItemsTableSelectionModel(itemsTable, buyOrSell);
+		
+		// Create listener for buying and selling items
+		addBuySellItemsButtonListener(buyOrSell);
+	}
+	
+	/** Method to handle the reseting of components relating to the buying and selling of Items 
+	 * Basically creates a new state for things to be bought in, without concern of past conditions 
+	 * of relevant components.
+	 */
+	private void resetBuySellComponents() {
+		howManyItemsLabel.setText("");
+		numItemsTextField.setText("");
+		receiptTextPane.setText("");
+		buySellPanel.setVisible(true);
+		numItemsTextField.setVisible(false);
+		buySellItemsButton.setEnabled(false);
+		enterIntegerJLabel.setVisible(false);
+		// Remove Excess action listeners for buySellItemsButton
+		if (buySellItemsButton.getActionListeners().length > 0) {
+			buySellItemsButton.removeActionListener(buySellItemsButton.getActionListeners()[0]);
+		}
+	}
+	
+	/** Method to create a selection model for a created itemsTable, for user
+	 * to select Items from
+	 * 
+	 * @param itemsTable JTable containing descriptions of the Items that a player can buy or sell
+	 * @param buyOrSell String for what a user wants to do with a Store, either "buy" or "sell"
+	 */
+	private void addItemsTableSelectionModel(JTable itemsTable, String buyOrSell) {
 		// Create model and action listener for user to choose an Item from the table
 		ListSelectionModel selectionModel = itemsTable.getSelectionModel();
 		selectionModel.addListSelectionListener(new ListSelectionListener() {
 		    public void valueChanged(ListSelectionEvent e) {
-		    	// Item has been chosen, so update Label asking how many Items they would like to buy
+		    	// Bellow lines ensures that changing selection of a row counts as one change, not two
 		    	if (!e.getValueIsAdjusting()) {
 			    	chosenItemName = chosenItemName(itemsTable);
-			    	buySellStartHelper(buyOrSell, chosenItemName);
+			    	buySellItemsStartHelper(buyOrSell, chosenItemName);
 		    	}
 		    }
 		});
-		
-		// get the item name from the chosen item in the table
+	}
+	
+	/** Method to add a listener for the button to buy and sell items
+	 * 
+	 * @param buyOrSell String for what a user wants to do with a Store, either "buy" or "sell"
+	 */
+	private void addBuySellItemsButtonListener(String buyOrSell) {
 		buySellItemsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("buyOrSell: " + 	buyOrSell);
 				buySellItemsButtonHandler(buyOrSell, chosenItemName);
 			}
 		});
 	}
 	
+	/** Method to handle the creation of a table for buying and selling Items along with relevant supporting
+	 * components.
+	 * 
+	 * @param buyOrSell String describing what a user wants to do with a Store, either "buy" or "sell"
+	 * @return JTable table containing descriptions of the Items that a player can buy or sell with a Store
+	 */
 	private JTable setupBuySellTable(String buyOrSell) {
-		/* Use html to display multi line button 
+		/* Use html to display multi-line button 
 		 * from https://stackoverflow.com/questions/15746970/how-to-add-a-multi-line-text-to-a-jbutton-with-the-line-unknown-dynamically
 		 */
 		itemsJTableLabel.setText(String.format("<html>Items that the store %ss<br>Select one to continue</html>", buyOrSell));
@@ -371,29 +385,26 @@ public class VisitStoreScreen extends Screen {
 		return createTable(catalogueNestedArray, colNames);
 	}
 	
-	/** Method to update the name of an item within the label that
-	 * ask a user how many Items they would like to buy 
+	/** Helper method for buySellItemsStart. Adjusts relevant components to do with buying and selling Items
+	 * Has no real functional use, just a method to format components.
 	 * 
-	 * @param operation String for what a user wants to do with a store, either "buy" or "sell"
+	 * @param buyOrSell String for what a user wants to do with a store, either "buy" or "sell"
+	 * @param itemName String for the name of an Item that a user wants to buy or sell
 	 */
-	private void buySellStartHelper(String buyOrSell, String itemName) {
+	private void buySellItemsStartHelper(String buyOrSell, String itemName) {
 		
 		numItemsTextField.setText("");
 	
 		String buyOrSellAdj = "";
 		
-		System.out.println("buyOrSell in helper: " + 	buyOrSell);
-		System.out.println("chosenItemName: " + chosenItemName);
-		
 		if (buyOrSell.equals("buy")) {
 			// Switch the meaning of operation around, as within the store class, it is in the perspective of the store!
-			// So it is now in the perspective of the player!
+			// So it is now in the perspective of the player!, just for components to diplay
 			buyOrSellAdj = "sell";
 		}
 		else {
 			buyOrSellAdj = "buy";
 		}
-		
 		String buyOrSellCap = buyOrSellAdj.substring(0, 1).toUpperCase() + buyOrSellAdj.substring(1);
 		buySellItemsButton.setText(String.format("%s Items", buyOrSellCap));
 		howManyItemsLabel.setText(String.format("How many %s would you like to %s>", itemName, buyOrSellAdj));
@@ -405,22 +416,20 @@ public class VisitStoreScreen extends Screen {
 	 * selling into one.
 	 * 
 	 * @param buyOrSell String for what a user wants to do with a store, either "buy" or "sell"
+	 * @param itemName String for the name of an Item that a user wants to buy or sell
 	 * @throws IllegalStateException if operation is neither "buy" or "sell"
 	 */
 	private void buySellItemsButtonHandler(String buyOrSell, String chosenItemName) throws IllegalStateException {
-//		String chosenItemName = chosenItemName(itemsTable);
-//		System.out.println("handler item name: " + chosenItemName);
-		
-		// receipt for a transaction, buying and selling
-		
+		// Check if the chosenItem name is empty, checks exceptional program flow
 		if (chosenItemName.equals("")) {
 			throw new IllegalArgumentException("Chosen item is empty!!");
 		}
-		String receipt = "";
+		
 		int numItems = Integer.parseInt(numItemsTextField.getText());
 		
-		System.out.println("Buy sell in handler :"+buyOrSell);
+		String receipt = "";
 		// buyOrSell is in the perspective of the store
+		// Buy or sell items with a store
 		if (buyOrSell.equals("buy")) {
 			receipt = buyItemsFromPlayer(chosenItemName, numItems);
 		}
@@ -479,23 +488,6 @@ public class VisitStoreScreen extends Screen {
 		return itemName;
 	}
 	
-	private void resetBuySellComponents() {
-		/* Adjust components that may have been adjusted from viewing previously bought items
-		 * basically resets affected components to what they were before user selected anything
-		 */
-		howManyItemsLabel.setText("");
-		buySellPanel.setVisible(true);
-		numItemsTextField.setText("");
-		numItemsTextField.setVisible(false);
-		buySellItemsButton.setEnabled(false);
-		receiptTextPane.setText("");
-		enterIntegerJLabel.setVisible(false);
-		System.out.println("Number of action listeners for button: " +buySellItemsButton.getActionListeners().length);
-		if (buySellItemsButton.getActionListeners().length > 0) {
-			buySellItemsButton.removeActionListener(buySellItemsButton.getActionListeners()[0]);
-		}
-	}
-	
 	/** Method to handle the input of how many Items a user would like to buy
 	 * Checks if a number is valid, and takes action to notify user that the number is invalid
 	 * 
@@ -515,7 +507,6 @@ public class VisitStoreScreen extends Screen {
 		}
 	}
 	
-	
 	/** Method to check if an inputed integer, (in the form of a String) from a player. 
 	 * Helper method for handleNumItem(String)
 	 * 
@@ -531,12 +522,20 @@ public class VisitStoreScreen extends Screen {
 			}
 		}
 		// This is thrown if the inputted String is not a valid Integer
-		catch (NumberFormatException iie) {
+		catch (NumberFormatException nfe) {
 			return false;
 		}
 		return true;
 	
     }
+	
+	/** Method to update the balance of a player that is shown at the top of the frame
+	 * Is called every time Item(s) are sold or bought between a store and a player
+	 */
+	private void updatePlayerBalance() {
+		//balanceJLabel.setText(String.format("Player has a balance of : %d", gameEnvironment.getPlayer().getMoneyBalance()));
+		balanceJLabel.setText(String.format("Your current balance is %s", game.getPlayer().getMoneyBalance()));
+	}
 }
 
 
