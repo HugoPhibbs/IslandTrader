@@ -14,6 +14,7 @@ import coreClasses.*;
 import uiClasses.GameUi;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
@@ -52,6 +53,10 @@ public class ChooseRouteScreen extends Screen {
 	}
 	
 	private void onConfirm() {
+		JDialog paymentsScreen = new MakePaymentsDialog(game, selectedRoute, this);
+	}
+	
+	protected void confirmSelection() {
 		this.quit();
 		SailingScreen sailingScreen = new SailingScreen(game, island, selectedRoute);
 		sailingScreen.show();

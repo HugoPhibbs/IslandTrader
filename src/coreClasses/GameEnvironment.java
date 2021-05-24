@@ -206,8 +206,8 @@ public class GameEnvironment {
 	 * @param Integer for the amount of money the player started with, needed for profit calculation.  
 	 * @return Integer for the player's score at time of call.
 	 */
-	public int calculateScore(int startMoney) {
-		int profit = getPlayer().getMoneyBalance() - 1000;
+	public int calculateScore() {
+		int profit = getPlayer().getMoneyBalance() - ui.STARTING_MONEY;
 		int daysPlayed = getDaysSelected() - getDaysRemaining();
 		
 		if (daysPlayed == 0) {

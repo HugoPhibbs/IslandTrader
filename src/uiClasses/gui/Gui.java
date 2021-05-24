@@ -22,7 +22,8 @@ public class Gui implements GameUi{
 
 	@Override
 	public void finishGame(String message) {
-		System.out.println("Game Over");
+		Screen gameOverScreen = new GameOverScreen(gameEnvironment);
+		gameOverScreen.show();
 	}
 
 
