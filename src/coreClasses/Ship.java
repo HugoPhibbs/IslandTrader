@@ -168,9 +168,21 @@ public class Ship {
      * @return Integer for the total wage cost to travel along this route
      */
     public int routeWageCost(Route route) {
-    	int daysSailing = route.getDistance() / speed; // days sailing dependent on ship speed. 
+    	int daysSailing = calculateDaysSailing(route); // days sailing dependent on ship speed. 
     	return getDailyWageCost() * daysSailing;
     }
+    
+    /** Calculates the number of days sailing on a particular route
+     * Rounds up to the ceiling of the route.getDistance() / speed to ensure that
+     * all routes have at least 1 days sailing. Otherwise this would break paying wages
+     * for routes less than 1 days sailing
+     * 
+     * @param route Route object with distance to be calculated with
+     * @return Integer for the days sailing of inputed Route
+     */
+	public int calculateDaysSailing(Route route) {
+		return (int)Math.ceil((float)route.getDistance() / (float)speed);
+	}
     
     /** Method that returns the cost to repair ship because of damage
      * 

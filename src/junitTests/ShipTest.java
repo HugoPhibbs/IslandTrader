@@ -126,10 +126,25 @@ class ShipTest {
 	}
 	
 	@Test
-	void getRouteWageCostTest() {
+	void routeWageCostTest() {
 		// simple calculation, no real boundary conditions
 		Route route1 = new Route("arb", 100, null, null);
 		assertEquals(250, testShip.routeWageCost(route1));
+	}
+	
+	@Test
+	void calculateDaysSailingTest() {
+		Route route1 = new Route("arb", 100, null, null);
+		Route route2 = new Route("arb", 1, null, null);
+		Route route3 = new Route("arb", 120, null, null);
+		Ship testShip2  =  new Ship("Speedy Gonzales", 50, 0, 0);
+		
+		// Test with route distance/speed being a whole number
+		assertEquals(2, testShip2.calculateDaysSailing(route1));
+		// Test with route distance/speed being less than 1
+		assertEquals(1, testShip2.calculateDaysSailing(route2));
+		// Test with route distance/speed being above 1 but not a whole number
+		assertEquals(3, testShip2.calculateDaysSailing(route3));
 	}
 	
 	@Test
