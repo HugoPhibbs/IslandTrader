@@ -69,28 +69,28 @@ public class Player {
     	// used by GUI
     	
     	// componenents in array have (<name>, <buyPrice>, <sellPrice>)
-    	ArrayList<ArrayList<String>> purchasedItemsArrayList = new ArrayList<ArrayList<String>>();
-    	
     	if (purchasedItems.size() == 0) {
     		// return null if purchased items is empty, gui handles 
     		return null;
     	}
     	else {
+    		ArrayList<String[]> purchasedItemsArrayList = new ArrayList<String[]>();
     		for (int i=0; i < purchasedItems.size(); i++) {
     			Item currItem = purchasedItems.get(i);
     			
-    			purchasedItemsArrayList.get(i).add(currItem.getName());
-    			purchasedItemsArrayList.get(i).add(Integer.toString(currItem.getPlayerBuyPrice()));
-    			
+    			String [] infoArray = new String[] {
+    					currItem.getName(), 
+    					Integer.toString(currItem.getPlayerBuyPrice()), 
+    					"N/A"
+    			};
     			if (currItem.getPlayerSellPrice() != -1) {
-    				purchasedItemsArrayList.get(i).add(Integer.toString(currItem.getPlayerSellPrice()));
+    				infoArray[2] = Integer.toString(currItem.getPlayerSellPrice());
     			}
-    			else {
-    				purchasedItemsArrayList.get(i).add("N/A");
-    			}
+    			
+    			purchasedItemsArrayList.add(infoArray);
     		}
+    		return purchasedItemsArrayList.toArray(new String[purchasedItemsArrayList.size()][3]);
     	}
-    	return (String [][]) purchasedItemsArrayList.toArray();
     }
     
 	/** Adds an item the player has purchased to purchasedItems.
