@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JPanel;
@@ -55,7 +57,18 @@ public class ChooseRouteScreen extends Screen {
 	}
 	
 	private void onConfirm() {
-		JDialog paymentsScreen = new MakePaymentsDialog(game, selectedRoute, this);
+		// Check player has enough money to make required payments
+		int costToSail = game.getShip().repairCost() + game.getShip().routeWageCost(selectedRoute);
+		int moneyBalance = game.getPlayer().getMoneyBalance();
+		
+		if (costToSail > game.getPlayer().getMoneyBalance()) {
+			String notEnoughMoneyMessage = String.format("<html>Not enough money tosail this route! You need $%d to pay your crew wages and <br>"
+					+ "repair your ship. Your current balance is $%d. Please sell some of your items.<html>", 
+					costToSail, moneyBalance);
+			JOptionPane.showMessageDialog(frame, notEnoughMoneyMessage, "Not Enough Money!", JOptionPane.ERROR_MESSAGE);
+		} else {
+			JDialog paymentsScreen = new MakePaymentsDialog(game, selectedRoute, this);
+		}
 	}
 	
 	protected void confirmSelection() {
