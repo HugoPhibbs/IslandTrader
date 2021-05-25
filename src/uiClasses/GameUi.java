@@ -11,7 +11,7 @@ public interface GameUi {
 	String DURATION_REQUIREMENTS = "Invalid game duration. Please enter a number of days (integer) between 20 and 50";
 	
 	// The amount of money the player starts with.
-	int STARTING_MONEY = 100;
+	int STARTING_MONEY = 1000;
 	
 	public void setup(GameEnvironment gameEnvironment);
 	
