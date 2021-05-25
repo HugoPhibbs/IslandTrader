@@ -71,7 +71,7 @@ public class WeatherScreen extends Screen {
 				+ "wild weather did %d damage to your ship. <html>", damageDone));
 		lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInfo.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblInfo.setBounds(127, 310, 368, 38);
+		lblInfo.setBounds(12, 310, 576, 38);
 		frame.getContentPane().add(lblInfo);
 	}
 }

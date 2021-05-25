@@ -40,7 +40,7 @@ public class PirateScreen extends Screen {
 	 */
 	@Override
 	protected void initialize() {
-		frame.setBounds(100, 100, 650, 450);
+		frame.setBounds(100, 100, 650, 500);
 		
 		createRollDiceButton();
 		createContinueButton();
@@ -52,7 +52,15 @@ public class PirateScreen extends Screen {
 			int diceOutcome = pirate.rollDice();
 			lblDiceOutcome.setText(String.format("You got a %d", diceOutcome));
 			outcome = pirate.attackShip(diceOutcome, game.getShip());
-			lblAttackOutcome.setText(outcome);
+			
+			if (outcome.equals("game_over")) {
+				lblAttackOutcome.setText("<html> The pirates boarded your ship and you don't have enough goods <br>"
+	        									+ "to satisfy them. You and your crew have to walk the plank! <html>");
+			} else if (outcome.equals("attack_successful")) {
+				lblAttackOutcome.setText("The pirate's boarded yur ship and stole all your goods!");
+			} else {
+				lblAttackOutcome.setText("You successful fended of the pirates!");
+			}
 		}
 	}
 	
@@ -60,6 +68,7 @@ public class PirateScreen extends Screen {
 		if (outcome.equals("game_over")) {
 			game.getUi().finishGame("You have less goods than what the pirates demand. \n"
         			+ "You and your crew have to walk the plank!");
+			quit();
 		}
 		else {
 			SailingScreen sailingScreen = new SailingScreen(game, game.getCurrentIsland(), route);
@@ -82,7 +91,7 @@ public class PirateScreen extends Screen {
 		JButton btnContinue = new JButton("Continue");
 		btnContinue.addActionListener(e -> onContinueButton());
 		btnContinue.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnContinue.setBounds(521, 389, 117, 25);
+		btnContinue.setBounds(521, 439, 117, 25);
 		frame.getContentPane().add(btnContinue);
 	}
 	
@@ -92,7 +101,8 @@ public class PirateScreen extends Screen {
 		lblPirateAttack.setBounds(167, 12, 297, 38);
 		frame.getContentPane().add(lblPirateAttack);
 		
-		JLabel lblInstructions = new JLabel("<html> Oh no, pirates are attacking your ship. They will try <br>        to steal your loot, roll the dice to defend. </html>");
+		JLabel lblInstructions = new JLabel("<html> Oh no, pirates are attacking your ship. They will try <br>"
+				+ "to steal your loot, roll the dice to defend. </html>");
 		lblInstructions.setFont(new Font("Dialog", Font.BOLD, 17));
 		lblInstructions.setBounds(81, 76, 483, 60);
 		frame.getContentPane().add(lblInstructions);
@@ -104,7 +114,8 @@ public class PirateScreen extends Screen {
 		
 		lblAttackOutcome = new JLabel("");
 		lblAttackOutcome.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblAttackOutcome.setBounds(23, 352, 600, 25);
+		lblAttackOutcome.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAttackOutcome.setBounds(23, 352, 600, 75);
 		frame.getContentPane().add(lblAttackOutcome);
 	}
 }
