@@ -24,6 +24,7 @@ public class PirateScreen extends Screen {
 	private String outcome;
 	/** The route the attack occurs on.*/
 	private Route route;
+	private JButton btnContinue;
 	
 	/**
 	 * Create the application.
@@ -48,6 +49,7 @@ public class PirateScreen extends Screen {
 	}
 	
 	private void onDiceRoll() {
+		btnContinue.setEnabled(true);
 		if (lblDiceOutcome.getText() == "") {
 			int diceOutcome = pirate.rollDice();
 			lblDiceOutcome.setText(String.format("You got a %d", diceOutcome));
@@ -57,13 +59,13 @@ public class PirateScreen extends Screen {
 	}
 	
 	private void onContinueButton() {
+		quit();
 		if (outcome.equals("game_over")) {
 			game.getUi().finishGame("You have less goods than what the pirates demand. \n"
         			+ "You and your crew have to walk the plank!");
 		}
 		else {
 			SailingScreen sailingScreen = new SailingScreen(game, game.getCurrentIsland(), route);
-			quit();
 			sailingScreen.endSail();
 		}
 	}
@@ -79,7 +81,8 @@ public class PirateScreen extends Screen {
 	}
 	
 	private void createContinueButton() {
-		JButton btnContinue = new JButton("Continue");
+		this.btnContinue = new JButton("Continue");
+		btnContinue.setEnabled(false);
 		btnContinue.addActionListener(e -> onContinueButton());
 		btnContinue.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnContinue.setBounds(521, 389, 117, 25);
