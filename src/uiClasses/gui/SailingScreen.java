@@ -60,7 +60,6 @@ public class SailingScreen extends Screen {
 	
 	protected void endSail() {
 		Screen optionsScreen = new CoreOptionsScreen(game);
-		System.out.println("endsail");
 		quit();
 		optionsScreen.show();
 	}
