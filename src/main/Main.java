@@ -424,24 +424,118 @@ public class Main {
 
 		ArrayList<HashMap<String, HashMap<String, Integer>>> buyCatalogues = new ArrayList<HashMap<String, HashMap<String, Integer>>>();
 
-		// Create sell catalogue for cyprus, becuase it only sells ugrades, can buy a
-		// bit of everything
-		HashMap<String, HashMap<String, Integer>> buyCatalogueCyprus = new HashMap<String, HashMap<String, Integer>>();
-		HashMap<String, Integer> goldPropertiesCyprus = new HashMap<String, Integer>();
-		goldPropertiesCyprus.put("spaceTaken", 5);
-		goldPropertiesCyprus.put("price", 10);
+
+
+		
+		// Create buy catalogue properties for silver for each store
 		HashMap<String, Integer> silverPropertiesCyprus = new HashMap<String, Integer>();
 		silverPropertiesCyprus.put("spaceTaken", 3);
 		silverPropertiesCyprus.put("price", 4);
+		HashMap<String, Integer> silverPropertiesMalta = new HashMap<String, Integer>();
+		silverPropertiesMalta.put("spaceTaken", 3);
+		silverPropertiesMalta.put("price", 4);
+		
+		// Create buy catalogue properties for banana for each store
 		HashMap<String, Integer> bananaPropertiesCyprus = new HashMap<String, Integer>();
 		bananaPropertiesCyprus.put("spaceTaken", 1);
 		bananaPropertiesCyprus.put("price", 1);
+		HashMap<String, Integer> bananaPropertiesCorsica = new HashMap<String, Integer>();
+		bananaPropertiesCorsica.put("spaceTaken", 1);
+		bananaPropertiesCorsica.put("price", 1);
+		
+		// Create buy catalogue properties for bandages for each store
 		HashMap<String, Integer> bandagesPropertiesCyprus = new HashMap<String, Integer>();
 		bandagesPropertiesCyprus.put("spaceTaken", 3);
 		bandagesPropertiesCyprus.put("price", 4);
+		HashMap<String, Integer> bandagesPropertiesMalta = new HashMap<String, Integer>();
+		bandagesPropertiesMalta.put("spaceTaken", 0);
+		bandagesPropertiesMalta.put("price", 30);
+		HashMap<String, Integer> bandagesPropertiesIbiza = new HashMap<String, Integer>();
+		bandagesPropertiesIbiza.put("spaceTaken", 0);
+		bandagesPropertiesIbiza.put("price", 30);
+		
+		// Create buy catalogue properties for lime for each store
 		HashMap<String, Integer> limePropertiesCyprus = new HashMap<String, Integer>();
 		limePropertiesCyprus.put("spaceTaken", 1);
 		limePropertiesCyprus.put("price", 1);
+		HashMap<String, Integer> limePropertiesSicily = new HashMap<String, Integer>();
+		limePropertiesSicily.put("spaceTaken", 0);
+		limePropertiesSicily.put("price", 10);
+		HashMap<String, Integer> limePropertiesIbiza = new HashMap<String, Integer>();
+		limePropertiesIbiza.put("spaceTaken", 0);
+		limePropertiesIbiza.put("price", 50);
+		
+		// Create buy catalogue properties for Tomato Sauce for each store
+		HashMap<String, Integer> tomatoSaucePropertiesSicily = new HashMap<String, Integer>();
+		tomatoSaucePropertiesSicily.put("spaceTaken", 1);
+		tomatoSaucePropertiesSicily.put("price", 3);
+		HashMap<String, Integer> tomatoSaucePropertiesCorsica = new HashMap<String, Integer>();
+		tomatoSaucePropertiesCorsica.put("spaceTaken", 1);
+		tomatoSaucePropertiesCorsica.put("price", 3);
+		
+		// Create buy catalogue properties for bottle o rum for each store
+		HashMap<String, Integer> bottleORumPropertiesSicily = new HashMap<String, Integer>();
+		bottleORumPropertiesSicily.put("spaceTaken", 3);
+		bottleORumPropertiesSicily.put("price", 4);
+		HashMap<String, Integer> bottleORumPropertiesIbiza = new HashMap<String, Integer>();
+		bottleORumPropertiesIbiza.put("spaceTaken", 0);
+		bottleORumPropertiesIbiza.put("price", 30);
+		
+		// Create buy catalogue properties for Turtle meat for each store
+		HashMap<String, Integer> turtleMeatPropertiesSicily = new HashMap<String, Integer>();
+		turtleMeatPropertiesSicily.put("spaceTaken", 0);
+		turtleMeatPropertiesSicily.put("price", 50);
+		HashMap<String, Integer> turtleMeatPropertiesCorsica= new HashMap<String, Integer>();
+		turtleMeatPropertiesCorsica.put("spaceTaken", 0);
+		turtleMeatPropertiesCorsica.put("price", 50);
+		
+		// Create buy catalogue properties for Gold for each store
+		HashMap<String, Integer> goldPropertiesSicily = new HashMap<String, Integer>();
+		goldPropertiesSicily.put("spaceTaken", 0);
+		goldPropertiesSicily.put("price", 30);
+		HashMap<String, Integer> goldPropertiesMalta = new HashMap<String, Integer>();
+		goldPropertiesMalta.put("spaceTaken", 0);
+		goldPropertiesMalta.put("price", 50);
+		HashMap<String, Integer> goldPropertiesCyprus = new HashMap<String, Integer>();
+		goldPropertiesCyprus.put("spaceTaken", 5);
+		goldPropertiesCyprus.put("price", 10);
+		
+		// Create buy catalogue properties for Treasure Map for each store
+		HashMap<String, Integer> treasureMapPropertiesCorsica = new HashMap<String, Integer>();
+		treasureMapPropertiesCorsica.put("spaceTaken", 3);
+		treasureMapPropertiesCorsica.put("price", 4);
+		HashMap<String, Integer> treasureMapPropertiesMalta = new HashMap<String, Integer>();
+		treasureMapPropertiesMalta.put("spaceTaken", 3);
+		treasureMapPropertiesMalta.put("price", 4);
+		
+		// Create buy catalogue properties for Special Tea for each store
+		HashMap<String, Integer> specialTeaPropertiesCorsica = new HashMap<String, Integer>();
+		specialTeaPropertiesCorsica.put("spaceTaken", 0);
+		specialTeaPropertiesCorsica.put("price", 50);
+		HashMap<String, Integer> specialTeaPropertiesIbiza = new HashMap<String, Integer>();
+		specialTeaPropertiesIbiza.put("spaceTaken", 3);
+		specialTeaPropertiesIbiza.put("price", 4);
+		
+		// Create buy catalogue properties for Large chest for each store
+		HashMap<String, Integer> largeChestPropertiesMalta = new HashMap<String, Integer>();
+		largeChestPropertiesMalta.put("spaceTaken", 1);
+		largeChestPropertiesMalta.put("price", 3);
+		HashMap<String, Integer> largeChestPropertiesIbiza = new HashMap<String, Integer>();
+		largeChestPropertiesIbiza.put("spaceTaken", 0);
+		largeChestPropertiesIbiza.put("price", 10);
+		
+		// Create sell catalogue for sicily, specialises in food.
+		HashMap<String, HashMap<String, Integer>> buyCatalogueSicily = new HashMap<String, HashMap<String, Integer>>();
+		buyCatalogueSicily.put("Tomato-Sauce", tomatoSaucePropertiesSicily);
+		buyCatalogueSicily.put("Bottle-O'-Rum", bottleORumPropertiesSicily);
+		buyCatalogueSicily.put("Turtle-Meat", turtleMeatPropertiesSicily);
+		buyCatalogueSicily.put("Gold", goldPropertiesSicily);
+		buyCatalogueSicily.put("Lime", limePropertiesSicily);
+		buyCatalogues.add(buyCatalogueSicily);
+		
+		// Create sell catalogue for cyprus, becuase it only sells ugrades, can buy a
+		// bit of everything
+		HashMap<String, HashMap<String, Integer>> buyCatalogueCyprus = new HashMap<String, HashMap<String, Integer>>();
 		buyCatalogueCyprus.put("Gold", goldPropertiesCyprus);
 		buyCatalogueCyprus.put("Silver", silverPropertiesCyprus);
 		buyCatalogueCyprus.put("Banana", bananaPropertiesCyprus);
@@ -449,83 +543,26 @@ public class Main {
 		buyCatalogueCyprus.put("Lime", limePropertiesCyprus);
 		buyCatalogues.add(buyCatalogueCyprus);
 
-		// Create sell catalogue for sicily, specialises in food.
-		HashMap<String, HashMap<String, Integer>> buyCatalogueSicily = new HashMap<String, HashMap<String, Integer>>();
-		HashMap<String, Integer> tomatoSaucePropertiesSicily = new HashMap<String, Integer>();
-		tomatoSaucePropertiesSicily.put("spaceTaken", 1);
-		tomatoSaucePropertiesSicily.put("price", 3);
-		HashMap<String, Integer> bottleORumPropertiesSicily = new HashMap<String, Integer>();
-		bottleORumPropertiesSicily.put("spaceTaken", 3);
-		bottleORumPropertiesSicily.put("price", 4);
-		HashMap<String, Integer> turtleMeatPropertiesSicily = new HashMap<String, Integer>();
-		turtleMeatPropertiesSicily.put("spaceTaken", 0);
-		turtleMeatPropertiesSicily.put("price", 50);
-		HashMap<String, Integer> goldPropertiesSicily = new HashMap<String, Integer>();
-		goldPropertiesSicily.put("spaceTaken", 0);
-		goldPropertiesSicily.put("price", 30);
-		HashMap<String, Integer> limePropertiesSicily = new HashMap<String, Integer>();
-		limePropertiesSicily.put("spaceTaken", 0);
-		limePropertiesSicily.put("price", 10);
-		buyCatalogueSicily.put("Tomato-Sauce", tomatoSaucePropertiesSicily);
-		buyCatalogueSicily.put("Bottle-O'-Rum", bottleORumPropertiesSicily);
-		buyCatalogueSicily.put("Turtle-Meat", turtleMeatPropertiesSicily);
-		buyCatalogueSicily.put("Gold", goldPropertiesSicily);
-		buyCatalogueSicily.put("Lime", limePropertiesSicily);
-		buyCatalogues.add(buyCatalogueSicily);
-
 		// Create buy catalogue for corsica specialises in everything
 		HashMap<String, HashMap<String, Integer>> buyCatalogueCorsica = new HashMap<String, HashMap<String, Integer>>();
-		HashMap<String, Integer> tomatoSaucePropertiesCorsica = new HashMap<String, Integer>();
-		tomatoSaucePropertiesCorsica.put("spaceTaken", 1);
-		tomatoSaucePropertiesCorsica.put("price", 3);
-		HashMap<String, Integer> treasureMapPropertiesCorsica = new HashMap<String, Integer>();
-		treasureMapPropertiesCorsica.put("spaceTaken", 3);
-		treasureMapPropertiesCorsica.put("price", 4);
-		HashMap<String, Integer> specialTeaPropertiesCorsica = new HashMap<String, Integer>();
-		specialTeaPropertiesCorsica.put("spaceTaken", 0);
-		specialTeaPropertiesCorsica.put("price", 50);
 		buyCatalogueCorsica.put("Tomato-Sauce", tomatoSaucePropertiesCorsica);
 		buyCatalogueCorsica.put("Treasure-Map", treasureMapPropertiesCorsica);
 		buyCatalogueCorsica.put("Special-Tea", specialTeaPropertiesCorsica);
+		buyCatalogueCorsica.put("Turtle-Meat", turtleMeatPropertiesCorsica);
+		buyCatalogueCorsica.put("Banana", bananaPropertiesCorsica);
 		buyCatalogues.add(buyCatalogueCorsica);
 
 		// Create sell catalogue for malta
 		HashMap<String, HashMap<String, Integer>> buyCatalogueMalta = new HashMap<String, HashMap<String, Integer>>();
-		HashMap<String, Integer> largeChestPropertiesMalta = new HashMap<String, Integer>();
-		largeChestPropertiesMalta.put("spaceTaken", 1);
-		largeChestPropertiesMalta.put("price", 3);
-		HashMap<String, Integer> treasureMapPropertiesMalta = new HashMap<String, Integer>();
-		treasureMapPropertiesMalta.put("spaceTaken", 3);
-		treasureMapPropertiesMalta.put("price", 4);
-		HashMap<String, Integer> goldPropertiesMalta = new HashMap<String, Integer>();
-		goldPropertiesMalta.put("spaceTaken", 0);
-		goldPropertiesMalta.put("price", 50);
-		HashMap<String, Integer> bandagesPropertiesMalta = new HashMap<String, Integer>();
-		bandagesPropertiesMalta.put("spaceTaken", 0);
-		bandagesPropertiesMalta.put("price", 30);
 		buyCatalogueMalta.put("Large-Chest", largeChestPropertiesMalta);
 		buyCatalogueMalta.put("Treasure-Map", treasureMapPropertiesMalta);
 		buyCatalogueMalta.put("Gold", goldPropertiesMalta);
 		buyCatalogueMalta.put("Bandages", bandagesPropertiesMalta);
+		buyCatalogueMalta.put("Silver", silverPropertiesMalta);
 		buyCatalogues.add(buyCatalogueMalta);
 
 		// Create buy catalogue for ibiza
-		HashMap<String, HashMap<String, Integer>> buyCatalogueIbiza = new HashMap<String, HashMap<String, Integer>>();
-		HashMap<String, Integer> bandagesPropertiesIbiza = new HashMap<String, Integer>();
-		bandagesPropertiesIbiza.put("spaceTaken", 0);
-		bandagesPropertiesIbiza.put("price", 30);
-		HashMap<String, Integer> specialTeaPropertiesIbiza = new HashMap<String, Integer>();
-		specialTeaPropertiesIbiza.put("spaceTaken", 3);
-		specialTeaPropertiesIbiza.put("price", 4);
-		HashMap<String, Integer> limePropertiesIbiza = new HashMap<String, Integer>();
-		limePropertiesIbiza.put("spaceTaken", 0);
-		limePropertiesIbiza.put("price", 50);
-		HashMap<String, Integer> bottleORumPropertiesIbiza = new HashMap<String, Integer>();
-		bottleORumPropertiesIbiza.put("spaceTaken", 0);
-		bottleORumPropertiesIbiza.put("price", 30);
-		HashMap<String, Integer> largeChestPropertiesIbiza = new HashMap<String, Integer>();
-		largeChestPropertiesIbiza.put("spaceTaken", 0);
-		largeChestPropertiesIbiza.put("price", 10);
+		HashMap<String, HashMap<String, Integer>> buyCatazlogueIbiza = new HashMap<String, HashMap<String, Integer>>();
 		buyCatalogueIbiza.put("Bandages", bandagesPropertiesIbiza);
 		buyCatalogueIbiza.put("Special-Tea", specialTeaPropertiesIbiza);
 		buyCatalogueIbiza.put("Lime", limePropertiesIbiza);
