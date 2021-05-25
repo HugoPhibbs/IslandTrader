@@ -321,5 +321,14 @@ public class GameEnvironment {
 	 * @param ship Ship object belonging to a player in a game
 	 */
 	public void setShip(Ship ship) {this.ship = ship;}
+	
+
+	/** Method for selling the min money to travel for a game
+	 *
+	 * @param minMoneyToTravel Integer value for the minimum money to travel
+	 */
+	public void setMinMoneyToTravel(Integer minMoneyToTravel) {
+		this.minMoneyToTravel = minMoneyToTravel;
+	}
 }	
 
