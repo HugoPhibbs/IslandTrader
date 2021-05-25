@@ -139,7 +139,9 @@ public class PirateScreen extends Screen {
 		else {
 			// User had enough goods to satisfy the Pirates, continue traveling to the next island
 			SailingScreen sailingScreen = new SailingScreen(game, game.getCurrentIsland(), route);
-			sailingScreen.endSail();
+			sailingScreen.finishProgress();
+			quit();
+			sailingScreen.show();
 		}
 	}
 }

@@ -459,6 +459,8 @@ public class VisitStoreScreen extends Screen {
 			throw new IllegalArgumentException("Chosen item is empty!!");
 		}
 		
+		// Create a pop up if buying this item will put a player into liquidation
+		
 		int numItems = Integer.parseInt(numItemsTextField.getText());
 		
 		String receipt = "";
