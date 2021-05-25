@@ -18,15 +18,17 @@ public class GameOverScreen extends Screen {
 	private JLabel lblScore;
 	private JLabel lblProfit;
 	private JLabel lblDaysPlayed;
+	private String preppedMessage;
 
 	/**
 	 * Create the application.
 	 */
-	public GameOverScreen(GameEnvironment game) {
+	public GameOverScreen(GameEnvironment game, String message) {
 		super("Game Over", game);
+		preppedMessage = prepareMessage(message);
 		initialize();
 	}
-
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -43,7 +45,7 @@ public class GameOverScreen extends Screen {
 		JButton btnFinishGame = new JButton("Finish Game");
 		btnFinishGame.addActionListener(e -> quit());
 		btnFinishGame.setFont(new Font("Dialog", Font.BOLD, 16));
-		btnFinishGame.setBounds(292, 405, 140, 29);
+		btnFinishGame.setBounds(280, 405, 140, 29);
 		frame.getContentPane().add(btnFinishGame);
 	}
 	
@@ -56,33 +58,45 @@ public class GameOverScreen extends Screen {
 	}
 	
 	private void createMainLabels() {
-		JLabel lblGameOver = new JLabel("GAME OVER");
+		JLabel lblGameOver = new JLabel("GAME OVER " + game.getPlayer().getName().toUpperCase());
+		lblGameOver.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGameOver.setForeground(Color.RED);
 		lblGameOver.setFont(new Font("Dialog", Font.BOLD, 32));
-		lblGameOver.setBounds(243, 12, 215, 38);
+		lblGameOver.setBounds(0, 12, 700, 38);
 		frame.getContentPane().add(lblGameOver);
 		
-		lblReason = new JLabel("REASON");
+		lblReason = new JLabel(String.format(preppedMessage));
+		lblReason.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblReason.setHorizontalAlignment(SwingConstants.CENTER);
-		lblReason.setBounds(38, 73, 616, 57);
+		lblReason.setBounds(20, 73, 660, 57);
 		frame.getContentPane().add(lblReason);
 		
 		lblScore = new JLabel("SCORE: " + game.calculateScore());
 		lblScore.setFont(new Font("Dialog", Font.BOLD, 20));
 		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
-		lblScore.setBounds(243, 189, 236, 24);
+		lblScore.setBounds(0, 189, 700, 24);
 		frame.getContentPane().add(lblScore);
 		
 		lblProfit = new JLabel("PROFIT: " + (game.getPlayer().getMoneyBalance() - game.getUi().STARTING_MONEY));
 		lblProfit.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProfit.setFont(new Font("Dialog", Font.BOLD, 20));
-		lblProfit.setBounds(243, 250, 236, 24);
+		lblProfit.setBounds(0, 250, 700, 24);
 		frame.getContentPane().add(lblProfit);
 		
 		lblDaysPlayed = new JLabel("DAYS PLAYED: " + (game.getDaysSelected() - game.getDaysRemaining()));
 		lblDaysPlayed.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDaysPlayed.setFont(new Font("Dialog", Font.BOLD, 20));
-		lblDaysPlayed.setBounds(243, 313, 236, 24);
+		lblDaysPlayed.setBounds(0, 313, 700, 24);
 		frame.getContentPane().add(lblDaysPlayed);
+	}
+	
+	private String prepareMessage(String message) {
+		if (message.length() <= 50) {
+			return message;
+		}
+		int splitPoint = 50;
+		while (message.charAt(splitPoint) != ' ')
+			splitPoint++;
+		return String.format("<html>%s<br>%s<html>", message.substring(0, splitPoint), message.substring(splitPoint));
 	}
 }
