@@ -62,7 +62,7 @@ public class ChooseRouteScreen extends Screen {
 		this.quit();
 		SailingScreen sailingScreen = new SailingScreen(game, island, selectedRoute);
 		sailingScreen.show();
-		sailingScreen.startSail();
+		sailingScreen.firstHalf()
 	}
 	
 	/** Creates the labels on the screen not in a sub container.*/

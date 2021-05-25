@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 import coreClasses.*;
 
@@ -17,10 +19,11 @@ public class SailingScreen extends Screen {
 	private Route route;
 	
 	private JProgressBar progressBar;
-	private int progress = 0;
+	private int progressPercent = 0;
 	private int delay;
 	private JLabel lblIslandName;
 	private Timer timer;
+	private final PropertyChangeSupport pcs;
 	
 	/**
 	 * Create the application.
@@ -29,6 +32,7 @@ public class SailingScreen extends Screen {
 		super("Sailing", game);
 		this.desinatonIsland = island;
 		this.route = route;
+		pcs = new PropertyChangeSupport(this);
 		initialize();
 	}
 
@@ -38,18 +42,30 @@ public class SailingScreen extends Screen {
 	@Override
 	protected void initialize() {
 		frame.setBounds(100, 100, 450, 300);
+		int routeDuration = game.calculateDaysSailing(route);
+		delay = 200 * routeDuration;
 		
 		createProgressBar();
 		createLabels();
 	}
 	
+	public void startProgress() {
+		timer = new Timer(delay, (event) -> firstHalfProgressBar());
+	}
+	
 
+	private void firstHalfProgressBar() {
+		progressPercent += 5;
+		progressBar.setValue(progressPercent);
+		
+		if (progressPercent >= 50) {
+			timer.stop();
+			startSail();
+		}
+	} 
 	
 	/** Fills progress bar, time taken depends on how many days the route takes to sail.*/
-	public void startSail() {
-		int routeDuration = game.calculateDaysSailing(route);
-		delay = 200 * routeDuration;
-		
+	private void startSail() {
 		boolean eventOccurred = game.sailToNewIsland(route, desinatonIsland);
 		if (!eventOccurred) {
 			endSail();
@@ -63,8 +79,6 @@ public class SailingScreen extends Screen {
 		quit();
 		optionsScreen.show();
 	}
-	
-	
 	
 	private void createProgressBar() {
 		progressBar = new JProgressBar(0, 100);
