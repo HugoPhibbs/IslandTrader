@@ -10,6 +10,7 @@ import java.util.*;
 
 public class Ship {
 	// Class variables //
+	
 	/** Name for the ship */
     private final String name;
     

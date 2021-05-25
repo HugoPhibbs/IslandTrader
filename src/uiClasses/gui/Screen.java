@@ -30,7 +30,6 @@ public abstract class Screen {
 	/** Border object that creates black borders that can be used by all implementations of this class. */
 	public Border blackline = BorderFactory.createLineBorder(Color.black);
 	
-	
 	/** Constructor for the Screen class
 	 * 
 	 * @param title String for the title of this Screen

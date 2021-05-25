@@ -24,7 +24,6 @@ public class Island {
 	 */
 	private String description;
 	
-	
 	/** Constructor method for an Island object
 	 * 
 	 * @param name String for the name of the Island
