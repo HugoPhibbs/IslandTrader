@@ -1,15 +1,7 @@
 package uiClasses.gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-
 import coreClasses.*;
-import uiClasses.GameUi;
-
-import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextPane;
@@ -22,10 +14,18 @@ public class ViewIslandsScreen extends Screen {
 	/** Island selected by the player.*/
 	private Island selectedIsland;
 	
+	/** Button that a user can press when they have chosen an Island that they want to travel to */
 	private JButton btnTravel;
+
+	/** Label that shows the current Island that a user has selected */
+	private JLabel lblSelectedIsland;
 	
-	/**
-	 * Create the application.
+	/** TextPane to hold detailed information on a Island, including what it buys and sells */
+	private JTextPane paneFullIslandInfo;
+	
+	/** Constructor for ViewIslandsScreen class.
+	 * 
+	 * @param game GameEnvironment object for this current game 
 	 */
 	public ViewIslandsScreen(GameEnvironment game) {
 		super("View Islands", game);
@@ -43,9 +43,9 @@ public class ViewIslandsScreen extends Screen {
 		createOtherComponenets();
 	}
 	
-	/**
-	 * Method called when confirm button is clicked. Hides this instance of screen and creates the 
+	/** Method called when confirm button is clicked. Hides this instance of screen and creates the 
 	 * Screen used to select a route to the selected island. 
+	 * 
 	 */
 	private void viewRoutes() {
 		Screen chooseRoute = new ChooseRouteScreen(game, selectedIsland);
@@ -56,12 +56,12 @@ public class ViewIslandsScreen extends Screen {
 	/** Creates the JPanel and its components used to select an Island.*/
 	private void createSelectIslandComponents() {
 		JPanel panelIslandSelection = new JPanel();
-		panelIslandSelection.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelIslandSelection.setBorder(blackline);
 		panelIslandSelection.setBounds(12, 43, 776, 411);
 		frame.getContentPane().add(panelIslandSelection);
 		panelIslandSelection.setLayout(null);
 		
-		JLabel lblSelectedIsland = new JLabel("Select an island!");
+		this.lblSelectedIsland = new JLabel("Select an island!");
 		lblSelectedIsland.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 16));
 		lblSelectedIsland.setBounds(593, 12, 184, 32);
 		panelIslandSelection.add(lblSelectedIsland);
@@ -71,31 +71,35 @@ public class ViewIslandsScreen extends Screen {
 		lblInfo.setBounds(593, 43, 70, 15);
 		panelIslandSelection.add(lblInfo);
 		
-		JTextPane textPaneIslandInfo = new JTextPane();
-		textPaneIslandInfo.setText("");
-		textPaneIslandInfo.setBounds(593, 71, 174, 328);
-		panelIslandSelection.add(textPaneIslandInfo);
+		this.paneFullIslandInfo = new JTextPane();
+		paneFullIslandInfo.setText("");
+		paneFullIslandInfo.setBounds(593, 71, 174, 328);
+		panelIslandSelection.add(paneFullIslandInfo);
 		
+		// All the other islands that a user can reach from their current island */
 		Island[] islandsToView = game.otherIslands();
 		
+		/* Buttons that a user can press, when pressed, gives them info on an island, and
+		 * enables btnTravel if not already enabled. 
+		 */
 		JButton btnIsland1 = new JButton(islandsToView[0].getIslandName());
 		btnIsland1.setBounds(12, 12, 274, 187);
-		btnIsland1.addActionListener(e -> changeIslandInfo(islandsToView[0] , lblSelectedIsland, textPaneIslandInfo));
+		btnIsland1.addActionListener(e -> changeIslandInfo(islandsToView[0]));
 		panelIslandSelection.add(btnIsland1);
 		
 		JButton btnIsland2 = new JButton(islandsToView[1].getIslandName());
 		btnIsland2.setBounds(298, 12, 274, 187);
-		btnIsland2.addActionListener(e -> changeIslandInfo(islandsToView[1] , lblSelectedIsland, textPaneIslandInfo));
+		btnIsland2.addActionListener(e -> changeIslandInfo(islandsToView[1]));
 		panelIslandSelection.add(btnIsland2);
 		
 		JButton btnIsland3 = new JButton(islandsToView[2].getIslandName());
 		btnIsland3.setBounds(12, 212, 274, 187);
-		btnIsland3.addActionListener(e -> changeIslandInfo(islandsToView[2] , lblSelectedIsland, textPaneIslandInfo));
+		btnIsland3.addActionListener(e -> changeIslandInfo(islandsToView[2]));
 		panelIslandSelection.add(btnIsland3);
 		
 		JButton btnIsland4 = new JButton(islandsToView[3].getIslandName());
 		btnIsland4.setBounds(298, 212, 274, 187);
-		btnIsland4.addActionListener(e -> changeIslandInfo(islandsToView[3] , lblSelectedIsland, textPaneIslandInfo));
+		btnIsland4.addActionListener(e -> changeIslandInfo(islandsToView[3]));
 		panelIslandSelection.add(btnIsland4);
 	}
 
@@ -104,6 +108,7 @@ public class ViewIslandsScreen extends Screen {
 		JButton btnBack = new JButton("Go Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				// If a user decides to go back, this screen is discarded and another CoreOptionsScreen is created 
 				CoreOptionsScreen coreOptionsScreen = new CoreOptionsScreen(game);
 				coreOptionsScreen.show();
 				quit();
@@ -124,17 +129,15 @@ public class ViewIslandsScreen extends Screen {
 		frame.getContentPane().add(lblInstructions);
 	}
 
-	/**
-	 * Changes the info displayed to be info on the selected island. Method is called each time an
+	/**	Changes the info displayed to be info on the selected island. Method is called each time an
 	 * Island's button is clicked. 
-	 * @param island Island
-	 * @param name JLabe;
-	 * @param islandInfo JTextPane
+	 * 
+	 * @param island Island object that has been chosen from clicking one of the Island buttons
 	 */
-	private void changeIslandInfo(Island island, JLabel name, JTextPane islandInfo) {
-		btnTravel.setEnabled(true);
-		name.setText(island.getIslandName());
-		islandInfo.setText(island.fullInfo(game.getCurrentIsland().possibleRoutes(island)));
+	private void changeIslandInfo(Island island) {
+		btnTravel.setEnabled(true); // Has now been set to enabled since a island button has been pressed
+		lblSelectedIsland.setText(island.getIslandName());
+		paneFullIslandInfo.setText(island.fullInfo(game.getCurrentIsland().possibleRoutes(island)));
 		selectedIsland = island;
 	}
 }

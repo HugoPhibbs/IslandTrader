@@ -1,13 +1,12 @@
 package uiClasses.gui;
 
-import javax.swing.JLabel;
+import javax.swing.JLabel;  
 import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -17,22 +16,27 @@ import java.awt.Color;
 import javax.swing.JTextPane;
 
 public class SetupScreen extends Screen {
-
+	// Class Variables //
 	/** The instance of Ship the player has selected.*/
 	private Ship selectedShip;
+	
 	/** The instance of Island the player has selected to start at.*/
 	private Island selectedIsland;
+	
 	/** JLabel that displays an error message when the name entered by the player is not valid.*/
 	private JLabel lblNameError;
+	
 	/** JSlider used by the player to select the game duration.*/
 	private JSlider sliderDays;
+	
 	/** JLabel that displays the amount of days the player has selected to play for using the slider.*/
 	private JLabel lblDisplayDays;
+	
 	/** JButton used to confirm choices and move on to the main game.*/ 
 	private JButton btnConfirm;
+	
 	/** String The name the player has entered.*/
 	private String playerName;
-	
 	
 	
 	/**
@@ -69,7 +73,8 @@ public class SetupScreen extends Screen {
 		game.onSetupFinished(player, selectedShip, sliderDays.getValue(), selectedIsland);
 		this.quit();
 	}
-		
+	
+	/** Method to create the main labels for the setup screen */
 	private void createMainLabels() {
 		JLabel lblWelcome = new JLabel("Welcome to Island Trader!");
 		lblWelcome.setFont(new Font("Dialog", Font.BOLD, 22));
@@ -86,7 +91,7 @@ public class SetupScreen extends Screen {
 		lblAskDays.setBounds(26, 101, 377, 19);
 		frame.getContentPane().add(lblAskDays);
 		
-		lblDisplayDays = new JLabel("30");
+		this.lblDisplayDays = new JLabel("30");
 		lblDisplayDays.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDisplayDays.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblDisplayDays.setBounds(1008, 105, 44, 17);
@@ -102,13 +107,14 @@ public class SetupScreen extends Screen {
 		lblPickIsland.setBounds(26, 446, 188, 19);
 		frame.getContentPane().add(lblPickIsland);
 		
-		lblNameError = new JLabel("Must be 3-15 characters, and have not special characters");
+		this.lblNameError = new JLabel("Must be 3-15 characters, and have not special characters");
 		lblNameError.setForeground(Color.RED);
 		lblNameError.setFont(new Font("Dialog", Font.BOLD, 11));
 		lblNameError.setBounds(682, 77, 370, 14);
 		lblNameError.setVisible(false);
 		frame.getContentPane().add(lblNameError);
 		
+		// Label for the days that you can choose with the slider
 		JLabel lblNewLabel = new JLabel("20                    30                    "
 				+ "40                   50");
 		lblNewLabel.setBounds(693, 120, 325, 15);
@@ -160,7 +166,7 @@ public class SetupScreen extends Screen {
 	private void createPickShipComponents() {
 		
 		JPanel panelPickShip = new JPanel();
-		panelPickShip.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelPickShip.setBorder(blackline);
 		panelPickShip.setBounds(12, 184, 1065, 250);
 		frame.getContentPane().add(panelPickShip);
 		panelPickShip.setLayout(null);
@@ -240,7 +246,7 @@ public class SetupScreen extends Screen {
 	private void createPickIslandComponents() {
 		
 		JPanel panelPickIsland = new JPanel();
-		panelPickIsland.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelPickIsland.setBorder(blackline);
 		panelPickIsland.setBounds(12, 477, 1065, 250);
 		frame.getContentPane().add(panelPickIsland);
 		panelPickIsland.setLayout(null);
