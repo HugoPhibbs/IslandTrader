@@ -60,7 +60,7 @@ public class Store {
     public static String chosenItemName(String[] displayArray, int chosenItemNum) {
     	// display ArrayList must have form {"itemName for ..."}, key thing being itemName is in first position
     	// To Note that the array is indexed one less than chosenItemNum, since chosenItemNum is a number > 1
-    	// Representing an action in Cmd Line UI
+    	// Representing an action in Cmd Line UI		
     	return (String) Array.get(displayArray[chosenItemNum-1].split(" "), 0);
     }
     
@@ -71,15 +71,20 @@ public class Store {
      *  otherwise returns null if they dont need to be asked. 
      *  Used by Ui before buying an item
      *  
-     * @param gameEnvironment GameEnivornment object belonging to the current object
-     * @param itemName String for the requested item that is wanted to be bought
-     * @param player Player object that wants to buy an item
+     * @param gameEnvironment GameEnivornment object belonging to the current object bought
+     * @param itemName String for the name of the Item that a user wants to buy from a store
+     * @param quantity Integer for the number of items that a user wants to buy
      * @return String Asking user to confirm that they want to sell an item if applicable, otherwise null
      */
-	public String checkPlayerWantsToBuy(GameEnvironment gameEnvironment, String itemName) {
-		if (sellCatalogue.get(itemName).get("price") >= gameEnvironment.getMinMoneyToTravel()) {
-			return "If you buy this item you will need to sell some of your items if you want to travel to another island. \n"
-					+ "Are you sure you want to buy this item?";
+	public String checkPlayerWantsToBuy(GameEnvironment gameEnvironment, String itemName, int quantity) {
+		int totalPrice = sellCatalogue.get(itemName).get("price") * quantity; // Get the total cost for a possible transaction
+		System.out.println(totalPrice);
+		
+		System.out.println(gameEnvironment.getMinMoneyToTravel());
+		
+		if (totalPrice >= gameEnvironment.getMinMoneyToTravel()) {
+			return "If you buy these Item(s) you will need to sell some of your items if you want to travel to another island. \n"
+					+ "Do you still want to buy these item(s)";
 		}
 		return null;
 	}
