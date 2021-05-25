@@ -85,6 +85,10 @@ public class GameEnvironment {
 		
 		player.setShip(ship);
 		
+		// Calculates the minimum money to leave your island (taking the shortest possible route) and sets this as 
+		// a variable so that the store can prevent you from spending money that will take you below this balance.
+		// (going below this ends the game).
+		minMoneyRequired();
 		ui.playGame();
 	}
 	
