@@ -49,7 +49,7 @@ public class ViewIslandsScreen extends Screen {
 	 */
 	private void viewRoutes() {
 		Screen chooseRoute = new ChooseRouteScreen(game, selectedIsland);
-		this.hide();
+		quit()
 		chooseRoute.show();
 	}
 	
