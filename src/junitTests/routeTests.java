@@ -28,5 +28,4 @@ class routeTests {
 	void testToSring() {
 		assertEquals("Stormy Route is 150 km long. Careful, this route is prone to bad weather", testRoute.toString());
 	}
-
 }

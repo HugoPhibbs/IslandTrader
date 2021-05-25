@@ -66,7 +66,7 @@ public class Store {
     
     /////////////////////// METHODS FOR SELLING AN ITEM TO A PLAYER ///////////////////////////
     
-    /** Method to check if a player wants to buy an item. If buying an item puts them in a possition where they need
+    /** Method to check if a player wants to buy an item. If buying an item puts them in a position where they need
      *  to sell items in order to travel to another island, then it returns a string. 
      *  otherwise returns null if they dont need to be asked. 
      *  Used by Ui before buying an item
@@ -77,7 +77,7 @@ public class Store {
      * @return String Asking user to confirm that they want to sell an item if applicable, otherwise null
      */
 	public String checkPlayerWantsToBuy(GameEnvironment gameEnvironment, String itemName) {
-		if (sellCatalogue.get(itemName).get("price") > gameEnvironment.getMinMoneyToTravel()) {
+		if (sellCatalogue.get(itemName).get("price") >= gameEnvironment.getMinMoneyToTravel()) {
 			return "If you buy this item you will need to sell some of your items if you want to travel to another island. \n"
 					+ "Are you sure you want to buy this item?";
 		}
@@ -113,10 +113,10 @@ public class Store {
 			if (!itemToSell.getWithPlayer()) {
 				// Since item didn't come in possession with player, find reason why not
 				
-				result += "Not all of the requested items were sold to a player! \n";
+				result += "Not all of the requested Items were sold to a Player! \n";
 				// Check if item wasn't sold because of an error to do with it being an upgrade
-				if (itemToSell.getName().endsWith("(upgrade)") && !Store.canSellUpgradeToPlayer(gameEnvironment.getPlayer()).equals("Can sell")){
-					result += Store.canSellUpgradeToPlayer(gameEnvironment.getPlayer()) + '\n'; // return reason why cant sell upgrade.
+				if (itemToSell.getName().endsWith("(upgrade)") && !Store.canSellUpgradeToPlayer(gameEnvironment, itemToSell).equals("Can sell")){
+					result += Store.canSellUpgradeToPlayer(gameEnvironment, itemToSell) + '\n'; // return reason why cant sell upgrade.
 				}
 				// Otherwise find reason inherent in being an Item object
 				else { 
@@ -174,7 +174,7 @@ public class Store {
     				sellCatalogue.get(itemToSell.getName()).get("defenseBoost")); 
     		
     		// Check if this new ShipUpgrade can be sold. 
-    		if (!canSellUpgradeToPlayer(gameEnvironment.getPlayer()).equals("Can sell")) {
+    		if (!canSellUpgradeToPlayer(gameEnvironment, upgradeToSell).equals("Can sell")) {
     			return (Item) upgradeToSell;
     		}
     		
@@ -229,8 +229,6 @@ public class Store {
     	else if (gameEnvironment.getPlayer().getShip().getRemainingItemSpace() < itemToSell.getSpaceTaken() && !itemToSell.getName().endsWith("(upgrade)")) {
     		return "Can't sell Item(s), Player does not have enough space to store item(s)!";
     	}
-    	else if (gameEnvironment.calculateLiquidValue() - itemToSell.getPlayerBuyPrice() + sellCatalogue.get(itemToSell.getName()).get("price") < gameEnvironment.getMinMoneyToTravel())
-    		return "Can't sell Item(s), Player wouldn't be able to travel anywhere if Item was bought!";
     	return "Can sell";
     }
     
@@ -241,9 +239,13 @@ public class Store {
      * @param upgradeToSell ShipUpgrade object that is trying to be sold
      * @return Boolean if ShipUpgrade object can be sold. 
      */
-    public static String canSellUpgradeToPlayer(Player player) {
-    	if (player.getShip().getDefenseCapability() >= player.getShip().getMaxDefenseCapability()) {
+    public static String canSellUpgradeToPlayer(GameEnvironment gameEnvironment, Item itemToSell) {
+    	// Use an Item object, so this can be called if a ShipUpgrade object hasn't been created, so works with the general case of just an Item
+    	if (gameEnvironment.getShip().getDefenseCapability() >= gameEnvironment.getShip().getMaxDefenseCapability()) {
     		return "Can't sell Upgrade(s), Ship already has max defense Capability";
+    	}
+    	else if (gameEnvironment.calculateLiquidValue() - itemToSell.getPlayerBuyPrice() < gameEnvironment.getMinMoneyToTravel()){
+    		return "Can't sell Upgrades(s), Player wouldn't be able to travel anywhere if Upgrade was bought!";
     	}
     	return "Can sell";
     }
@@ -368,7 +370,7 @@ public class Store {
     	return displayArrayList.toArray(new String[displayArrayList.size()]);
     }
     
-    public String[][] catalogueToNestedArray(HashMap<String, HashMap<String, Integer>> catalogue){
+    public String[][] catalogueToNestedArray(HashMap<String, HashMap<String, Integer>> catalogue, String buyOrSell){
     	// converts a catalogue into a nested array to be used by GUI for tables!
     
     	ArrayList<String[]> catalogueArrayList = new ArrayList<String[]>();
@@ -390,9 +392,14 @@ public class Store {
     		catalogueArrayList.add(infoArray);
     		}
     	// Convert the arrayList with nested String arrays into a String[][] array
+    	if (buyOrSell.equals("buy")) {
+    		/* Trim off the last column from infoArrays, because selling an item to a store doesn't need
+    		 * to show the defense capability because stores dont buy upgrades from Players. 
+    		 */
+    		catalogueArrayList.toArray(new String[catalogueArrayList.size()][3]);
+    	}
     	return catalogueArrayList.toArray(new String[catalogueArrayList.size()][4]);
     }
-    
     
     
     /** Creates and returns a string representation of the given catalogue, useful for giving a quick overview

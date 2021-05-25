@@ -27,7 +27,7 @@ class StoreTest {
 		HashMap<String, HashMap<String, Integer>> testBuyCatalogue = Main.createBuyCatalogues().get(0);
 		HashMap<String, HashMap<String, Integer>> testSellCatalogue = Main.createSellCatalogues().get(0);
 		
-		testPlayer = new Player("Batman", 100);
+		testPlayer = new Player("Batman", 0);
 		testShip = new Ship("Batmobile", 10, 10, 10);
 		testPlayer.setShip(testShip);
 		
@@ -60,21 +60,24 @@ class StoreTest {
 		// Test with player having no money
 		testPlayer.spendMoney(testPlayer.getMoneyBalance()); 
 		resultString = testStore.sellItemsToPlayer(testGameEnvironment, "Gold", 1);
-		expectedResultString = "Can't sell Item(s), Player does not have enough money to buy this item!\n0 out of requested 1 Gold bought \nTotal cost of transaction: 0 Pirate Bucks \n";
+		expectedResultString = "Not all of the requested Items were sold to a Player! \nCan't sell Item(s), Player does not have enough money to buy this item!\n0 out of requested 1 Gold bought \nTotal cost of transaction: 0 Pirate Bucks \n";
 		assertEquals(expectedResultString, resultString);
 		
 		// Test with player having the exact amount of money
-		testPlayer.earnMoney(3); // price of gold at Cyrpus, will need to be changed if Cyprus' catalogue is changed
+		testPlayer.earnMoney(25); // price of gold at Cyrpus, will need to be changed if Cyprus' catalogue is changed
+		testGameEnvironment.setMinMoneyToTravel(0);
+		
 		resultString = testStore.sellItemsToPlayer(testGameEnvironment, "Gold", 1);
-		expectedResultString = "1 out of requested 1 Gold bought \nTotal cost of transaction: 3 Pirate Bucks \n";
+		expectedResultString = "1 out of requested 1 Gold bought \nTotal cost of transaction: 25 Pirate Bucks \n";
 		assertEquals(expectedResultString, resultString);
 		
 		// Test with testPlayer ship not having enough space on-board ship to store items
 		testPlayer.earnMoney(100); 
 		testPlayer.setShip(new Ship("Batmobile", 10, 1, 2));
 		testPlayer.getShip().setRemainingItemSpace(1); //Use setter method to directly modify the remaining Item space
+		testGameEnvironment.setShip(testPlayer.getShip());
 		resultString = testStore.sellItemsToPlayer(testGameEnvironment, "Gold", 1);
-		expectedResultString = "Can't sell Item(s), Player does not have enough space to store item(s)!\n0 out of requested 1 Gold bought \nTotal cost of transaction: 0 Pirate Bucks \n";
+		expectedResultString = "Not all of the requested Items were sold to a Player! \nCan't sell Item(s), Player does not have enough space to store item(s)!\n0 out of requested 1 Gold bought \nTotal cost of transaction: 0 Pirate Bucks \n";
 		assertEquals(expectedResultString, resultString);;
 		
 		// Test with upgrades
@@ -85,23 +88,16 @@ class StoreTest {
 		
 		// An upgrade that can't be sold because the defense capability of a ship is already maxed
 		resultString = testStore.sellItemsToPlayer(testGameEnvironment, "Canon(upgrade)", 1);
-		expectedResultString = "Can't sell Upgrade(s), Ship already has max defense Capability\n0 out of requested 1 Canon(upgrade) bought \nTotal cost of transaction: 0 Pirate Bucks \nYour defense capability is maxed at 2! \n";
+		expectedResultString = "Not all of the requested Items were sold to a Player! \nCan't sell Upgrade(s), Ship already has max defense Capability\n0 out of requested 1 Canon(upgrade) bought \nTotal cost of transaction: 0 Pirate Bucks \nYour defense capability is maxed at 2! \n";
 		assertEquals(expectedResultString, resultString);
 		
 		// Test normally with upgrades
 		testPlayer.setShip(new Ship("Green Hornet", 10, 10, 30));
 		testPlayer.earnMoney(100);
+		testGameEnvironment.setShip(testPlayer.getShip());
 		resultString = testStore.sellItemsToPlayer(testGameEnvironment, "Canon(upgrade)", 2);
 		expectedResultString = "2 out of requested 2 Canon(upgrade) bought \nTotal cost of transaction: 100 Pirate Bucks \nYour defense capability is now 20! \n";
 		assertEquals(expectedResultString, resultString);
-	}
-	
-	@Test
-	void canSellItemToPlayerTest() {
-		// Most of it has been tested above
-		// Test with testPlayer not having enough liquid cash to be able to sail anywhee
-		// TODO implement!
-		
 	}
 	
 	@Test
@@ -115,16 +111,57 @@ class StoreTest {
 		ShipUpgrade testUpgrade2 = new ShipUpgrade("cannon", 1, 1, 10);
 		testPlayer.getShip().addUpgrade(testUpgrade1);
 		testPlayer.getShip().addUpgrade(testUpgrade2);
-		resultString = Store.canSellUpgradeToPlayer(testPlayer);
+		testGameEnvironment.setShip(testPlayer.getShip());
+		resultString = Store.canSellUpgradeToPlayer(testGameEnvironment, testUpgrade1);
 		expectedResultString = "Can't sell Upgrade(s), Ship already has max defense Capability";
 		assertEquals(expectedResultString, resultString);
 		
 		// Test with player ship having less than max defense capability
 		testPlayer.setShip(new Ship("mountain tiger", 0, 0, 50));
+		testPlayer.earnMoney(100); // To avoid triggering liquidation clause
 		ShipUpgrade testUpgrade3 = new ShipUpgrade("cannon", 1, 1, 40);
 		testPlayer.getShip().addUpgrade(testUpgrade3);
-		resultString = Store.canSellUpgradeToPlayer(testPlayer);
+		testGameEnvironment.setShip(testPlayer.getShip());
+		resultString = Store.canSellUpgradeToPlayer(testGameEnvironment, testUpgrade2);
 		expectedResultString = "Can sell";
+		assertEquals(expectedResultString, resultString); 
+		
+		// Create a mock Game, with conditions to suit testing this precise parts of Store
+		// Assume that supporting functions are working correctly
+		
+		// Test with an upgrade putting a player into liquidation
+		GameEnvironment testGameEnvironment2 = new GameEnvironment(null, null, null, null, null);
+		Player testPlayer2 = new Player("David", 110);
+		testPlayer2.setShip(new Ship("mountain tiger", 0, 0, 50));
+		testGameEnvironment2.setPlayer(testPlayer2);
+		testGameEnvironment2.setShip(testPlayer2.getShip());
+		testGameEnvironment2.setMinMoneyToTravel(100);
+		
+		HashMap<String, HashMap<String, Integer>> testSellCatalogue = new HashMap<String, HashMap<String, Integer>>();
+		HashMap<String, Integer> testSailsProperties = new HashMap<String, Integer>();
+		testSailsProperties.put("price", 20);
+		testSailsProperties.put("spaceTaken", 0);
+		testSailsProperties.put("defenseBoost", 10);
+		testSellCatalogue.put("Sails(upgrade)", testSailsProperties);
+		Store testStore2 = new Store("Krusty crab", "pies", testSellCatalogue, null);
+		Island testIsland2 = new Island("Bikini Bottom", testStore2, "Stuff");
+		testGameEnvironment2.setCurrentIsland(testIsland2);
+		
+		// Test with (liquidWorth - upgradePrice < minMoneyToTravel)
+		resultString = testStore2.sellItemsToPlayer(testGameEnvironment2, "Sails(upgrade)", 1);
+		expectedResultString = "Not all of the requested Items were sold to a Player! \n"+
+				"Can't sell Upgrades(s), Player wouldn't be able to travel anywhere if Upgrade was bought!\n"+
+				"0 out of requested 1 Sails(upgrade) bought \n"+
+				"Total cost of transaction: 0 Pirate Bucks \n"+
+				"Your defense capability is now 0! \n";
+		assertEquals(expectedResultString, resultString);
+		
+		// Test with (liquidWorth - upgradePrice = minMoneyToTravel)
+		testGameEnvironment2.setMinMoneyToTravel(90);
+		resultString = testStore2.sellItemsToPlayer(testGameEnvironment2, "Sails(upgrade)", 1);
+		expectedResultString = "1 out of requested 1 Sails(upgrade) bought \n"+
+				"Total cost of transaction: 20 Pirate Bucks \n"+
+				"Your defense capability is now 10! \n";
 		assertEquals(expectedResultString, resultString);
 	}
 	
@@ -134,13 +171,14 @@ class StoreTest {
 		String expectedResultString = "";
 		
 		// Test with player having item in possession
+		testPlayer.earnMoney(100);
 		testStore.sellItemsToPlayer(testGameEnvironment, "Gold", 1);
 		resultString = testStore.buyItemsFromPlayer("Gold", testPlayer, 1);
 		assertEquals("1 out of a requested 1 Gold was sold to the store \nTotal monetary gain: 10", resultString);
 		
 		// Test with player not having item in possession
 		resultString = testStore.buyItemsFromPlayer("Silver", testPlayer, 1);
-		expectedResultString = "Player does not have this item in possession!\n0 out of a requested 1 Silver was sold to the store \nTotal monetary gain: 0";
+		expectedResultString = "Not all of the requested Items were bought from a Player! \nPlayer does not have this item in possession!\n0 out of a requested 1 Silver was sold to the store \nTotal monetary gain: 0";
 		assertEquals(expectedResultString, resultString);
 		
 		// Test with a supposed Item that isnt been sold by a Store
@@ -148,17 +186,7 @@ class StoreTest {
 	}
 	
 	@Test
-	void canBuyItemFromPlayerTest() {
-		// tested in buyItemFromPlayerTest()
-	}
-	
-	@Test 
-	void catalogueToArrayListTest() {
-		
-	}
-	
-	@Test
-	void catalogueToString() {
+	void checkPlayerWantsToBuyItemTest() {
 		
 	}
 	

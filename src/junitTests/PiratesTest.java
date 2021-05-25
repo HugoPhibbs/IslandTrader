@@ -57,27 +57,28 @@ class PiratesTest {
 	}
 	
 	@Test
-	void getLargestShipItemTest() {
-		/* boundary conditions:
-		 * equal size items
-		 */
-		Ship ship1 = new Ship("Black Pearl", 10, 10, 20);
-		Item item1 = new Item("Gold", 10, 10);
-		Item item2 = new Item("Silver", 7, 10);
-		Item item3 = new Item("Large Chest", 20, 10);
-		Item item4 = new Item("Bananas", 5, 10);
-		Item item5 = new Item("Bottle of Rum", 3, 10);
-		ship1.addItem(item1);
-		ship1.addItem(item2);
-		ship1.addItem(item3);
-		ship1.addItem(item4);
-		ship1.addItem(item5);
-		assertEquals(item3, Pirates.getLargestShipItem(ship1));
-		ship1.takeItem(item3.getName());
-		ship1.takeItem(item1.getName());
-		assertEquals(item2, Pirates.getLargestShipItem(ship1));
+	void takeGoodsTest() {
+		Ship testShip = new Ship("Queen Mary", 0, 10, 0);
+		Pirates testPirates = new Pirates(100);
+		// Test with ship having no Items
+		assertEquals("game_over", testPirates.takeGoods(testShip));
 		
-		Ship ship2 = new Ship("Bat Mobile", 100, 10, 50);
-		assertEquals(null, Pirates.getLargestShipItem(ship2)); // no items belonging to Ship
+		// Test with ship having items more than the wanted amount by the pirates
+		testShip.addItem(new Item("Football", 5, 50));
+		testShip.addItem(new Item("Cherries", 5, 60));
+		assertEquals("attack_successful", testPirates.takeGoods(testShip));
+		assertEquals(0, testShip.getItems().size());
+		
+		// Test with ship having the exact value that the pirates want
+		testShip.addItem(new Item("Drink-Bottle", 5, 50));
+		testShip.addItem(new Item("Laptop", 4, 50));
+		assertEquals("attack_successful", testPirates.takeGoods(testShip));
+		assertEquals(0, testShip.getItems().size());
+		
+		// Test with ship having less than the value that the pirates want
+		testShip.addItem(new Item("Toothbrush", 5, 40));
+		testShip.addItem(new Item("Rubix-Cube", 4, 50));
+		assertEquals("game_over", testPirates.takeGoods(testShip));
+		assertEquals(0, testShip.getItems().size());
 	}
 }

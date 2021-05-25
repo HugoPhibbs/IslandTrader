@@ -22,6 +22,8 @@ public class ViewIslandsScreen extends Screen {
 	/** Island selected by the player.*/
 	private Island selectedIsland;
 	
+	private JButton btnTravel;
+	
 	/**
 	 * Create the application.
 	 */
@@ -110,7 +112,8 @@ public class ViewIslandsScreen extends Screen {
 		btnBack.setBounds(12, 466, 117, 25);
 		frame.getContentPane().add(btnBack);
 		
-		JButton btnTravel = new JButton("Travel to selected island");
+		this.btnTravel = new JButton("Travel to selected island");
+		btnTravel.setEnabled(false); // set to disabled until a user chooses an island to travel to
 		btnTravel.setBounds(554, 466, 234, 25);
 		btnTravel.addActionListener(e -> viewRoutes());
 		frame.getContentPane().add(btnTravel);
@@ -129,6 +132,7 @@ public class ViewIslandsScreen extends Screen {
 	 * @param islandInfo JTextPane
 	 */
 	private void changeIslandInfo(Island island, JLabel name, JTextPane islandInfo) {
+		btnTravel.setEnabled(true);
 		name.setText(island.getIslandName());
 		islandInfo.setText(island.fullInfo(game.getCurrentIsland().possibleRoutes(island)));
 		selectedIsland = island;

@@ -1,7 +1,6 @@
 package coreClasses;
 
 import java.util.Random; 
-import java.util.ArrayList;
 
 /** Represents a pirates random event
  * 
@@ -82,27 +81,6 @@ public class Pirates {
     	// here to make experience more interactive in the ui, like actually rolling a dice
     	Random random = new Random();
     	return random.nextInt(6) + 1;
-    }
-
-    /** Getter method for the largest Item object belonging to a ship.
-     *  Searches Items array of ship. Used by takeGoods for taking Items from a ship.
-     * 
-     * @param ship Ship object that contains items to be searched
-     * @return Item object that is the largest belonging to a ship 
-     */
-    public static Item getLargestShipItem(Ship ship) {
-    	// public for testing
-    	ArrayList<Item> itemsArrayList = ship.getItems();
-    	int biggestSize = -1;
-    	Item biggestItem = null;
-    	for (int i = 0; i < itemsArrayList.size(); i++) {
-    		// pirates cannot take upgrades, no capability for this in ship!
-    		if (itemsArrayList.get(i).getSpaceTaken() > biggestSize) {
-    			biggestItem = itemsArrayList.get(i);
-    			biggestSize = biggestItem.getSpaceTaken();
-    		}
-    	}
-    	return biggestItem;
     }
     
 	/** Getter method for the description of a pirates random event.

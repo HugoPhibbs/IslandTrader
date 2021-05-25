@@ -81,15 +81,18 @@ public class Player {
     			String [] infoArray = new String[] {
     					currItem.getName(), 
     					Integer.toString(currItem.getPlayerBuyPrice()), 
+    					"N/A", 
     					"N/A"
     			};
     			if (currItem.getPlayerSellPrice() != -1) {
+    				// If an item has been sold back to a store, include information on this
     				infoArray[2] = Integer.toString(currItem.getPlayerSellPrice());
+    				infoArray[3] = currItem.getStoreIslandSoldAt().getIslandName();
     			}
     			
     			purchasedItemsArrayList.add(infoArray);
     		}
-    		return purchasedItemsArrayList.toArray(new String[purchasedItemsArrayList.size()][3]);
+    		return purchasedItemsArrayList.toArray(new String[purchasedItemsArrayList.size()][4]);
     	}
     }
     
