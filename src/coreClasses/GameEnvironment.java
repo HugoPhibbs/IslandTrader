@@ -112,7 +112,8 @@ public class GameEnvironment {
 		boolean eventOccurred = randomEvents(route);
 		// Arrive at new island
 		reduceDaysRemaining(routeDuration);
-		setCurrentIsland(destination);	
+		setCurrentIsland(destination);
+		minMoneyRequired();
 		return eventOccurred;
     }
 	

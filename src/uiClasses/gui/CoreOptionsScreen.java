@@ -27,9 +27,16 @@ public class CoreOptionsScreen extends Screen{
 	 * Create the application.
 	 */
 	public CoreOptionsScreen(GameEnvironment gameEnvironment) {
-		// Make the parent of the setup screen to be null
 		super("Core options screen", gameEnvironment);
-		initialize();
+		// Check player has enough money to continue with the game
+		if (game.calculateLiquidValue() < game.getMinMoneyToTravel()) {
+			game.getUi().finishGame("You don't have enough money to pay your crew and you don't have enough goods to sell."
+					+ " You are stranded on this island, and are rubbish at trading pirate goods.");
+			quit();
+		}
+		else {
+			initialize();
+		}
 	}
 	
 	/**

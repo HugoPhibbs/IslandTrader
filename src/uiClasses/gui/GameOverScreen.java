@@ -68,7 +68,7 @@ public class GameOverScreen extends Screen {
 		lblReason = new JLabel(String.format(preppedMessage));
 		lblReason.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblReason.setHorizontalAlignment(SwingConstants.CENTER);
-		lblReason.setBounds(20, 73, 660, 57);
+		lblReason.setBounds(40, 73, 620, 80);
 		frame.getContentPane().add(lblReason);
 		
 		lblScore = new JLabel("SCORE: " + game.calculateScore());
