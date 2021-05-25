@@ -30,6 +30,8 @@ public class ChooseRouteScreen extends Screen {
 	private Island island;
 	/** Route selected by the player.*/
 	private Route selectedRoute;
+	
+	private JButton btnConfirm;
 
 	/**
 	 * Create the application.
@@ -90,7 +92,8 @@ public class ChooseRouteScreen extends Screen {
 	
 	/** Creates the miscellaneous components on the screen not in a sub container.*/
 	private void createOtherComponents() {
-		JButton btnConfirm = new JButton("Confirm");
+		this.btnConfirm = new JButton("Confirm");
+		btnConfirm.setEnabled(false); // set to disabled until a user picks a route
 		btnConfirm.addActionListener(e -> onConfirm());
 		btnConfirm.setBounds(626, 489, 162, 25);
 		frame.getContentPane().add(btnConfirm);
@@ -195,6 +198,7 @@ public class ChooseRouteScreen extends Screen {
 	 * @param rescue JLabel
 	 */
 	private void changeRouteInfo(Route route, JLabel name, JTextPane description, JLabel distance, JLabel pirate,  JLabel weather, JLabel rescue) {
+		btnConfirm.setEnabled(true);
 		name.setText(route.getRouteName());
 		description.setText(route.getDescription());
 		distance.setText(String.valueOf(route.getDistance()));
