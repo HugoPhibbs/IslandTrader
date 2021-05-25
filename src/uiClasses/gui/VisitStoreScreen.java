@@ -404,8 +404,17 @@ public class VisitStoreScreen extends Screen {
 		 * and column names to match!
 		 */
 		HashMap<String, HashMap<String, Integer>> catalogue =  game.getCurrentIsland().getIslandStore().getCatalogue(buyOrSell);
-		String[][] catalogueNestedArray = game.getCurrentIsland().getIslandStore().catalogueToNestedArray(catalogue);
-		String[] colNames = {"Name", "Price", "Space Taken", "Defense Boost"};
+		// Create nested array of item descriptions that the store sells, has different dimensions depending on if a user is buying or selling
+		String[][] catalogueNestedArray = game.getCurrentIsland().getIslandStore().catalogueToNestedArray(catalogue, buyOrSell);
+		String[] colNames;
+		
+		// Check if a user wants to buy or sell, different situations need different column names
+		if (buyOrSell.equals("buy")) {
+			colNames = new String [] {"Name", "Price", "Space Taken"};
+		}
+		else {
+			colNames = new String [] {"Name", "Price", "Space Taken", "Defense Boost"};
+		}
 		
 		// Create table holding all the information from catalogueArray
 		return createTable(catalogueNestedArray, colNames, false);
