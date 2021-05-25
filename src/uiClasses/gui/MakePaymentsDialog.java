@@ -1,26 +1,21 @@
 package uiClasses.gui;
 
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import coreClasses.GameEnvironment;
 import coreClasses.Route;
 
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class MakePaymentsDialog extends JDialog {
-		
-	private GameEnvironment game;
-	private Route route;
+	
+	/** the instance of ChooseRouteScreen that created this dialog box.*/
 	private ChooseRouteScreen routeScreen;
 	/**
 	 * Create the dialog.
@@ -29,7 +24,6 @@ public class MakePaymentsDialog extends JDialog {
 		setBounds(100, 100, 450, 229);
 		getContentPane().setLayout(null);
 		
-		this.route = route;
 		this.routeScreen= routeScreen;
 		
 		int costWages = game.getShip().routeWageCost(route);
@@ -63,11 +57,16 @@ public class MakePaymentsDialog extends JDialog {
 		}
 	}
 	
+	
+	/** Method called when btnMakePayments is clicked.
+	 * Triggers the wage and repair payments to be made, and closes the dialog box.
+	 */
 	private void makePayments() {
 		routeScreen.confirmSelection();
 		this.dispose();
 	}
 	
+	/** Creates the JLabel which gives the player instructions.*/
 	private void createInstructionLabel() {
 		JLabel lblInstruction = new JLabel("Before you set sail, you need to:");
 		lblInstruction.setFont(new Font("Dialog", Font.BOLD, 15));
@@ -75,6 +74,7 @@ public class MakePaymentsDialog extends JDialog {
 		getContentPane().add(lblInstruction);
 	}
 	
+	/** Creates the JLabels that display the cost of paying your crew wages.*/
 	private void createWageslabels(int cost) {
 		JLabel lblPayWages = new JLabel("- Pay your crew wages");
 		lblPayWages.setHorizontalAlignment(SwingConstants.CENTER);
@@ -89,6 +89,7 @@ public class MakePaymentsDialog extends JDialog {
 		getContentPane().add(lblWageAmount);
 	}
 	
+	/** Creates the JLabels that display the cost of repairing your ship.*/
 	private void createRepairLabels(int cost) {
 		JLabel lblRepairShip = new JLabel("- Repair your Ship");
 		lblRepairShip.setHorizontalAlignment(SwingConstants.CENTER);
