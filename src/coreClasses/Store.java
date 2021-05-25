@@ -66,7 +66,7 @@ public class Store {
     
     /////////////////////// METHODS FOR SELLING AN ITEM TO A PLAYER ///////////////////////////
     
-    /** Method to check if a player wants to buy an item. If buying an item puts them in a possition where they need
+    /** Method to check if a player wants to buy an item. If buying an item puts them in a position where they need
      *  to sell items in order to travel to another island, then it returns a string. 
      *  otherwise returns null if they dont need to be asked. 
      *  Used by Ui before buying an item
@@ -368,7 +368,7 @@ public class Store {
     	return displayArrayList.toArray(new String[displayArrayList.size()]);
     }
     
-    public String[][] catalogueToNestedArray(HashMap<String, HashMap<String, Integer>> catalogue){
+    public String[][] catalogueToNestedArray(HashMap<String, HashMap<String, Integer>> catalogue, String buyOrSell){
     	// converts a catalogue into a nested array to be used by GUI for tables!
     
     	ArrayList<String[]> catalogueArrayList = new ArrayList<String[]>();
@@ -390,9 +390,14 @@ public class Store {
     		catalogueArrayList.add(infoArray);
     		}
     	// Convert the arrayList with nested String arrays into a String[][] array
+    	if (buyOrSell.equals("buy")) {
+    		/* Trim off the last column from infoArrays, because selling an item to a store doesn't need
+    		 * to show the defense capability because stores dont buy upgrades from Players. 
+    		 */
+    		catalogueArrayList.toArray(new String[catalogueArrayList.size()][3]);
+    	}
     	return catalogueArrayList.toArray(new String[catalogueArrayList.size()][4]);
     }
-    
     
     
     /** Creates and returns a string representation of the given catalogue, useful for giving a quick overview

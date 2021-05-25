@@ -74,7 +74,7 @@ class StoreTest {
 		testPlayer.setShip(new Ship("Batmobile", 10, 1, 2));
 		testPlayer.getShip().setRemainingItemSpace(1); //Use setter method to directly modify the remaining Item space
 		resultString = testStore.sellItemsToPlayer(testGameEnvironment, "Gold", 1);
-		expectedResultString = "Can't sell Item(s), Player does not have enough space to store item(s)!\n0 out of requested 1 Gold bought \nTotal cost of transaction: 0 Pirate Bucks \n";
+		expectedResultString = "Not all of the requested items were sold to a player! \nCan't sell Item(s), Player does not have enough space to store item(s)!\n0 out of requested 1 Gold bought \nTotal cost of transaction: 0 Pirate Bucks \n";
 		assertEquals(expectedResultString, resultString);;
 		
 		// Test with upgrades
@@ -85,7 +85,7 @@ class StoreTest {
 		
 		// An upgrade that can't be sold because the defense capability of a ship is already maxed
 		resultString = testStore.sellItemsToPlayer(testGameEnvironment, "Canon(upgrade)", 1);
-		expectedResultString = "Can't sell Upgrade(s), Ship already has max defense Capability\n0 out of requested 1 Canon(upgrade) bought \nTotal cost of transaction: 0 Pirate Bucks \nYour defense capability is maxed at 2! \n";
+		expectedResultString = "Not all of the requested items were sold to a player! \nCan't sell Upgrade(s), Ship already has max defense Capability\n0 out of requested 1 Canon(upgrade) bought \nTotal cost of transaction: 0 Pirate Bucks \nYour defense capability is maxed at 2! \n";
 		assertEquals(expectedResultString, resultString);
 		
 		// Test normally with upgrades
@@ -94,6 +94,10 @@ class StoreTest {
 		resultString = testStore.sellItemsToPlayer(testGameEnvironment, "Canon(upgrade)", 2);
 		expectedResultString = "2 out of requested 2 Canon(upgrade) bought \nTotal cost of transaction: 100 Pirate Bucks \nYour defense capability is now 20! \n";
 		assertEquals(expectedResultString, resultString);
+		
+		// Test gameEnvironment.calculateLiquidValue() - itemToSell.getPlayerBuyPrice() + sellCatalogue.get(itemToSell.getName()).get("price") < gameEnvironment.getMinMoneyToTravel()
+		
+		// 
 	}
 	
 	@Test
