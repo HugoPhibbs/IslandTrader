@@ -52,7 +52,8 @@ public class WeatherScreen extends Screen {
 	 */
 	private void onContinueButton() {
 		SailingScreen sailingScreen = new SailingScreen(game, game.getCurrentIsland(), route);
-		sailingScreen.endSail();
+		sailingScreen.finishProgress();
+		sailingScreen.show();
 		quit();
 	}
 	
