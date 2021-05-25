@@ -75,7 +75,9 @@ public class PirateScreen extends Screen {
 		}
 		else {
 			SailingScreen sailingScreen = new SailingScreen(game, game.getCurrentIsland(), route);
-			sailingScreen.endSail();
+			sailingScreen.finishProgress();
+			quit();
+			sailingScreen.show();
 		}
 	}
 	

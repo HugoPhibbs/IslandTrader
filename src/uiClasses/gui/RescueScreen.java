@@ -38,8 +38,9 @@ public class RescueScreen extends Screen {
 	
 	private void onContinueButton() {
 		SailingScreen sailingScreen = new SailingScreen(game, game.getCurrentIsland(), route);
+		sailingScreen.finishProgress();
 		quit();
-		sailingScreen.endSail();
+		sailingScreen.show();
 	}
 	
 	private void createContinueButton() {

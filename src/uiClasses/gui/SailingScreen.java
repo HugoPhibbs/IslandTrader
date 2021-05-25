@@ -43,7 +43,7 @@ public class SailingScreen extends Screen {
 	protected void initialize() {
 		frame.setBounds(100, 100, 450, 300);
 		int routeDuration = game.calculateDaysSailing(route);
-		delay = 200 * routeDuration;
+		delay = 100 * routeDuration;
 		
 		createProgressBar();
 		createLabels();
@@ -51,6 +51,7 @@ public class SailingScreen extends Screen {
 	
 	public void startProgress() {
 		timer = new Timer(delay, (event) -> firstHalfProgressBar());
+		timer.start();
 	}
 	
 
@@ -64,15 +65,33 @@ public class SailingScreen extends Screen {
 		}
 	} 
 	
+	
 	/** Fills progress bar, time taken depends on how many days the route takes to sail.*/
 	private void startSail() {
 		boolean eventOccurred = game.sailToNewIsland(route, desinatonIsland);
 		if (!eventOccurred) {
-			endSail();
+			finishProgress();
 		} else {
 			quit();
 		}
 	}
+	
+	public void finishProgress() {
+		progressPercent = 50;
+		timer = new Timer(delay, (event) -> secondHalfProgressBar());
+		timer.start();
+	}
+	
+
+	private void secondHalfProgressBar() {
+		progressPercent += 5;
+		progressBar.setValue(progressPercent);
+		
+		if (progressPercent >= 100) {
+			timer.stop();
+			endSail();
+		}
+	} 
 	
 	protected void endSail() {
 		Screen optionsScreen = new CoreOptionsScreen(game);
@@ -85,8 +104,6 @@ public class SailingScreen extends Screen {
 		progressBar.setBounds(30, 167, 390, 39);
 		progressBar.setValue(0);
 		progressBar.setBorderPainted(true);
-		progressBar.setStringPainted(true);
-
 		frame.getContentPane().add(progressBar);
 	}
 	
