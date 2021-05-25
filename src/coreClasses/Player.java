@@ -81,15 +81,17 @@ public class Player {
     			String [] infoArray = new String[] {
     					currItem.getName(), 
     					Integer.toString(currItem.getPlayerBuyPrice()), 
+    					"N/A", 
     					"N/A"
     			};
     			if (currItem.getPlayerSellPrice() != -1) {
     				infoArray[2] = Integer.toString(currItem.getPlayerSellPrice());
+    				infoArray[3] = currItem.getStoreIslandSoldAt().getIslandName();
     			}
     			
     			purchasedItemsArrayList.add(infoArray);
     		}
-    		return purchasedItemsArrayList.toArray(new String[purchasedItemsArrayList.size()][3]);
+    		return purchasedItemsArrayList.toArray(new String[purchasedItemsArrayList.size()][4]);
     	}
     }
     
@@ -108,10 +110,13 @@ public class Player {
 	 * @return Boolean value if money was spent or not, ie player had enough cash to pay
 	 */
 	public boolean spendMoney(int amountSpent) {
+		System.out.println("amount before playing, in player: "+amountSpent);
 		if (amountSpent <= moneyBalance && amountSpent >= 0) {
 			moneyBalance -= amountSpent;
+			System.out.println(true);
 			return true;
 		}
+		System.out.println(false);
 		return false; // not enough money
 	}
 	
