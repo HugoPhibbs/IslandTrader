@@ -3,6 +3,7 @@ package uiClasses.gui;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -459,8 +460,6 @@ public class VisitStoreScreen extends Screen {
 			throw new IllegalArgumentException("Chosen item is empty!!");
 		}
 		
-		// Create a pop up if buying this item will put a player into liquidation
-		
 		int numItems = Integer.parseInt(numItemsTextField.getText());
 		
 		String receipt = "";
@@ -485,6 +484,17 @@ public class VisitStoreScreen extends Screen {
 	 * @return String for the receipt of a transaction
 	 */
 	private String sellItemsToPlayer(String itemName, int numItems) {
+		Store currentStore = game.getCurrentIsland().getIslandStore();
+		
+		if ((currentStore.checkPlayerWantsToBuy(game, itemName, numItems) != null)){
+			/* Create a pop up dialog that asks a user if they would really like to buy an item, if
+			 * it puts a user in a position where they have to sell items in order to travel to another island
+			 */
+			int result = JOptionPane.showConfirmDialog(frame, currentStore.checkPlayerWantsToBuy(game, itemName, numItems));
+			if (result==JOptionPane.NO_OPTION) {
+				return "Buy Items from Store cancelled!";
+			} 
+		}
 		// Return Receipt from buying an item given by item name from the store
 		return game.getCurrentIsland().getIslandStore().sellItemsToPlayer(game, itemName, numItems);
 	}
@@ -497,6 +507,7 @@ public class VisitStoreScreen extends Screen {
 	 */
 	private String buyItemsFromPlayer(String itemName, int numItems) {
 		// Get receipt from selling an item to a Store
+		// Create a pop up if buying this item will put a player into liquidation
 		return game.getCurrentIsland().getIslandStore().buyItemsFromPlayer(itemName, game.getPlayer(), numItems);
 	}
 	
