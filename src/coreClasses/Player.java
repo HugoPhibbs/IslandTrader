@@ -85,6 +85,7 @@ public class Player {
     					"N/A"
     			};
     			if (currItem.getPlayerSellPrice() != -1) {
+    				// If an item has been sold back to a store, include information on this
     				infoArray[2] = Integer.toString(currItem.getPlayerSellPrice());
     				infoArray[3] = currItem.getStoreIslandSoldAt().getIslandName();
     			}
@@ -110,13 +111,10 @@ public class Player {
 	 * @return Boolean value if money was spent or not, ie player had enough cash to pay
 	 */
 	public boolean spendMoney(int amountSpent) {
-		System.out.println("amount before playing, in player: "+amountSpent);
 		if (amountSpent <= moneyBalance && amountSpent >= 0) {
 			moneyBalance -= amountSpent;
-			System.out.println(true);
 			return true;
 		}
-		System.out.println(false);
 		return false; // not enough money
 	}
 	

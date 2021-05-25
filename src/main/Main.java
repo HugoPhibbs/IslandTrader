@@ -244,11 +244,14 @@ public class Main {
 		// NOTE stores do not buy upgrades!
 
 		// TODO need to balance out all the prices!!
+		
+		// TODO as a convention a store buys back an item for the exact same price that it bought it for!
 
 		ArrayList<HashMap<String, HashMap<String, Integer>>> sellCatalogues = new ArrayList<HashMap<String, HashMap<String, Integer>>>();
 
 		// every store buys and sells 5 items, for simplicity
-		
+		// Max item space in a ship is 100
+
 		// Create Gold sell properties for each island store
 		HashMap<String, Integer> goldPropertiesCyprus = new HashMap<String, Integer>();
 		goldPropertiesCyprus.put("spaceTaken", 2);
@@ -421,27 +424,32 @@ public class Main {
 		 * Meat spaceTaken = 2 /foods Bottle o' Rum, spaceTaken = 2 /foods
 		 * 
 		 */
-
+		
+		// Max item space in a ship is 100
+		/* Make it so a store buys back items at the exact same price that they sell them
+		 * makes it easier to coordinate prices
+		 * 
+		 * or we could have a small penalty for this, say 10 bucks, just putting it out there, its all relative to
+		 * how much we set the price, aim for around 10%, or just a small fee. 
+		 */
+		
 		ArrayList<HashMap<String, HashMap<String, Integer>>> buyCatalogues = new ArrayList<HashMap<String, HashMap<String, Integer>>>();
 
-
-
-		
 		// Create buy catalogue properties for silver for each store
 		HashMap<String, Integer> silverPropertiesCyprus = new HashMap<String, Integer>();
 		silverPropertiesCyprus.put("spaceTaken", 3);
-		silverPropertiesCyprus.put("price", 4);
+		silverPropertiesCyprus.put("price", 40);
 		HashMap<String, Integer> silverPropertiesMalta = new HashMap<String, Integer>();
 		silverPropertiesMalta.put("spaceTaken", 3);
-		silverPropertiesMalta.put("price", 4);
+		silverPropertiesMalta.put("price", 20);
 		
 		// Create buy catalogue properties for banana for each store
 		HashMap<String, Integer> bananaPropertiesCyprus = new HashMap<String, Integer>();
 		bananaPropertiesCyprus.put("spaceTaken", 1);
-		bananaPropertiesCyprus.put("price", 1);
+		bananaPropertiesCyprus.put("price", 10);
 		HashMap<String, Integer> bananaPropertiesCorsica = new HashMap<String, Integer>();
 		bananaPropertiesCorsica.put("spaceTaken", 1);
-		bananaPropertiesCorsica.put("price", 1);
+		bananaPropertiesCorsica.put("price", 5);
 		
 		// Create buy catalogue properties for bandages for each store
 		HashMap<String, Integer> bandagesPropertiesCyprus = new HashMap<String, Integer>();
@@ -516,6 +524,16 @@ public class Main {
 		specialTeaPropertiesIbiza.put("spaceTaken", 3);
 		specialTeaPropertiesIbiza.put("price", 4);
 		
+		// Create sell catalogue for cyprus, becuase it only sells ugrades, can buy a
+		// bit of everything
+		HashMap<String, HashMap<String, Integer>> buyCatalogueCyprus = new HashMap<String, HashMap<String, Integer>>();
+		buyCatalogueCyprus.put("Gold", goldPropertiesCyprus);
+		buyCatalogueCyprus.put("Silver", silverPropertiesCyprus);
+		buyCatalogueCyprus.put("Banana", bananaPropertiesCyprus);
+		buyCatalogueCyprus.put("Bandages", bandagesPropertiesCyprus);
+		buyCatalogueCyprus.put("Lime", limePropertiesCyprus);
+		buyCatalogues.add(buyCatalogueCyprus);
+		
 		// Create buy catalogue properties for Large chest for each store
 		HashMap<String, Integer> largeChestPropertiesMalta = new HashMap<String, Integer>();
 		largeChestPropertiesMalta.put("spaceTaken", 1);
@@ -532,16 +550,6 @@ public class Main {
 		buyCatalogueSicily.put("Gold", goldPropertiesSicily);
 		buyCatalogueSicily.put("Lime", limePropertiesSicily);
 		buyCatalogues.add(buyCatalogueSicily);
-		
-		// Create sell catalogue for cyprus, becuase it only sells ugrades, can buy a
-		// bit of everything
-		HashMap<String, HashMap<String, Integer>> buyCatalogueCyprus = new HashMap<String, HashMap<String, Integer>>();
-		buyCatalogueCyprus.put("Gold", goldPropertiesCyprus);
-		buyCatalogueCyprus.put("Silver", silverPropertiesCyprus);
-		buyCatalogueCyprus.put("Banana", bananaPropertiesCyprus);
-		buyCatalogueCyprus.put("Bandages", bandagesPropertiesCyprus);
-		buyCatalogueCyprus.put("Lime", limePropertiesCyprus);
-		buyCatalogues.add(buyCatalogueCyprus);
 
 		// Create buy catalogue for corsica specialises in everything
 		HashMap<String, HashMap<String, Integer>> buyCatalogueCorsica = new HashMap<String, HashMap<String, Integer>>();
@@ -562,7 +570,7 @@ public class Main {
 		buyCatalogues.add(buyCatalogueMalta);
 
 		// Create buy catalogue for ibiza
-		HashMap<String, HashMap<String, Integer>> buyCatazlogueIbiza = new HashMap<String, HashMap<String, Integer>>();
+		HashMap<String, HashMap<String, Integer>> buyCatalogueIbiza = new HashMap<String, HashMap<String, Integer>>();
 		buyCatalogueIbiza.put("Bandages", bandagesPropertiesIbiza);
 		buyCatalogueIbiza.put("Special-Tea", specialTeaPropertiesIbiza);
 		buyCatalogueIbiza.put("Lime", limePropertiesIbiza);
