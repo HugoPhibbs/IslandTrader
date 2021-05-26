@@ -33,8 +33,8 @@ public class Store {
      * 
      * @param name String name of Store object to be created
      * @param specialty String for the specialty of a Store
-     * @param sellCatalogue HashMap<String, HashMap> of Items that the store sells
-     * @param buyCatalogue HashMap<String, HashMap> of Items that a store buys
+     * @param sellCatalogue HashMap of Items that the store sells
+     * @param buyCatalogue HashMap of Items that a store buys
      */
     public Store(String name, String specialty, HashMap<String, HashMap<String, Integer>> sellCatalogue, HashMap<String, HashMap<String, Integer>> buyCatalogue) {
     	
@@ -219,7 +219,6 @@ public class Store {
     /** Checks if selling an item from a store is permissible. Returns "Can sell" if permissable otherwise returns 
      * a String returning the reason why not. 
      * 
-     * @param player Player object that item is trying to be sold to 
      * @param itemToSell Item being checked if it can be sold 
      * @return String representation if item can be sold or not, along with a reason if not. 
      */
@@ -237,8 +236,7 @@ public class Store {
     /** Checks if a store can sell an upgrade to a player. Returns "Can sell" if it can, otherwise
      * returns a String for the reason explaining why not. 
      * 
-     * @param player Player object that upgrade is trying to be sold to 
-     * @param upgradeToSell ShipUpgrade object that is trying to be sold
+     * @param itemToSell Item object that is trying to be sold to a Player
      * @return Boolean if ShipUpgrade object can be sold. 
      */
     public static String canSellUpgradeToPlayer(GameEnvironment gameEnvironment, Item itemToSell) {
@@ -345,7 +343,7 @@ public class Store {
     
     /** Converts a sell or buy catalogue into an an Array that can be easily displayed by cmd line UI
      * 
-     * @param catalogue HashMap<String, HashMap<String, Integer>> catalogue to be parsed into an Array
+     * @param catalogue HashMap catalogue to be parsed into an Array
      * @return Array for what you can buy or sell from a store
      */
     public String[] catalogueToArray(HashMap<String, HashMap<String, Integer>> catalogue){
@@ -372,6 +370,13 @@ public class Store {
     	return displayArrayList.toArray(new String[displayArrayList.size()]);
     }
     
+    /** Method to turn a catalogue into a nested array representation
+     * Used by GUI for displaying contents in tabular form 
+     * 
+     * @param catalogue HashMap for a catalogue to be converted into a nested array
+     * @param buyOrSell String for the operation that a user wants to do, either "buy" or "sell"
+     * @return
+     */
     public String[][] catalogueToNestedArray(HashMap<String, HashMap<String, Integer>> catalogue, String buyOrSell){
     	// converts a catalogue into a nested array to be used by GUI for tables!
     
@@ -430,7 +435,7 @@ public class Store {
      *  
      * @param buyOrSell String for the operation requested, should be "buy" or "sell" otherwise 
      * method returns null. 
-     * @return HashMap<String, HashMap<String, Integer>> catalogue associated with 'buyOrSell'
+     * @return HashMap catalogue associated with 'buyOrSell'
      */
     public HashMap<String, HashMap<String, Integer>> getCatalogue(String buyOrSell){
     	if (buyOrSell == "buy") {
@@ -486,19 +491,19 @@ public class Store {
    
     /** Gets the sellCatalogue for a store
      * 
-     * @return HashMap<String, HashMap> representation of the things that a store sells
+     * @return HashMap representation of the things that a store sells
      */
     public HashMap<String, HashMap<String, Integer>> getSellCatalogue() {return sellCatalogue;}
     
     /** Gets the buyCatalogue for a store
      * 
-     * @return HashMap<String, HashMap<String, Integer>> representation of the things that a store buys
+     * @return HashMap representation of the things that a store buys
      */
     public HashMap<String, HashMap<String, Integer>> getBuyCatalogue() {return buyCatalogue;}   
     
     /** Sets the Island that a store belongs to
      * 
-     * @param island Island that a store belongs to
+     * @param storeIsland Island that a store belongs to
      */
     public void setStoreIsland(Island storeIsland) {this.storeIsland = storeIsland;}
 }

@@ -29,7 +29,7 @@ public class Main {
 	public static void main(String[] args) {
 		// Initialize all the objects needed to run a game
 		Ship[] shipArray = createShips();
-
+		
 		// Create pirates object to be used throughout game
 		Pirates pirates = new Pirates(50);
 
@@ -105,11 +105,9 @@ public class Main {
 	/**
 	 * Method for creating the islands for a game
 	 * 
-	 * @param buyCatalogues  ArrayList<HashMap<String, HashMap<String, Integer>>>
-	 *                       contains all the buyCatalogues for every island to be
+	 * @param buyCatalogues  ArrayList containing HashMaps for the buyCatalogues for every island to be
 	 *                       created
-	 * @param sellCatalogues ArrayList<HashMap<String, HashMap<String, Integer>>>
-	 *                       contains all the sellCatalogues for every island to be
+	 * @param sellCatalogues ArrayList containing HashMaps for the sellCatalogues for every island to be
 	 *                       created
 	 * @return Island[] containing all the Islands that were created
 	 */
@@ -222,7 +220,7 @@ public class Main {
 	/**
 	 * Method for creating all the sellCatalogues for a game
 	 * 
-	 * @return ArrayList<HashMap<String, HashMap<String, Integer>>> contains all the
+	 * @return ArrayList of HashMaps for the
 	 *         sellCatalogues for every Island in the game
 	 */
 	public static ArrayList<HashMap<String, HashMap<String, Integer>>> createSellCatalogues() {
@@ -239,10 +237,6 @@ public class Main {
 		 * 
 		 */
 		// NOTE stores do not buy upgrades!
-
-		// TODO need to balance out all the prices!!
-		
-		// TODO as a convention a store buys back an item for the exact same price that it bought it for!
 
 		ArrayList<HashMap<String, HashMap<String, Integer>>> sellCatalogues = new ArrayList<HashMap<String, HashMap<String, Integer>>>();
 
@@ -425,7 +419,7 @@ public class Main {
 	/**
 	 * Method for creating all the buyCatalgues for a game
 	 * 
-	 * @return ArrayList<HashMap<String, HashMap<String, Integer>>> contains all the
+	 * @return ArrayList of HashMaps for all the
 	 *         buyCatalogues for every Island in the game
 	 */
 	public static ArrayList<HashMap<String, HashMap<String, Integer>>> createBuyCatalogues() {
