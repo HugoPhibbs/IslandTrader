@@ -95,6 +95,8 @@ public class GameEnvironment {
 		ui.playGame();
 	}
 	
+    /////////////////////// HELPER METHODS ///////////////////////
+	
 
 	/** Method to reduce in-game days
 	 * 
@@ -173,10 +175,6 @@ public class GameEnvironment {
 	public void minMoneyRequired() {
 		minMoneyToTravel = ship.routeWageCost(currentIsland.shortestPossibleRoute(otherIslands())) + ship.repairCost();
 	}
-	
-	//////////////////////////////////////////////////////////////
-    /////////////////////// HELPER METHODS ///////////////////////
-    //////////////////////////////////////////////////////////////
 
 	/** Works out the amount that has to be spent before this route can be sailed.
 	 * Based on the cost to repair the ship and pay crew wages. 
