@@ -177,46 +177,46 @@ public class SetupScreen extends Screen {
 		panelPickShip.add(lblSelectedShip);
 		
 		JLabel lblSpeed = new JLabel("Speed:");
-		lblSpeed.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblSpeed.setFont(new Font("Dialog", Font.BOLD, 12));
 		lblSpeed.setBounds(869, 64, 56, 17);
 		panelPickShip.add(lblSpeed);
 		
 		JLabel lblCrewSize = new JLabel("Crew Size:");
-		lblCrewSize.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblCrewSize.setFont(new Font("Dialog", Font.BOLD, 12));
 		lblCrewSize.setBounds(869, 107, 86, 17);
 		panelPickShip.add(lblCrewSize);
 		
 		JLabel lblCargoCapacity = new JLabel("Cargo capacity:");
-		lblCargoCapacity.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblCargoCapacity.setFont(new Font("Dialog", Font.BOLD, 12));
 		lblCargoCapacity.setBounds(869, 152, 123, 17);
 		panelPickShip.add(lblCargoCapacity);
 		
 		JLabel lblMaxDefense = new JLabel("Max Defense:");
-		lblMaxDefense.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblMaxDefense.setBounds(869, 198, 86, 17);
+		lblMaxDefense.setFont(new Font("Dialog", Font.BOLD, 12));
+		lblMaxDefense.setBounds(869, 198, 150, 17);
 		panelPickShip.add(lblMaxDefense);
 
 		JLabel lblSpeedVal = new JLabel("-");
 		lblSpeedVal.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblSpeedVal.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblSpeedVal.setFont(new Font("Dialog", Font.BOLD, 12));
 		lblSpeedVal.setBounds(1006, 64, 34, 17);
 		panelPickShip.add(lblSpeedVal);
 		
 		JLabel lblCrewVal = new JLabel("-");
 		lblCrewVal.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblCrewVal.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblCrewVal.setFont(new Font("Dialog", Font.BOLD, 12));
 		lblCrewVal.setBounds(1006, 108, 34, 17);
 		panelPickShip.add(lblCrewVal);
 		
 		JLabel lblCargoVal = new JLabel("-");
 		lblCargoVal.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblCargoVal.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblCargoVal.setFont(new Font("Dialog", Font.BOLD, 12));
 		lblCargoVal.setBounds(1006, 153, 34, 17);
 		panelPickShip.add(lblCargoVal);
 		
 		JLabel lblDefenseVal = new JLabel("-");
 		lblDefenseVal.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblDefenseVal.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblDefenseVal.setFont(new Font("Dialog", Font.BOLD, 12));
 		lblDefenseVal.setBounds(1006, 199, 34, 17);
 		panelPickShip.add(lblDefenseVal);
 		
