@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
 import coreClasses.*;
 import uiClasses.*;
 import uiClasses.gui.Gui;
@@ -52,7 +54,7 @@ public class Main {
 		GameUi ui;
 		ui = new Gui();
 		GameEnvironment gameEnvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
-		ui.setup(gameEnvironment);
+		SwingUtilities.invokeLater(() -> ui.setup(gameEnvironment));
 
 //		if (args.length > 0 && (args[0].equals("cmd"))) {
 //			ui = new CmdLineUi();
@@ -61,8 +63,9 @@ public class Main {
 //		} else {
 //			ui = new Gui();
 //			GameEnvironment gameEnrvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
-//			ui.setup(gameEnrvironment);
-//		}
+//			SwingUtilities.invokeLater(() -> ui.setup(gameEnvironment));
+////		}
+
 	}
 
 	/**
@@ -190,7 +193,7 @@ public class Main {
 				"REasonably short. Reasonably risky.");
 		sicilyAndIbizaWobble.constructProbabilityMap(35, 40, 50);
 
-		Route sicilyAndCorsica = new Route("Average Pass", 20, new Island[] { sicily, corsica },
+		Route sicilyAndCorsica = new Route("Average Pass", 140, new Island[] { sicily, corsica },
 				"The odd pirate, a storm here and there.");
 		sicilyAndCorsica.constructProbabilityMap(30, 25, 30);
 
@@ -201,7 +204,7 @@ public class Main {
 		Route maltaAndCorsicaPirate = new Route("Pirate Coast", 50, new Island[] { malta, corsica },
 				"Many a pirates favourite route!");
 		maltaAndCorsicaPirate.constructProbabilityMap(100, 0, 0);
-		Route maltaAndCorsicaSafe = new Route("Boring Detour", 10, new Island[] { malta, corsica },
+		Route maltaAndCorsicaSafe = new Route("Boring Detour", 220, new Island[] { malta, corsica },
 				"Scared of the pirates? Avoid them by taking a lengthy detour.");
 		maltaAndCorsicaSafe.constructProbabilityMap(0, 5, 10);
 

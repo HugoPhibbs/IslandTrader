@@ -44,6 +44,8 @@ public class CoreOptionsScreen extends Screen{
 	 */
 	@Override
 	protected void initialize() {
+		System.out.println("Core " + game.getPlayer().getMoneyBalance()); // TODO remove
+		
 		frame.setBounds(100, 100, 1100, 595);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

@@ -114,8 +114,9 @@ public class Player {
 		if (amountSpent <= moneyBalance && amountSpent >= 0) {
 			moneyBalance -= amountSpent;
 			return true;
-		}
+		} else {
 		return false; // not enough money
+		}
 	}
 	
 	/** Method to convert a Players money balance into a String representation

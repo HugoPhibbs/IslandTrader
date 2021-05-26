@@ -46,6 +46,8 @@ public class ChooseRouteScreen extends Screen {
 	 */
 	@Override
 	protected void initialize() {
+		System.out.println("route " + game.getPlayer().getMoneyBalance()); // TODO remove
+
 		frame.setBounds(100, 100, 800, 550);
 		
 		createMainLabels();

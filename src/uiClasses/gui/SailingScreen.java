@@ -53,6 +53,8 @@ public class SailingScreen extends Screen {
 	 */
 	@Override
 	protected void initialize() {
+		System.out.println("sail " + game.getPlayer().getMoneyBalance()); // TODO remove
+
 		frame.setBounds(100, 100, 450, 300);
 		int routeDuration = game.calculateDaysSailing(route);
 		delay = 100 * routeDuration;
@@ -87,6 +89,8 @@ public class SailingScreen extends Screen {
 	 */
 	private void startSail() {
 		boolean eventOccurred = game.sailToNewIsland(route, destinatonIsland);
+		System.out.println("sail end of first half " + game.getPlayer().getMoneyBalance()); // TODO remove
+
 		if (!eventOccurred) {
 			finishProgress();
 		} else {
