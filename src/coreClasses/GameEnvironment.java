@@ -1,6 +1,6 @@
 package coreClasses;
 
-import java.util.Random;
+import java.util.Random; 
 import java.lang.Math;
 
 import uiClasses.GameUi;
@@ -11,7 +11,7 @@ import java.util.HashMap;
  * Contains necessary Game objects, along with general methods that dont really belong anywhere else
  * 
  * @author Jordan Vegar and Hugo Phibbs
- * @version 19/5/21
+ * @version 26/5/21
  * @since 2/4/21
  */
 public class GameEnvironment {
@@ -55,11 +55,11 @@ public class GameEnvironment {
 	
 	/** Constructor for GameEnvironment class
 	 * 
-	 * @param islandArray Island[] array containing islands to be used in game
-	 * @param shipArray Ship[] array containing ships that can be chosen by player
+	 * @param islandArray Island[] array containing all islands to be used in game
+	 * @param shipArray Ship[] array containing all ships that can be chosen by player
+	 * @param ui GameUi implementation of GameUi to be used by game
 	 * @param pirates Pirates object for a pirate attack random event
 	 * @param rescuedSailors RescuedSailors object for a rescued sailors random event
-	 * @param ui GameUi implementation to be used by game
 	 */
 	public GameEnvironment(Island[] islandArray, Ship[] shipArray, uiClasses.GameUi ui, Pirates pirates, RescuedSailors rescuedSailors) {
 		this.islandArray = islandArray;
@@ -74,9 +74,9 @@ public class GameEnvironment {
 	 * and all objects that required this information have been created. This method passes
 	 * those objects to the current instance of GameEnvironment. 
 	 * 
-	 * @param player
-	 * @param ship
-	 * @param duration
+	 * @param player Player object for this current game that has just been set up 
+	 * @param ship Ship object belonging to a player for this game
+	 * @param duration int the days the game will be played for. 
 	 * @param startisland
 	 */
 	public void onSetupFinished(Player player, Ship ship, int duration, Island startisland) {
@@ -98,7 +98,7 @@ public class GameEnvironment {
 
 	/** Method to reduce in-game days
 	 * 
-	 * @param daysPassed Integer for the number of in-game days passed
+	 * @param daysPassed int for the number of in-game days passed
 	 */
 	public void reduceDaysRemaining(int daysPassed) {
 		daysRemaining -= daysPassed;
@@ -173,7 +173,7 @@ public class GameEnvironment {
 	/** Works out the amount that has to be spent before this route can be sailed.
 	 * Based on the cost to repair the ship and pay crew wages. 
 	 * 
-	 * @return cost Integer for the total amount that needs to be paid before sailing that route. 
+	 * @return cost int for the total amount that needs to be paid before sailing that route. 
 	 */
 	public int getCost(Route route) {
 		int cost = ship.repairCost();
@@ -182,9 +182,9 @@ public class GameEnvironment {
 		return cost;
 	}
 	
-	/** Getter method for every game island besides the current island
+	/** Returns an array of all islands but the current island, representing all the islands the player can travel to. 
 	 * 
-	 * @return Island[] array containing every game island besides the current island
+	 * @return Island[] array containing every game island besides the current island.
 	 */
 	public Island[] otherIslands() {
 		Island[] otherIslands =  new Island[islandArray.length-1];
@@ -198,8 +198,8 @@ public class GameEnvironment {
 		return otherIslands;
 	}
 	
-	/** Getter method for the descriptions of every ship that a player can choose
-	 * 
+	/** Returns a description of every ship that a player can choose
+	 *
 	 * @return ArrayList<String> ArrayList containing descriptions of every ship that a player can choose
 	 */
 	public ArrayList<String> shipDescriptionArrayList() {
@@ -213,8 +213,8 @@ public class GameEnvironment {
 	
 	/** Calculates a score by dividing profit by days played.
 	 * 
-	 * @param Integer for the amount of money the player started with, needed for profit calculation.  
-	 * @return Integer for the player's score at time of call.
+	 * @param int for the amount of money the player started with, needed for profit calculation.  
+	 * @return int for the player's score at time of call.
 	 */
 	public int calculateScore() {
 		int profit = getPlayer().getMoneyBalance() - ui.STARTING_MONEY;
@@ -227,10 +227,11 @@ public class GameEnvironment {
 		}
 	}	
 	
-	/** Gets the current liquid value of a player in a game 
+	/** Calculates the current liquid value of a player in a game (the amount of money a player would have if they sold all 
+	 * items possible at your current island's store).
 	 * Based on your items you can sell at the current island's store, works out your players liquid value.
 	 * 
-	 * @return Integer for the amount the player can sell all his sellable items for plus his bank balance. 
+	 * @return int for the amount the player can sell all his sellable items for plus his bank balance. 
 	 */
 	public int calculateLiquidValue() {
 		ArrayList<Item> items = ship.getItems();
@@ -280,7 +281,7 @@ public class GameEnvironment {
 	
 	/** Getter method for game days remaining
 	 * 
-	 * @return Integer for the number of game days remaining
+	 * @return int for the number of game days remaining
 	 */
 	public int getDaysRemaining() {return daysRemaining;}	
 	
@@ -304,13 +305,13 @@ public class GameEnvironment {
 	
 	/** Getter method for days selected for a game
 	 * 
-	 * @return Integer for the number of days selected for a game
+	 * @return int for the number of days selected for a game
 	 */
 	public int getDaysSelected() {return daysSelected;}
 	
 	/** Getter method for the minimum amount of money to travel to another island
 	 * 
-	 * @return Integer for the minimum amount of money to travel to another island
+	 * @return int for the minimum amount of money to travel to another island
 	 */
 	public int getMinMoneyToTravel() {return minMoneyToTravel;};
 	
@@ -333,11 +334,11 @@ public class GameEnvironment {
 	public void setShip(Ship ship) {this.ship = ship;}
 	
 
-	/** Method for selling the min money to travel for a game
+	/** Method for selling the minimum money to travel for a game
 	 *
-	 * @param minMoneyToTravel Integer value for the minimum money to travel
+	 * @param minMoneyToTravel int value for the minimum money to travel
 	 */
-	public void setMinMoneyToTravel(Integer minMoneyToTravel) {
+	public void setMinMoneyToTravel(int minMoneyToTravel) {
 		this.minMoneyToTravel = minMoneyToTravel;
 	}
 	
