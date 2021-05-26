@@ -78,11 +78,8 @@ public class Store {
      */
 	public String checkPlayerWantsToBuy(GameEnvironment gameEnvironment, String itemName, int quantity) {
 		int totalPrice = sellCatalogue.get(itemName).get("price") * quantity; // Get the total cost for a possible transaction
-		System.out.println(totalPrice);
 		
-		System.out.println(gameEnvironment.getMinMoneyToTravel());
-		
-		if (totalPrice >= gameEnvironment.getMinMoneyToTravel()) {
+		if (gameEnvironment.getPlayer().getMoneyBalance() - totalPrice < gameEnvironment.getMinMoneyToTravel()) {
 			return "If you buy these Item(s) you will need to sell some of your items if you want to travel to another island. \n"
 					+ "Do you still want to buy these item(s)";
 		}

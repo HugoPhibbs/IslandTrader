@@ -1,13 +1,9 @@
 package uiClasses.gui;
 
-import java.awt.EventQueue;
 import java.awt.Font;
-
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
 import coreClasses.GameEnvironment;
 import coreClasses.Route;
 
