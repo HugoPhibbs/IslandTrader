@@ -315,7 +315,7 @@ public class GameEnvironment {
 	 */
 	public void setCurrentIsland(Island newCurrentIsland) {currentIsland = newCurrentIsland;}
 	
-	/** Method for setting a player object gor a game
+	/** Method for setting a player object for a game
 	 * 
 	 * @param player Player object to be set for a game
 	 */
