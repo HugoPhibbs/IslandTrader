@@ -125,6 +125,7 @@ public class PirateScreen extends Screen {
 				lblAttackOutcome.setText("The pirate's boarded yur ship and stole all your goods!");
 			} else {
 				lblAttackOutcome.setText("You successful fended of the pirates!");
+				game.increaseScore(5000);
 			}
 		}
 	}

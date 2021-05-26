@@ -144,11 +144,13 @@ public class GameEnvironment {
 		else if (route.getWeatherProb() >= random.nextInt(100)) {
 			int damageDone =UnfortunateWeather.damageShip(ship);
 			ui.badWeather(route, damageDone);
+			increaseScore(1000);
 			eventOccured = true;
 		}
 		else if (route.getRescueProb() >= random.nextInt(100)) {
 			// roll dice
 			rescuedSailors.giveMoney(player);
+			increaseScore(1500);
 			ui.rescueSailor(route);
 			eventOccured = true;
 		}
@@ -221,7 +223,7 @@ public class GameEnvironment {
 		if (daysPlayed == 0) {
 			return 0;
 		} else {
-			return profit / daysPlayed;
+			return (profit * 10) + score + (daysPlayed * 50);
 		}
 	}	
 	
