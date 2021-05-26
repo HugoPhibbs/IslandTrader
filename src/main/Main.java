@@ -51,19 +51,16 @@ public class Main {
 
 		// Initiate the UI and Game Environment
 		GameUi ui;
-		ui = new Gui();
-		GameEnvironment gameEnvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
-		ui.setup(gameEnvironment);
-
-//		if (args.length > 0 && (args[0].equals("cmd"))) {
-//			ui = new CmdLineUi();
-//			GameEnvironment gameEnrvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
-//			ui.setup(gameEnrvironment);
-//		} else {
-//			ui = new Gui();
-//			GameEnvironment gameEnrvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
-//			ui.setup(gameEnrvironment);
-//		}
+		
+		if (args.length > 0 && (args[0].equals("cmd"))) {
+			ui = new CmdLineUi();
+			GameEnvironment gameEnrvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
+			ui.setup(gameEnrvironment);
+		} else {
+			ui = new Gui();
+			GameEnvironment gameEnrvironment = new GameEnvironment(islands, shipArray, ui, pirates, rescuedSailors);
+			ui.setup(gameEnrvironment);
+		}
 	}
 
 	/**
