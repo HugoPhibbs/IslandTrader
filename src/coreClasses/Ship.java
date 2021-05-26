@@ -226,23 +226,6 @@ public class Ship {
     	return null; // did not find an Item with name 'itemName'
     }
     
-    /////////////////////////////// GETTER AND SETTER METHODS //////////////////////////////////////
-    
-    /** Getter method for the description of a Ship
-     * 
-     * @return String representation of a ship
-     */
-    public String getDescription() {
-    	return String.format(
-    			  "Remaining Item-Space: %d \n"
-    			+ "Crew-size: %d \n"
-    			+ "Wage Cost per day: %d \n"
-    			+ "Health Status: %d \n"
-    			+ "Cost to repair: %d"
-    			, remainingItemSpace, crewSize, getDailyWageCost(), healthStatus, repairCost());
-    	
-    }
-    
     /** Creates a String[][] representation of the upgrades that have been bought for a ship
      * Used by GUI for displaying to tables
      * 
@@ -256,6 +239,23 @@ public class Ship {
     	}
     	
     	return tempArrayList.toArray(new String[tempArrayList.size()][2]);
+    }
+    
+    /////////////////////////////// GETTER AND SETTER METHODS //////////////////////////////////////
+    
+    /** Getter method for the description of a Ship
+     * 
+     * @return String representation of a ship
+     */
+    public String getDescription() {
+    	return String.format(
+    			  "Remaining Item-Space: %d \n"
+    			+ "Crew-size: %d \n"
+    			+ "Wage Cost per day: %d \n"
+    			+ "Health Status: %d/100 \n"
+    			+ "Cost to repair: %d"
+    			, remainingItemSpace, crewSize, getDailyWageCost(), healthStatus, repairCost());
+    	
     }
     
     /** Getter method for the daily wage cost of all the crew on board a Ship
