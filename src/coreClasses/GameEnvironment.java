@@ -97,7 +97,7 @@ public class GameEnvironment {
 	
     /////////////////////// HELPER METHODS ///////////////////////
 	
-
+	
 	/** Method to reduce in-game days
 	 * 
 	 * @param daysPassed int for the number of in-game days passed
