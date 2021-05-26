@@ -167,7 +167,7 @@ public class Main {
 		Route cyprusAndSicilySafe = new Route("Flat Water Detour", 350, new Island[] { cyprus, sicily },
 				"A long, sheltered route.");
 		cyprusAndSicilySafe.constructProbabilityMap(10, 10, 30);
-		Route cyprusAndSicilyStormy = new Route("Stormy Seas", 175, new Island[] { cyprus, sicily },
+		Route cyprusAndSicilyStormy = new Route("Stormy Seas", 130, new Island[] { cyprus, sicily },
 				"The most direct route between Cyprus and Sicily, but watch out - its Stormy!");
 		cyprusAndSicilyStormy.constructProbabilityMap(5, 70, 80);
 
@@ -190,16 +190,16 @@ public class Main {
 				"Stranded sailors galore! Maybe you can rescue one.");
 		sicilyAndIbizaSwim.constructProbabilityMap(15, 15, 100);
 		Route sicilyAndIbizaWobble = new Route("Wobbly Waters", 170, new Island[] { sicily, ibiza },
-				"REasonably short. Reasonably risky.");
+				"Reasonably short. Reasonably risky.");
 		sicilyAndIbizaWobble.constructProbabilityMap(35, 40, 50);
 
-		Route sicilyAndCorsica = new Route("Average Pass", 140, new Island[] { sicily, corsica },
+		Route sicilyAndCorsica = new Route("Average Pass", 230, new Island[] { sicily, corsica },
 				"The odd pirate, a storm here and there.");
 		sicilyAndCorsica.constructProbabilityMap(30, 25, 30);
 
-		Route sicilyAndMalta = new Route("Pirate Pass", 10, new Island[] { sicily, malta },
+		Route sicilyAndMalta = new Route("Pirate Pass", 50, new Island[] { sicily, malta },
 				"Flat water and a short travel are loved by pirates too!");
-		sicilyAndMalta.constructProbabilityMap(75, 0, 35);
+		sicilyAndMalta.constructProbabilityMap(90, 0, 45);
 
 		Route maltaAndCorsicaPirate = new Route("Pirate Coast", 50, new Island[] { malta, corsica },
 				"Many a pirates favourite route!");
