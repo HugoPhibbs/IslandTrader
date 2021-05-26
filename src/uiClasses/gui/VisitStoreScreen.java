@@ -456,7 +456,7 @@ public class VisitStoreScreen extends Screen {
 		}
 		String buyOrSellCap = buyOrSellAdj.substring(0, 1).toUpperCase() + buyOrSellAdj.substring(1);
 		buySellItemsButton.setText(String.format("%s Items", buyOrSellCap));
-		howManyItemsLabel.setText(String.format("How many %ss would you like to %s", itemName, buyOrSellAdj));
+		howManyItemsLabel.setText(String.format("How many %s(s) would you like to %s", itemName, buyOrSellAdj));
 		numItemsTextField.setVisible(true);
 	}
 	
