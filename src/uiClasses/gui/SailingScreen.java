@@ -1,11 +1,10 @@
 package uiClasses.gui;
 
-import javax.swing.JProgressBar; 
+import javax.swing.JProgressBar;  
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
-import java.beans.PropertyChangeSupport;
 
 import coreClasses.*;
 
@@ -32,9 +31,6 @@ public class SailingScreen extends Screen {
 	/** Timer to keep track of the current progress to an island */
 	private Timer timer;
 	
-	// TODO add this
-	private final PropertyChangeSupport pcs;
-	
 	
 	/** Constructor for SailingScreen
 	 * 
@@ -46,7 +42,6 @@ public class SailingScreen extends Screen {
 		super("Sailing", game);
 		this.destinatonIsland = island;
 		this.route = route;
-		pcs = new PropertyChangeSupport(this);
 		initialize();
 	}
 
