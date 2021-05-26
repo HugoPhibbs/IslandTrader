@@ -125,22 +125,22 @@ public class Main {
 		cyprusStore.setStoreIsland(cyprus);
 
 		// Create Sicily Island and it's Store
-		Store sicilyStore = new Store("Pasta and Co", "Tasty food", sellCatalogues.get(1), buyCatalogues.get(1));
+		Store sicilyStore = new Store("Pasta and Co", "tasty food", sellCatalogues.get(1), buyCatalogues.get(1));
 		Island sicily = new Island("Sicily", sicilyStore, "Looks like a football");
 		sicilyStore.setStoreIsland(sicily);
 
 		// Create Corsica Island and it's Store
-		Store corsicaStore = new Store("Napoleans", "A bit of everything", sellCatalogues.get(2), buyCatalogues.get(2));
+		Store corsicaStore = new Store("Napoleans", "a bit of everything", sellCatalogues.get(2), buyCatalogues.get(2));
 		Island corsica = new Island("Corsica", corsicaStore, "Has cool beaches");
 		corsicaStore.setStoreIsland(corsica);
 
 		// Create Malta Island and it's Store
-		Store maltaStore = new Store("Duty Free Store", "Exotic goods", sellCatalogues.get(3), buyCatalogues.get(3));
+		Store maltaStore = new Store("Duty Free Store", "exotic goods", sellCatalogues.get(3), buyCatalogues.get(3));
 		Island malta = new Island("Malta", maltaStore, "Good for the rich");
 		maltaStore.setStoreIsland(malta);
 
 		// Create Ibiza Island and it's Store
-		Store ibizaStore = new Store("Party Store", "Medicines", sellCatalogues.get(4), buyCatalogues.get(4));
+		Store ibizaStore = new Store("Party Store", "pirate apparel", sellCatalogues.get(4), buyCatalogues.get(4));
 		Island ibiza = new Island("Ibiza", ibizaStore, "Party central");
 		ibizaStore.setStoreIsland(ibiza);
 
@@ -165,7 +165,7 @@ public class Main {
 				"A long, sheltered route.");
 		cyprusAndSicilySafe.constructProbabilityMap(10, 10, 30);
 		Route cyprusAndSicilyStormy = new Route("Stormy Seas", 175, new Island[] { cyprus, sicily },
-				"The most direct route between Cyprus and Sicily, but watch out - its Stormy!");
+				"The most direct route between Cyprus and Sicily, but watch out - its stormy!");
 		cyprusAndSicilyStormy.constructProbabilityMap(5, 70, 80);
 
 		Route cyprusAndCorsicaFast = new Route("Speedy Route", 50, new Island[] { cyprus, corsica },
@@ -187,7 +187,7 @@ public class Main {
 				"Stranded sailors galore! Maybe you can rescue one.");
 		sicilyAndIbizaSwim.constructProbabilityMap(15, 15, 100);
 		Route sicilyAndIbizaWobble = new Route("Wobbly Waters", 170, new Island[] { sicily, ibiza },
-				"REasonably short. Reasonably risky.");
+				"Reasonably short. Reasonably risky.");
 		sicilyAndIbizaWobble.constructProbabilityMap(35, 40, 50);
 
 		Route sicilyAndCorsica = new Route("Average Pass", 20, new Island[] { sicily, corsica },
@@ -315,7 +315,7 @@ public class Main {
 		limePropertiesSicily.put("price", 10);
 		HashMap<String, Integer> limePropertiesIbiza = new HashMap<String, Integer>();
 		limePropertiesIbiza.put("spaceTaken", 1);
-		limePropertiesIbiza.put("price", 10);
+		limePropertiesIbiza.put("price", 20);
 		
 		// Create large chest sell properties for each store
 		HashMap<String, Integer> largeChestPropertiesMalta = new HashMap<String, Integer>();
@@ -512,10 +512,10 @@ public class Main {
 		// Create buy catalogue properties for lime for each store
 		HashMap<String, Integer> limeBuyPropertiesSicily = new HashMap<String, Integer>();
 		limeBuyPropertiesSicily.put("spaceTaken", 1);
-		limeBuyPropertiesSicily.put("price", 5);
+		limeBuyPropertiesSicily.put("price", 10 );
 		HashMap<String, Integer> limeBuyPropertiesIbiza = new HashMap<String, Integer>();
 		limeBuyPropertiesIbiza.put("spaceTaken", 1);
-		limeBuyPropertiesIbiza.put("price", 10);
+		limeBuyPropertiesIbiza.put("price", 20);
 		
 		// Create buy catalogue properties for Large chest for each store
 		HashMap<String, Integer> largeChestBuyPropertiesMalta = new HashMap<String, Integer>();
