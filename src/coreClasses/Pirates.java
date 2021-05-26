@@ -64,6 +64,8 @@ public class Pirates {
     	if (totalValueStolen < goodDemandValue) {
     		return "game_over";
     	} else {
+    		// Replenish the remaining upgrade space of a ship
+    		ship.setRemainingItemSpace(ship.getMaxItemSpace());
     		return "attack_successful";
     	}
   
