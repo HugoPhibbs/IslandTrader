@@ -53,8 +53,6 @@ public class SailingScreen extends Screen {
 	 */
 	@Override
 	protected void initialize() {
-		System.out.println("sail " + game.getPlayer().getMoneyBalance()); // TODO remove
-
 		frame.setBounds(100, 100, 450, 300);
 		int routeDuration = game.calculateDaysSailing(route);
 		delay = 100 * routeDuration;

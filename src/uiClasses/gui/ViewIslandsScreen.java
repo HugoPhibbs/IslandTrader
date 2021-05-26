@@ -39,9 +39,6 @@ public class ViewIslandsScreen extends Screen {
 	 */
 	@Override
 	protected void initialize() {
-		System.out.println("islands " + game.getPlayer().getMoneyBalance()); // TODO remove
-
-		
 		frame.setBounds(100, 100, 1100, 530);
 		
 		createSelectIslandComponents();

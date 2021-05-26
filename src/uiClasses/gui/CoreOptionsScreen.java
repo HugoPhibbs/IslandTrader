@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 import java.awt.Font;
 
 import coreClasses.GameEnvironment;
@@ -45,9 +46,7 @@ public class CoreOptionsScreen extends Screen{
 	 * Initialize the contents of the frame.
 	 */
 	@Override
-	protected void initialize() {
-		System.out.println("Core " + game.getPlayer().getMoneyBalance()); // TODO remove
-		
+	protected void initialize() {		
 		frame.setBounds(100, 100, 1100, 595);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -63,6 +62,7 @@ public class CoreOptionsScreen extends Screen{
 		// Create panel to hold relevant components
 		JPanel optionsPanel = new JPanel();
 		optionsPanel.setBorder(blackline);
+		optionsPanel.setBackground(new Color(0, 153, 255));
 		optionsPanel.setBounds(35, 230, 450, 292);
 		frame.getContentPane().add(optionsPanel);
 		optionsPanel.setLayout(null);
@@ -75,11 +75,13 @@ public class CoreOptionsScreen extends Screen{
 			}
 		});
 		visitStoreButton.setBounds(12, 12, 425, 125);
+		visitStoreButton.setBackground(new Color(153, 204, 255));
 		optionsPanel.add(visitStoreButton);
 		
 		// Use html to display text as two lines instead of one!
 		JButton viewVisitOtherIslandsButton = new JButton("<html>  View other islands<br>and travel to another island</html>");
 		viewVisitOtherIslandsButton.setBounds(12, 155, 425, 125);
+		viewVisitOtherIslandsButton.setBackground(new Color(153, 204, 255));
 		optionsPanel.add(viewVisitOtherIslandsButton);
 		viewVisitOtherIslandsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -94,6 +96,7 @@ public class CoreOptionsScreen extends Screen{
 	private void initializeGameInfoPanel() {
 		JPanel gameFactsPanel = new JPanel();
 		gameFactsPanel.setBorder(blackline);
+		gameFactsPanel.setBackground(new Color(0, 153, 255));
 		gameFactsPanel.setBounds(35, 40, 1000, 175);
 		frame.getContentPane().add(gameFactsPanel);
 		gameFactsPanel.setLayout(null);
@@ -134,6 +137,7 @@ public class CoreOptionsScreen extends Screen{
 		JPanel shipPanel = new JPanel();
 		shipPanel.setBounds(500, 230, 535, 292);
 		shipPanel.setLayout(null);
+		shipPanel.setBackground(new Color(0, 153, 255));
 		frame.getContentPane().add(shipPanel);
 		shipPanel.setBorder(blackline);
 		

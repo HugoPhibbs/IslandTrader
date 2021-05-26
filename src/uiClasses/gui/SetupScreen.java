@@ -40,7 +40,7 @@ public class SetupScreen extends Screen {
 	
 	
 	/**
-	 * Create the application.
+	 * Create the application by calling the parent class's constructor. 
 	 */
 	public SetupScreen(GameEnvironment game) {
 		super("Setup Game", game);
@@ -48,7 +48,7 @@ public class SetupScreen extends Screen {
 	}
 	
 	/**
-	 * Initialize the contents of the frame.
+	 * Sets the bounds/size of the frame, then calls methods to create and add components to the frame.
 	 */
 	@Override
 	protected void initialize() {
@@ -144,6 +144,7 @@ public class SetupScreen extends Screen {
 	 */
 	private void createConfirmButton() {
 		btnConfirm = new JButton("Confirm Choices");
+		btnConfirm.setBackground(new Color(153, 204, 255));
 		btnConfirm.addActionListener(e -> setupComplete());
 		btnConfirm.setBounds(910, 739, 178, 25);
 		btnConfirm.setEnabled(false);
@@ -153,6 +154,7 @@ public class SetupScreen extends Screen {
 	/** Creates the JSlider used to select the game duration.*/
 	private void createDaysSlider() {
 		sliderDays = new JSlider();
+		sliderDays.setBackground(new Color(255, 222, 173));
 		sliderDays.setPaintLabels(true);
 		sliderDays.setMinorTickSpacing(1);
 		sliderDays.setMinimum(20);
@@ -168,6 +170,7 @@ public class SetupScreen extends Screen {
 		
 		JPanel panelPickShip = new JPanel();
 		panelPickShip.setBorder(blackline);
+		panelPickShip.setBackground(new Color(0, 153, 255));
 		panelPickShip.setBounds(12, 184, 1065, 250);
 		frame.getContentPane().add(panelPickShip);
 		panelPickShip.setLayout(null);
@@ -248,6 +251,7 @@ public class SetupScreen extends Screen {
 		
 		JPanel panelPickIsland = new JPanel();
 		panelPickIsland.setBorder(blackline);
+		panelPickIsland.setBackground(new Color(0, 153, 255));
 		panelPickIsland.setBounds(12, 477, 1065, 250);
 		frame.getContentPane().add(panelPickIsland);
 		panelPickIsland.setLayout(null);

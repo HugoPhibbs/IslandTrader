@@ -39,6 +39,8 @@ public abstract class Screen {
 		this.game = gameEvironment;
 		this.frame = new JFrame();
 		frame.setTitle(title);
+		frame.getContentPane().setBackground(new Color(255, 222, 173));
+
 		
 		setFrameCharacteristics();
 	}
