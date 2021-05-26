@@ -15,8 +15,6 @@ class ShipTest {
 	
 	private Ship testShip;
 	private Player testPlayer;
-	private Island testIsland;
-	private Store testStore;
 
 	@BeforeEach
 	void setUpBeforeClass() {
@@ -24,8 +22,6 @@ class ShipTest {
 		// Ship(String name, int speed, int crewSize, int maxUpgradeSpace, int maxCargoCapacity)
 		testShip = new Ship("Black Pearl", 10,  5, 50);
 		
-		testStore = new Store("Bobs shack", "Burgers", null, null);
-		testIsland = new Island("Shipwreck Cove", testStore, "Has alot of sand");
 		testPlayer = new Player("Jack Sparrow", 10000);
 		
 		testShip.setOwner(testPlayer);
@@ -83,9 +79,6 @@ class ShipTest {
 	
 	@Test
 	void addUpgradeTest() {	
-		// TODO 
-		// Max defense capability
-		// No Space remaining in upgrade space - (equal anad more)
 		ShipUpgrade testUpgrade1 = new ShipUpgrade("Cannon", 2, 90, 20);
 		testShip.addUpgrade(testUpgrade1);
 		assertEquals(20, testShip.getDefenseCapability());

@@ -1,6 +1,6 @@
 package uiClasses;
 
-import coreClasses.*;  
+import coreClasses.*;   
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 package coreClasses;
 
-import java.util.Random; 
+import java.util.Random;  
 import java.lang.Math;
 
 import uiClasses.GameUi;
@@ -217,7 +217,7 @@ public class GameEnvironment {
 	 * @return int for the player's score at time of call.
 	 */
 	public int calculateScore() {
-		int profit = getPlayer().getMoneyBalance() - ui.STARTING_MONEY;
+		int profit = getPlayer().getMoneyBalance() - GameUi.STARTING_MONEY;
 		int daysPlayed = getDaysSelected() - getDaysRemaining();
 		
 		if (daysPlayed == 0) {

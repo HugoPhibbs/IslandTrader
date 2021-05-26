@@ -1,6 +1,6 @@
 package junitTests;
 
-import coreClasses.Ship; 
+import coreClasses.Ship;  
 import coreClasses.Item;
 import coreClasses.Pirates;
 import coreClasses.ShipUpgrade;

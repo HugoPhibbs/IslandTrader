@@ -1,6 +1,6 @@
 package uiClasses.gui;
 
-import javax.swing.JLabel;
+import javax.swing.JLabel; 
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
