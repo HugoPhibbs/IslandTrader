@@ -54,7 +54,7 @@ public class Ship {
     * @param name String for the name of the ship
     * @param speed Integer for the speed of the ship as it travels between islands (assume constant), number out of 100
     * @param shipSize Integer for the size of the ship, influences crew size and the max cargo space of a ship, number out of 10
-    * @param maxDefenseCapability Integer for the max defense capability of a ship, number out of 50
+    * @param maxDefenseCapability Integer for the max defense capability of a ship, number out of 40
     */
    public Ship(String name, int speed, int shipSize, int maxDefenseCapability) throws IllegalArgumentException{    	
    	if (!CheckValidInput.nameIsValid(name)) {
@@ -66,8 +66,8 @@ public class Ship {
    		throw new IllegalArgumentException(msg2);
    	}
    	
-   	if (maxDefenseCapability > 50) {
-   		String msg3 = "Max defense capability cannot be more than 50";
+   	if (maxDefenseCapability > 40) {
+   		String msg3 = "Max defense capability cannot be more than 40!";
    		throw new IllegalArgumentException(msg3);
    	}
    	
