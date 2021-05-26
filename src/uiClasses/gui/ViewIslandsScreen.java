@@ -1,6 +1,8 @@
 package uiClasses.gui;
 
 import javax.swing.JPanel;
+import javax.swing.JTable;
+
 import coreClasses.*;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -37,7 +39,7 @@ public class ViewIslandsScreen extends Screen {
 	 */
 	@Override
 	protected void initialize() {
-		frame.setBounds(100, 100, 800, 530);
+		frame.setBounds(100, 100, 1100, 530);
 		
 		createSelectIslandComponents();
 		createOtherComponenets();
@@ -57,7 +59,7 @@ public class ViewIslandsScreen extends Screen {
 	private void createSelectIslandComponents() {
 		JPanel panelIslandSelection = new JPanel();
 		panelIslandSelection.setBorder(blackline);
-		panelIslandSelection.setBounds(12, 43, 776, 411);
+		panelIslandSelection.setBounds(12, 43, 950, 411);
 		frame.getContentPane().add(panelIslandSelection);
 		panelIslandSelection.setLayout(null);
 		
@@ -73,7 +75,7 @@ public class ViewIslandsScreen extends Screen {
 		
 		this.paneFullIslandInfo = new JTextPane();
 		paneFullIslandInfo.setText("");
-		paneFullIslandInfo.setBounds(593, 71, 174, 328);
+		paneFullIslandInfo.setBounds(593, 71, 475, 120);
 		panelIslandSelection.add(paneFullIslandInfo);
 		
 		// All the other islands that a user can reach from their current island */
@@ -102,6 +104,14 @@ public class ViewIslandsScreen extends Screen {
 		btnIsland4.addActionListener(e -> changeIslandInfo(islandsToView[3]));
 		panelIslandSelection.add(btnIsland4);
 	}
+	
+	private void createTables() {
+		JTable tableItemsStoreSells = new JTable();
+		tableItemsStoreSells.setBounds(0, 0, 0, 0);
+		
+		JTable tableItemsStoreBuys = new JTable();
+		
+	}
 
 	/** Creates the miscellaneous components the screen requires.*/
 	private void createOtherComponenets() {
@@ -119,7 +129,7 @@ public class ViewIslandsScreen extends Screen {
 		
 		this.btnTravel = new JButton("Travel to selected island");
 		btnTravel.setEnabled(false); // set to disabled until a user chooses an island to travel to
-		btnTravel.setBounds(554, 466, 234, 25);
+		btnTravel.setBounds(730, 466, 234, 25);
 		btnTravel.addActionListener(e -> viewRoutes());
 		frame.getContentPane().add(btnTravel);
 		
