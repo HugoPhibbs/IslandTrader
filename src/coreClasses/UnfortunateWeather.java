@@ -22,6 +22,7 @@ public class UnfortunateWeather{
 	 * imparts damage up to 99 as to avoid reducing ship health to 0
 	 * 
 	 * @param ship Ship object to be damaged
+	 * @return int for the amound of damage taken by a ship by unfortunate weather
 	 */
 	public static int damageShip(Ship ship) {
 		// Create a random int between 0 and 99, this is the damage imparted onto a Ship

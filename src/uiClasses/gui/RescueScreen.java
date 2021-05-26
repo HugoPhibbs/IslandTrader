@@ -8,13 +8,21 @@ import javax.swing.SwingConstants;
 import coreClasses.GameEnvironment;
 import coreClasses.Route;
 
+/** Represents a screen for a rescued sailors random event
+ * 
+ * @author Jordan Vegar
+ *
+ */
 public class RescueScreen extends Screen {
 
 	/** The route the attack occurs on.*/
 	private Route route;
 	
-	/**
-	 * Create the screen by calling the parent's constructor and initializing the class variable route. 
+	/** Constructor for RescueScreen
+	 * Create the screen by calling the parent's constructor and initializing the class variable route.
+	 * 
+	 * @param game GameEnvironment object for the current game
+	 * @param route Route that rescued sailors happens on for a user
 	 */
 	public RescueScreen(GameEnvironment game, Route route) {
 		super("Stranded Sailor", game);

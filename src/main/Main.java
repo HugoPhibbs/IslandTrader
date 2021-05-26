@@ -24,7 +24,7 @@ public class Main {
 	 * objects needed for a game Most of the functionality is handled by Main's
 	 * other methods`
 	 * 
-	 * @param args
+	 * @param args String[] containing command line arguments needed to run Island Trader
 	 */
 	public static void main(String[] args) {
 		// Initialize all the objects needed to run a game

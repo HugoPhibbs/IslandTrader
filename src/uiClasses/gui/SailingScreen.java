@@ -8,6 +8,11 @@ import javax.swing.Timer;
 
 import coreClasses.*;
 
+/** Represents a screen for Sailing between two islands
+ * 
+ * @author Jordan Vegar
+ *
+ */
 public class SailingScreen extends Screen {
 	// Class attributes //
 	/** The Island that a user is trying to traveling to */

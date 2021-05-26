@@ -160,7 +160,7 @@ public class Player {
 	/** Getter method for the purchased items of a Player
 	 * Both ones that have been bought and sold back to a store
 	 * 
-	 * @return ArrayList<Item> the purchased items of a player
+	 * @return ArrayList containing the purchased Items of a player
 	 */
 	public ArrayList<Item> getPurchasedItems() {return purchasedItems;}
 }

@@ -26,8 +26,11 @@ import coreClasses.GameEnvironment;
  */
 public class CoreOptionsScreen extends Screen{
 
-	/**
-	 * Create the application.
+	/** Constructor for CoreOptionsScreen
+	 * Checks that a user has enough money to continue playing, either creating a game over event, or initializing a
+	 * new screen for a user to interact with
+	 * 
+	 * @param gameEnvironment GameEnvironment object for the current game
 	 */
 	public CoreOptionsScreen(GameEnvironment gameEnvironment) {
 		super("Core options screen", gameEnvironment);

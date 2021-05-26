@@ -18,6 +18,14 @@ import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/** Represents a ChooseRouteScreen class.
+ * Where a user can choose the routes they want to go on after selecting an Island that they want
+ * to travel to
+ * 
+ * @author Hugo Phibbs and Jordan Vegar
+ * @version 26/5/2021
+ * @since 8/5/2021
+ */
 public class ChooseRouteScreen extends Screen {
 
 	/** the island the player to view routes to.*/

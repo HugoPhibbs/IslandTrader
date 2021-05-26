@@ -220,6 +220,7 @@ public class Store {
      * a String returning the reason why not. 
      * 
      * @param itemToSell Item being checked if it can be sold 
+     * @param gameEnvironment GameEnvironment object for this current game
      * @return String representation if item can be sold or not, along with a reason if not. 
      */
     public String canSellItemToPlayer(GameEnvironment gameEnvironment, Item itemToSell) {
@@ -236,6 +237,7 @@ public class Store {
     /** Checks if a store can sell an upgrade to a player. Returns "Can sell" if it can, otherwise
      * returns a String for the reason explaining why not. 
      * 
+     * @param gameEnvironment GameEnvironment object for this current game
      * @param itemToSell Item object that is trying to be sold to a Player
      * @return Boolean if ShipUpgrade object can be sold. 
      */
@@ -375,7 +377,7 @@ public class Store {
      * 
      * @param catalogue HashMap for a catalogue to be converted into a nested array
      * @param buyOrSell String for the operation that a user wants to do, either "buy" or "sell"
-     * @return
+     * @return String[][] nested array description of an inputed catalogue
      */
     public String[][] catalogueToNestedArray(HashMap<String, HashMap<String, Integer>> catalogue, String buyOrSell){
     	// converts a catalogue into a nested array to be used by GUI for tables!

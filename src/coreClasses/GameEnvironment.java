@@ -77,7 +77,7 @@ public class GameEnvironment {
 	 * @param player Player object for this current game that has just been set up 
 	 * @param ship Ship object belonging to a player for this game
 	 * @param duration int the days the game will be played for. 
-	 * @param startisland
+	 * @param startisland Island that a user decides to start their game from
 	 */
 	public void onSetupFinished(Player player, Ship ship, int duration, Island startisland) {
 		this.player = player;
@@ -109,6 +109,8 @@ public class GameEnvironment {
 	 * new Island. May encounter random events based on the probabilities of the particular route. 
 	 * 
 	 * @param route The Route the player has chosen. 
+	 * @param destination Island that a user has decided to travel to
+	 * @return boolean for if an event occured while traveling to destination
 	 */
 	public boolean sailToNewIsland(Route route, Island destination) {
     	// Repair ship and pay wages before setting sail.
@@ -124,6 +126,13 @@ public class GameEnvironment {
 		return eventOccurred;
     }
 	
+	/** Calculates the days sailing for traveling to another Island on a paricular Route
+	 * Takes the ceiling of distance/speed, as this will always create a number above 0 and not 
+	 * round down to 0
+	 * 
+	 * @param route Route that a user wants to travel on
+	 * @return int for the total number of days sailing on route
+	 */
 	public int calculateDaysSailing(Route route) {
 		return (int)Math.ceil((float)route.getDistance() / (float)ship.getSpeed());
 	}
@@ -172,6 +181,7 @@ public class GameEnvironment {
 	/** Works out the amount that has to be spent before this route can be sailed.
 	 * Based on the cost to repair the ship and pay crew wages. 
 	 * 
+	 * @param route Route object that a user is trying to travel on, and will have to pay any necessary wages
 	 * @return cost int for the total amount that needs to be paid before sailing that route. 
 	 */
 	public int getCost(Route route) {
@@ -199,7 +209,7 @@ public class GameEnvironment {
 	
 	/** Returns a description of every ship that a player can choose
 	 *
-	 * @return ArrayList<String> ArrayList containing descriptions of every ship that a player can choose
+	 * @return ArrayList containing String descriptions of every ship that a player can choose
 	 */
 	public ArrayList<String> shipDescriptionArrayList() {
 		ArrayList<String> shipDescriptionArrayList = new ArrayList<String>();
