@@ -1,6 +1,7 @@
 package uiClasses.gui;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import coreClasses.*;
@@ -25,6 +26,12 @@ public class ViewIslandsScreen extends Screen {
 	/** TextPane to hold detailed information on a Island, including what it buys and sells */
 	private JTextPane paneFullIslandInfo;
 	
+	/** Panel to hold tables detailing the Items that the chosen Island store buys and sells */
+	private JPanel panelTable;
+	
+	/** Panel to hold information on the current selected island */
+	private JPanel panelIslandInfo;
+	
 	/** Constructor for ViewIslandsScreen class.
 	 * 
 	 * @param game GameEnvironment object for this current game 
@@ -39,9 +46,11 @@ public class ViewIslandsScreen extends Screen {
 	 */
 	@Override
 	protected void initialize() {
-		frame.setBounds(100, 100, 1100, 530);
+		frame.setBounds(100, 100, 1144, 530);
 		
 		createSelectIslandComponents();
+		createIslandInfoPanel();
+		createTablePanel();
 		createOtherComponenets();
 	}
 	
@@ -59,25 +68,9 @@ public class ViewIslandsScreen extends Screen {
 	private void createSelectIslandComponents() {
 		JPanel panelIslandSelection = new JPanel();
 		panelIslandSelection.setBorder(blackline);
-		panelIslandSelection.setBounds(12, 43, 1075, 411);
+		panelIslandSelection.setBounds(12, 43, 584, 411);
 		frame.getContentPane().add(panelIslandSelection);
 		panelIslandSelection.setLayout(null);
-		
-		this.lblSelectedIsland = new JLabel("Select an island!");
-		lblSelectedIsland.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 16));
-		lblSelectedIsland.setBounds(593, 12, 184, 32);
-		panelIslandSelection.add(lblSelectedIsland);
-		
-		JLabel lblInfo = new JLabel("Info:");
-		lblInfo.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblInfo.setBounds(593, 43, 70, 15);
-		panelIslandSelection.add(lblInfo);
-		
-		this.paneFullIslandInfo = new JTextPane();
-		paneFullIslandInfo.setText("");
-		paneFullIslandInfo.setEditable(false);
-		paneFullIslandInfo.setBounds(593, 71, 475, 120);
-		panelIslandSelection.add(paneFullIslandInfo);
 		
 		// All the other islands that a user can reach from their current island */
 		Island[] islandsToView = game.otherIslands();
@@ -106,12 +99,23 @@ public class ViewIslandsScreen extends Screen {
 		panelIslandSelection.add(btnIsland4);
 	}
 	
-	private void createTables() {
-		JTable tableItemsStoreSells = new JTable();
-		tableItemsStoreSells.setBounds(0, 0, 0, 0);
+	/** Creates panel for holding information on the current island that has been selected */
+	private void createIslandInfoPanel() {
+		this.panelIslandInfo = new JPanel();
+		panelIslandInfo.setBounds(608, 43, 524, 124);
+		frame.getContentPane().add(panelIslandInfo);
+		panelIslandInfo.setLayout(null);
 		
-		JTable tableItemsStoreBuys = new JTable();
+		this.lblSelectedIsland = new JLabel("Select an island!");
+		lblSelectedIsland.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 16));
+		lblSelectedIsland.setBounds(12, 0, 184, 32);
+		panelIslandInfo.add(lblSelectedIsland);
 		
+		this.paneFullIslandInfo = new JTextPane();
+		paneFullIslandInfo.setText("");
+		paneFullIslandInfo.setEditable(false);
+		paneFullIslandInfo.setBounds(12, 30, 500, 82);
+		panelIslandInfo.add(paneFullIslandInfo);
 	}
 
 	/** Creates the miscellaneous components the screen requires.*/
@@ -126,7 +130,7 @@ public class ViewIslandsScreen extends Screen {
 			}
 		});
 		btnBack.setBounds(12, 466, 117, 25);
-		frame.getContentPane().add(btnBack);
+		frame.getContentPane().add(btnBack); 
 		
 		this.btnTravel = new JButton("Travel to selected island");
 		btnTravel.setEnabled(false); // set to disabled until a user chooses an island to travel to
@@ -139,6 +143,59 @@ public class ViewIslandsScreen extends Screen {
 		lblInstructions.setBounds(12, 12, 412, 19);
 		frame.getContentPane().add(lblInstructions);
 	}
+	
+	/** Method to create panel containing tables with information on the chosen Island's store buys and sells */
+	private void createTablePanel() {
+		// Create the panel
+		this.panelTable = new JPanel();
+		panelTable.setBorder(blackline);
+		panelTable.setBounds(608, 177, 524, 277);
+		frame.getContentPane().add(panelTable);
+		panelTable.setLayout(null);
+	}
+	
+	/** Creates the labels for the table panel, called after has been before adding tables to panelTable */
+	private void createTablePanelLabels() {
+		
+		// Label for the title of the table containing items that the store sells
+		JLabel labelStoreSellsTitle= new JLabel("This Island's store sells");
+		labelStoreSellsTitle.setBounds(100, 12, 200, 20);
+		panelTable.add(labelStoreSellsTitle);
+		
+		JLabel labelStoreBuysTitle = new JLabel("This Island's store buys");
+		labelStoreBuysTitle.setBounds(100, 140, 200, 20);
+		panelTable.add(labelStoreBuysTitle);
+	}
+	
+	
+	private void createTables(Store islandStore) {
+		
+		// Clear panelTabel and add labels back on
+		clearPanel(panelTable);
+		createTablePanelLabels();
+		
+		// Create table containing items that a store sells
+		String[][] itemsStoreSellsRows= islandStore.catalogueToNestedArray(islandStore.getSellCatalogue(), "sell");
+		String[] itemsstoreSellsColumns = new String[] {"Name", "Price", "Space Taken", "Defense Boost"};
+		JTable tableItemsStoreSells = new JTable(itemsStoreSellsRows, itemsstoreSellsColumns);
+		tableItemsStoreSells.setBounds(0, 0, 100, 100);
+		
+		JScrollPane scrollPaneItemsStoreSells = new JScrollPane(tableItemsStoreSells);
+		scrollPaneItemsStoreSells.setBounds(12, 36, 500, 100);
+		
+		panelTable.add(scrollPaneItemsStoreSells);
+		
+		// Create table containing items that a store buys
+		String[][] itemsStoreBuysRows = islandStore.catalogueToNestedArray(islandStore.getBuyCatalogue(), "buy");
+		String[] itemsStoreBuysColumns = new String[] {"Name", "Price", "Space Taken"};
+		JTable tableItemsStoreBuys = new JTable(itemsStoreBuysRows, itemsStoreBuysColumns);
+		tableItemsStoreBuys.setBounds(0, 0, 100, 100);
+		
+		JScrollPane scrollPaneItemsStoreBuys = new JScrollPane(tableItemsStoreBuys);
+		scrollPaneItemsStoreBuys.setBounds(12, 165, 500, 100);
+		
+		panelTable.add(scrollPaneItemsStoreBuys);
+	}
 
 	/**	Changes the info displayed to be info on the selected island. Method is called each time an
 	 * Island's button is clicked. 
@@ -146,8 +203,11 @@ public class ViewIslandsScreen extends Screen {
 	 * @param island Island object that has been chosen from clicking one of the Island buttons
 	 */
 	private void changeIslandInfo(Island island) {
+		// Create the tables needed to display the items that can be bought from an Island's store
+		createTables(island.getIslandStore());
+		
 		btnTravel.setEnabled(true); // Has now been set to enabled since a island button has been pressed
-		lblSelectedIsland.setText(island.getIslandName());
+		lblSelectedIsland.setText(String.format("Info on %s", island.getIslandName()));
 		paneFullIslandInfo.setText(island.fullInfo(game.getCurrentIsland().possibleRoutes(island)));
 		selectedIsland = island;
 	}
