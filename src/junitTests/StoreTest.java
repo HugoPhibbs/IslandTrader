@@ -1,7 +1,6 @@
 package junitTests;
 
-import coreClasses.*;
-import main.Main;
+import coreClasses.*; 
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,11 +54,14 @@ class StoreTest {
 		HashMap<String, Integer> limePropertiesSellTest = new HashMap<String, Integer>();
 		limePropertiesSellTest.put("spaceTaken", 1);
 		limePropertiesSellTest.put("price", 1);
-		
+		HashMap<String, Integer> canonPropertiesSellTest = new HashMap<String, Integer>();
+		canonPropertiesSellTest.put("spaceTaken", 0);
+		canonPropertiesSellTest.put("price", 50);
+		canonPropertiesSellTest.put("defenseBoost", 10);
 
 		HashMap<String, HashMap<String, Integer>> testBuyCatalogue = new HashMap<String, HashMap<String, Integer>>();
-		testBuyCatalogue.put("Gold", silverPropertiesBuyTest);
-		testBuyCatalogue.put("Silver", goldPropertiesBuyTest);
+		testBuyCatalogue.put("Gold", goldPropertiesBuyTest);
+		testBuyCatalogue.put("Silver", silverPropertiesBuyTest);
 		testBuyCatalogue.put("Banana", bananaPropertiesBuyTest);
 		testBuyCatalogue.put("Bandages", bandagesPropertiesBuyTest);
 		testBuyCatalogue.put("Lime", limePropertiesBuyTest);
@@ -70,6 +72,7 @@ class StoreTest {
 		testSellCatalogue.put("Banana", bananaPropertiesBuyTest);
 		testSellCatalogue.put("Bandages", bandagesPropertiesSellTest);
 		testSellCatalogue.put("Lime", limePropertiesSellTest);
+		testSellCatalogue.put("Canon(upgrade)", canonPropertiesSellTest);
 		
 		testPlayer = new Player("Batman", 0);
 		testShip = new Ship("Batmobile", 10, 10, 10);
@@ -112,7 +115,7 @@ class StoreTest {
 		testGameEnvironment.setMinMoneyToTravel(0);
 		
 		resultString = testStore.sellItemsToPlayer(testGameEnvironment, "Gold", 1);
-		expectedResultString = "1 out of requested 1 Gold bought \nTotal cost of transaction: 20 Pirate Bucks \n";
+		expectedResultString = "1 out of requested 1 Gold bought \nTotal cost of transaction: 10 Pirate Bucks \n";
 		assertEquals(expectedResultString, resultString);
 		
 		// Test with testPlayer ship not having enough space on-board ship to store items
@@ -150,7 +153,7 @@ class StoreTest {
 		String expectedResultString = "";
 		
 		// Test with player ship having a max defense capability
-		testPlayer.setShip(new Ship("mountain tiger", 0, 0, 50));
+		testPlayer.setShip(new Ship("mountain tiger", 0, 0, 40));
 		ShipUpgrade testUpgrade1 = new ShipUpgrade("cannon", 1, 1, 40);
 		ShipUpgrade testUpgrade2 = new ShipUpgrade("cannon", 1, 1, 10);
 		testPlayer.getShip().addUpgrade(testUpgrade1);
@@ -161,26 +164,22 @@ class StoreTest {
 		assertEquals(expectedResultString, resultString);
 		
 		// Test with player ship having less than max defense capability
-		testPlayer.setShip(new Ship("mountain tiger", 0, 0, 50));
+		testPlayer.setShip(new Ship("mountain tiger", 0, 0, 40));
 		testPlayer.earnMoney(100); // To avoid triggering liquidation clause
-		ShipUpgrade testUpgrade3 = new ShipUpgrade("cannon", 1, 1, 40);
+		ShipUpgrade testUpgrade3 = new ShipUpgrade("cannon", 1, 1, 29);
 		testPlayer.getShip().addUpgrade(testUpgrade3);
 		testGameEnvironment.setShip(testPlayer.getShip());
 		resultString = Store.canSellUpgradeToPlayer(testGameEnvironment, testUpgrade2);
 		expectedResultString = "Can sell";
 		assertEquals(expectedResultString, resultString); 
-		
-		// Create a mock Game, with conditions to suit testing this precise parts of Store
-		// Assume that supporting functions are working correctly
-		
-		// Test with an upgrade putting a player into liquidation
+	
+		// Set up a mock game
 		GameEnvironment testGameEnvironment2 = new GameEnvironment(null, null, null, null, null);
 		Player testPlayer2 = new Player("David", 110);
-		testPlayer2.setShip(new Ship("mountain tiger", 0, 0, 50));
+		testPlayer2.setShip(new Ship("mountain tiger", 0, 0, 40));
 		testGameEnvironment2.setPlayer(testPlayer2);
 		testGameEnvironment2.setShip(testPlayer2.getShip());
 		testGameEnvironment2.setMinMoneyToTravel(100);
-		
 		HashMap<String, HashMap<String, Integer>> testSellCatalogue = new HashMap<String, HashMap<String, Integer>>();
 		HashMap<String, Integer> testSailsProperties = new HashMap<String, Integer>();
 		testSailsProperties.put("price", 20);
@@ -218,7 +217,7 @@ class StoreTest {
 		testPlayer.earnMoney(100);
 		testStore.sellItemsToPlayer(testGameEnvironment, "Gold", 1);
 		resultString = testStore.buyItemsFromPlayer("Gold", testPlayer, 1);
-		assertEquals("1 out of a requested 1 Gold was sold to the store \nTotal monetary gain: 20", resultString);
+		assertEquals("1 out of a requested 1 Gold was sold to the store \nTotal monetary gain: 10", resultString);
 		
 		// Test with player not having item in possession
 		resultString = testStore.buyItemsFromPlayer("Silver", testPlayer, 1);
