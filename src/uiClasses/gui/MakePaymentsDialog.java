@@ -59,7 +59,8 @@ public class MakePaymentsDialog extends JDialog {
 	
 	
 	/** Method called when btnMakePayments is clicked.
-	 * Triggers the wage and repair payments to be made, and closes the dialog box.
+	 * Triggers the wage and repair payments to be made in SailingScreen, once it has been created in ChooseRouteScreen
+	 * and closes the dialog box.
 	 */
 	private void makePayments() {
 		routeScreen.confirmSelection();
