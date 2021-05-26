@@ -7,21 +7,21 @@ package coreClasses;
  * @since 2/4/2021
  */
 public class RescuedSailors {
-	/** Amount of money given to a player for saving sailors */
+	/** int Amount of money given to a player for saving sailors */
 	private int REWARD_MONEY;
 	
 	
 	/** Constructor method for a RescuedSailors event
 	 * 
-	 * @param REWARD_MONEY Integer for the amount of money given to a player as a reward upon rescue
+	 * @param REWARD_MONEY int for the amount of money given to a player as a reward upon rescue
 	 */
 	public RescuedSailors(int REWARD_MONEY) {
 		this.REWARD_MONEY = REWARD_MONEY;
 	}
 	
-	/** Method to give reward money to a player. Gives an arbitary amount
+	/** Method to give reward money to a player. Gives an arbitrary amount
 	 * 
-	 * @param player Player object to recieve money 
+	 * @param player Player object to receive money 
 	 */
 	public void giveMoney(Player player) {
 		player.earnMoney(REWARD_MONEY); 

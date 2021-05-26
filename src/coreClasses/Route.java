@@ -10,13 +10,13 @@ import java.util.HashMap;
  */
 public class Route {
 	// Class attributes //
-	/** The name of this route. */
+	/** String The name of this route. */
 	private String routeName;
 	
-	/** The distance of this route, expressed in nautical miles. */
+	/** int The distance of this route, expressed in nautical miles. */
 	private int distance;
 	
-	/** An array of the two Islands this route connects. */
+	/** Island[] An array of the two Islands this route connects. */
 	private Island[] islands;
 	
 	/** String description of the Route. Must include indaction's about the how dangerous
@@ -25,7 +25,7 @@ public class Route {
 	 */
 	private String description;
 	
-	/** A map that assigns the name of each possible RandomEvent to the probability of said
+	/** HashMap<String, Integer> A map that assigns the name of each possible RandomEvent to the probability of said
 	 * random event happening on this particular route. 
 	 */
 	private HashMap<String, Integer> eventProbabilityMap;
@@ -34,7 +34,7 @@ public class Route {
 	/** Creates a new route object. 
 	 * 
 	 * @param name String for the name of the route.
-	 * @param distance Integer for the distance of the route
+	 * @param distance int for the distance of the route
 	 * @param islands Island[] array of the two island objects this route is between.
 	 * @param description String for the description of the route. 
 	 */
@@ -53,9 +53,9 @@ public class Route {
 
 	/** Takes probabilities (out of 100), and constructs the map that shows the probability of each RandomEvent. 
 	 * 
-	 * @param pirateProb Integer for the probability of pirates attacking on this route. 
-	 * @param weatherProb Integer for the probability of encountering bad weather on this route.
-	 * @param rescueProb Integer for the probability of coming across sailors that need rescuing on this route. 
+	 * @param pirateProb int for the probability of pirates attacking on this route. 
+	 * @param weatherProb int for the probability of encountering bad weather on this route.
+	 * @param rescueProb int for the probability of coming across sailors that need rescuing on this route. 
 	 */
 	public void constructProbabilityMap(int pirateProb, int weatherProb, int rescueProb) {
 		eventProbabilityMap = new HashMap<String, Integer>();
@@ -72,7 +72,7 @@ public class Route {
 	
 	/** Getter method for the distance of this Route
 	 * 
-	 * @return Integer for the distance of this Route 
+	 * @return int for the distance of this Route 
 	 */
 	public int getDistance() {return distance;}
 	
@@ -91,21 +91,21 @@ public class Route {
 	/** Getter method for the probability of a Pirates random event
 	 * Expressed out of 100
 	 * 
-	 * @return Integer for the probability of a Pirates random event
+	 * @return int for the probability of a Pirates random event
 	 */
 	public int getPirateProb() {return eventProbabilityMap.get("Pirates");}
 	
 	/** Getter method for the probability of a UnfortunateWeather random event
 	 * Expressed out of 100
 	 * 
-	 * @return Integer for the probability of a UnfortunateWeather random event
+	 * @return int for the probability of a UnfortunateWeather random event
 	 */
 	public int getWeatherProb() {return eventProbabilityMap.get("Weather");}
 	
 	/** Getter method for the probability of a RescuedSailors random event
 	 * Expressed out of 100
 	 * 
-	 * @return Integer for the probability of a RescuedSailors random event
+	 * @return int for the probability of a RescuedSailors random event
 	 */
 	public int getRescueProb() {return eventProbabilityMap.get("Rescue");}
 }
