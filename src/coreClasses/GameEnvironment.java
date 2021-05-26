@@ -49,6 +49,9 @@ public class GameEnvironment {
 	/** The minimum amount of money to travel off your particular island. */
 	private int minMoneyToTravel; 
 	
+	/** The player's score. Calculated based on profit and days played, with bonuses from random events.*/
+	private int score;
+	
 	
 	/** Constructor for GameEnvironment class
 	 * 
@@ -335,5 +338,11 @@ public class GameEnvironment {
 	public void setMinMoneyToTravel(Integer minMoneyToTravel) {
 		this.minMoneyToTravel = minMoneyToTravel;
 	}
+	
+	/**Method for increasing the variable Score.
+	 * 
+	 * @param extraScore int the amount to be added to the player's score.
+	 */
+	public void increaseScore(int extraScore) { this.score += extraScore; }
 }	
 

@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.DocumentEvent;
@@ -105,13 +106,15 @@ public class VisitStoreScreen extends Screen {
 		
 		// Create label for a Player's balance, and update it's value
 		this.balanceJLabel = new JLabel();
-		balanceJLabel.setBounds(35, 90, 300, 20);
+		balanceJLabel.setBounds(0, 90, 900, 20);
+		balanceJLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		frame.getContentPane().add(balanceJLabel);
 		updatePlayerBalance();
 		
 		// Label for the specialty of this store
 		JLabel specialtyLabel = new JLabel(String.format("%s specialises in %s!", currentStore.getName(), currentStore.getSpecialty()));
-		specialtyLabel.setBounds(35, 70, 300, 20);
+		specialtyLabel.setBounds(0, 70, 900, 20);
+		specialtyLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		frame.getContentPane().add(specialtyLabel);
 		
 		// Button for going back
@@ -140,12 +143,12 @@ public class VisitStoreScreen extends Screen {
 		mainStoreOptionsPanel.setLayout(null);
 		
 		// Button to view Items that are for sale
-		JButton viewItemsForSaleButton = new JButton("View Items that the store sells");
+		JButton viewItemsForSaleButton = new JButton("Buy Items");
 		viewItemsForSaleButton.setBounds(12, 12, 475, 113);
 		mainStoreOptionsPanel.add(viewItemsForSaleButton);
 		
 		// Button to view Items that a store buys
-		JButton viewItemsStoreBuysButton = new JButton("View Items that the store buys");
+		JButton viewItemsStoreBuysButton = new JButton("Sell Items");
 		viewItemsStoreBuysButton.setBounds(12, 137, 475, 113);
 		mainStoreOptionsPanel.add(viewItemsStoreBuysButton);
 		
@@ -226,6 +229,7 @@ public class VisitStoreScreen extends Screen {
 		// Label to contain the receipt a transaction with a store
 		this.receiptTextPane = new JTextPane();
 		receiptTextPane.setBounds(12, 78, 325, 100);
+		receiptTextPane.setEditable(false);
 		buySellOptionsPanel.add(receiptTextPane);
 		
 		/* Button to press to buy or sell Items.
@@ -452,7 +456,7 @@ public class VisitStoreScreen extends Screen {
 		}
 		String buyOrSellCap = buyOrSellAdj.substring(0, 1).toUpperCase() + buyOrSellAdj.substring(1);
 		buySellItemsButton.setText(String.format("%s Items", buyOrSellCap));
-		howManyItemsLabel.setText(String.format("How many %s would you like to %s>", itemName, buyOrSellAdj));
+		howManyItemsLabel.setText(String.format("How many %ss would you like to %s", itemName, buyOrSellAdj));
 		numItemsTextField.setVisible(true);
 	}
 	

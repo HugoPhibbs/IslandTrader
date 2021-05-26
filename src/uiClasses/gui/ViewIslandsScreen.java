@@ -39,6 +39,9 @@ public class ViewIslandsScreen extends Screen {
 	 */
 	@Override
 	protected void initialize() {
+		System.out.println("islands " + game.getPlayer().getMoneyBalance()); // TODO remove
+
+		
 		frame.setBounds(100, 100, 1100, 530);
 		
 		createSelectIslandComponents();
@@ -75,6 +78,7 @@ public class ViewIslandsScreen extends Screen {
 		
 		this.paneFullIslandInfo = new JTextPane();
 		paneFullIslandInfo.setText("");
+		paneFullIslandInfo.setEditable(false);
 		paneFullIslandInfo.setBounds(593, 71, 475, 120);
 		panelIslandSelection.add(paneFullIslandInfo);
 		
