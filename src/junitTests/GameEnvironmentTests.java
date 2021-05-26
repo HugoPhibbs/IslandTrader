@@ -79,9 +79,5 @@ class GameEnvironmentTests {
 	void testGetLiquidValue() {
 		
 	}
-	
-	
-	
-	
 }
 

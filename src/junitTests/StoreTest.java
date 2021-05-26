@@ -19,7 +19,7 @@ class StoreTest {
 	private Player testPlayer;
 	private Ship testShip;
 	private GameEnvironment testGameEnvironment;
-
+	
 	@BeforeEach
 	void setUpBeforeClass() throws Exception {
 		// Use the buy and sell catalogues from the main class for Cyprus.
@@ -230,7 +230,21 @@ class StoreTest {
 	
 	@Test
 	void checkPlayerWantsToBuyItemTest() {
+		testPlayer.earnMoney(100);
+		testGameEnvironment.setMinMoneyToTravel(70);
 		
+		// Gold has a price of 10
+		
+		// Check with a purchase that shouldnt put player in a position where they would have to sell items to go to another island
+		assertEquals(null, testStore.checkPlayerWantsToBuy(testGameEnvironment, "Gold", 2));
+		
+		// Check with a purchase that is will leave player with min money to travel
+		assertEquals(null, testStore.checkPlayerWantsToBuy(testGameEnvironment, "Gold", 3));
+		
+		// Check with a purchase that will leave player with less than min money to travel
+		String expectedResultString = "If you buy these Item(s) you will need to sell some of your items if you want to travel to another island. \n"
+				+ "Do you still want to buy these item(s)";
+		assertEquals(expectedResultString, testStore.checkPlayerWantsToBuy(testGameEnvironment, "Gold", 5));
 	}
 	
 	@Test

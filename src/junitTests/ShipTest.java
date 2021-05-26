@@ -15,12 +15,11 @@ class ShipTest {
 	
 	private Ship testShip;
 	private Player testPlayer;
-
+	
 	@BeforeEach
 	void setUpBeforeClass() {
 		
-		// Ship(String name, int speed, int crewSize, int maxUpgradeSpace, int maxCargoCapacity)
-		testShip = new Ship("Black Pearl", 10,  5, 50);
+		testShip = new Ship("Black Pearl", 10,  5, 40);
 		
 		testPlayer = new Player("Jack Sparrow", 10000);
 		
@@ -33,7 +32,6 @@ class ShipTest {
 		// Boundary conditions: no damage, 100 damage
 		// test with no upgrades equipped
 		
-		// REPORT with testing i realised that i needed to cast to a float when doing division otherwise it is just int division
 		testShip.takeDamage(0);
 		assertEquals(100, testShip.getHealthStatus()); // Boundary Test
 		testShip.repairShip();
@@ -49,7 +47,7 @@ class ShipTest {
 		ShipUpgrade newUpgrade2 = new ShipUpgrade("Canon(upgrade)", 10, 10, 10);
 		testShip.addUpgrade(newUpgrade2);
 		testShip.takeDamage(100);
-		assertEquals(50.0, testShip.getHealthStatus()); //effective damage is 50
+		assertEquals(39, testShip.getHealthStatus()); //effective damage is 39
 	}
 	
 	@Test
@@ -71,10 +69,9 @@ class ShipTest {
 	
 	@Test
 	void addItemTest() {
-		// simple process, easily to test. makes testing code as a whole really easy when things are put into methods!, you can test seperately
 		Item newItem = new Item("Gold", 5, 10);
 		testShip.addItem(newItem);
-		assertEquals(true, testShip.getItems().size()==1); // check that item was added
+		assertEquals(true, testShip.getItems().size()==1); // check that item was addeds
 	}
 	
 	@Test
@@ -84,7 +81,7 @@ class ShipTest {
 		assertEquals(20, testShip.getDefenseCapability());
 		testShip.addUpgrade(testUpgrade1);
 		testShip.addUpgrade(testUpgrade1);
-		assertEquals(50, testShip.getDefenseCapability()); // should now be maxed
+		assertEquals(40, testShip.getDefenseCapability()); // should now be maxed
 	}
 	
 	@Test

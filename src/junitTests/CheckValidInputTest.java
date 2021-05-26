@@ -39,5 +39,4 @@ class CheckValidInputTest {
 		assertEquals(false, CheckValidInput.durationIsValid(51)); 		// duration too long
 		assertEquals(false, CheckValidInput.durationIsValid(-10));
 	}
-	
 }

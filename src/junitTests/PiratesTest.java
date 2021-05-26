@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
  */
 class PiratesTest {
 	
+	
 	@Test
 	void attackShipTest() {
 		/* So expected result matrix:
@@ -29,7 +30,7 @@ class PiratesTest {
 		 *    6 S  S  S  S  S
 		 * 
 		 */
-		Ship testShip1 = new Ship("BatMobile", 0, 10, 50);
+		Ship testShip1 = new Ship("BatMobile", 0, 10, 40);
 		Pirates testPirates = new Pirates(0); // Keep it to zero to ensure that we have a black and white picture of what the if statement is doing
 		
 		/* Test with a ship having zero defense capability but with a dice roll of 6 */
@@ -53,7 +54,7 @@ class PiratesTest {
 		/* Test with ship having max in-game defense capability of 50, every dice int should now be enough to fend off pirates */
 		assertEquals("attack_failed", testPirates.attackShip(6, testShip1));
 		assertEquals("attack_failed", testPirates.attackShip(4, testShip1));
-		assertEquals("attack_failed", testPirates.attackShip(1, testShip1));
+		assertEquals("attack_successful", testPirates.attackShip(1, testShip1));
 	}
 	
 	@Test

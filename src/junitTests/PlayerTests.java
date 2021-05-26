@@ -19,7 +19,6 @@ class PlayerTests {
 	private Player testPlayer;
 	private Ship testShip;
 	
-	
 	@BeforeEach
 	void createRequiredObjects() {
 		testShip = new Ship("Black Pearl", 10,  5, 30);

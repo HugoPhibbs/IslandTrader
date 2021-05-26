@@ -27,8 +27,6 @@ class IslandTests {
 	private Route mainAndTest2;
 	
 	
-
-	
 	// Note will probably transfer the code that sets up the stores islands and routes to a before each/all method. 
 	@BeforeEach
 	void createRequiredObjects() {
