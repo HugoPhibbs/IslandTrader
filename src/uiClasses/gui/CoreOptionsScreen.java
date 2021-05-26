@@ -155,10 +155,6 @@ public class CoreOptionsScreen extends Screen{
 		shipUpgradesLabel.setBounds(335, 60, 200, 15);
 		shipPanel.add(shipUpgradesLabel);
 		
-		JLabel imageLabel = new JLabel("<image>");
-		imageLabel.setBounds(12, 80, 100, 15);
-		shipPanel.add(imageLabel);
-		
 		String[][] upgrades = game.getShip().upgradesToNestedArray();
 		if (upgrades.length == 0) {
 			// Ship hasnt bought any upgrades

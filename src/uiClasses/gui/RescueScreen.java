@@ -57,15 +57,10 @@ public class RescueScreen extends Screen {
 		lblTitle.setBounds(66, 12, 486, 38);
 		frame.getContentPane().add(lblTitle);
 		
-		JLabel lblImage = new JLabel("IMAGE HERE");
-		lblImage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImage.setBounds(53, 82, 494, 227);
-		frame.getContentPane().add(lblImage);
-		
 		JLabel lblInfo = new JLabel("<html> You spotted a stranded sailor through your telescope and <br> saved him! He has thanked you by giving you 50 Pirate Bucks  <html>");
 		lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInfo.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblInfo.setBounds(28, 309, 548, 38);
+		lblInfo.setBounds(28, 200, 548, 38);
 		frame.getContentPane().add(lblInfo);
 	}
 }

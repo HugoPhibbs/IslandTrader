@@ -79,19 +79,14 @@ public class WeatherScreen extends Screen {
 		lblTitle.setFont(new Font("Dialog", Font.BOLD, 32));
 		lblTitle.setBounds(66, 12, 486, 38);
 		frame.getContentPane().add(lblTitle);
-		
-		// TODO add images for bello
-		JLabel lblImage = new JLabel("IMAGE HERE");
-		lblImage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImage.setBounds(53, 82, 494, 227);
-		frame.getContentPane().add(lblImage);
+	
 		
 		// Use html to display text in Labels with multiple lines
 		JLabel lblInfo = new JLabel(String.format("<html> Oh no! You have sailed into a storm and the <br>"
 				+ "wild weather did %d damage to your ship. <html>", damageDone));
 		lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInfo.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblInfo.setBounds(12, 310, 576, 38);
+		lblInfo.setBounds(12, 200, 576, 38);
 		frame.getContentPane().add(lblInfo);
 	}
 }
