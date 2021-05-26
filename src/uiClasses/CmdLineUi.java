@@ -262,7 +262,16 @@ public class CmdLineUi implements GameUi {
 	 * @return String name of the chosen item that is being sold or bought
 	 */
 	private String[] visitStoreBuySellHelper(String operation) {
-		String buySellMessage  = String.format("Enter the number corresponding to the Item that you want to %s! \n", operation);
+		// Switch operation to be in perspective of user, was previously in the perspective of the store
+		String operationAdj;
+		if (operation.equals("buy")) {
+			operationAdj = "sell";
+		}
+		else {
+			operationAdj = "buy";
+		}
+		
+		String buySellMessage  = String.format("Enter the number corresponding to the Item that you want to %s! \n", operationAdj);
 		
 		// Get the catalogue assosiatted with this operation, and parse it into an Array form
 		HashMap<String, HashMap<String, Integer>> catalogue = gameEnvironment.getCurrentIsland().getIslandStore().getCatalogue(operation);
