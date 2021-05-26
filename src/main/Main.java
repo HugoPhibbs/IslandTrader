@@ -98,10 +98,10 @@ public class Main {
 	 * @return Ship[] contains all the Ships created for a game
 	 */
 	public static Ship[] createShips() {
-		Ship ship1 = new Ship("Black Pearl",   100,  7,  40);
-		Ship ship2 = new Ship("Queen Mary",     30,  8,  30);
-		Ship ship3 = new Ship("HMNZS Aotearoa", 80,  5,  50);
-		Ship ship4 = new Ship("Titanic",        50,  6,  20);
+		Ship ship1 = new Ship("Black Pearl",   100,  7,  30);
+		Ship ship2 = new Ship("Queen Mary",     30,  8,  20);
+		Ship ship3 = new Ship("HMNZS Aotearoa", 80,  5,  40);
+		Ship ship4 = new Ship("Titanic",        50,  6,  10);
 		return new Ship[] { ship1, ship2, ship3, ship4 };
 	}
 
@@ -344,36 +344,35 @@ public class Main {
 		// Create Canon sell properties for each island store
 		HashMap<String, Integer> canonPropertiesCyprus = new HashMap<String, Integer>();
 		canonPropertiesCyprus.put("spaceTaken", 0);
-		canonPropertiesCyprus.put("price", 50);
-		canonPropertiesCyprus.put("defenseBoost", 10);
+		canonPropertiesCyprus.put("price", 300);
+		canonPropertiesCyprus.put("defenseBoost", 5);
 		HashMap<String, Integer> canonPropertiesCorsica = new HashMap<String, Integer>();
 		canonPropertiesCorsica.put("spaceTaken", 0);
-		canonPropertiesCorsica.put("price", 30);
-		canonPropertiesCorsica.put("defenseBoost", 7);
+		canonPropertiesCorsica.put("price", 600);
+		canonPropertiesCorsica.put("defenseBoost", 5);
 		
 		// Create armour sell properties for each store	
 		HashMap<String, Integer> armourPropertiesCyprus = new HashMap<String, Integer>();
 		armourPropertiesCyprus.put("spaceTaken", 0);
-		armourPropertiesCyprus.put("price", 30);
-		armourPropertiesCyprus.put("defenseBoost", 7);
+		armourPropertiesCyprus.put("price", 400);
+		armourPropertiesCyprus.put("defenseBoost", 3);
 		HashMap<String, Integer> armourPropertiesMalta = new HashMap<String, Integer>();
 		armourPropertiesMalta.put("spaceTaken", 0);
-		armourPropertiesMalta.put("price", 10);
-		armourPropertiesMalta.put("defenseBoost", 7);
+		armourPropertiesMalta.put("price", 240);
+		armourPropertiesMalta.put("defenseBoost", 3);
 		
 		// Create crows-nest sell properties or crows-nest for each store
 		HashMap<String, Integer> crowsNestPropertiesCyprus = new HashMap<String, Integer>();
 		crowsNestPropertiesCyprus.put("spaceTaken", 0);
-		crowsNestPropertiesCyprus.put("price", 10);
-		crowsNestPropertiesCyprus.put("defenseBoost", 2);
+		crowsNestPropertiesCyprus.put("price", 100);
+		crowsNestPropertiesCyprus.put("defenseBoost", 1);
 		
 		// Create telescope sell properties for each store
 		HashMap<String, Integer> telescopePropertiesCorsica = new HashMap<String, Integer>();
 		telescopePropertiesCorsica.put("spaceTaken", 0);
-		telescopePropertiesCorsica.put("price", 10);
-		telescopePropertiesCorsica.put("defenseBoost", 3);
-		
-		
+		telescopePropertiesCorsica.put("price", 200);
+		telescopePropertiesCorsica.put("defenseBoost", 2);
+
 		// Create sell catalouge for Cyprus, specialises in upgrades
 		HashMap<String, HashMap<String, Integer>> sellCatalogueCyprus = new HashMap<String, HashMap<String, Integer>>();
 		sellCatalogueCyprus.put("Gold",                goldPropertiesCyprus);

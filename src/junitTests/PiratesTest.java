@@ -20,13 +20,13 @@ class PiratesTest {
 	void attackShipTest() {
 		/* So expected result matrix:
 		 *            DC//10  
-		 *      0  1  2  3  4  5
-		 *    1 F  F  F  F  F  5
-		 *    2 F  F  F  F  S  S
-		 * DR 3 F  F  F  S  S  S
-		 *    4 F  F  S  S  S  S
-		 *    5 F  S  S  S  S  S
-		 *    6 S  S  S  S  S  S
+		 *      0  1  2  3  4
+		 *    1 F  F  F  F  F
+		 *    2 F  F  F  F  S
+		 * DR 3 F  F  F  S  S
+		 *    4 F  F  S  S  S
+		 *    5 F  S  S  S  S
+		 *    6 S  S  S  S  S
 		 * 
 		 */
 		Ship testShip1 = new Ship("BatMobile", 0, 10, 50);
