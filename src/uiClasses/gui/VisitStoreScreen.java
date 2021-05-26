@@ -63,6 +63,9 @@ public class VisitStoreScreen extends Screen {
 	
 	/** The current name of the Item that a player has chosen from the table */
 	private String chosenItemName = "";
+	
+	/** Store that a player is currently located at */
+	private Store currentStore;
 
 	
 	/** Constructor for the VisitStoreScreen
@@ -71,6 +74,8 @@ public class VisitStoreScreen extends Screen {
 	 */
 	public VisitStoreScreen(GameEnvironment gameEnvironment) {
 		super("Visit Store Screen ", gameEnvironment);
+		this.currentStore = gameEnvironment.getCurrentIsland().getIslandStore();
+		
 		initialize();
 	}
 	
@@ -100,9 +105,14 @@ public class VisitStoreScreen extends Screen {
 		
 		// Create label for a Player's balance, and update it's value
 		this.balanceJLabel = new JLabel();
-		balanceJLabel.setBounds(34, 89, 300, 23);
+		balanceJLabel.setBounds(35, 90, 300, 20);
 		frame.getContentPane().add(balanceJLabel);
 		updatePlayerBalance();
+		
+		// Label for the specialty of this store
+		JLabel specialtyLabel = new JLabel(String.format("%s specialises in %s!", currentStore.getName(), currentStore.getSpecialty()));
+		specialtyLabel.setBounds(35, 70, 300, 20);
+		frame.getContentPane().add(specialtyLabel);
 		
 		// Button for going back
 		JButton goBackButton = new JButton("Go Back");
@@ -484,7 +494,6 @@ public class VisitStoreScreen extends Screen {
 	 * @return String for the receipt of a transaction
 	 */
 	private String sellItemsToPlayer(String itemName, int numItems) {
-		Store currentStore = game.getCurrentIsland().getIslandStore();
 		
 		if ((currentStore.checkPlayerWantsToBuy(game, itemName, numItems) != null)){
 			/* Create a pop up dialog that asks a user if they would really like to buy an item, if
@@ -508,7 +517,7 @@ public class VisitStoreScreen extends Screen {
 	private String buyItemsFromPlayer(String itemName, int numItems) {
 		// Get receipt from selling an item to a Store
 		// Create a pop up if buying this item will put a player into liquidation
-		return game.getCurrentIsland().getIslandStore().buyItemsFromPlayer(itemName, game.getPlayer(), numItems);
+		return currentStore.buyItemsFromPlayer(itemName, game.getPlayer(), numItems);
 	}
 	
 	/** Method to handle the finishing of a transaction between a Player and a Store. 
@@ -580,7 +589,6 @@ public class VisitStoreScreen extends Screen {
 	 * Is called every time Item(s) are sold or bought between a store and a player
 	 */
 	private void updatePlayerBalance() {
-		//balanceJLabel.setText(String.format("Player has a balance of : %d", gameEnvironment.getPlayer().getMoneyBalance()));
 		balanceJLabel.setText(String.format("Your current balance is %s Pirate Bucks", game.getPlayer().getMoneyBalance()));
 	}
 }
