@@ -1,27 +1,19 @@
 package uiClasses.gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 
 import coreClasses.*;
-import uiClasses.GameUi;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -30,13 +22,18 @@ public class ChooseRouteScreen extends Screen {
 
 	/** the island the player to view routes to.*/
 	private Island island;
+	
 	/** Route selected by the player.*/
 	private Route selectedRoute;
 	
+	/** Button pressed by user when they have chosen a Route they want to travel on, and want to confirm their selection */
 	private JButton btnConfirm;
 
-	/**
-	 * Create the application.
+	
+	/** Constructor for ChooseRouteScreen
+	 * 
+	 * @param game GameEnvironment object for this current game
+	 * @param island Island object for which a user has to see routes from
 	 */
 	public ChooseRouteScreen(GameEnvironment game, Island island) {
 		super("Choose Route", game);
@@ -54,28 +51,6 @@ public class ChooseRouteScreen extends Screen {
 		createMainLabels();
 		createOtherComponents();
 		createRouteChooseComponents();
-	}
-	
-	private void onConfirm() {
-		// Check player has enough money to make required payments
-		int costToSail = game.getShip().repairCost() + game.getShip().routeWageCost(selectedRoute);
-		int moneyBalance = game.getPlayer().getMoneyBalance();
-		
-		if (costToSail > game.getPlayer().getMoneyBalance()) {
-			String notEnoughMoneyMessage = String.format("<html>Not enough money tosail this route! You need $%d to pay your crew wages and <br>"
-					+ "repair your ship. Your current balance is $%d. Please sell some of your items.<html>", 
-					costToSail, moneyBalance);
-			JOptionPane.showMessageDialog(frame, notEnoughMoneyMessage, "Not Enough Money!", JOptionPane.ERROR_MESSAGE);
-		} else {
-			JDialog paymentsScreen = new MakePaymentsDialog(game, selectedRoute, this);
-		}
-	}
-	
-	protected void confirmSelection() {
-		this.quit();
-		SailingScreen sailingScreen = new SailingScreen(game, island, selectedRoute);
-		sailingScreen.show();
-		sailingScreen.startProgress();
 	}
 	
 	/** Creates the labels on the screen not in a sub container.*/
@@ -123,7 +98,7 @@ public class ChooseRouteScreen extends Screen {
 		});
 	}
 	
-	/** Creates the Jpanel and its components used to select a route.*/
+	/** Creates the JPanel and its components used to select a route.*/
 	private void createRouteChooseComponents() {
 		JPanel panelRouteSelection = new JPanel();
 		panelRouteSelection.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -142,9 +117,9 @@ public class ChooseRouteScreen extends Screen {
 		txtRouteDescription.setEditable(false);
 		panelRouteSelection.add(txtRouteDescription);
 		
-		JLabel lblDistance = new JLabel("Distance:");
-		lblDistance.setBounds(551, 126, 67, 15);
-		panelRouteSelection.add(lblDistance);
+		JLabel lblDuration = new JLabel("Duration (days):");
+		lblDuration.setBounds(551, 126, 150, 15);
+		panelRouteSelection.add(lblDuration);
 		
 		JLabel lblPirate = new JLabel("Pirate Attack:");
 		lblPirate.setBounds(551, 193, 125, 15);
@@ -162,10 +137,10 @@ public class ChooseRouteScreen extends Screen {
 		lblChances.setBounds(605, 166, 85, 15);
 		panelRouteSelection.add(lblChances);
 		
-		JLabel lblDistanceVal = new JLabel("-");
-		lblDistanceVal.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblDistanceVal.setBounds(698, 126, 49, 15);
-		panelRouteSelection.add(lblDistanceVal);
+		JLabel lblDurationVal = new JLabel("-");
+		lblDurationVal.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblDurationVal.setBounds(698, 126, 49, 15);
+		panelRouteSelection.add(lblDurationVal);
 		
 		JLabel lblPirateOdds = new JLabel("-");
 		lblPirateOdds.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -186,7 +161,7 @@ public class ChooseRouteScreen extends Screen {
 		
 		JButton btnRoute1 = new JButton(routeList.get(0).getRouteName());
 		btnRoute1.addActionListener(e -> changeRouteInfo(routeList.get(0), 
-				lblSelectedRoute, txtRouteDescription, lblDistanceVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
+				lblSelectedRoute, txtRouteDescription, lblDurationVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
 		btnRoute1.setBounds(12, 12, 233, 284);
 		panelRouteSelection.add(btnRoute1);
 		
@@ -194,30 +169,59 @@ public class ChooseRouteScreen extends Screen {
 			JButton btnRoute2 = new JButton(routeList.get(1).getRouteName());
 			btnRoute2.setBounds(257, 12, 233, 284);
 			btnRoute2.addActionListener(e -> changeRouteInfo(routeList.get(1), 
-					lblSelectedRoute, txtRouteDescription, lblDistanceVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
+					lblSelectedRoute, txtRouteDescription, lblDurationVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
 			panelRouteSelection.add(btnRoute2);
 		}
 	}
 	
-	/**
-	 * Changes the displayed route info to that of the selected route. Called each time a Route's button
+	/** Changes the displayed route info to that of the selected route. Called each time a Route's button
 	 * is clicked. 
-	 * @param route Route
-	 * @param name JLabel
-	 * @param description JTextField
-	 * @param distance JLabel
-	 * @param pirate JLabel
-	 * @param weather JLabel
-	 * @param rescue JLabel
+	 * 
+	 * @param route Route object that a user has selected to see information on
+	 * @param lblName JLabel for the name of inputed Route object
+	 * @param lblDescription JTextField  for the description of a Route
+	 * @param lblDuration JLabel for the distance of a route
+	 * @param lblPirate JLabel for the chance of a Pirate attack event on Route
+	 * @param lblWeather JLabel for the chance of a unfortunate weather event on Route
+	 * @param lblRescue JLabel for the chance of a Pirate attack event on Route
 	 */
-	private void changeRouteInfo(Route route, JLabel name, JTextPane description, JLabel distance, JLabel pirate,  JLabel weather, JLabel rescue) {
+	private void changeRouteInfo(Route route, JLabel lblName, JTextPane lblDescription, JLabel lblDuration, JLabel lblPirate,  JLabel lblWeather, JLabel lblRescue) {
 		btnConfirm.setEnabled(true);
-		name.setText(route.getRouteName());
-		description.setText(route.getDescription());
-		distance.setText(String.valueOf(route.getDistance()));
-		pirate.setText(String.valueOf(route.getPirateProb()));
-		weather.setText(String.valueOf(route.getWeatherProb()));
-		rescue.setText(String.valueOf(route.getRescueProb()));
+		lblName.setText(route.getRouteName());
+		lblDescription.setText(route.getDescription());
+		lblDuration.setText(String.valueOf(game.getShip().calculateDaysSailing(route)));
+		lblPirate.setText(String.valueOf(route.getPirateProb()));
+		lblWeather.setText(String.valueOf(route.getWeatherProb()));
+		lblRescue.setText(String.valueOf(route.getRescueProb()));
 		selectedRoute = route;
+	}
+	
+	/** Method to handle pressing of btnConfirm. 
+	 * Checks if a user can pay the wages and any repair costs in order to travel on a Route
+	 */
+	private void onConfirm() {
+		// Check player has enough money to make required payments
+		int costToSail = game.getShip().repairCost() + game.getShip().routeWageCost(selectedRoute);
+		int moneyBalance = game.getPlayer().getMoneyBalance();
+		
+		if (costToSail > game.getPlayer().getMoneyBalance()) {
+			String notEnoughMoneyMessage = String.format("<html>Not enough money tosail this route! You need $%d to pay your crew wages and <br>"
+					+ "repair your ship. Your current balance is $%d. Please sell some of your items.<html>", 
+					costToSail, moneyBalance);
+			JOptionPane.showMessageDialog(frame, notEnoughMoneyMessage, "Not Enough Money!", JOptionPane.ERROR_MESSAGE);
+		} else {
+			JDialog paymentsScreen = new MakePaymentsDialog(game, selectedRoute, this);
+		}
+	}
+	
+	/** Method to handle when a user pays wages for a route, called from MakePaymentsDialog
+	 * Creates a new SailingScreen and closes this screen
+	 * 
+	 */
+	protected void confirmSelection() {
+		SailingScreen sailingScreen = new SailingScreen(game, island, selectedRoute);
+		sailingScreen.show();
+		sailingScreen.startProgress();
+		this.quit();
 	}
 }
