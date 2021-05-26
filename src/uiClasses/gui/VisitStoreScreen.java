@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.DocumentEvent;
@@ -105,13 +106,15 @@ public class VisitStoreScreen extends Screen {
 		
 		// Create label for a Player's balance, and update it's value
 		this.balanceJLabel = new JLabel();
-		balanceJLabel.setBounds(35, 90, 300, 20);
+		balanceJLabel.setBounds(0, 90, 900, 20);
+		balanceJLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		frame.getContentPane().add(balanceJLabel);
 		updatePlayerBalance();
 		
 		// Label for the specialty of this store
 		JLabel specialtyLabel = new JLabel(String.format("%s specialises in %s!", currentStore.getName(), currentStore.getSpecialty()));
 		specialtyLabel.setBounds(0, 70, 900, 20);
+		specialtyLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		frame.getContentPane().add(specialtyLabel);
 		
 		// Button for going back
