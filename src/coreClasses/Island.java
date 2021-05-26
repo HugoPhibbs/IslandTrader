@@ -67,7 +67,7 @@ public class Island {
 	 * @return String representation for the description of an Island object
 	 */
 	public String getDescription() {
-		return String.format("%s. \nStore specialises in %s", description, islandStore.getSpecialty());
+		return String.format("%s. It's Store specialises in %s", description, islandStore.getSpecialty());
 	}
 
 	/** Searches through the current island's routes to find those that go to the island the player
