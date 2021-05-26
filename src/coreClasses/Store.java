@@ -390,6 +390,7 @@ public class Store {
     		
     		if (itemName.endsWith("(upgrade)")) {
     			infoArray[3] = Integer.toString(catalogue.get(itemName).get("defenseBoost"));
+    			infoArray[2] = "N/A";
     			}
     		catalogueArrayList.add(infoArray);
     		}
