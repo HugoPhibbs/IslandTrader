@@ -14,7 +14,7 @@ public class Pirates {
 	
 	/** Constructor method for a Pirates random event
 	 * 
-	 * @param maxDamage int for the max damage that Pirates random event can impose onto a Ship object 
+	 * @param goodDemandValue int for the value of Goods that Pirates demand to steal from a Ship
 	 */
 	public Pirates(int goodDemandValue) {
 		this.goodDemandValue = goodDemandValue;

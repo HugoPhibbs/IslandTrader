@@ -15,7 +15,7 @@ public class ShipUpgrade extends Item{
      * 
      * @param name String for the name of ShipUpgrade
      * @param spaceTaken int for the space taken of ShipUpgrade
-     * @param basePrice int for the base price of ShipUpgrade
+     * @param price int for the cost of ShipUpgrade in store
      * @param defenseBoost int for the defense boost of a shipUpgrade
      */
     public ShipUpgrade(String name, int spaceTaken, int price, int defenseBoost){

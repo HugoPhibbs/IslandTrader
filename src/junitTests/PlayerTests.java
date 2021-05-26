@@ -1,9 +1,9 @@
-/**
+/** 
  * 
  */
 package junitTests;
 
-import coreClasses.*; 
+import coreClasses.*;   
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +47,6 @@ class PlayerTests {
 	void testPurchasedItemsToArray() {
 		testPlayer.addPurchasedItem(new Item("Tomato", 2, 1));
 		testPlayer.addPurchasedItem(new Item("Gold", 5, 25));
-		String[][] testArray = new String[][] {{"Tomato", "1", "N/A"}, {"Gold", "25", "N/A"}};
 		String[][] actual = testPlayer.purchasedItemsToArray();
 
 		assertEquals("Tomato", actual[0][0]);

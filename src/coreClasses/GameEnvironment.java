@@ -1,6 +1,6 @@
 package coreClasses;
 
-import java.util.Random; 
+import java.util.Random;  
 import java.lang.Math;
 
 import uiClasses.GameUi;
@@ -160,7 +160,6 @@ public class GameEnvironment {
 	/** Calculates the amount that needs to be paid before the cheapest route available can be sailed. 
 	 * cost is dependent on amount of damage to the ship that needs to be repaired, as well as cost of wages to be paid. 
 	 * 
-	 * @return The amount of money required to take the cheapest sail option. 
 	 */
 	public void minMoneyRequired() {
 		minMoneyToTravel = ship.routeWageCost(currentIsland.shortestPossibleRoute(otherIslands())) + ship.repairCost();
@@ -213,11 +212,10 @@ public class GameEnvironment {
 	
 	/** Calculates a score by dividing profit by days played.
 	 * 
-	 * @param int for the amount of money the player started with, needed for profit calculation.  
 	 * @return int for the player's score at time of call.
 	 */
 	public int calculateScore() {
-		int profit = getPlayer().getMoneyBalance() - ui.STARTING_MONEY;
+		int profit = getPlayer().getMoneyBalance() - GameUi.STARTING_MONEY;
 		int daysPlayed = getDaysSelected() - getDaysRemaining();
 		
 		if (daysPlayed == 0) {

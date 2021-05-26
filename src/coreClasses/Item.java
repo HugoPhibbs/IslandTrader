@@ -78,7 +78,7 @@ public class Item{
   
     /** Setter method for the Island that an Item as sold at
     *
-    * @param islandSoldAt Island object that an Item was sold at
+    * @param storeIslandSoldAt Island object that an Item was sold at
     */
    public void setStoreIslandSoldAt(Island storeIslandSoldAt) {this.storeIslandSoldAt = storeIslandSoldAt;}
    
