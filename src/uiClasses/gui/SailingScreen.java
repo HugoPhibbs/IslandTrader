@@ -1,36 +1,50 @@
 package uiClasses.gui;
 
-import javax.swing.JProgressBar;
+import javax.swing.JProgressBar; 
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import coreClasses.*;
 
 public class SailingScreen extends Screen {
+	// Class attributes //
+	/** The Island that a user is trying to traveling to */
+	private Island destinatonIsland;
 	
-	private Island desinatonIsland;
+	/** Route object that a user is currently traveling on to destinationIsland */
 	private Route route;
 	
+	/** Progress bar reflecting the current progress of this journey to destinationIsland */
 	private JProgressBar progressBar;
+	
+	/** Current progress in percent of traveling to another Island, influenced by the speed of a Ship and a Route's speed */
 	private int progressPercent = 0;
+	
+	// TODO add this
 	private int delay;
+	
+	/** Label for the name of the Island that a user is currently traveling to */
 	private JLabel lblIslandName;
+	
+	/** Timer to keep track of the current progress to an island */
 	private Timer timer;
+	
+	// TODO add this
 	private final PropertyChangeSupport pcs;
 	
-	/**
-	 * Create the application.
+	
+	/** Constructor for SailingScreen
+	 * 
+	 * @param game GameEnvironment object for this current game
+	 * @param island Island that a user is currently traveling to
+	 * @param route Route object that a user is currently traveling on to an Island
 	 */
 	public SailingScreen(GameEnvironment game, Island island, Route route) {
 		super("Sailing", game);
-		this.desinatonIsland = island;
+		this.destinatonIsland = island;
 		this.route = route;
 		pcs = new PropertyChangeSupport(this);
 		initialize();
@@ -49,12 +63,18 @@ public class SailingScreen extends Screen {
 		createLabels();
 	}
 	
+	/** Starts progress bar timer for the journey on the way to the Island
+	 * 
+	 */
 	public void startProgress() {
 		timer = new Timer(delay, (event) -> firstHalfProgressBar());
 		timer.start();
 	}
 	
-
+	/** Handles the first half of the progress bar
+	 * Once the journey to a new Island has reached half way, it calls
+	 * setSail() to handle the occurrence of any random events  
+	 */
 	private void firstHalfProgressBar() {
 		progressPercent += 5;
 		progressBar.setValue(progressPercent);
@@ -66,9 +86,11 @@ public class SailingScreen extends Screen {
 	} 
 	
 	
-	/** Fills progress bar, time taken depends on how many days the route takes to sail.*/
+	/** Fills progress bar, time taken depends on how many days the route takes to sail.
+	 * if a random event occurs, then this screen is quit, otherwise the sail is continued
+	 */
 	private void startSail() {
-		boolean eventOccurred = game.sailToNewIsland(route, desinatonIsland);
+		boolean eventOccurred = game.sailToNewIsland(route, destinatonIsland);
 		if (!eventOccurred) {
 			finishProgress();
 		} else {
@@ -76,13 +98,18 @@ public class SailingScreen extends Screen {
 		}
 	}
 	
+	/** Handles the finishing of the of the progress
+	 * calls secondHalfProgress()
+	 */
 	public void finishProgress() {
 		progressPercent = 50;
 		timer = new Timer(delay, (event) -> secondHalfProgressBar());
 		timer.start();
 	}
 	
-
+	/** Handles the second half of the progress bar, once it is completed
+	 * calls endSail() to finish traveling to an Island
+	 */
 	private void secondHalfProgressBar() {
 		progressPercent += 5;
 		progressBar.setValue(progressPercent);
@@ -93,12 +120,16 @@ public class SailingScreen extends Screen {
 		}
 	} 
 	
+	/** Handles the finish of a sail to new Island. */
 	protected void endSail() {
-		Screen optionsScreen = new CoreOptionsScreen(game);
+		Screen coreOptionsScreen = new CoreOptionsScreen(game);
+		coreOptionsScreen.show();
 		quit();
-		optionsScreen.show();
 	}
 	
+	/** Creates a progress bar to reflect the current progress of
+	 * traveling between one island and another
+	 */
 	private void createProgressBar() {
 		progressBar = new JProgressBar(0, 100);
 		progressBar.setBounds(30, 167, 390, 39);
@@ -107,13 +138,14 @@ public class SailingScreen extends Screen {
 		frame.getContentPane().add(progressBar);
 	}
 	
+	/** Creates the labels needed for this screen */
 	private void createLabels() {
 		JLabel lblSailingTo = new JLabel("Sailing to");
 		lblSailingTo.setFont(new Font("Dialog", Font.BOLD, 14));
 		lblSailingTo.setBounds(185, 44, 80, 17);
 		frame.getContentPane().add(lblSailingTo);
 		
-		lblIslandName = new JLabel("Island Name");
+		lblIslandName = new JLabel(destinatonIsland.getIslandName());
 		lblIslandName.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIslandName.setFont(new Font("Dialog", Font.BOLD, 20));
 		lblIslandName.setBounds(150, 91, 150, 24);
