@@ -79,7 +79,7 @@ public class Ship {
    	this.name = name;
    	this.speed = speed;
    	this.crewSize = shipSize; // neat numbers
-   	this.maxItemSpace = (int) shipSize * 10; // ie for every unit of crewSize max item space adjusts with this. arbitrary constant
+   	this.maxItemSpace = (int) shipSize * 30; // ie for every unit of crewSize max item space adjusts with this. arbitrary constant
    	this.maxDefenseCapability = maxDefenseCapability;
    	
    	remainingItemSpace = maxItemSpace;
@@ -224,6 +224,8 @@ public class Ship {
     	
     	for (Item currItem : 	items) {
     		if (currItem.getName().equals(itemName)) {
+    			// Replenish the item space of a ship
+    			remainingItemSpace += currItem.getSpaceTaken();
     			items.remove(currItem);
     			return currItem;
     		}
@@ -258,8 +260,9 @@ public class Ship {
     			+ "Crew-size: %d \n"
     			+ "Wage Cost per day: %d \n"
     			+ "Health Status: %d/100 \n"
-    			+ "Cost to repair: %d"
-    			, remainingItemSpace, crewSize, getDailyWageCost(), healthStatus, repairCost());
+    			+ "Cost to repair: %d \n"
+    			+ "Defense capability %d/%d"
+    			, remainingItemSpace, crewSize, getDailyWageCost(), healthStatus, repairCost(), defenseCapability, maxDefenseCapability);
     	
     }
     
@@ -274,7 +277,12 @@ public class Ship {
      * @return Integer for the max Cargo capacity of Ship Object
      */
     public int getRemainingItemSpace() {return remainingItemSpace;}
-
+    
+    /** Getter method for the max item space of a ship
+     * 
+     */
+    public int getMaxItemSpace() {return maxItemSpace;}
+    
     /** Getter method for the size of crew on board ship
      * 
      * @return Integer for the number of crew on board 
