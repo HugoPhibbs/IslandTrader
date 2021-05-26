@@ -10,16 +10,16 @@ import java.util.ArrayList;
  */
 public class Island {
 	// Class variables //
-	/** The name of the island. */
+	/** String The name of the island. */
     private String islandName;
     
-	/** The object of Store that models the store on this island. */
+	/** Store The object of Store that models the store on this island. */
 	private Store islandStore;
 	
-	/** An array of all the routes from this island to another island.*/
+	/** Route[] An array of all the routes from this island to another island.*/
 	private Route[] routeArray;
 	
-	/** A brief description of the characteristics of this island, including an
+	/** String A brief description of the characteristics of this island, including an
 	 * indication of what the store sells and buys. 
 	 */
 	private String description;
@@ -44,6 +44,7 @@ public class Island {
 		this.description = description;
 	}
 	
+	/** Returns a string giving the name and description of an island.*/
 	@Override
 	public String toString() {
 		return String.format("%s: %s", islandName, description);

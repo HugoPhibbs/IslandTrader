@@ -10,23 +10,23 @@ import java.util.ArrayList;
  */
 public class Player {
 	// Class variables //
-	/** The name of the player, entered by the player. */
+	/** String The name of the player, entered by the player. */
 	private String name;
 	
-	/** The current amount of Pirate Bucks the player has.  */
+	/** int The current amount of Pirate Bucks the player has.  */
 	private int moneyBalance;
 	
-	/** A list of all items the player has purchased during the game, including those unsold. */
+	/** ArrayList<Item> A list of all items the player has purchased during the game, including those not sold. */
 	private ArrayList<Item> purchasedItems = new ArrayList<Item>();
 	
-	/** Ship object belonging to a player in game */
+	/** Ship Ship object belonging to a player in game */
 	private Ship ship;
 	
 	
 	/** Constructor method for a player object
 	 * 
 	 * @param name String for the player's name
-	 * @param startingCash Integer for the set amount of Pirate Bucks the player has at the start of the game. 
+	 * @param startingCash int for the set amount of Pirate Bucks the player has at the start of the game. 
 	 */
 	public Player(String name, int startingCash) {
 		this.name = name;
@@ -107,8 +107,8 @@ public class Player {
 	/** Checks the player has enough Pirate Bucks for a purchase, and if so, reduces
 	 * there balance by that amount
 	 * 
-	 * @param amountSpent Integer for the amount the purchase costs.
-	 * @return Boolean value if money was spent or not, ie player had enough cash to pay
+	 * @param amountSpent int for the amount the purchase costs.
+	 * @return boolean value if money was spent or not, ie player had enough cash to pay
 	 */
 	public boolean spendMoney(int amountSpent) {
 		if (amountSpent <= moneyBalance && amountSpent >= 0) {
@@ -129,7 +129,7 @@ public class Player {
 
 	/** Increases the player's balance by the given amount
 	 * 
-	 * @param amountEarned Integer for the amount of Pirate Bucks gained by the player. 
+	 * @param amountEarned int for the amount of Pirate Bucks gained by the player. 
 	 */
 	public void earnMoney(int amountEarned) {moneyBalance += amountEarned;}
 	
@@ -153,7 +153,7 @@ public class Player {
 	
 	/** Getter method for the current money balance of a Player
 	 * 
-	 * @return Integer of the money balance of a player
+	 * @return int of the money balance of a player
 	 */
 	public int getMoneyBalance() {return moneyBalance;}
 	

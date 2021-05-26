@@ -52,9 +52,9 @@ public class Ship {
     *
     * @throws IllegalArgumentException if constructor parameters are invalid
     * @param name String for the name of the ship
-    * @param speed Integer for the speed of the ship as it travels between islands (assume constant), number out of 100
-    * @param shipSize Integer for the size of the ship, influences crew size and the max cargo space of a ship, number out of 10
-    * @param maxDefenseCapability Integer for the max defense capability of a ship, number out of 40
+    * @param speed int for the speed of the ship as it travels between islands (assume constant), number out of 100
+    * @param shipSize int for the size of the ship, influences crew size and the max cargo space of a ship, number out of 10
+    * @param maxDefenseCapability int for the max defense capability of a ship, number out of 40
     */
    public Ship(String name, int speed, int shipSize, int maxDefenseCapability) throws IllegalArgumentException{    	
    	if (!CheckValidInput.nameIsValid(name)) {
@@ -90,7 +90,7 @@ public class Ship {
     
     /** Enacts damage onto Ship Object
      *
-     * @param damage Integer for damage to be inflicted onto ship
+     * @param damage int for damage to be inflicted onto ship
      */
     public void takeDamage(int damage) {
         healthStatus -= (int) damage * (1-(float)defenseCapability/100); 
@@ -172,7 +172,7 @@ public class Ship {
     /** Method that returns the total wage cost for traveling along a route
      * 
      * @param route Route object that a Ship wishes to travel on
-     * @return Integer for the total wage cost to travel along this route
+     * @return int for the total wage cost to travel along this route
      */
     public int routeWageCost(Route route) {
     	int daysSailing = calculateDaysSailing(route); // days sailing dependent on ship speed. 
@@ -185,7 +185,7 @@ public class Ship {
      * for routes less than 1 days sailing
      * 
      * @param route Route object with distance to be calculated with
-     * @return Integer for the days sailing of inputed Route
+     * @return int for the days sailing of inputed Route
      */
 	public int calculateDaysSailing(Route route) {
 		return (int)Math.ceil((float)route.getDistance() / (float)speed);
@@ -193,7 +193,7 @@ public class Ship {
     
     /** Method that returns the cost to repair ship because of damage
      * 
-     * @return Integer for the cost of a ship repair
+     * @return int for the cost of a ship repair
      */
     public int repairCost() {
     	int damageInflicted = 100-healthStatus;
@@ -268,13 +268,13 @@ public class Ship {
     
     /** Getter method for the daily wage cost of all the crew on board a Ship
      * 
-     * @return Integer for the daily wage cost of all the crew on board a Ship
+     * int for the daily wage cost of all the crew on board a Ship
      */
     public int getDailyWageCost() {return COST_PER_CREW_PER_DAY * crewSize;}
     
     /** Getter for the max cargo capacity of Ship Object
      * 
-     * @return Integer for the max Cargo capacity of Ship Object
+     * @return int for the max Cargo capacity of Ship Object
      */
     public int getRemainingItemSpace() {return remainingItemSpace;}
     
@@ -285,7 +285,7 @@ public class Ship {
     
     /** Getter method for the size of crew on board ship
      * 
-     * @return Integer for the number of crew on board 
+     * @return int for the number of crew on board 
      */
     public int getCrewSize() {return crewSize;}
     
@@ -309,25 +309,25 @@ public class Ship {
 
     /** Gets the health status for this Ship Object
      *
-     * @return Integer value for the health of the Ship
+     * @return int value for the health of the Ship
      */
     public int getHealthStatus() {return healthStatus;}
    
     /** Gets the defense capability for this Ship Object
     *
-    * @return Integer value for the defense capability of the Ship
+    * @return int value for the defense capability of the Ship
     */
     public int getDefenseCapability() {return defenseCapability;}
     
     /** Getter method for the speed of this ship object
      * 
-     * @return Integer value for the speed of a ship object
+     * @return int value for the speed of a ship object
      */
     public int getSpeed() {return speed;}
     
     /** Getter method for the max defense capability of a ship object
      * 
-     * @return Integer value for the max defense capability of a ship object
+     * @return int value for the max defense capability of a ship object
      */
     public int getMaxDefenseCapability() {return maxDefenseCapability;}
     
@@ -339,7 +339,7 @@ public class Ship {
     
     /** Method to set the remaining item space of a ship
      * 
-     * @param remainingItemSpace Integer for the remaining Item space for a ship
+     * @param remainingItemSpace int for the remaining Item space for a ship
      */
     public void setRemainingItemSpace(int remainingItemSpace) {
     	this.remainingItemSpace = remainingItemSpace;

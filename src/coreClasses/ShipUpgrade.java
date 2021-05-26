@@ -14,9 +14,9 @@ public class ShipUpgrade extends Item{
     /** Constructor method for ShipUpgrade object
      * 
      * @param name String for the name of ShipUpgrade
-     * @param spaceTaken Integer for the space taken of ShipUpgrade
-     * @param basePrice Integer for the base price of ShipUpgrade
-     * @param defenseBoost Integer for the defense boost of a shipUpgrade
+     * @param spaceTaken int for the space taken of ShipUpgrade
+     * @param basePrice int for the base price of ShipUpgrade
+     * @param defenseBoost int for the defense boost of a shipUpgrade
      */
     public ShipUpgrade(String name, int spaceTaken, int price, int defenseBoost){
     	// Call Item constructor
@@ -26,14 +26,14 @@ public class ShipUpgrade extends Item{
     
     /** Getter method for the defense boost of ShipUpgrade object
      * 
-     * @return Integer defenseBoost how much ShipUpgrade object benefits the defense of a ship
+     * @return int defenseBoost how much ShipUpgrade object benefits the defense of a ship
      */
     public int getDefenseBoost() { return defenseBoost; }    
     
     /** Setter method for the defense boost of a Ship Upgrade objects
      * 
      * @throws IllegalArgumentException if Defense Boost is invalid
-     * @param defenseBoost Integer for the defense boost to be set
+     * @param defenseBoost int for the defense boost to be set
      */
     private void setDefenseBoost(int defenseBoost) throws IllegalArgumentException {
     	if (defenseBoostIsValid(defenseBoost)) {
@@ -46,7 +46,7 @@ public class ShipUpgrade extends Item{
     
     /** Checks if a defenseBoost is valid, helper for constructor
      * 
-     * @param defenseBoost Integer for defenseBoost to be checked
+     * @param defenseBoost int for defenseBoost to be checked
      * @return boolean if inputed defenseBoost is valid
      */
     private boolean defenseBoostIsValid(int defenseBoost) {

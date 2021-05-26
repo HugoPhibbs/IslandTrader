@@ -9,12 +9,12 @@ import java.util.Random;
  * @since 2/4/2021
  */
 public class Pirates {
-	/**The minimum value of goods you must have to satisfy the pirates.*/
+	/** int The minimum value of goods you must have to satisfy the pirates.*/
 	private int goodDemandValue;
 	
 	/** Constructor method for a Pirates random event
 	 * 
-	 * @param maxDamage Integer for the max damage that Pirates random event can impose onto a Ship object 
+	 * @param maxDamage int for the max damage that Pirates random event can impose onto a Ship object 
 	 */
 	public Pirates(int goodDemandValue) {
 		this.goodDemandValue = goodDemandValue;
@@ -23,7 +23,7 @@ public class Pirates {
     /** Method for attacking a ship object
      * Damage is based on chance and the dice number rolled by player
      * 
-     * @param diceInt Integer for the dice value rolled by a player
+     * @param diceInt int for the dice value rolled by a player
      * @param ship Ship object to be attacked
      * @return String representation for the outcome of an attack
      */
@@ -73,7 +73,7 @@ public class Pirates {
     
     /** Method for rolling dice for a pirates random event
      * 
-     * @return Integer for the result of rolling a die. A pseudo random number
+     * @return int for the result of rolling a die. A pseudo random number
      * between 1 and 6
      */
     public int rollDice() {
