@@ -13,11 +13,11 @@ import coreClasses.Route;
 
 public class RescueScreen extends Screen {
 
-
 	/** The route the attack occurs on.*/
 	private Route route;
+	
 	/**
-	 * Create the application.
+	 * Create the screen by calling the parent's constructor and initializing the class variable route. 
 	 */
 	public RescueScreen(GameEnvironment game, Route route) {
 		super("Stranded Sailor", game);
@@ -25,9 +25,7 @@ public class RescueScreen extends Screen {
 		initialize();	
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
+	/** Sets the bound/size of the frame and calls the methods that create and add the frame's components*/
 	@Override
 	protected void initialize() {
 		frame.setBounds(100, 100, 600, 420);
@@ -36,6 +34,7 @@ public class RescueScreen extends Screen {
 		createLabels();
 	}
 	
+	/** Disposes of this Screen and creates the SailingScreen, to finish sailing to the next Island. */
 	private void onContinueButton() {
 		SailingScreen sailingScreen = new SailingScreen(game, game.getCurrentIsland(), route);
 		sailingScreen.finishProgress();
@@ -43,6 +42,7 @@ public class RescueScreen extends Screen {
 		sailingScreen.show();
 	}
 	
+	/** Creates the JButton btnContinue.*/
 	private void createContinueButton() {
 		JButton btnContinue = new JButton("Continue");
 		btnContinue.addActionListener(e -> onContinueButton());
@@ -51,6 +51,7 @@ public class RescueScreen extends Screen {
 		frame.getContentPane().add(btnContinue);
 	}
 	
+	/** Creates the JLabels that give information to the player about the random event rescue sailor. */
 	private void createLabels() {
 		JLabel lblTitle = new JLabel("STRANDED SAILOR");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);

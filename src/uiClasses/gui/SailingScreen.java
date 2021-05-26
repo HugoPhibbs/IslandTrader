@@ -22,13 +22,15 @@ public class SailingScreen extends Screen {
 	/** Current progress in percent of traveling to another Island, influenced by the speed of a Ship and a Route's speed */
 	private int progressPercent = 0;
 	
-	// TODO add this
+	/** int The time in milliseconds to wait before each update of the progress bar. Based on the amount 
+	 * of days sailing a route is with the player's Ship.
+	 */
 	private int delay;
 	
 	/** Label for the name of the Island that a user is currently traveling to */
 	private JLabel lblIslandName;
 	
-	/** Timer to keep track of the current progress to an island */
+	/** Timer which makes event calls to update the progress bar.*/
 	private Timer timer;
 	
 	
@@ -46,7 +48,8 @@ public class SailingScreen extends Screen {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Sets the bounds/size of the frame, calculates and sets delay, and calls the methods to create and 
+	 * add the components to the frame. 
 	 */
 	@Override
 	protected void initialize() {
@@ -58,9 +61,7 @@ public class SailingScreen extends Screen {
 		createLabels();
 	}
 	
-	/** Starts progress bar timer for the journey on the way to the Island
-	 * 
-	 */
+	/** Starts progress bar timer for the journey on the way to the Island */
 	public void startProgress() {
 		timer = new Timer(delay, (event) -> firstHalfProgressBar());
 		timer.start();

@@ -15,10 +15,20 @@ import javax.swing.SwingConstants;
 
 public class MakePaymentsDialog extends JDialog {
 	
-	/** the instance of ChooseRouteScreen that created this dialog box.*/
+	/** long Generated serial version UID. Class has unique values so not used. */
+	private static final long serialVersionUID = 1169380786453432984L;
+	
+	/** ChooseRouteScreen the instance of ChooseRouteScreen that created this dialog box.*/
 	private ChooseRouteScreen routeScreen;
+	
+	/** int The $ amount it will cost the player to pay their crew wages before sailing their chosen route.*/
+	private int costWages;
+	
+	/** int The amount it will cost the player to repair their ship, which is required before traveling.*/
+	private int costRepairs;
+	
 	/**
-	 * Create the dialog.
+	 * Creates the JDialog box and calls the methods required to add components.
 	 */
 	public MakePaymentsDialog(GameEnvironment game, Route route, ChooseRouteScreen routeScreen) {
 		setBounds(100, 100, 450, 229);
@@ -26,34 +36,36 @@ public class MakePaymentsDialog extends JDialog {
 		
 		this.routeScreen= routeScreen;
 		
-		int costWages = game.getShip().routeWageCost(route);
-		int costRepairs = game.getShip().repairCost();
-	
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setBounds(0, 158, 440, 35);
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane);
-			{
-				JButton btnMakePayment = new JButton("Make Payment of $" + String.valueOf(costWages + costRepairs));
-				btnMakePayment .addActionListener(e -> makePayments());
-				buttonPane.add(btnMakePayment);
-				getRootPane().setDefaultButton(btnMakePayment);
-			}
-			{
-				JButton btnCancel = new JButton("Cancel");
-				btnCancel.addActionListener(e -> dispose());
-				buttonPane.add(btnCancel);
-			}
-		}
+		costWages = game.getShip().routeWageCost(route);
+		costRepairs = game.getShip().repairCost();
 		
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
 		
+		createButtons();
 		createInstructionLabel();
 		createWageslabels(costWages);
 		if (costRepairs != 0) {
 			createRepairLabels(costRepairs);
+		}
+	}
+	
+	/** Creates the JPanel buttonPane and adds the JButtons for making the payment and canceling.*/
+	private void createButtons() {
+		JPanel buttonPane = new JPanel();
+		buttonPane.setBounds(0, 158, 440, 35);
+		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		getContentPane().add(buttonPane);
+		{
+			JButton btnMakePayment = new JButton("Make Payment of $" + String.valueOf(costWages + costRepairs));
+			btnMakePayment .addActionListener(e -> makePayments());
+			buttonPane.add(btnMakePayment);
+			getRootPane().setDefaultButton(btnMakePayment);
+		}
+		{
+			JButton btnCancel = new JButton("Cancel");
+			btnCancel.addActionListener(e -> dispose());
+			buttonPane.add(btnCancel);
 		}
 	}
 	

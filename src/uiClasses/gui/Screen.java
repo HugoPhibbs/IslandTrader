@@ -43,9 +43,7 @@ public abstract class Screen {
 		setFrameCharacteristics();
 	}
 	
-	/** Sets the characteristics of the frame that are common to all screens.
-	 * 
-	 */
+	/** Sets the characteristics of the frame that are common to all screens. */
 	private void setFrameCharacteristics() {
 		// Prevent the user from quiting immediately when quit is clicked.
 		// Code copied from Rocket Manager Example
@@ -62,8 +60,7 @@ public abstract class Screen {
 	
 	/** This is where the bounds of your frame will be set and methods which create the components
 	 * will be called. Is called at the end of the constructor method.
-	 * 
-	 */
+	 *  */
 	protected abstract void initialize();
 	
 	/** Disposes of the Screen's frame.
