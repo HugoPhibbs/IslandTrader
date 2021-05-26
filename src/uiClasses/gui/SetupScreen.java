@@ -257,7 +257,7 @@ public class SetupScreen extends Screen {
 		panelPickIsland.add(lblSelectedIsland);
 		
 		JTextPane txtpnThisIslandInfo = new JTextPane();
-		txtpnThisIslandInfo.setText("This island sells tomatos and buys gold. It has routes ot all other isalnds.");
+		txtpnThisIslandInfo.setText("");
 		txtpnThisIslandInfo.setBounds(869, 76, 184, 135);
 		panelPickIsland.add(txtpnThisIslandInfo);
 		
