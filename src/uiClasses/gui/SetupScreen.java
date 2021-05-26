@@ -78,7 +78,8 @@ public class SetupScreen extends Screen {
 	private void createMainLabels() {
 		JLabel lblWelcome = new JLabel("Welcome to Island Trader!");
 		lblWelcome.setFont(new Font("Dialog", Font.BOLD, 22));
-		lblWelcome.setBounds(321, 0, 332, 27);
+		lblWelcome.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWelcome.setBounds(0, 0, 1100, 27);
 		frame.getContentPane().add(lblWelcome);
 		
 		JLabel lblAskName = new JLabel("Please enter your name: ");

@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -98,7 +100,8 @@ public class CoreOptionsScreen extends Screen{
 		
 		JLabel welcomeLabel = new JLabel(String.format("Welcome to %s %s!", game.getCurrentIsland().getIslandName(), game.getPlayer().getName()));
 		welcomeLabel.setFont(new Font("Dialog", Font.BOLD, 22));
-		welcomeLabel.setBounds(400, 20, 900, 30);
+		welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		welcomeLabel.setBounds(0, 20, 1000, 30);
 		gameFactsPanel.add(welcomeLabel);
 		
 		JLabel gameFactsLabel = new JLabel("Quick game facts!");
