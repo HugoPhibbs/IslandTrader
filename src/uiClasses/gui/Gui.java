@@ -6,6 +6,8 @@ import coreClasses.Route;
 
 public class Gui implements GameUi{
 	
+	
+	/** GameEnvironment object for this game, used to store all necessary objects needed for the game */
 	private GameEnvironment gameEnvironment;
 
 	public void setup(GameEnvironment gameEnvironment) {
