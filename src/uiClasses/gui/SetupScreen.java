@@ -227,21 +227,25 @@ public class SetupScreen extends Screen {
 		JButton btnShip1 = new JButton("Black Pearl");
 		btnShip1.addActionListener(e -> changeShipStats(game.getShipArray()[0], lblSelectedShip, lblSpeedVal, lblCrewVal, lblCargoVal, lblDefenseVal));
 		btnShip1.setBounds(12, 12, 198, 226);
+		btnShip1.setBackground(new Color(153, 204, 255));
 		panelPickShip.add(btnShip1);
 		
 		JButton btnShip2 = new JButton("Thunder Bird");
 		btnShip2.addActionListener(e -> changeShipStats(game.getShipArray()[1], lblSelectedShip, lblSpeedVal, lblCrewVal, lblCargoVal, lblDefenseVal));
 		btnShip2.setBounds(222, 12, 198, 226);
+		btnShip2.setBackground(new Color(153, 204, 255));
 		panelPickShip.add(btnShip2);
 		
 		JButton btnShip3 = new JButton("Batmobile");
 		btnShip3.addActionListener(e -> changeShipStats(game.getShipArray()[2], lblSelectedShip, lblSpeedVal, lblCrewVal, lblCargoVal, lblDefenseVal));
 		btnShip3.setBounds(432, 12, 198, 226);
+		btnShip3.setBackground(new Color(153, 204, 255));
 		panelPickShip.add(btnShip3);
 		
 		JButton btnShip4 = new JButton("Apollo");
 		btnShip4.addActionListener(e -> changeShipStats(game.getShipArray()[3], lblSelectedShip, lblSpeedVal, lblCrewVal, lblCargoVal, lblDefenseVal));
 		btnShip4.setBounds(642, 12, 198, 226);
+		btnShip4.setBackground(new Color(153, 204, 255));
 		panelPickShip.add(btnShip4);
 		
 	}
@@ -274,26 +278,31 @@ public class SetupScreen extends Screen {
 		JButton btnIsland1 = new JButton("Cyprus");
 		btnIsland1.addActionListener(e -> changeIslandInfo(game.getIslandArray()[0], lblSelectedIsland, txtpnThisIslandInfo));
 		btnIsland1.setBounds(12, 12, 156, 226);
+		btnIsland1.setBackground(new Color(153, 204, 255));
 		panelPickIsland.add(btnIsland1);
 		
 		JButton btnIsland2 = new JButton("Sicily");
 		btnIsland2.addActionListener(e -> changeIslandInfo(game.getIslandArray()[1], lblSelectedIsland, txtpnThisIslandInfo));
 		btnIsland2.setBounds(180, 12, 156, 226);
+		btnIsland2.setBackground(new Color(153, 204, 255));
 		panelPickIsland.add(btnIsland2);
 		
 		JButton btnIsland3 = new JButton("Corsica");
 		btnIsland3.addActionListener(e -> changeIslandInfo(game.getIslandArray()[2], lblSelectedIsland, txtpnThisIslandInfo));
 		btnIsland3.setBounds(348, 12, 156, 226);
+		btnIsland3.setBackground(new Color(153, 204, 255));
 		panelPickIsland.add(btnIsland3);
 		
 		JButton btnIsland4 = new JButton("Malta");
 		btnIsland4.addActionListener(e -> changeIslandInfo(game.getIslandArray()[3], lblSelectedIsland, txtpnThisIslandInfo));
 		btnIsland4.setBounds(516, 12, 156, 226);
+		btnIsland4.setBackground(new Color(153, 204, 255));
 		panelPickIsland.add(btnIsland4);
 		
 		JButton btnIsland5 = new JButton("Ibiza");
 		btnIsland5.addActionListener(e -> changeIslandInfo(game.getIslandArray()[4], lblSelectedIsland, txtpnThisIslandInfo));
 		btnIsland5.setBounds(684, 12, 156, 226);
+		btnIsland5.setBackground(new Color(153, 204, 255));
 		panelPickIsland.add(btnIsland5);
 	}
 	

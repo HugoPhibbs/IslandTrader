@@ -1,6 +1,8 @@
 package uiClasses.gui;
 
-import javax.swing.JLabel; 
+import javax.swing.JLabel;
+
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
@@ -62,6 +64,7 @@ public class WeatherScreen extends Screen {
 	 */
 	private void createContinueButton() {
 		JButton btnContinue = new JButton("Continue");
+		btnContinue.setBackground(new Color(153, 204, 255));
 		btnContinue.addActionListener(e -> onContinueButton());
 		btnContinue.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnContinue.setBounds(242, 359, 117, 25);

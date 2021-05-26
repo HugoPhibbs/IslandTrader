@@ -54,6 +54,7 @@ public class GameOverScreen extends Screen {
 	/** Creates the JButton btnFinishGame, used to finish the game and exit.*/
 	private void createFinishButton() {
 		JButton btnFinishGame = new JButton("Finish Game");
+		btnFinishGame.setBackground(new Color(153, 204, 255));
 		btnFinishGame.addActionListener(e -> quit());
 		btnFinishGame.setFont(new Font("Dialog", Font.BOLD, 16));
 		btnFinishGame.setBounds(280, 405, 140, 29);

@@ -120,6 +120,7 @@ public class VisitStoreScreen extends Screen {
 		// Button for going back
 		JButton goBackButton = new JButton("Go Back");
 		goBackButton.setBounds(950, 525, 115, 23);
+		goBackButton.setBackground(new Color(153, 204, 255));
 		goBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Create a new coreOptions screen, and delete this current screen
@@ -138,22 +139,26 @@ public class VisitStoreScreen extends Screen {
 		// Create the Panel
 		this.mainStoreOptionsPanel = new JPanel();
 		mainStoreOptionsPanel.setBorder(blackline);
+		mainStoreOptionsPanel.setBackground(new Color(0, 153, 255));
 		mainStoreOptionsPanel.setBounds(35, 125, 500, 392);
 		frame.getContentPane().add(mainStoreOptionsPanel);
 		mainStoreOptionsPanel.setLayout(null);
 		
 		// Button to view Items that are for sale
 		JButton viewItemsForSaleButton = new JButton("Buy Items");
+		viewItemsForSaleButton.setBackground(new Color(153, 204, 255));
 		viewItemsForSaleButton.setBounds(12, 12, 475, 113);
 		mainStoreOptionsPanel.add(viewItemsForSaleButton);
 		
 		// Button to view Items that a store buys
 		JButton viewItemsStoreBuysButton = new JButton("Sell Items");
+		viewItemsStoreBuysButton.setBackground(new Color(153, 204, 255));
 		viewItemsStoreBuysButton.setBounds(12, 137, 475, 113);
 		mainStoreOptionsPanel.add(viewItemsStoreBuysButton);
 		
 		// Button to view previously bought items
 		JButton viewPreviousItemsButton = new JButton("View previously bought Items");
+		viewPreviousItemsButton.setBackground(new Color(153, 204, 255));
 		viewPreviousItemsButton.setBounds(12, 262, 475, 113);
 		mainStoreOptionsPanel.add(viewPreviousItemsButton);
 		
@@ -183,6 +188,7 @@ public class VisitStoreScreen extends Screen {
 		// Create the panel holding everything necessary
 		this.buySellOptionsPanel = new JPanel();
 		buySellOptionsPanel.setBorder(blackline);
+		buySellOptionsPanel.setBackground(new Color(0, 153, 255));
 		buySellOptionsPanel.setBounds(560, 327, 500, 190);
 		frame.getContentPane().add(buySellOptionsPanel);
 		buySellOptionsPanel.setLayout(null);
@@ -238,6 +244,7 @@ public class VisitStoreScreen extends Screen {
 		 */
 		this.buySellItemsButton = new JButton();
 		buySellItemsButton.setBounds(350, 78, 139, 100);
+		buySellItemsButton.setBackground(new Color(153, 204, 255));
 		buySellOptionsPanel.add(buySellItemsButton);
 		buySellItemsButton.setEnabled(false);
 	}
@@ -249,6 +256,7 @@ public class VisitStoreScreen extends Screen {
 		// Create the panel
 		this.tablePanel = new JPanel();
 		tablePanel.setBorder(blackline);
+		tablePanel.setBackground(new Color(0, 153, 255));
 		tablePanel.setBounds(560, 125, 500, 190);
 		frame.getContentPane().add(tablePanel);
 		tablePanel.setLayout(null);

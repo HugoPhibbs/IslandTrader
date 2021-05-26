@@ -46,12 +46,10 @@ public class ChooseRouteScreen extends Screen {
 	 */
 	@Override
 	protected void initialize() {
-		System.out.println("route " + game.getPlayer().getMoneyBalance()); // TODO remove
-
 		frame.setBounds(100, 100, 800, 550);
 		
 		createMainLabels();
-		createOtherComponents();
+		createButtons();
 		createRouteChooseComponents();
 	}
 	
@@ -81,15 +79,17 @@ public class ChooseRouteScreen extends Screen {
 	}
 	
 	/** Creates the miscellaneous components on the screen not in a sub container.*/
-	private void createOtherComponents() {
+	private void createButtons() {
 		this.btnConfirm = new JButton("Confirm");
 		btnConfirm.setEnabled(false); // set to disabled until a user picks a route
 		btnConfirm.addActionListener(e -> onConfirm());
 		btnConfirm.setBounds(626, 489, 162, 25);
+		btnConfirm.setBackground(new Color(153, 204, 255)); 
 		frame.getContentPane().add(btnConfirm);
 		
 		JButton btnBack = new JButton("Go Back");
 		btnBack.setBounds(12, 489, 162, 25);
+		btnBack.setBackground(new Color(153, 204, 255)); 
 		frame.getContentPane().add(btnBack);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -104,6 +104,7 @@ public class ChooseRouteScreen extends Screen {
 	private void createRouteChooseComponents() {
 		JPanel panelRouteSelection = new JPanel();
 		panelRouteSelection.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelRouteSelection.setBackground(new Color(0, 153, 255));
 		panelRouteSelection.setBounds(12, 177, 776, 308);
 		frame.getContentPane().add(panelRouteSelection);
 		panelRouteSelection.setLayout(null);
@@ -165,11 +166,13 @@ public class ChooseRouteScreen extends Screen {
 		btnRoute1.addActionListener(e -> changeRouteInfo(routeList.get(0), 
 				lblSelectedRoute, txtRouteDescription, lblDurationVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
 		btnRoute1.setBounds(12, 12, 233, 284);
+		btnRoute1.setBackground(new Color(153, 204, 255));
 		panelRouteSelection.add(btnRoute1);
 		
 		if (routeList.size() == 2) {
 			JButton btnRoute2 = new JButton(routeList.get(1).getRouteName());
 			btnRoute2.setBounds(257, 12, 233, 284);
+			btnRoute2.setBackground(new Color(153, 204, 255));
 			btnRoute2.addActionListener(e -> changeRouteInfo(routeList.get(1), 
 					lblSelectedRoute, txtRouteDescription, lblDurationVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
 			panelRouteSelection.add(btnRoute2);

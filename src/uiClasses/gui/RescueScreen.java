@@ -1,5 +1,6 @@
 package uiClasses.gui;
 
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -41,6 +42,7 @@ public class RescueScreen extends Screen {
 	/** Creates the JButton btnContinue.*/
 	private void createContinueButton() {
 		JButton btnContinue = new JButton("Continue");
+		btnContinue.setBackground(new Color(153, 204, 255));
 		btnContinue.addActionListener(e -> onContinueButton());
 		btnContinue.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnContinue.setBounds(242, 359, 117, 25);

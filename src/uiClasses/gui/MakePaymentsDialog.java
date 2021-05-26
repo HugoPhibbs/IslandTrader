@@ -1,5 +1,6 @@
 package uiClasses.gui;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -33,6 +34,7 @@ public class MakePaymentsDialog extends JDialog {
 	public MakePaymentsDialog(GameEnvironment game, Route route, ChooseRouteScreen routeScreen) {
 		setBounds(100, 100, 450, 229);
 		getContentPane().setLayout(null);
+		getContentPane().setBackground(new Color(255, 222, 173));
 		
 		this.routeScreen= routeScreen;
 		
@@ -53,17 +55,20 @@ public class MakePaymentsDialog extends JDialog {
 	/** Creates the JPanel buttonPane and adds the JButtons for making the payment and canceling.*/
 	private void createButtons() {
 		JPanel buttonPane = new JPanel();
+		buttonPane.setBackground(new Color(255, 222, 173));
 		buttonPane.setBounds(0, 158, 440, 35);
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane);
 		{
 			JButton btnMakePayment = new JButton("Make Payment of $" + String.valueOf(costWages + costRepairs));
+			btnMakePayment.setBackground(new Color(153, 204, 255));
 			btnMakePayment .addActionListener(e -> makePayments());
 			buttonPane.add(btnMakePayment);
 			getRootPane().setDefaultButton(btnMakePayment);
 		}
 		{
 			JButton btnCancel = new JButton("Cancel");
+			btnCancel.setBackground(new Color(153, 204, 255));
 			btnCancel.addActionListener(e -> dispose());
 			buttonPane.add(btnCancel);
 		}

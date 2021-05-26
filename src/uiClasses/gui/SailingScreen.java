@@ -87,7 +87,6 @@ public class SailingScreen extends Screen {
 	 */
 	private void startSail() {
 		boolean eventOccurred = game.sailToNewIsland(route, destinatonIsland);
-		System.out.println("sail end of first half " + game.getPlayer().getMoneyBalance()); // TODO remove
 
 		if (!eventOccurred) {
 			finishProgress();

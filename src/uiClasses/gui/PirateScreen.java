@@ -1,6 +1,8 @@
 package uiClasses.gui;
 
 import javax.swing.JLabel;
+
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
@@ -63,6 +65,7 @@ public class PirateScreen extends Screen {
 	 */
 	private void createRollDiceButton( ) {
 		this.btnRollDice = new JButton("Roll the Dice");
+		btnRollDice.setBackground(new Color(153, 204, 255));
 		btnRollDice.addActionListener(e -> onDiceRoll());
 		btnRollDice.setFont(new Font("Dialog", Font.BOLD, 18));
 		btnRollDice.setBounds(213, 148, 210, 160);
@@ -72,6 +75,7 @@ public class PirateScreen extends Screen {
 	/** Method to create a button that a user presses when they want to continue to the next screen */
 	private void createContinueButton() {
 		this.btnContinue = new JButton("Continue");
+		btnContinue.setBackground(new Color(153, 204, 255));
 		btnContinue.setEnabled(false);
 		btnContinue.addActionListener(e -> onContinueButton());
 		btnContinue.setFont(new Font("Dialog", Font.BOLD, 14));

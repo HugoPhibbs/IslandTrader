@@ -6,6 +6,8 @@ import javax.swing.JTable;
 
 import coreClasses.*;
 import javax.swing.JLabel;
+
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
@@ -68,6 +70,7 @@ public class ViewIslandsScreen extends Screen {
 	private void createSelectIslandComponents() {
 		JPanel panelIslandSelection = new JPanel();
 		panelIslandSelection.setBorder(blackline);
+		panelIslandSelection.setBackground(new Color(0, 153, 255));
 		panelIslandSelection.setBounds(12, 43, 584, 411);
 		frame.getContentPane().add(panelIslandSelection);
 		panelIslandSelection.setLayout(null);
@@ -80,20 +83,24 @@ public class ViewIslandsScreen extends Screen {
 		 */
 		JButton btnIsland1 = new JButton(islandsToView[0].getIslandName());
 		btnIsland1.setBounds(12, 12, 274, 187);
+		btnIsland1.setBackground(new Color(153, 204, 255));
 		btnIsland1.addActionListener(e -> changeIslandInfo(islandsToView[0]));
 		panelIslandSelection.add(btnIsland1);
 		
 		JButton btnIsland2 = new JButton(islandsToView[1].getIslandName());
+		btnIsland2.setBackground(new Color(153, 204, 255));
 		btnIsland2.setBounds(298, 12, 274, 187);
 		btnIsland2.addActionListener(e -> changeIslandInfo(islandsToView[1]));
 		panelIslandSelection.add(btnIsland2);
 		
 		JButton btnIsland3 = new JButton(islandsToView[2].getIslandName());
+		btnIsland3.setBackground(new Color(153, 204, 255));
 		btnIsland3.setBounds(12, 212, 274, 187);
 		btnIsland3.addActionListener(e -> changeIslandInfo(islandsToView[2]));
 		panelIslandSelection.add(btnIsland3);
 		
 		JButton btnIsland4 = new JButton(islandsToView[3].getIslandName());
+		btnIsland4.setBackground(new Color(153, 204, 255));
 		btnIsland4.setBounds(298, 212, 274, 187);
 		btnIsland4.addActionListener(e -> changeIslandInfo(islandsToView[3]));
 		panelIslandSelection.add(btnIsland4);
@@ -102,6 +109,7 @@ public class ViewIslandsScreen extends Screen {
 	/** Creates panel for holding information on the current island that has been selected */
 	private void createIslandInfoPanel() {
 		this.panelIslandInfo = new JPanel();
+		panelIslandInfo.setBackground(new Color(0, 153, 255));
 		panelIslandInfo.setBounds(608, 43, 524, 124);
 		frame.getContentPane().add(panelIslandInfo);
 		panelIslandInfo.setLayout(null);
@@ -130,11 +138,13 @@ public class ViewIslandsScreen extends Screen {
 			}
 		});
 		btnBack.setBounds(12, 466, 117, 25);
+		btnBack.setBackground(new Color(153, 204, 255));
 		frame.getContentPane().add(btnBack); 
 		
 		this.btnTravel = new JButton("Travel to selected island");
 		btnTravel.setEnabled(false); // set to disabled until a user chooses an island to travel to
 		btnTravel.setBounds(730, 466, 234, 25);
+		btnTravel.setBackground(new Color(153, 204, 255));
 		btnTravel.addActionListener(e -> viewRoutes());
 		frame.getContentPane().add(btnTravel);
 		
@@ -149,6 +159,7 @@ public class ViewIslandsScreen extends Screen {
 		// Create the panel
 		this.panelTable = new JPanel();
 		panelTable.setBorder(blackline);
+		panelTable.setBackground(new Color(0, 153, 255));
 		panelTable.setBounds(608, 177, 524, 277);
 		frame.getContentPane().add(panelTable);
 		panelTable.setLayout(null);
