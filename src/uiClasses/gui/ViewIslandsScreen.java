@@ -62,7 +62,7 @@ public class ViewIslandsScreen extends Screen {
 	private void createSelectIslandComponents() {
 		JPanel panelIslandSelection = new JPanel();
 		panelIslandSelection.setBorder(blackline);
-		panelIslandSelection.setBounds(12, 43, 950, 411);
+		panelIslandSelection.setBounds(12, 43, 1075, 411);
 		frame.getContentPane().add(panelIslandSelection);
 		panelIslandSelection.setLayout(null);
 		

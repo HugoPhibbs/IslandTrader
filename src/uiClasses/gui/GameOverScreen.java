@@ -1,16 +1,13 @@
-package uiClasses.gui;
+	package uiClasses.gui;
 
-import java.awt.Color;
-import java.awt.EventQueue;
-
+import java.awt.Color; 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import coreClasses.GameEnvironment;
+import uiClasses.GameUi;
 
 public class GameOverScreen extends Screen {
 	
@@ -93,7 +90,7 @@ public class GameOverScreen extends Screen {
 		lblScore.setBounds(0, 189, 700, 24);
 		frame.getContentPane().add(lblScore);
 		
-		lblProfit = new JLabel("PROFIT: " + (game.getPlayer().getMoneyBalance() - game.getUi().STARTING_MONEY));
+		lblProfit = new JLabel("PROFIT: " + (game.getPlayer().getMoneyBalance() - GameUi.STARTING_MONEY));
 		lblProfit.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProfit.setFont(new Font("Dialog", Font.BOLD, 20));
 		lblProfit.setBounds(0, 250, 700, 24);
