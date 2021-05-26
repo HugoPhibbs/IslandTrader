@@ -104,10 +104,10 @@ class IslandTests {
 	@Test
 	void testFullInfo() {
 		ArrayList<Route> routesFromTest1toMain = new ArrayList<Route>(List.of(mainAndTest1Fun, mainAndTest1Scary));
-		String expectedMainInfoString = "About Main Island: An island with a nice store and even nicer tests, Store specialises in precious metals\n"
-				+ "Routes to Main Island:\n - fun route is 100 km long. fun!\n - scary route is 150 km long. scary!\n"
-				+ "The store on this island sells:\nRum for 4 Pirate Bucks, taking up 3 space; Tomato for 3 Pirate Bucks, taking up 1 space; \n"
-				+ "The store on this island buys:\nGold for 30 Pirate Bucks, taking up 2 space; Lime for 10 Pirate Bucks, taking up 1 space; \n";
+		String expectedMainInfoString = "About Main Island: An island with a nice store and even nicer tests. It's Store specialises in precious metals\n"
+				+ "Routes to Main Island:\n"
+				+ " - fun route is 100 km long. fun!\n"
+				+ " - scary route is 150 km long. scary!\n";
 		assertEquals(expectedMainInfoString, mainIsland.fullInfo(routesFromTest1toMain));
 	}
 	

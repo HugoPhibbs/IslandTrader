@@ -129,7 +129,7 @@ class ShipTest {
 	void routeWageCostTest() {
 		// simple calculation, no real boundary conditions
 		Route route1 = new Route("arb", 100, null, null);
-		assertEquals(250, testShip.routeWageCost(route1));
+		assertEquals(150, testShip.routeWageCost(route1));
 	}
 	
 	@Test
@@ -151,6 +151,6 @@ class ShipTest {
 	void getRepairCostTest() {
 		// simple calculation, no real boundary conditions
 		testShip.takeDamage(50);
-		assertEquals(250, testShip.repairCost());
+		assertEquals(35, testShip.repairCost());
 	}
 }

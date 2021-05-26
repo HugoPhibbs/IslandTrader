@@ -24,8 +24,52 @@ class StoreTest {
 	@BeforeEach
 	void setUpBeforeClass() throws Exception {
 		// Use the buy and sell catalogues from the main class for Cyprus.
-		HashMap<String, HashMap<String, Integer>> testBuyCatalogue = Main.createBuyCatalogues().get(0);
-		HashMap<String, HashMap<String, Integer>> testSellCatalogue = Main.createSellCatalogues().get(0);
+		HashMap<String, Integer> silverPropertiesBuyTest = new HashMap<String, Integer>();
+		silverPropertiesBuyTest.put("spaceTaken", 3);
+		silverPropertiesBuyTest.put("price", 4);
+		HashMap<String, Integer> goldPropertiesBuyTest = new HashMap<String, Integer>();
+		goldPropertiesBuyTest.put("spaceTaken", 5);
+		goldPropertiesBuyTest.put("price", 10);
+		HashMap<String, Integer> bananaPropertiesBuyTest = new HashMap<String, Integer>();
+		bananaPropertiesBuyTest.put("spaceTaken", 1);
+		bananaPropertiesBuyTest.put("price", 1);
+		HashMap<String, Integer> bandagesPropertiesBuyTest = new HashMap<String, Integer>();
+		bandagesPropertiesBuyTest.put("spaceTaken", 3);
+		bandagesPropertiesBuyTest.put("price", 4);
+		HashMap<String, Integer> limePropertiesBuyTest = new HashMap<String, Integer>();
+		limePropertiesBuyTest.put("spaceTaken", 1);
+		limePropertiesBuyTest.put("price", 1);
+		
+		HashMap<String, Integer> silverPropertiesSellTest = new HashMap<String, Integer>();
+		silverPropertiesSellTest.put("spaceTaken", 3);
+		silverPropertiesSellTest.put("price", 4);
+		HashMap<String, Integer> goldPropertiesSellTest = new HashMap<String, Integer>();
+		goldPropertiesSellTest.put("spaceTaken", 5);
+		goldPropertiesSellTest.put("price", 10);
+		HashMap<String, Integer> bananaPropertiesSellTest = new HashMap<String, Integer>();
+		bananaPropertiesSellTest.put("spaceTaken", 1);
+		bananaPropertiesSellTest.put("price", 1);
+		HashMap<String, Integer> bandagesPropertiesSellTest = new HashMap<String, Integer>();
+		bandagesPropertiesSellTest.put("spaceTaken", 3);
+		bandagesPropertiesSellTest.put("price", 4);
+		HashMap<String, Integer> limePropertiesSellTest = new HashMap<String, Integer>();
+		limePropertiesSellTest.put("spaceTaken", 1);
+		limePropertiesSellTest.put("price", 1);
+		
+
+		HashMap<String, HashMap<String, Integer>> testBuyCatalogue = new HashMap<String, HashMap<String, Integer>>();
+		testBuyCatalogue.put("Gold", silverPropertiesBuyTest);
+		testBuyCatalogue.put("Silver", goldPropertiesBuyTest);
+		testBuyCatalogue.put("Banana", bananaPropertiesBuyTest);
+		testBuyCatalogue.put("Bandages", bandagesPropertiesBuyTest);
+		testBuyCatalogue.put("Lime", limePropertiesBuyTest);
+
+		HashMap<String, HashMap<String, Integer>> testSellCatalogue = new HashMap<String, HashMap<String, Integer>>();
+		testSellCatalogue.put("Gold", goldPropertiesBuyTest);
+		testSellCatalogue.put("Silver", silverPropertiesBuyTest);
+		testSellCatalogue.put("Banana", bananaPropertiesBuyTest);
+		testSellCatalogue.put("Bandages", bandagesPropertiesSellTest);
+		testSellCatalogue.put("Lime", limePropertiesSellTest);
 		
 		testPlayer = new Player("Batman", 0);
 		testShip = new Ship("Batmobile", 10, 10, 10);
@@ -39,7 +83,7 @@ class StoreTest {
 		testGameEnvironment = new GameEnvironment(null, null, null, null, null);
 		testGameEnvironment.setPlayer(testPlayer);
 		testGameEnvironment.setShip(testShip);
-		testGameEnvironment.setCurrentIsland(testIsland);
+		testGameEnvironment.setCurrentIsland(testIsland); 
 	}
 
 	@Test 
@@ -68,7 +112,7 @@ class StoreTest {
 		testGameEnvironment.setMinMoneyToTravel(0);
 		
 		resultString = testStore.sellItemsToPlayer(testGameEnvironment, "Gold", 1);
-		expectedResultString = "1 out of requested 1 Gold bought \nTotal cost of transaction: 25 Pirate Bucks \n";
+		expectedResultString = "1 out of requested 1 Gold bought \nTotal cost of transaction: 20 Pirate Bucks \n";
 		assertEquals(expectedResultString, resultString);
 		
 		// Test with testPlayer ship not having enough space on-board ship to store items
@@ -174,7 +218,7 @@ class StoreTest {
 		testPlayer.earnMoney(100);
 		testStore.sellItemsToPlayer(testGameEnvironment, "Gold", 1);
 		resultString = testStore.buyItemsFromPlayer("Gold", testPlayer, 1);
-		assertEquals("1 out of a requested 1 Gold was sold to the store \nTotal monetary gain: 10", resultString);
+		assertEquals("1 out of a requested 1 Gold was sold to the store \nTotal monetary gain: 20", resultString);
 		
 		// Test with player not having item in possession
 		resultString = testStore.buyItemsFromPlayer("Silver", testPlayer, 1);

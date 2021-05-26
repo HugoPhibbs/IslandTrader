@@ -48,7 +48,16 @@ class PlayerTests {
 		testPlayer.addPurchasedItem(new Item("Tomato", 2, 1));
 		testPlayer.addPurchasedItem(new Item("Gold", 5, 25));
 		String[][] testArray = new String[][] {{"Tomato", "1", "N/A"}, {"Gold", "25", "N/A"}};
-		assertEquals(testArray, testPlayer.purchasedItemsToArray());
+		String[][] actual = testPlayer.purchasedItemsToArray();
+
+		assertEquals("Tomato", actual[0][0]);
+		assertEquals("1", actual[0][1]);
+		assertEquals("N/A", actual[0][2]);
+		
+		
+		assertEquals("Gold", actual[1][0]);
+		assertEquals("25", actual[1][1]);
+		assertEquals("N/A", actual[1][2]);	
 	}
 	
 	
