@@ -24,7 +24,7 @@ public class Main {
 	 * objects needed for a game Most of the functionality is handled by Main's
 	 * other methods`
 	 * 
-	 * @param args
+	 * @param args String[] containing command line arguments needed to run Island Trader
 	 */
 	public static void main(String[] args) {
 		// Initialize all the objects needed to run a game
@@ -203,12 +203,12 @@ public class Main {
 		Route maltaAndIbizaWavy = new Route("Wavy waters", 200, new Island[] { malta, ibiza },
 				"A wavy route, with a decent chance of storms and the odd brave pirate.");
 		maltaAndIbizaWavy.constructProbabilityMap(20, 60, 50);
-		Route maltaAndIbizaPirate = new Route("Wavy waters", 200, new Island[] { malta, ibiza },
+		Route maltaAndIbizaPirate = new Route("Piratey Pass", 200, new Island[] { malta, ibiza },
 				"A calmer route, prefered by the pirates.");
 		maltaAndIbizaPirate.constructProbabilityMap(60, 20, 50);
 
 		Route ibizaAndCorsica = new Route("Mild Sail", 300, new Island[] { ibiza, corsica },
-				"A hintof calm in the chaos.");
+				"A hint of calm in the chaos.");
 		ibizaAndCorsica.constructProbabilityMap(5, 5, 5);
 
 		return new Route[] { cyprusAndSicilySafe, cyprusAndSicilyStormy, cyprusAndCorsicaFast, cyprusAndCorsicaSlow,

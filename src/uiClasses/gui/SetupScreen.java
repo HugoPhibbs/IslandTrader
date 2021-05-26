@@ -15,6 +15,13 @@ import coreClasses.*;
 import java.awt.Color;
 import javax.swing.JTextPane;
 
+/** Represents a SetupScreen
+ * Used to set up a game, getting the starting conditions, 
+ * then passes flow over to a CoreOptionsScreen object
+ * 
+ * @author Jordan Vegar
+ *
+ */
 public class SetupScreen extends Screen {
 	// Class Variables //
 	/** The instance of Ship the player has selected.*/
@@ -39,8 +46,9 @@ public class SetupScreen extends Screen {
 	private String playerName;
 	
 	
-	/**
-	 * Create the application by calling the parent class's constructor. 
+	/** Constructor for SetupScreen
+	 * 
+	 * @param game GameEnvironment object for the current game
 	 */
 	public SetupScreen(GameEnvironment game) {
 		super("Setup Game", game);

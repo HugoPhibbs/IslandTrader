@@ -26,8 +26,11 @@ import coreClasses.GameEnvironment;
  */
 public class CoreOptionsScreen extends Screen{
 
-	/**
-	 * Create the application.
+	/** Constructor for CoreOptionsScreen
+	 * Checks that a user has enough money to continue playing, either creating a game over event, or initializing a
+	 * new screen for a user to interact with
+	 * 
+	 * @param gameEnvironment GameEnvironment object for the current game
 	 */
 	public CoreOptionsScreen(GameEnvironment gameEnvironment) {
 		super("Core options screen", gameEnvironment);
@@ -154,10 +157,6 @@ public class CoreOptionsScreen extends Screen{
 		JLabel shipUpgradesLabel = new JLabel("Ship upgrades");
 		shipUpgradesLabel.setBounds(335, 60, 200, 15);
 		shipPanel.add(shipUpgradesLabel);
-		
-		JLabel imageLabel = new JLabel("<image>");
-		imageLabel.setBounds(12, 80, 100, 15);
-		shipPanel.add(imageLabel);
 		
 		String[][] upgrades = game.getShip().upgradesToNestedArray();
 		if (upgrades.length == 0) {

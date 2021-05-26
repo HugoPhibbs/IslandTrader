@@ -4,6 +4,10 @@ import uiClasses.GameUi;
 import coreClasses.GameEnvironment;
 import coreClasses.Route;
 
+/** Represent the core operating class for the GUI for Island Trader
+ * 
+ * @author Jordan Vegar
+ */
 public class Gui implements GameUi{
 	
 	

@@ -18,6 +18,14 @@ import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/** Represents a ChooseRouteScreen class.
+ * Where a user can choose the routes they want to go on after selecting an Island that they want
+ * to travel to
+ * 
+ * @author Hugo Phibbs and Jordan Vegar
+ * @version 26/5/2021
+ * @since 8/5/2021
+ */
 public class ChooseRouteScreen extends Screen {
 
 	/** the island the player to view routes to.*/
@@ -58,24 +66,19 @@ public class ChooseRouteScreen extends Screen {
 		
 		JLabel lblIsland = new JLabel("You are travelling to ", SwingConstants.CENTER);
 		lblIsland.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblIsland.setBounds(121, 28, 187, 19);
+		lblIsland.setBounds(0, 28, 800, 19);
 		frame.getContentPane().add(lblIsland);
 		
 		JLabel lblIslandName = new JLabel(island.getIslandName(), SwingConstants.CENTER);
 		lblIslandName.setFont(new Font("Dialog", Font.BOLD, 20));
-		lblIslandName.setBounds(121, 61, 175, 24);
+		lblIslandName.setBounds(0, 61, 800, 24);
 		frame.getContentPane().add(lblIslandName);
 		
 		JLabel lblSelectRoute = new JLabel("Please select a route to continue");
 		lblSelectRoute.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblSelectRoute.setForeground(new Color(51, 51, 51));
-		lblSelectRoute.setBounds(76, 146, 297, 19);
+		lblSelectRoute.setBounds(0, 146, 800, 19);
 		frame.getContentPane().add(lblSelectRoute);
-		
-		JLabel lblIslandImage = new JLabel("This will be a picture of the island you are travelling to!");
-		lblIslandImage.setBackground(Color.CYAN);
-		lblIslandImage.setBounds(509, 7, 259, 137);
-		frame.getContentPane().add(lblIslandImage);
 	}
 	
 	/** Creates the miscellaneous components on the screen not in a sub container.*/

@@ -12,6 +12,11 @@ import coreClasses.Route;
 
 import javax.swing.JButton;
 
+/** Represents a Pirates random event
+ * 
+ * @author Jordan Vegar
+ *
+ */
 public class PirateScreen extends Screen {
 	// Class Variables //
 	/** Pirates object for this pirates attack */

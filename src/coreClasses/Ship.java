@@ -268,7 +268,7 @@ public class Ship {
     
     /** Getter method for the daily wage cost of all the crew on board a Ship
      * 
-     * int for the daily wage cost of all the crew on board a Ship
+     * @return int for the daily wage cost of all the crew on board a Ship
      */
     public int getDailyWageCost() {return COST_PER_CREW_PER_DAY * crewSize;}
     
@@ -280,6 +280,7 @@ public class Ship {
     
     /** Getter method for the max item space of a ship
      * 
+     * @return int for the max amount of items that a ship can store
      */
     public int getMaxItemSpace() {return maxItemSpace;}
     

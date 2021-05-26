@@ -8,13 +8,21 @@ import javax.swing.SwingConstants;
 import coreClasses.GameEnvironment;
 import coreClasses.Route;
 
+/** Represents a screen for a rescued sailors random event
+ * 
+ * @author Jordan Vegar
+ *
+ */
 public class RescueScreen extends Screen {
 
 	/** The route the attack occurs on.*/
 	private Route route;
 	
-	/**
-	 * Create the screen by calling the parent's constructor and initializing the class variable route. 
+	/** Constructor for RescueScreen
+	 * Create the screen by calling the parent's constructor and initializing the class variable route.
+	 * 
+	 * @param game GameEnvironment object for the current game
+	 * @param route Route that rescued sailors happens on for a user
 	 */
 	public RescueScreen(GameEnvironment game, Route route) {
 		super("Stranded Sailor", game);
@@ -57,15 +65,10 @@ public class RescueScreen extends Screen {
 		lblTitle.setBounds(66, 12, 486, 38);
 		frame.getContentPane().add(lblTitle);
 		
-		JLabel lblImage = new JLabel("IMAGE HERE");
-		lblImage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImage.setBounds(53, 82, 494, 227);
-		frame.getContentPane().add(lblImage);
-		
 		JLabel lblInfo = new JLabel("<html> You spotted a stranded sailor through your telescope and <br> saved him! He has thanked you by giving you 50 Pirate Bucks  <html>");
 		lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInfo.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblInfo.setBounds(28, 309, 548, 38);
+		lblInfo.setBounds(28, 200, 548, 38);
 		frame.getContentPane().add(lblInfo);
 	}
 }

@@ -93,8 +93,8 @@ public class Island {
 	
 	/** Method for the getting a string representation of routes from an island
 	 * 
-	 * @param routes ArrayList<Route> containing all the routes from a particular island. (from the player's current island)
-	 * @return String representation of all the routes from a given island
+	 * @param routes ArrayList containing all the routes from the player's current island to another island
+	 * @return String representation of all the routes from a given island to another island
 	 */
 	public String viewRoutes(ArrayList<Route> routes) {
 		
@@ -109,7 +109,7 @@ public class Island {
 	/** Creates a detailed description of this island, including info about the routes to it 
 	 * (from current island) and a list of items the store buys and sells.
 	 *  
-	 * @param routes ArrayList<Route> of routes from the player's current island to this island.
+	 * @param routes ArrayList of routes from the player's current island to this island.
 	 * @return fullInfo String giving a detailed description of this island.
 	 */
 	public String fullInfo(ArrayList<Route> routes) {
@@ -117,9 +117,6 @@ public class Island {
 		
 		fullInfo += viewRoutes(routes);
 		
-		//fullInfo += islandStore.catalogueToString(islandStore.getSellCatalogue(), "sell");
-		//fullInfo += islandStore.catalogueToString(islandStore.getBuyCatalogue(), "buy");
-	
 		return fullInfo;
 	}
 	

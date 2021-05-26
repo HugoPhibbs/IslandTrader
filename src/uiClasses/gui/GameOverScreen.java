@@ -9,6 +9,11 @@ import javax.swing.SwingConstants;
 import coreClasses.GameEnvironment;
 import uiClasses.GameUi;
 
+/** Represents a a screen for the event of Game Over for a user. 
+
+ * @author Jordan Vegar
+ *
+ */
 public class GameOverScreen extends Screen {
 	
 	/** JLabel that displays the reason the game has ended.*/

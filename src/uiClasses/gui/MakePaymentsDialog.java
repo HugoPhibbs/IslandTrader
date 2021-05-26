@@ -14,6 +14,12 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+/** Dialog for making payments before traveling on a Route to
+ * another Island
+ * 
+ * @author Jordan Vegar 
+ *
+ */
 public class MakePaymentsDialog extends JDialog {
 	
 	/** long Generated serial version UID. Class has unique values so not used. */
@@ -30,6 +36,10 @@ public class MakePaymentsDialog extends JDialog {
 	
 	/**
 	 * Creates the JDialog box and calls the methods required to add components.
+	 * 
+	 * @param game GameEnvironment object for the current game
+	 * @param route Route object for the current game
+	 * @param routeScreen ChooseRouteScreen object displaying the current routes that a user choose to travel to another island
 	 */
 	public MakePaymentsDialog(GameEnvironment game, Route route, ChooseRouteScreen routeScreen) {
 		setBounds(100, 100, 450, 229);

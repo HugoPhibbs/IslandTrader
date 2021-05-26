@@ -14,6 +14,12 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/** Represents a screen for viewing Islands that a user can travel to from their
+ * current Island
+ * 
+ * @author Jordan Vegar and Hugo Phibbs
+ *
+ */
 public class ViewIslandsScreen extends Screen {
 	
 	/** Island selected by the player.*/
