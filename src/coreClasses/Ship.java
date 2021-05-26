@@ -27,7 +27,7 @@ public class Ship {
     private final int crewSize; 
     
     /** The daily wage cost of a single crew member */
-	private final int COST_PER_CREW_PER_DAY = 5;
+	private final int COST_PER_CREW_PER_DAY = 3;
 	
 	/** Player object that owns this Ship object in a game */
     private Player owner;
@@ -191,8 +191,7 @@ public class Ship {
      */
     public int repairCost() {
     	int damageInflicted = 100-healthStatus;
-    	int REPAIR_COST_CONSTANT = 1; // can be adjusted for balance
-    	return damageInflicted * crewSize * REPAIR_COST_CONSTANT;
+    	return ((damageInflicted * crewSize) / 10) + 10;
     }
    
     //////////////////////////////// MANAGING SHIP ITEMS ///////////////////////////////////////////
