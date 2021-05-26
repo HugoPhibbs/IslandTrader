@@ -49,36 +49,42 @@ public class Ship {
 
     
     /** Constructor for a Ship object
-     *
-     * @throws IllegalArgumentException if constructor parameters are invalid
-     * @param name String for the name of the ship
-     * @param speed Integer for the speed of the ship as it travels between islands (assume constant)
-     * @param shipSize Integer for the size of the ship, influences crew size and the max cargo space of a ship
-     * @param maxDefenseCapability Integer for the max defense capability of a ship
-     */
-    public Ship(String name, int speed, int shipSize, int maxDefenseCapability) throws IllegalArgumentException{    	
-    	if (!CheckValidInput.nameIsValid(name)) {
-    	    String msg1 = "Name for ship must have no more than 1 consecutive white space and be between 3 and 15 characters in length!";
-    		throw new IllegalArgumentException(msg1);
-    	}
-    	if (shipSize * 10 > 100) {
-    		String msg2 = "Ship size cannot be more than 10!";
-    		throw new IllegalArgumentException(msg2);
-    	}
-    	
-    	if (maxDefenseCapability > 50) {
-    		String msg3 = "Max defense capability cannot be more than 50";
-    		throw new IllegalArgumentException(msg3);
-    	}
-    	
-    	this.name = name;
-    	this.speed = speed;
-    	this.crewSize = shipSize; // neat numbers
-    	this.maxItemSpace = (int) shipSize * 10; // ie for every unit of crewSize max item space adjusts with this. arbitrary constant
-    	this.maxDefenseCapability = maxDefenseCapability;
-    	
-    	remainingItemSpace = maxItemSpace;
-    }
+    *
+    * @throws IllegalArgumentException if constructor parameters are invalid
+    * @param name String for the name of the ship
+    * @param speed Integer for the speed of the ship as it travels between islands (assume constant), number out of 100
+    * @param shipSize Integer for the size of the ship, influences crew size and the max cargo space of a ship, number out of 10
+    * @param maxDefenseCapability Integer for the max defense capability of a ship, number out of 50
+    */
+   public Ship(String name, int speed, int shipSize, int maxDefenseCapability) throws IllegalArgumentException{    	
+   	if (!CheckValidInput.nameIsValid(name)) {
+   	    String msg1 = "Name for ship must have no more than 1 consecutive white space and be between 3 and 15 characters in length!";
+   		throw new IllegalArgumentException(msg1);
+   	}
+   	if (shipSize * 10 > 100) {
+   		String msg2 = "Ship size cannot be more than 10!";
+   		throw new IllegalArgumentException(msg2);
+   	}
+   	
+   	if (maxDefenseCapability > 50) {
+   		String msg3 = "Max defense capability cannot be more than 50";
+   		throw new IllegalArgumentException(msg3);
+   	}
+   	
+   	if (speed > 100) {
+   		String msg4 = "Speed cannot be more than 50!";
+   		throw new IllegalArgumentException(msg4);
+   	}
+   	
+   	this.name = name;
+   	this.speed = speed;
+   	this.crewSize = shipSize; // neat numbers
+   	this.maxItemSpace = (int) shipSize * 10; // ie for every unit of crewSize max item space adjusts with this. arbitrary constant
+   	this.maxDefenseCapability = maxDefenseCapability;
+   	
+   	remainingItemSpace = maxItemSpace;
+   }
+
 
     ////////////////////////////////// GENERAL SHIP METHODS ////////////////////////////////////////
     
