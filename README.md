@@ -1,8 +1,8 @@
 Welcome to our Island Trader project for SENG201!!
 
-To build and run the Island Trader game from the command line:
+To build and run the Island Trader game:
 
-1. Ensure you are in the root project directory. This directory contains this README, the src and doc directories.
+1. Ensure you are in the root project directory. This located in the root of the zip folder and is called 'seng201_project', this contains the source code and everything else that is needed to run the project
 2. Run the following command to compile the Java source code and place the resulting compiled classes into the
    bin directory:
 
@@ -15,6 +15,7 @@ To build and run the Island Trader game from the command line:
    To start RocketManager with a command line interface run:
 
      java -cp bin main.Main cmd
+
 
 Alternatively, to load the project into Eclipse:
 1. Create a new Eclipse Project
