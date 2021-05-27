@@ -123,9 +123,9 @@ public class ChooseRouteScreen extends Screen {
 		txtRouteDescription.setEditable(false);
 		panelRouteSelection.add(txtRouteDescription);
 		
-		JLabel lblDuration = new JLabel("Duration (days):");
-		lblDuration.setBounds(551, 126, 150, 15);
-		panelRouteSelection.add(lblDuration);
+		JLabel lblDistance = new JLabel("Distance:");
+		lblDistance.setBounds(551, 126, 150, 15);
+		panelRouteSelection.add(lblDistance);
 		
 		JLabel lblPirate = new JLabel("Pirate Attack:");
 		lblPirate.setBounds(551, 193, 125, 15);
@@ -143,10 +143,10 @@ public class ChooseRouteScreen extends Screen {
 		lblChances.setBounds(605, 166, 85, 15);
 		panelRouteSelection.add(lblChances);
 		
-		JLabel lblDurationVal = new JLabel("-");
-		lblDurationVal.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblDurationVal.setBounds(698, 126, 49, 15);
-		panelRouteSelection.add(lblDurationVal);
+		JLabel lblDistanceVal = new JLabel("-");
+		lblDistanceVal.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblDistanceVal.setBounds(698, 126, 49, 15);
+		panelRouteSelection.add(lblDistanceVal);
 		
 		JLabel lblPirateOdds = new JLabel("-");
 		lblPirateOdds.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -167,7 +167,7 @@ public class ChooseRouteScreen extends Screen {
 		
 		JButton btnRoute1 = new JButton(routeList.get(0).getRouteName());
 		btnRoute1.addActionListener(e -> changeRouteInfo(routeList.get(0), 
-				lblSelectedRoute, txtRouteDescription, lblDurationVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
+				lblSelectedRoute, txtRouteDescription, lblDistanceVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
 		btnRoute1.setBounds(12, 12, 233, 284);
 		btnRoute1.setBackground(new Color(153, 204, 255));
 		panelRouteSelection.add(btnRoute1);
@@ -177,7 +177,7 @@ public class ChooseRouteScreen extends Screen {
 			btnRoute2.setBounds(257, 12, 233, 284);
 			btnRoute2.setBackground(new Color(153, 204, 255));
 			btnRoute2.addActionListener(e -> changeRouteInfo(routeList.get(1), 
-					lblSelectedRoute, txtRouteDescription, lblDurationVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
+					lblSelectedRoute, txtRouteDescription, lblDistanceVal, lblPirateOdds, lblWeatherOdds, lblRescueOdds));
 			panelRouteSelection.add(btnRoute2);
 		}
 	}
@@ -193,11 +193,11 @@ public class ChooseRouteScreen extends Screen {
 	 * @param lblWeather JLabel for the chance of a unfortunate weather event on Route
 	 * @param lblRescue JLabel for the chance of a Pirate attack event on Route
 	 */
-	private void changeRouteInfo(Route route, JLabel lblName, JTextPane lblDescription, JLabel lblDuration, JLabel lblPirate,  JLabel lblWeather, JLabel lblRescue) {
+	private void changeRouteInfo(Route route, JLabel lblName, JTextPane lblDescription, JLabel lblDistance, JLabel lblPirate,  JLabel lblWeather, JLabel lblRescue) {
 		btnConfirm.setEnabled(true);
 		lblName.setText(route.getRouteName());
 		lblDescription.setText(route.getDescription());
-		lblDuration.setText(String.valueOf(game.getShip().calculateDaysSailing(route)));
+		lblDistance.setText(String.valueOf(route.getDistance()));
 		lblPirate.setText(String.valueOf(route.getPirateProb()));
 		lblWeather.setText(String.valueOf(route.getWeatherProb()));
 		lblRescue.setText(String.valueOf(route.getRescueProb()));
