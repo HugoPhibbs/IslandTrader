@@ -15,3 +15,8 @@ To build and run the Island Trader game from the command line:
    To start RocketManager with a command line interface run:
 
      java -cp bin main.Main cmd
+
+Alternatively, to load the project into Eclipse:
+1. Create a new Eclipse Project
+2. Right click on the project, and select Import -> General -> File System. It will make a copy of your files. 
+You can also drag and drop files from the Finder into the src folder. 
