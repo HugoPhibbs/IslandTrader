@@ -8,11 +8,11 @@ To build and run the Island Trader game:
 
     javac -d bin -cp src src/main/Main.java
 
-3. To start RocketManager with a graphical user interface run:
+3. To start IslandTrader with a graphical user interface run:
 
      java -cp bin main.Main
 
-   To start RocketManager with a command line interface run:
+   To start IslandTrader with a command line interface run:
 
      java -cp bin main.Main cmd
 
